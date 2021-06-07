@@ -1,3 +1,5 @@
+SDX=/dev/sda
+
 sgdisk -Z $SDX
 sgdisk -n 0:0:+512MiB -t 0:ef00 -c 0:efi  $SDX
 sgdisk -n 0:0:+8GiB   -t 0:8200 -c 0:swap $SDX
