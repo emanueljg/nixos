@@ -1,3 +1,5 @@
+sudo -i
+
 loadkeys sv-latin1
 
 SDX=/dev/sda
