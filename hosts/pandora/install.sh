@@ -4,11 +4,12 @@ loadkeys sv-latin1
 
 SDX=/dev/sda
 
-sgdisk -Z
+sgdisk -Z $SDX
 sgdisk -n 0:0:+512MiB -t 0:ef00 -c 0:efi  $SDX
 sgdisk -n 0:0:+8GiB   -t 0:8200 -c 0:swap $SDX
 sgdisk -n 0:0:0       -t 0:8300 -c 0:root $SDX
 sgdisk -p $SDX
+partprobe
 
 mkfs.fat -F 32 -n efi  ${SDX}1
 mkswap         -L swap ${SDX}2
@@ -23,5 +24,9 @@ nixos-generate-config --root /mnt
 
 # . . .
 
-nixos-install
-reboot
+wget "https://github.com/emanueljg/nixos/archive/refs/heads/master.zip" -O temp.zip
+unzip temp.zip
+rm temp.zip
+
+#nixos-install
+#reboot
