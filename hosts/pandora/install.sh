@@ -24,9 +24,17 @@ nixos-generate-config --root /mnt
 
 # . . .
 
-wget "https://github.com/emanueljg/nixos/archive/refs/heads/master.zip" -O temp.zip
+curl "https://github.com/emanueljg/nixos/archive/master.zip" -LO
 unzip temp.zip
 rm temp.zip
+
+mv nixos-master/* /mnt/etc/nixos/
+
+ln -sr ./hosts/pandora/configuration.nix /mnt/etc/nixos/configuration.nix
+
+
+
+
 
 #nixos-install
 #reboot
