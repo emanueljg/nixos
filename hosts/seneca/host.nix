@@ -43,7 +43,6 @@
 
   hardware.opengl.enable = true;
   hardware.bluetooth.enable = true;
-  security.sudo.wheelNeedsPassword = false;
 
   my.home.packages = with pkgs; [
     dmenu
