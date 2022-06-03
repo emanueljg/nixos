@@ -11,7 +11,6 @@
       ../../parts/system/fast-x.nix
 
       ../../parts/home/programs/autorandr/autorandr.nix
-      ../../parts/home/programs/rtorrent/rtorrent.nix
       ../../parts/home/programs/qutebrowser/qutebrowser.nix
       ../../parts/home/programs/i3/i3.nix
       ../../parts/home/programs/kitty/kitty.nix
