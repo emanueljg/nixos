@@ -3,8 +3,8 @@
 {
   imports =
     [ 
-      ./hosts/seneca.nix
-      ./home/home.nix
+    ./hosts/seneca.nix
+    ./home/home.nix
     ];
 }
 

@@ -9,6 +9,9 @@
       ../system/anti-intel-screentear.nix
       ../system/fast-x.nix
     ];
+    boot = {
+      resumeDevice = "/dev/sda2";
+    };
   networking = {
     hostName = "seneca";
     useDHCP = false;

@@ -2,10 +2,10 @@
 
 {
   services.xserver = {
-    videoDrivers = [ "intel" ];
-    deviceSection = ''
-      Option "DRI" "2"
-      Option "TearFree" "true"
-    '';
+    videoDrivers = [ "modesetting" ];
+#    deviceSection = ''
+#      Option "DRI" "2"
+#      Option "TearFree" "true"
+#    '';
   };
 }

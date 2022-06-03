@@ -12,5 +12,6 @@
       start = "";
     }; in [ fakeSession ];
     defaultSession = "none+fake";
+    lightdm.greeter.enable = false; 
   };
 }

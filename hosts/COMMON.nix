@@ -13,6 +13,7 @@
     packages = with pkgs; [ terminus_font ];
     font = "ter-v32n";
   };
+  hardware.opengl.enable = true;
   services.xserver.libinput.enable = true;
   sound.enable = true;
   hardware.pulseaudio.enable = true;
