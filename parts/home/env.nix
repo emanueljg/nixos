@@ -13,12 +13,26 @@
       shellAliases = {
         "c" = "cd /config";
         "..." = "cd ../..";
+
         "e" = "$EDITOR";
+
         "s" = "sudo";
         "se" = "sudoedit";
-        "si" = "sudo -i";
+        "si" = "s -i";
+
         "nrs" = "sudo nixos-rebuild switch";
         "nrt" = "sudo nixos-rebuild test";
+
+        "skk" = "kitty +kitten ssh";
+        "aur" = "skk ejg@192.168.1.2 -p 34022";
+
+        "g" = "git";
+        "gs" = "g status";
+        "ga" = "g add";
+        "gc" = "g commit -m";
+        "gca" = "g commit -am";
+        "gpush" = "g push";
+        "gpull" = "g pull";
       };
     };
   };
