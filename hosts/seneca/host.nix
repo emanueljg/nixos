@@ -26,6 +26,8 @@
       enp0s31f6.useDHCP = false;
       wlan0.useDHCP = true;
     };
+    wireless.enable = false;
+    networkmanager.enable = true;
   }; 
 
   services = {

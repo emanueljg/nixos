@@ -24,8 +24,6 @@
 
   networking = {
     useDHCP = false;
-    wireless.enable = false;
-    networkmanager.enable = true;
   };
 
   users.users.ejg = {
