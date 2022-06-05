@@ -23,8 +23,8 @@
         "nrs" = "sudo nixos-rebuild switch";
         "nrt" = "sudo nixos-rebuild test";
 
-        "skk" = "kitty +kitten ssh";
-        "aur" = "skk ejg@192.168.1.2 -p 34022";
+        "xc" = "xclip -sel clip";
+        "xp" = "xc -o";
 
         "g" = "git";
         "gs" = "g status";
@@ -33,6 +33,14 @@
         "gca" = "g commit -am";
         "gpush" = "g push";
         "gpull" = "g pull";
+
+        "skk" = "kitty +kitten ssh";
+        "aur" = "skk ejg@192.168.1.2 -p 34022";
+
+        "aurt" = "deluge-console -d 192.168.1.2 -p 58846 -U ejg -P password";
+        "aurti" = "aurt info";
+        "aurta" = "aurt add";
+        "aurtax" = "aurta $(xp)"; 
       };
     };
   };

@@ -5,6 +5,7 @@
     [
       ../SHARED/host.nix
       ./hardware-configuration.nix
+      ./deluge.nix
 
       ../../parts/system/silent-boot.nix
       ../../parts/system/anti-intel-screentear.nix
