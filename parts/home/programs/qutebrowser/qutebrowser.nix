@@ -16,7 +16,7 @@
         "gJ" = "tab-move -";
         "gK" = "tab-move +";
         "ew" = "jseval -q document.activeElement.blur()";
-        "eb" = "spawn kitty -e nvim /config/home/programs/qutebrowser/quickmarks.nix && sudo nixos-rebuild switch";
+        "eb" = "spawn --userscript /config/parts/home/programs/qutebrowser/edit-quickmarks.sh";
         ",d" = ''hint links spawn bash -lic "aurta {hint-url}"''; 
       };
     };
