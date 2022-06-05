@@ -5,6 +5,8 @@
     [
       ../SHARED/host.nix
       ./hardware-configuration.nix
+      ./openssh.nix
+      ./deluge.nix
     ];
   networking = {
     firewall.enable = false;
