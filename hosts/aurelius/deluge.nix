@@ -12,6 +12,7 @@
       download_location = "/srv/torrents/";
       max_upload_speed = 0;
       max_download_speed = 1000;
+      max_active_downloading = 3;
       listen_ports = [6881 6891];
     };
 
