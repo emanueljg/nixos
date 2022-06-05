@@ -35,7 +35,7 @@
         "gpull" = "g pull";
 
         "skk" = "kitty +kitten ssh";
-        "aur" = "skk ejg@192.168.1.2 -p 34022 source .bashrc;";
+        "aur" = "skk ejg@192.168.1.2 -p 34022";
 
         "aurt" = "deluge-console -d 192.168.1.2 -p 58846 -U ejg -P password";
         "aurti" = "aurt info";
