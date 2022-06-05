@@ -41,6 +41,12 @@
     logind.lidSwitch = "ignore";
   };
 
+  systemd.targets = {
+    sleep.enable = false;
+    suspend.enable = false;
+    hybrid-sleep.enable = false;
+  };
+
   my.xsession.enable = true;
 
   hardware.opengl.enable = true;
