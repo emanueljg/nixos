@@ -7,7 +7,8 @@
     openFirewall = true;
 
     config = {
-     # allow_remote = true;
+      allow_remote = true;
+      daemon_port = 58846;
       download_location = "/srv/torrents/";
       max_upload_speed = 0;
       max_download_speed = 1000;
