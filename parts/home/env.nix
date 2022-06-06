@@ -28,8 +28,11 @@
 
         "g" = "git";
         "gs" = "g status";
+
         "gb" = "g branch";
-        "gch" = "g checkout -b";
+        "gch" = "g checkout";
+        "gchb" = "g checkout -b";
+
         "gm" = "g merge"; 
         "ga" = "g add";
         "gco" = "g commit -m";
