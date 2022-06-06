@@ -13,19 +13,24 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/900027f8-cc30-4b47-ab07-5c7ead9c2a93";
+  fileSystems = {
+    "/" = {
+      device = "/dev/disk/by-uuid/900027f8-cc30-4b47-ab07-5c7ead9c2a93";
       fsType = "ext4";
     };
 
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/94ED-9055";
+    "/boot" = {
+      device = "/dev/disk/by-uuid/94ED-9055";
       fsType = "vfat";
     };
 
+    "/mnt/data" = {
+      device = "/dev/disk/by-uuid/7B171917468EA7D0";
+      fsType = "ntfs";
+    };
+  };
   swapDevices =
-    [ { device = "/dev/disk/by-uuid/84ac4161-65c8-4497-9c40-14e40c69bd28"; }
-    ];
+    [ { device = "/dev/disk/by-uuid/84ac4161-65c8-4497-9c40-14e40c69bd28"; } ];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
