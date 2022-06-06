@@ -5,7 +5,10 @@
     ../../hm.nix
   ];
 
-  my.programs.dircolors.settings = {
-    OTHER_WRITABLE = "01;33";
-  }
+  my.programs.dircolors = {
+    enable = true;
+    settings = {
+      OTHER_WRITABLE = "01;33";
+    };
+  };
 }

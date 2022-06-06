@@ -12,6 +12,7 @@
       ../../parts/home/programs/rtorrent/rtorrent.nix
       ../../parts/home/programs/neovim/neovim.nix
       ../../parts/home/programs/git/git.nix
+      ../../parts/home/programs/dircolors/dircolors.nix
     ];
 
   console = {
