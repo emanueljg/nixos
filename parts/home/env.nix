@@ -28,12 +28,9 @@
 
         "g" = "git";
         "gs" = "g status";
-        "gb" = "g branch";
-        "gch" = "g checkout -b";
-        "gm" = "g merge"; 
         "ga" = "g add";
-        "gco" = "g commit -m";
-        "gcoa" = "g commit -am";
+        "gc" = "g commit -m";
+        "gca" = "g commit -am";
         "gpush" = "g push";
         "gpull" = "g pull";
 
