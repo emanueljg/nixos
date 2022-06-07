@@ -20,6 +20,8 @@
       extraOptions = ["--runtime=nvidia" ];
       environment = {
         JELLYFIN_LOG_DIR = "/log";
+        NVIDIA_DRIVER_CAPABILITIES = "all";
+        NVIDIA_VISIBLE_DEVICES = "all";
       };
     };
   };
