@@ -9,7 +9,11 @@
     config = {
       allow_remote = true;
       daemon_port = 58846;
-      download_location = "/srv/torrents/";
+
+      download_location = "/mnt/data/.unfinished_torrents/";
+      move_completed = true;
+      move_completed_path = "/mnt/data/torrs";
+
       max_upload_speed = 0;
       max_download_speed = 1000;
       max_active_downloading = 3;
