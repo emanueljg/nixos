@@ -12,6 +12,7 @@
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
+  boot.kernelParams = [ "systemd.unified_cgroup_hierarchy=0" ]; 
 
   fileSystems = {
     "/" = {

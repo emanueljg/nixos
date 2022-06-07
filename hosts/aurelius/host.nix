@@ -7,6 +7,7 @@
       ./hardware-configuration.nix
       ./openssh.nix
       ./deluge.nix
+      ./jellyfin-docker.nix
     ];
   networking = {
     firewall.enable = false;
