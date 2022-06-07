@@ -19,5 +19,8 @@
     t-dl-nsi = "https://nyaa.si/";
     t-dl-rbg  = "https://rarbg.to/torrents.php";
     t-dl-1337x = "https://www.1377x.to/";
+
+    s-dl = "192.168.1.2:34012";
+    s-jf = "192.168.1.2:8096";
   };
 }
