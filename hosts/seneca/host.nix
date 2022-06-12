@@ -1,17 +1,16 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   imports = 
     [
       ../SHARED/host.nix
       ./hardware-configuration.nix
+      ./periph-env.nix
       ./deluge.nix
 
       ../../parts/system/silent-boot.nix
-      ../../parts/system/anti-intel-screentear.nix
       ../../parts/system/fast-x.nix
 
-      ../../parts/home/programs/autorandr/autorandr.nix
       ../../parts/home/programs/qutebrowser/qutebrowser.nix
       ../../parts/home/programs/i3/i3.nix
       ../../parts/home/programs/kitty/kitty.nix
@@ -35,12 +34,12 @@
     xserver = {
       enable = true;
       libinput.enable = true;
-      # don't forget the binary DL blob!
-      videoDrivers = [ "displaylink" ];  
     };
-
     logind.lidSwitch = "ignore";
   };
+
+  # sets all graphical stuff
+  periph-env.enable = true; 
 
   systemd.targets = {
     sleep.enable = false;

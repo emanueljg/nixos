@@ -2,7 +2,15 @@
 
 
 let
-  inherit (lib.attrsets) mapAttrs recursiveUpdate genAttrs;
+  inherit (lib.lists)
+    foldl
+  ;
+
+  inherit (lib.attrsets) 
+    mapAttrs 
+    recursiveUpdate 
+    genAttrs
+  ;
 in 
 
 
@@ -14,4 +22,6 @@ in
   ;
 
   doRecursiveUpdates = old: ass: mapAttrs (name: value: recursiveUpdate old value) ass;  
+
+  updateAttrs = ass: old: foldl (rhs: lhs: recursiveUpdate lhs rhs) old ass;
 }

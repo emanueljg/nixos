@@ -53,16 +53,16 @@
           };
         };
         "tv" = {
-          fingerprint.eDP-1 = fingerprint.eDP-1;
-          fingerprint.HDMI-1 = fingerprint.HDMI-1;
+          fingerprint.eDP1 = fingerprint.eDP-1;
+          fingerprint.HDMI1 = fingerprint.HDMI-1;
 
           config = {
-            HDMI-1 = base-config // {
-              primary = true;
+            HDMI1 = base-config // {
               position = "0x0";
             };
 
-            eDP-1 = base-config // {
+            eDP1 = base-config // {
+              primary = true;
               position = "0x1080";
             };
           };

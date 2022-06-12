@@ -5,7 +5,8 @@
     consoleLogLevel = 0;
     initrd.verbose = false;
     loader = {
-      timeout = 0;
+      systemd-boot.consoleMode = "auto";
+      timeout = 10000;
     };
     kernelParams = [
       "quiet"
