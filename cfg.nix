@@ -50,7 +50,7 @@ let
       "aurelius"
     ];
 
-    HM-VERSION = "21.11";
+    HM-VERSION = "22.05";
 
     SENECA-SPECS = [ "mobile" "docked" "tv" ];
 
@@ -252,7 +252,7 @@ in { imports = (mkKnobs readDesiredHost [
 
   # meta
   (mkKnob true {
-    system.stateVersion = "21.11";
+    system.stateVersion = "22.05";
     nixpkgs.config.allowUnfree = true;
     environment.systemPackages = with pkgs; [
       xterm
