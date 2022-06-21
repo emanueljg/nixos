@@ -28,6 +28,10 @@
     };
     wireless.enable = false;
     networkmanager.enable = true;
+    networkmanager.extraConfig = ''
+      [device-mac-randomization]
+      wifi.scan-rand-mac-address=no
+    '';
   }; 
 
   services = {
