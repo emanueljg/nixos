@@ -45,11 +45,6 @@ in
             notification = false;
           }
         ];
-
-        workspaceOutputAssign = genWorkspaceOutputs { 
-          "DVI-I-2-2" = range 1 5;
-          "DVI-I-1-1" = range 6 10;
-        };
         
         gaps = 
           { "bottom" = GAP + BAR-HEIGHT + GAP; "inner" = GAP + GAP; }

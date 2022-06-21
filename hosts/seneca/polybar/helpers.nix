@@ -37,7 +37,7 @@ rec {
         mapAttrsToList (name: value:
           nameValuePair ("bar/" + name + "-" + m) (value // { monitor = "\${env:MONITOR:" + m + "}"; }) 
         ) bars
-      ) [ "DVI-I-2-2" "DVI-I-1-1" ]   
+      ) [ "DVI-I-2-2" "DVI-I-1-1" "eDP-1" "HDMI-1" ]   
     );
 }
 
