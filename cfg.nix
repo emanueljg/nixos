@@ -11,6 +11,7 @@ let
     attrNames
     listToAttrs
     length
+    readFile
   ;
 
   inherit (lib)
@@ -39,6 +40,7 @@ let
     concatMapStrings
     removePrefix
     stringToCharacters
+    removeSuffix
   ; 
 
 
@@ -119,6 +121,11 @@ let
             (knob: getAttr host knob)
             eligibleKnobs
       ;
+
+      readDesiredHost = 
+        removeSuffix 
+          "\n" 
+          (readFile "/etc/nixos/makeHost");
     };
 
     domain = { 
@@ -222,10 +229,10 @@ let
   inherit (funcs.general) 
     mkKnob
     mkKnobs
+    readDesiredHost
   ;
 
-in { imports = (mkKnobs "seneca" [
-  # 
+in { imports = (mkKnobs readDesiredHost [
   (mkKnob true 
     (let
       home-manager = 
@@ -443,7 +450,7 @@ in { imports = (mkKnobs "seneca" [
       wireless = {
         enable = true;
         networks = {
-          "comhem_8726A1" = {
+          "TRIK" = {
             psk = "42ny8xh8";
           };
         };
@@ -452,6 +459,82 @@ in { imports = (mkKnobs "seneca" [
       defaultGateway =  {
         address = "192.168.0.1";
         interface = "wlp2s0";
+      };
+    };
+  })
+
+  # ssh server 
+  (mkKnob "aurelius" {
+    services.openssh = {
+      enable = true;
+      ports = [ 34022 ];
+      authorizedKeysFiles = [ "/home/ejg/.ssh/id_ed25519.pub" ];
+    };
+  })
+
+  # deluge server
+  (mkKnob "aurelius" {
+    services.deluge = {
+      enable = true;
+      declarative = true;
+      openFirewall = true;
+
+      config = {
+        allow_remote = true;
+        daemon_port = 58846;
+
+        download_location = "/mnt/data/torrs/";
+
+        # disable this for now, more hassle than it's worth
+        #move_completed = true;
+        #move_completed_path = "/mnt/data/torrs";
+
+        max_upload_speed = 0;
+        max_download_speed = 1000;
+        max_active_downloading = 3;
+        listen_ports = [6881 6891];
+      };
+
+      web = {
+        enable = true;
+        port = 34012;
+        openFirewall = true;
+      };
+    };
+
+    # creates the auth file
+    systemd.tmpfiles.rules = [ 
+      (''f+ /tmp/deluge/deluge-auth 0550 deluge deluge - localclient:password:10\nejg:password:10'')
+    ];
+
+    # sets the auth file
+    services.deluge.authFile = "/tmp/deluge/deluge-auth";
+  })
+
+  # jellyfin nvidia-accelerated server
+  (mkKnob "aurelius" {
+    hardware.opengl.driSupport32Bit = true;
+    services.xserver.videoDrivers =  [ "nvidia" ];
+    hardware.opengl.enable = true;
+
+    virtualisation = {
+      docker.enableNvidia = true;
+      oci-containers.containers."jellyfin" = {
+        autoStart = true;
+        image = "jellyfin/jellyfin";
+        volumes = [
+          "/var/cache/jellyfin/config:/config"
+          "/var/cache/jellyfin/cache:/cache"
+          "/var/log/jellyfin:/log"
+          "/mnt/data:/media:ro"
+        ];
+        ports = [ "8096:8096" ];
+        extraOptions = ["--runtime=nvidia" ];
+        environment = {
+          JELLYFIN_LOG_DIR = "/log";
+          NVIDIA_DRIVER_CAPABILITIES = "all";
+          NVIDIA_VISIBLE_DEVICES = "all";
+        };
       };
     };
   })
