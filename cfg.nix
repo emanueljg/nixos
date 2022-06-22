@@ -1201,6 +1201,8 @@ in { imports = (mkKnobs readDesiredHost [
         name = "JetBrains Mono";
       };
 
+      settings = { confirm_os_window_close = 0; };
+
       # manually load the Clrs theme
       extraConfig = ''
         # vim:ft=kitty
