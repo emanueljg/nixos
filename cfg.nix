@@ -632,6 +632,9 @@ rec {
             "gpush" = "g push";
             "gpull" = "g pull";
 
+            "gl" = "g log";
+            "gd" = "g diff";
+
             "skk" = "kitty +kitten ssh";
             "aur" = "skk ejg@192.168.1.2 -p 34022";
 
