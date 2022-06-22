@@ -1290,7 +1290,7 @@ rec {
         enable = true;
         searchEngines = {
           DEFAULT = "https://www.google.com/search?q={}";
-          yt = "https://invidious.snopyta.org/search?q={}";
+          yt = "https://yewtu.be/search?q={}";
         };
         keyBindings = {
           normal = {
@@ -1310,8 +1310,6 @@ rec {
     (mkKnob "seneca" {
       my.programs.qutebrowser.quickmarks = {
         f-d = "https://discord.com/channels/@me";
-
-        y-hn = "https://www.youtube.com/watch?v=HUd_ikEGPPM&list=PLmJS4rAJemEaN6k5S0g43vDlSib1qWudz"; 
 
         t-no-opt = "https://search.nixos.org/options";
         t-no-hm = "https://nix-community.github.io/home-manager/options.html";
