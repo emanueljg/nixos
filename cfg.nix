@@ -1419,6 +1419,13 @@ rec {
       };
     })
 
+    # try out helix on trial
+    (mkKnob true {
+      my.programs.helix = {
+        enable = true;
+      };
+    })
+
     # misc-dircolors
     (mkKnob [ "seneca" ] {
       my.programs.dircolors = {
@@ -1428,6 +1435,7 @@ rec {
         };
       };
     })
+
 
 
 
