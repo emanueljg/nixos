@@ -534,21 +534,24 @@ rec {
 
       virtualisation = {
         docker.enableNvidia = true;
-        oci-containers.containers."jellyfin" = {
-          autoStart = true;
-          image = "jellyfin/jellyfin";
-          volumes = [
-            "/var/cache/jellyfin/config:/config"
-            "/var/cache/jellyfin/cache:/cache"
-            "/var/log/jellyfin:/log"
-            "/mnt/data:/media:ro"
-          ];
-          ports = [ "8096:8096" ];
-          extraOptions = ["--runtime=nvidia" ];
-          environment = {
-            JELLYFIN_LOG_DIR = "/log";
-            NVIDIA_DRIVER_CAPABILITIES = "all";
-            NVIDIA_VISIBLE_DEVICES = "all";
+        oci-containers = {
+          backend = "docker";
+          containers."jellyfin" = {
+            autoStart = true;
+            image = "jellyfin/jellyfin";
+            volumes = [
+              "/var/cache/jellyfin/config:/config"
+              "/var/cache/jellyfin/cache:/cache"
+              "/var/log/jellyfin:/log"
+              "/mnt/data:/media:ro"
+            ];
+            ports = [ "8096:8096" ];
+            extraOptions = ["--runtime=nvidia" ];
+            environment = {
+              JELLYFIN_LOG_DIR = "/log";
+              NVIDIA_DRIVER_CAPABILITIES = "all";
+              NVIDIA_VISIBLE_DEVICES = "all";
+            };
           };
         };
       };
