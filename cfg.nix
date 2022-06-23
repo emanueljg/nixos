@@ -265,6 +265,12 @@ in { imports = (mkKnobs readDesiredHost [
     ];
   })
 
+  (mkKnob "aurelius" {
+    nix.extraOptions = ''
+      stalled-download-timeout = 99999999
+    '';
+  })
+
   # hw-config-seneca
   (mkKnob [ "seneca" ] {
     imports =
@@ -407,7 +413,11 @@ in { imports = (mkKnobs readDesiredHost [
 
   # network-base
   (mkKnob true { 
-    networking.useDHCP = false;
+    networking = {
+      networking.useDHCP = false;
+      wireless.enable = false;
+      networkmanager.enable = true;
+    };
   })
   
   # network-seneca
@@ -418,48 +428,45 @@ in { imports = (mkKnobs readDesiredHost [
         enp0s31f6.useDHCP = false;
         wlan0.useDHCP = true;
       };
-      wireless.enable = false;
-      networkmanager.enable = true;
-    };
+    ;
   })
 
   # network-aurelius
   (mkKnob [ "aurelius" ] {
     networking = {
       hostName = "aurelius";
-
       firewall.enable = false;
-
-      networkmanager.enable = false;
 
       interfaces = {
         wlp2s0.useDHCP = true;
-        eno1 = {
-          useDHCP = false;
-          ipv4 = {
-            addresses = [
-              {
-                address = "192.168.1.2";
-                prefixLength = 24;
-              }
-            ];
-          };
-        };
+        eno1.useDHCP = true;
       };
-
-      wireless = {
-        enable = true;
-        networks = {
-          "TRIK" = {
-            psk = "42ny8xh8";
-          };
-        };
-      };
-
-      defaultGateway =  {
-        address = "192.168.0.1";
-        interface = "wlp2s0";
-      };
+     #   eno1 = {
+     #     useDHCP = false;
+     #     ipv4 = {
+     #       addresses = [
+     #         {
+     #           address = "192.168.1.2";
+     #           prefixLength = 24;
+     #         }
+     #       ];
+     #     };
+     #   };
+     # };
+     #
+     # wireless = {
+     #   enable = true;
+     #   networks = {
+     #     "TRIK" = {
+     #       psk = "42ny8xh8";
+     #     };
+     #   };
+     # };
+     #
+     # defaultGateway =  {
+     #   address = "192.168.0.1";
+     #   interface = "wlp2s0";
+     # };
     };
   })
 
@@ -598,17 +605,7 @@ in { imports = (mkKnobs readDesiredHost [
           "aurti" = "aurt info";
           "aurta" = "aurt add";
           "aurtax" = "aurta $(xp)"; 
-
-        } // 
-        (genAttrs
-          constants.SENECA-SPECS
-          (spec: 
-            ''sudo sed -i "s/\(default \)\(.*\)'' +
-            ''/\1nixos-generation-*-specialisation-${spec}.conf/g" '' +
-            ''/boot/loader/loader.conf '' 
-            )
-          )
-        ;
+        };  
       };
     };
   })
