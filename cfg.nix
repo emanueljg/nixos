@@ -448,7 +448,11 @@ rec {
 
     # network-base
     (mkKnob true { 
-      networking.useDHCP = false;
+      networking = {
+        useDHCP = false;
+        wireless.enable = false;
+        networkmanager.enable = true;
+      };
     })
     
     # network-seneca
@@ -459,8 +463,6 @@ rec {
           enp0s31f6.useDHCP = false;
           wlan0.useDHCP = true;
         };
-        wireless.enable = false;
-        networkmanager.enable = true;
       };
     })
 
@@ -468,38 +470,10 @@ rec {
     (mkKnob [ "aurelius" ] {
       networking = {
         hostName = "aurelius";
-
         firewall.enable = false;
-
-        networkmanager.enable = false;
-
         interfaces = {
           wlp2s0.useDHCP = true;
-          eno1 = {
-            useDHCP = false;
-            ipv4 = {
-              addresses = [
-                {
-                  address = "192.168.1.2";
-                  prefixLength = 24;
-                }
-              ];
-            };
-          };
-        };
-
-        wireless = {
-          enable = true;
-          networks = {
-            "TRIK" = {
-              psk = "42ny8xh8";
-            };
-          };
-        };
-
-        defaultGateway =  {
-          address = "192.168.0.1";
-          interface = "wlp2s0";
+          eno1.useDHCP = false;
         };
       };
     })
