@@ -461,6 +461,7 @@ rec {
       networking = {
         hostName = "seneca";
         interfaces = {
+          enp0s20f0u3u1i5.useDHCP = false;
           enp0s31f6.useDHCP = false;
           wlan0.useDHCP = true;
         };
@@ -629,10 +630,18 @@ rec {
     })
 
     # x-base
-    (mkKnob [ "seneca" ] {
+    (mkKnob "seneca" {
       services.xserver = {
         enable = true;
         libinput.enable = true;
+
+        # this should fix the constant display powersaving
+        # (that doesn't even work properly with the dock)
+        config = lib.mkAfter ''
+          Section "Extensions"
+            Option "DPMS" "Disable"
+          EndSection
+        '';
       };
 
       my = {
