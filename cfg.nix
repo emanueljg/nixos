@@ -35,6 +35,7 @@ rec {
     flatten
     concatMap
     optionals
+    optional
   ;
 
   inherit (lib.strings)
@@ -63,6 +64,7 @@ rec {
       black = "#000000";
       white = "#FFFFFF";
       light-blue = "#7EBAE4";
+      very-dark-blue = "#184094";
       dark-blue = "#5277C3";
       dark-purple = "#5C1A70";
       light-purple = "#BC79D1";
@@ -70,6 +72,11 @@ rec {
       pape-background = "#383535";  # warm grey
       dark-red = "#A83333";
       red = "#FF0A0A";
+      green = "#1e942f";
+      gold = "#bf9515";
+      brown = "#ad5b1c";
+      pink = "#fa0590";
+      light-orange = "#F88379";
     };
   };
 
@@ -227,6 +234,14 @@ rec {
     mkKnob
     mkKnobs
     readDesiredHost
+  ;
+
+  unstable = 
+    import 
+      (builtins.fetchTarball
+        "https://github.com/nixos/nixpkgs/tarball/nixos-unstable"
+        )
+      { config = config.nixpkgs.config; }    
   ;
 
   knobs = [
@@ -572,7 +587,7 @@ rec {
         programs.bash.enable = true;
         home = {
           sessionVariables = {
-            EDITOR = "nvim";
+            EDITOR = "hx";
             SUDO_EDITOR = "nvim";
           };
           shellAliases = {
@@ -720,27 +735,16 @@ rec {
 
       config = mkIf cfg.enable {
         # infer screen names from set env
-        periph-env.screens =
-          let
-            modesetting-names = {
-              laptop = "eDP-1";
-                dock = {
-                  center-HDMI = "DVI-I-2-2";
-                  right-DP = "DVI-I-1-1";
-                };
-              tv = "HDMI-1";
-            };
-        
-            intel-names = {
-              laptop = "eDP1";
-              tv = "HDMI1";
-            };
-          in
-            if cfg.env == "tv" then 
-              attrsets.recursiveUpdate modesetting-names intel-names
-            else
-              modesetting-names
-        ;
+        periph-env.screens = {
+          laptop = "eDP1";
+
+          dock = { 
+            center-HDMI = "DVI-I-2-2";
+            right-DP = "DVI-I-1-1";
+          };
+
+          tv = "HDMI1";
+        };
         
         periph-env.fingerprint = with cfg.screens; {
           ${laptop} = "00ffffffffffff0009e5c00600000000011a0104951c10780af6a0995951942d1f505400000001010101010101010101010101010101c93680cd703814403020360018a51000001ad42b80cd703814406464440518a51000001a000000fe003138364743804e5631324e353100000000000041119e001000000a010a202000d6";
@@ -763,22 +767,14 @@ rec {
         ;
 
         # set external options
-        services.xserver = 
-          if cfg.env == "tv" then {
-            videoDrivers = [ "intel" ];
-            deviceSection = ''
-              Option "TearFree" "true"
-            '';
-          } else let ms = [ "modesetting" ]; in {
-            videoDrivers = 
-              if cfg.env == "mobile" then 
-                ms 
-              else 
-                ms ++ [ "displaylink" ] 
-            ;
-          }
-        ;
-
+        services.xserver = {
+          # for now, let's try using intel on all modes
+          videoDrivers = [ "intel" ] ++ optional (cfg.env == "docked") "displaylink";
+          deviceSection = mkIf (cfg.env == "tv") ''
+            Option "TearFree" "true"
+          '';
+        };
+      
         # first of all, configure qjoypad correctly
         qjoypad = {
           enable = cfg.env == "tv";
@@ -1410,6 +1406,89 @@ rec {
     (mkKnob true {
       my.programs.helix = {
         enable = true;
+        package = unstable.helix;
+        settings = {
+          theme = "snowy";
+          editor = {
+            line-number = "relative";
+          };
+        };
+
+        themes = {
+          snowy = with constants;
+            let
+              transparent = "none";
+              gray = "#665c54";
+              dark-gray = "#3c3836";
+              white = "#fbf1c7";
+              black = "#282828";
+              red = "#fb4934";
+              green = "#b8bb26";
+              yellow = "#fabd2f";
+              blue = "#83a598";
+              magenta = "#d3869b";
+              cyan = "#8ec07c";
+            in rec {
+              # menu
+                # bottom 
+                  # status bar 
+                    "ui.statusline" = { fg = COLORS.white; bg = COLORS.dark-blue; };
+                    "ui.statusline.inactive" = { fg = COLORS.dark-blue; bg = white; };
+
+                  # command autocomplete popup
+                    "ui.menu" = { fg = COLORS.white; bg = COLORS.dark-blue; };
+                    "ui.menu.selected" = { fg = COLORS.white; bg = COLORS.light-blue; };
+                    "ui.help" = { fg = COLORS.white; bg = COLORS.light-blue; };
+                
+                # left side (gutters)
+                  # diagnostics (left of line numbers)
+                    "diagnostics" = { fg = COLORS.white; bg = COLORS.dark-blue; };
+              
+                  # line numbers
+                    "ui.linenr" = { fg = COLORS.white; bg = COLORS.dark-blue; };
+                    "ui.linenr.selected" = { fg = COLORS.white; bg = COLORS.light-blue; modifiers = [ "bold" ]; };
+
+                # right side (only "extra commands"-popup for now)              
+                  "ui.popup" = COLORS.dark-blue;
+
+              # otherwise meta
+                "ui.selection" = { modifiers = [ "underlined" ]; };
+                "ui.selection.primary" = {  modifiers = [ "underlined" ]; };
+                "ui.cursor" = { modifiers = [ "reversed" ]; };
+                "ui.cursor.match" = { fg = COLORS.red; modifiers = [ "underlined" ]; };
+              
+              # syntax
+                "comment" = { fg = gray; };
+                "variable" = COLORS.dark-blue;
+                "constant" = COLORS.gold;
+                "attributes" = yellow;
+                "type" = "#fa0590";
+                "string" = COLORS.green;
+                "variable.other.member" = COLORS.very-dark-blue;
+                "function" = COLORS.pink;
+                "keyword" = COLORS.purple;
+
+              # (unknowns/unused)
+                "ui.window" = COLORS.pink;
+                "variable.builtin" = COLORS.pink;
+                "constant.numeric" = COLORS.pink;
+                "constant.character.escape" = COLORS.pink;
+                "constructor" = COLORS.pink;
+                "special" = COLORS.pink;
+                "label" = COLORS.pink;
+                "namespace" = COLORS.pink;
+                "diff.plus" = COLORS.pink;
+                "diff.delta" = COLORS.pink;
+                "diff.minus" = COLORS.pink;
+                "diagnostic" = COLORS.pink;
+                "info" = COLORS.pink;
+                "hint" = COLORS.pink;
+                "debug" = COLORS.pink;
+                "warning" = COLORS.pink;
+                "error" = COLORS.pink;
+            }
+          ;
+        };
       };
     })
 
