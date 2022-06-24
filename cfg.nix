@@ -260,6 +260,7 @@ rec {
         cryptsetup
         xclip
         scrot
+        pmutils
       ];
     })
 
