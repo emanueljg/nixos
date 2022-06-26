@@ -421,6 +421,20 @@ rec {
     # boot-hibernation
     (mkKnob [ "seneca" ] {
       boot.resumeDevice = "/dev/sda2";
+      my.xsession.windowManager.i3.config = 
+        let
+          gif = { 
+            cmd = "mpv /home/ejg/load.gif"; 
+            rule = { title = "load.gif - mpv"; };
+          };
+        in {
+          startup = [ { command = gif.cmd; always = true; } ];
+          assigns."1" = [ gif.rule ];
+          assigns."6" = [ gif.rule ];
+          floating.criteria = [ gif.rule ];
+          floating.border = 0;
+        }
+      ;
     })
 
     # locale-base
@@ -999,6 +1013,8 @@ rec {
                 notification = false;
               }
             ];
+        
+            defaultWorkspace = "workspace number 1";
             
             gaps = { 
               "bottom" = constants.GAP + constants.BAR-HEIGHT + constants.GAP; 
@@ -1568,17 +1584,4 @@ rec {
     })
   ]; # end of the knobs list
 } # end of the entire module
-
-
-
-  
-    
-
-
-
-  
-  
-  
-
-
 
