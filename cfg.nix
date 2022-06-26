@@ -584,7 +584,7 @@ rec {
     (mkKnob true {
       my = {
         # enable current shell to allow HM to inject stuff
-        programs.bash.enable = true;
+        programs.zsh.enable = true;
         home = {
           sessionVariables = {
             EDITOR = "hx";
@@ -1203,6 +1203,30 @@ rec {
             };
         };
     })
+  
+    # pkgs-zsh
+    (mkKnob "seneca" {
+      # sets default shell
+      users.users.ejg.shell = pkgs.zsh;
+
+      # required for
+      # https://nix-community.github.io/home-manager/options.html#opt-programs.zsh.enableCompletion
+      environment.pathsToLink = [ "/share/zsh" ];
+
+      my.programs.zsh = {
+        enable = true;
+        enableSyntaxHighlighting = true;
+        enableVteIntegration = true;
+        autocd = true;
+        # cdpath = [ ]  could try and add this later?
+        # defaultKeymap  perhaps this too
+        # dirHashes     definitely this, could be very useful
+      
+        localVariables = {
+          PROMPT="%F{68}%n@%m%f:%F{14}%~%f $ ";
+        };
+      };
+    })
 
     # pkgs-kitty 
     (mkKnob [ "seneca" ] {
@@ -1347,7 +1371,7 @@ rec {
             "gK" = "tab-move +";
             "ew" = "jseval -q document.activeElement.blur()";
             "eb" = "spawn --userscript /config/parts/home/programs/qutebrowser/edit-quickmarks.sh";
-            ",d" = ''hint links spawn bash -lic "aurta {hint-url}"''; 
+            ",d" = ''hint links spawn zsh -lic "aurta {hint-url}"''; 
           };
         };
       };
