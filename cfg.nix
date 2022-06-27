@@ -1227,7 +1227,7 @@ rec {
     })
   
     # pkgs-zsh
-    (mkKnob "seneca" {
+    (mkKnob true {
       # sets default shell
       users.users.ejg.shell = pkgs.zsh;
 
