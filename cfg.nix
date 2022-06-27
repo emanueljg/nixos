@@ -592,10 +592,6 @@ rec {
         config.services.invidious.port
         config.services.invidious.database.port
       ];
-    
-      # configuration
-    
-      
     })
 
     # Sound 
