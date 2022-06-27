@@ -1410,7 +1410,7 @@ rec {
             "gJ" = "tab-move -";
             "gK" = "tab-move +";
             "ew" = "jseval -q document.activeElement.blur()";
-            "eb" = "spawn --userscript /config/parts/home/programs/qutebrowser/edit-quickmarks.sh";
+            "eb" = "spawn --userscript /config/parts/home/programs/qutebrowser/edit-quickmarks.sh";  # doesn't work as of yet
             ",d" = ''hint links spawn zsh -lic "aurta {hint-url}"''; 
           };
         };
@@ -1420,23 +1420,31 @@ rec {
     # pkgs-qutebrowser-qms
     (mkKnob "seneca" {
       my.programs.qutebrowser.quickmarks = {
+        # f (feed)
         f-m = "https://mail.google.com/mail/u/0/#inbox";
         f-d = "https://discord.com/channels/@me";
-        f-4 = "https://https://4chan.org/";
+        f-ch = "https://https://4chan.org/";
 
-        t-no-opt = "https://search.nixos.org/options";
-        t-no-hm = "https://nix-community.github.io/home-manager/options.html";
-        t-no-pkgs = "https://search.nixos.org/packages";
-        t-no-lang = "https://teu5us.github.io/nix-lib.html#nix-builtin-functions";
+        # t (tech)
+          t-1 = "https://github.com/emanueljg/nixos";
 
-        t-qb-faq = "https://qutebrowser.org/FAQ.html";
-        t-qb-func = "https://qutebrowser.org/doc/help/commands.html";
-        t-qb-us = "https://qutebrowser.org/doc/userscripts.html";
+          # t-no (tech-nixos)
+          t-no-opt = "https://search.nixos.org/options";
+          t-no-hm = "https://nix-community.github.io/home-manager/options.html";
+          t-no-pkgs = "https://search.nixos.org/packages";
+          t-no-lang = "https://teu5us.github.io/nix-lib.html#nix-builtin-functions";
 
-        t-dl-nsi = "https://nyaa.si/";
-        t-dl-rbg  = "https://rarbg.to/torrents.php";
-        t-dl-1337x = "https://www.1377x.to/";
+          # t-qb (tech-qutebrowser)
+          t-qb-faq = "https://qutebrowser.org/FAQ.html";
+          t-qb-func = "https://qutebrowser.org/doc/help/commands.html";
+          t-qb-us = "https://qutebrowser.org/doc/userscripts.html";
 
+          # t-dl (tech-downloads)
+          t-dl-nsi = "https://nyaa.si/";
+          t-dl-rbg  = "https://rarbg.to/torrents.php";
+          t-dl-1337x = "https://www.1377x.to/";
+
+        # s (server)
         s-dl = "192.168.1.2:34012";
         s-jf = "192.168.1.2:8096";
       };
