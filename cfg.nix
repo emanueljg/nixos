@@ -1401,7 +1401,7 @@ rec {
         enable = true;
         searchEngines = {
           DEFAULT = "https://www.google.com/search?q={}";
-          yt = "https://yewtu.be/search?q={}";
+          yt = "http://192.168.1.2:34030/search?q={}";
         };
         keyBindings = {
           normal = {
