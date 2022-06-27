@@ -275,7 +275,6 @@ rec {
         cryptsetup
         xclip
         scrot
-        pmutils
       ];
     })
 
@@ -420,10 +419,12 @@ rec {
 
     # boot-hibernation
     (mkKnob [ "seneca" ] {
+      my.home.packages = [ pkgs.pmutils ];
       boot.resumeDevice = "/dev/sda2";
       powerManagement.resumeCommands = ''
         ${config.my.xsession.windowManager.i3.package}/bin/i3-msg restart
       '';
+      my.home.shellAliases."hib" = "sudo pm-hibernate";
     })
 
     # locale-base
