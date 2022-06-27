@@ -1433,6 +1433,14 @@ rec {
         userName = "emanueljg";
       };
     })
+  
+    # pkgs-gh
+    # allows for a local gh interface
+    (mkKnob true {
+      my.programs.gh = {
+        enable = true;
+      };
+    })
 
     # pkgs-neovim
     (mkKnob true {
