@@ -1420,6 +1420,7 @@ rec {
     # pkgs-qutebrowser-qms
     (mkKnob "seneca" {
       my.programs.qutebrowser.quickmarks = {
+        f-m = "https://mail.google.com/mail/u/0/#inbox";
         f-d = "https://discord.com/channels/@me";
         f-4 = "https://https://4chan.org/";
 
