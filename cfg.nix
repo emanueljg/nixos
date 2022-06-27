@@ -421,6 +421,9 @@ rec {
     # boot-hibernation
     (mkKnob [ "seneca" ] {
       boot.resumeDevice = "/dev/sda2";
+      powerManagement.resumeCommands = ''
+        ${config.my.xsession.windowManager.i3.package}/bin/i3-msg restart
+      '';
     })
 
     # locale-base
@@ -999,6 +1002,8 @@ rec {
                 notification = false;
               }
             ];
+        
+            defaultWorkspace = "workspace number 1";
             
             gaps = { 
               "bottom" = constants.GAP + constants.BAR-HEIGHT + constants.GAP; 
@@ -1571,17 +1576,4 @@ rec {
     })
   ]; # end of the knobs list
 } # end of the entire module
-
-
-
-  
-    
-
-
-
-  
-  
-  
-
-
 
