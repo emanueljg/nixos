@@ -577,6 +577,22 @@ rec {
         };
       };
     })
+  
+    # srv-invidious
+    (mkKnob "aurelius" {
+      services.invidious.enable = true;
+      
+      # setup ports
+      services.invidious = {
+        port = 34030;
+        database.port = 34031;
+      };
+
+      networking.firewall.allowedTCPPorts = [ 
+        config.services.invidious.port
+        config.services.invidious.database.port
+      ];
+    })
 
     # Sound 
     (mkKnob true {
@@ -1385,7 +1401,7 @@ rec {
         enable = true;
         searchEngines = {
           DEFAULT = "https://www.google.com/search?q={}";
-          yt = "https://yewtu.be/search?q={}";
+          yt = "http://192.168.1.2:34030/search?q={}";
         };
         keyBindings = {
           normal = {
