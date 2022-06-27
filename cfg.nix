@@ -1421,6 +1421,7 @@ rec {
     (mkKnob "seneca" {
       my.programs.qutebrowser.quickmarks = {
         f-d = "https://discord.com/channels/@me";
+        f-4 = "https://https://4chan.org/";
 
         t-no-opt = "https://search.nixos.org/options";
         t-no-hm = "https://nix-community.github.io/home-manager/options.html";
