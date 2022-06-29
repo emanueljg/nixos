@@ -698,7 +698,7 @@ rec {
             limit-rate = "500K";
           };
                 
-          videos = [
+          download = [
             {
               url = "https://www.youtube.com/playlist?list=PLrQI1-ZsRXgVRJVRAQocmcNK7PHz8kpbn";
               flags = {
