@@ -606,7 +606,7 @@ rec {
         enable =  mkEnableOption "Enables ytd.";
 
         defaultFlags = mkOption {
-          type = types.attrset;
+          type = types.attrs;
         }; 
         
         download = mkOption {
