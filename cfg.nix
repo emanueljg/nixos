@@ -664,7 +664,7 @@ rec {
               " && "
               (map
                 mkCmd
-                cfg.videos
+                cfg.download
                 )    
           ;
           
