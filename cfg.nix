@@ -1726,6 +1726,11 @@ rec {
       xdg.portal.enable = true;
       xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
     })
+  
+    # pkgs-appimage
+    (mkKnob "seneca" {
+      my.home.packages = [ pkgs.appimage-run ];
+    })
   ]; # end of the knobs list
 } # end of the entire module
 
