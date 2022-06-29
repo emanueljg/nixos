@@ -44,6 +44,7 @@ rec {
     removePrefix
     stringToCharacters
     removeSuffix
+    intersperse
   ; 
 
 
@@ -83,6 +84,12 @@ rec {
 
   funcs = rec {
     general = rec {
+      getOrElse = key: default: set: 
+        if (hasAttr key set) 
+          then (getAttr key set)
+          else default
+      ;
+
       genDefault = keys: value:
         genAttrs 
           keys
@@ -272,7 +279,6 @@ rec {
         wget
         acpi
         htop
-        cryptsetup
         xclip
         scrot
       ];
@@ -592,6 +598,117 @@ rec {
         config.services.invidious.port
         config.services.invidious.database.port
       ];
+    })
+  
+    # srv-yt-custom
+    (mkKnob true (let cfg = config.ytd; in with lib; {
+      options.ytd = {
+        enable =  mkEnableOption "Enables ytd.";
+
+        defaultFlags = mkOption {
+          type = types.attrs;
+        }; 
+        
+        download = mkOption {
+          default = [ ];
+        };
+      };
+    
+      config = 
+        let
+          interpretFlags = flags:
+            mapAttrsToList
+              (name: value: 
+                let
+                  prefixedArg =
+                    (if ((stringLength name) == 1)
+                      then "-"
+                      else "--"
+                      )
+                    + 
+                    name
+                  ;
+                in
+                  if 
+                    (isString value) then 
+                      "${prefixedArg} ${value}"
+                    else if ((isBool value) && (value)) then
+                      "${prefixedArg}"
+                    else
+                      ""
+                )
+              flags
+          ;
+        
+          completeFlags = video:
+            interpretFlags
+              (cfg.defaultFlags // video.flags)
+          ;
+          
+          mkCmd = video:
+            concatStringsSep
+              " "
+              (
+                # base command
+                [ "${pkgs.yt-dlp}/bin/yt-dlp" ]
+                  
+                  # flags
+                  ++ (completeFlags video)
+                      
+                  # url
+                  ++ [ video.url ]
+                )
+          ;
+        
+          mkCmdsChain = 
+            concatStringsSep
+              " && "
+              (map
+                mkCmd
+                cfg.download
+                )    
+          ;
+          
+        in mkIf cfg.enable {
+          # add package first
+          environment.systemPackages = [ pkgs.yt-dlp ];
+          
+          systemd.services."ytd" = rec {
+            after = [ "network-online.target" ];
+            before = [ "multi-user.target" ];
+            wantedBy = before;
+            serviceConfig = {
+              ExecStart = mkCmdsChain;
+              type = "forking";
+            };
+          };    
+        }
+      ;
+    }))
+  
+    (mkKnob true {
+      ytd = 
+        let
+          baseDir = "/mnt/data/vids/yt";
+          mkVidDir = dir: baseDir + dir;
+        in {
+          enable = true;
+
+          defaultFlags = {
+            output = "%(title)s.%(ext)s";
+            limit-rate = "500K";
+          };
+                
+          download = [
+            {
+              url = "https://www.youtube.com/playlist?list=PLrQI1-ZsRXgVRJVRAQocmcNK7PHz8kpbn";
+              flags = {
+                paths = mkVidDir "/twinshine-comps";
+              };
+            }
+          ];
+        }
+      ;
     })
 
     # Sound 
