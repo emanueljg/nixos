@@ -616,7 +616,7 @@ rec {
     
       config = 
         let
-          intepretFlags = flags:
+          interpretFlags = flags:
             mapAttrsToList
               (name: value: 
                 let
