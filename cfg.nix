@@ -637,6 +637,7 @@ rec {
                     else
                       ""
                 )
+              flags
           ;
         
           completeFlags = video:
