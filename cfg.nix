@@ -1613,6 +1613,7 @@ rec {
           theme = "snowy";
           editor = {
             line-number = "relative";
+            auto-pairs = false;  # simple fix, having it on is more trouble than it's worth for now
           };
         };
 
@@ -1657,7 +1658,7 @@ rec {
                 "ui.selection" = { modifiers = [ "underlined" ]; };
                 "ui.selection.primary" = {  modifiers = [ "underlined" ]; };
                 "ui.cursor" = { modifiers = [ "reversed" ]; };
-                "ui.cursor.match" = { fg = COLORS.red; modifiers = [ "underlined" ]; };
+                "ui.cursor.match" = { modifiers = [ "reversed" "bold" ]; };
               
               # syntax
                 "comment" = { fg = gray; };
