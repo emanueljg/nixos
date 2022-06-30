@@ -727,8 +727,9 @@ rec {
         programs.zsh.enable = true;
         home = {
           sessionVariables = {
+            VISUAL = "hx";
             EDITOR = "hx";
-            SUDO_EDITOR = "nvim";
+            SUDO_EDITOR = "hx";
           };
           shellAliases = {
             "c" = "cd /config";
@@ -1693,6 +1694,11 @@ rec {
           ;
         };
       };
+    })
+    
+    # pkgs-helix-patch-aurelius-default-editor
+    (mkKnob "aurelius" {
+      environment.sessionVariables."EDITOR" = "hx";
     })
 
     # misc-dircolors
