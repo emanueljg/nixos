@@ -704,6 +704,9 @@ rec {
               url = "https://www.youtube.com/playlist?list=PLrQI1-ZsRXgVRJVRAQocmcNK7PHz8kpbn";
               flags = {
                 paths = mkVidDir "/twinshine-comps";
+                embed-thumbnail = true;
+                add-metadata = true;
+                
               };
             }
           ];
