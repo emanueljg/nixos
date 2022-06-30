@@ -686,7 +686,7 @@ rec {
       ;
     }))
   
-    (mkKnob true {
+    (mkKnob "aurelius" {
       ytd = 
         let
           baseDir = "/mnt/data/vids/yt";
@@ -1729,7 +1729,28 @@ rec {
   
     # pkgs-appimage
     (mkKnob "seneca" {
-      my.home.packages = [ pkgs.appimage-run ];
+      my.home.packages = with pkgs; [ 
+        appimage-run 
+      ];
+    })
+  
+    # pkgs-appimage-artix-games-launcher
+    (mkKnob "seneca" {
+      environment.systemPackages = [
+        (pkgs.callPackage 
+          ({appimageTools, lib, pkgs }: appimageTools.wrapType2 rec {
+            pname = "artix-games-launcher";
+            version = "latest";
+        
+            src = builtins.fetchurl {
+              url = "https://launch.artix.com/latest/Artix_Games_Launcher-x86_64.AppImage";
+              sha256 = "0qa5rrrmvxgy90lbpxjxsyf22wj1l5im0p4idizkdwb1cwc3rnjk";
+            };
+            })
+          {}
+        )
+      ];
+      my.home.shellAliases = { "agll" = "artix-game-launcher-latest"; };
     })
   ]; # end of the knobs list
 } # end of the entire module
