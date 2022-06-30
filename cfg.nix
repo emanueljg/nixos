@@ -1613,6 +1613,7 @@ rec {
           theme = "snowy";
           editor = {
             line-number = "relative";
+            auto-pairs = false;  # simple fix, having it on is more trouble than it's worth for now
           };
         };
 
