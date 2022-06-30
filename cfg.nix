@@ -1750,7 +1750,7 @@ rec {
           {}
         )
       ];
-      my.home.shellAliases = { "agll" = "artix-game-launcher-latest"; };
+      my.home.shellAliases = { "agll" = "artix-games-launcher-latest"; };
     })
   ]; # end of the knobs list
 } # end of the entire module
