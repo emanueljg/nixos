@@ -1763,6 +1763,31 @@ rec {
       ];
       my.home.shellAliases = { "agll" = "artix-games-launcher-latest"; };
     })
-  ]; # end of the knobs list
-} # end of the entire module
+  
+    # pkgs-byzanz
+    (mkKnob "seneca" {
+      my.home.packages = with pkgs; [
+        byzanz
+      ];
+    
+      my.home.shellAliases = {
+        "record-single" = "byzanz-record --exec 'sleep infinity'  -x 0 -y -0 -w 1920 -h 1080";
+        "record-double" = "byzanz-record --exec 'sleep infinity'  -x 0 -y -0 -w 3840 -h 1080";
+      };
+    })
+  
+    # pkgs-android
+    (mkKnob "seneca" {
+      my.home.packages = with pkgs; [
+        android-tools
+        scrcpy
+      ];
+    
+      my.home.shellAliases = {
+        phone = "adb connect 192.168.1.4 && scrcpy";
+      };
+    })
+
+  ];
+}
 
