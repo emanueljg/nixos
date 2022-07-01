@@ -1533,6 +1533,7 @@ rec {
             "ew" = "jseval -q document.activeElement.blur()";
             "eb" = "spawn --userscript /config/parts/home/programs/qutebrowser/edit-quickmarks.sh";  # doesn't work as of yet
             ",d" = ''hint links spawn zsh -lic "aurta {hint-url}"''; 
+            ",yy" = ''yank inline https://youtube.com/watch?{url:query}'';
           };
         };
       };
