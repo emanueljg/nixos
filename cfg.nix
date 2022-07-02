@@ -573,7 +573,7 @@ rec {
               "/mnt/data:/media:ro"
             ];
             ports = [ "8096:8096" ];
-            extraOptions = ["--runtime=nvidia" ];
+            extraOptions = [ "--runtime=nvidia" ];
             environment = {
               JELLYFIN_LOG_DIR = "/log";
               NVIDIA_DRIVER_CAPABILITIES = "all";
@@ -616,6 +616,9 @@ rec {
     
       config = 
         let
+
+          inherit (funcs.general) getOrElse;
+
           interpretFlags = flags:
             mapAttrsToList
               (name: value: 
@@ -642,7 +645,7 @@ rec {
         
           completeFlags = video:
             interpretFlags
-              (cfg.defaultFlags // video.flags)
+              (cfg.defaultFlags // (getOrElse "flags" {} video))
           ;
           
           mkCmd = video:
@@ -695,18 +698,24 @@ rec {
           enable = true;
 
           defaultFlags = {
-            output = "%(title)s.%(ext)s";
             limit-rate = "500K";
+            write-thumbnail = true;
+            write-info-json = true;
+            #output = "%(title)s.%(ext)s";
           };
                 
           download = [
-            {
+            { 
               url = "https://www.youtube.com/playlist?list=PLrQI1-ZsRXgVRJVRAQocmcNK7PHz8kpbn";
               flags = {
-                paths = mkVidDir "/twinshine-comps";
-                embed-thumbnail = true;
-                add-metadata = true;
-                
+                paths = mkVidDir "/kripp/twinshine";
+              };
+            }
+            
+            { 
+              url = "https://www.youtube.com/playlist?list=PLrQI1-ZsRXgV2RLR7eYLup8yms65MYldK";
+              flags = {
+                paths = mkVidDir "/kripp/chronicles";
               };
             }
           ];
