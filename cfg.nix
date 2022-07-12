@@ -12,6 +12,8 @@ rec {
     listToAttrs
     length
     replaceStrings
+    attrValues
+    all
   ;
 
   inherit (lib)
@@ -29,6 +31,7 @@ rec {
     collect
     optionalAttrs
     cartesianProductOfSets
+    getAttrFromPath
   ;
 
   inherit (lib.lists)
@@ -36,6 +39,8 @@ rec {
     concatMap
     optionals
     optional
+    range
+    head
   ;
 
   inherit (lib.strings)
@@ -79,11 +84,35 @@ rec {
       pink = "#fa0590";
       light-orange = "#F88379";
     };
+  
+    SCREENS = {
+      aurelius = {
+        "DP-0" = {
+          fingerprint = "00ffffffffffff0006b3a425010101011a1e0104a5361e783b4c00a75552a028135054b7ef00714f8180814081c081009500b3000101023a801871382d40582c4500202f2100001e000000fd0028a5c3c329010a202020202020000000fc0056473235380a20202020202020000000ff004c364c4d51533136373535320a01a0020318f14b900504030201111213141f2309070783010000a49c80a07038594030203500202f2100001a8a4d80a070382c4030203500202f2100001afe5b80a07038354030203500202f2100001a866f80a07038404030203500202f2100001afc7e80887038124018203500202f2100001e00000000000000000000000000af";
+          workspaces = range 1 5;
+        };
+    
+        "DVI-D-0" = {
+          fingerprint = "00ffffffffffff0006b3a32501010101191e010380361e78ea4c00a75552a028135054b7ef00714f8180814081c081009500b3000101023a801871382d40582c4500202f2100001e000000fd0032901ea021000a202020202020000000fc0056473235380a20202020202020000000ff004c364c4d51533131323037380a01fc020104008a4d80a070382c4030203500202f2100001afe5b80a07038354030203500202f2100001a866f80a07038404030203500202f2100001afc7e80887038124018203500202f2100001e00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000077";
+          workspaces = range 6 10;
+        };
+      };
+    };
   };
 
 
   funcs = rec {
     general = rec {
+      getAllScreens = ( 
+        head (
+          flatten (
+            collect 
+              (s: all (hasAttr "fingerprint") (attrValues s)) 
+              constants.SCREENS
+          )
+        )
+      );
+    
       getOrElse = key: default: set: 
         if (hasAttr key set) 
           then (getAttr key set)
@@ -162,7 +191,7 @@ rec {
             )
         ;
 
-        genPolybarStartup = 
+        genPolybarStartup =  
           concatMapStrings
             (bar: "polybar " + removePrefix "bar/" bar + " &") 
             (attrNames 
@@ -200,7 +229,7 @@ rec {
 
         getWidthForMonitorWorkspaces = monitor: 
           let 
-            workspaceList = getAttr monitor config.periph-env.i3Workspaces;
+            workspaceList = getAttrFromPath [ monitor "workspaces" ] funcs.general.getAllScreens;
             chars = 
               foldl
                 (a: b: a + b)
@@ -215,21 +244,26 @@ rec {
           in
             (chars + (length workspaceList) * 2) * 12
         ;
-            
-            
 
-        applyToEachMonitor = bars:   
+        applyToEachMonitor = monitors: bars:   
           listToAttrs (
-            concatMap (m: 
-              mapAttrsToList (name: value:
-              nameValuePair ("bar/" + name + "-" + m) (value // { monitor = "\${env:MONITOR:" + m + "}"; 
-                                                                } // (optionalAttrs 
-                                                                    (name == "workspaces" && hasAttr m config.periph-env.i3Workspaces) 
-                                                                    { width = (getWidthForMonitorWorkspaces m); } 
-                                                                    )
-                                                      )
-              ) bars
-            ) (collect isString config.periph-env.screens)   
+            concatMap 
+              (m: 
+                mapAttrsToList (name: value:
+                  nameValuePair 
+                    ("bar/" + name + "-" + m) 
+                    (
+                      value // { 
+                        monitor = "\${env:MONITOR:" + m + "}"; 
+                      } // (
+                        optionalAttrs 
+                          (name == "workspaces") 
+                          { width = (getWidthForMonitorWorkspaces m); } 
+                      )
+                    )
+                ) bars
+              ) 
+              (attrNames monitors)   
           )
         ;
       };
@@ -303,9 +337,10 @@ rec {
           ;
 
           hostAliases = {
-            "sm" = "seneca-mobile";
-            "sd" = "seneca-docked";
-            "st" = "seneca-tv";
+            # "sm" = "seneca-mobile";
+            # "sd" = "seneca-docked";
+            # "st" = "seneca-tv";
+            "s" = "seneca";
             "a" = "aurelius";
           };
         in
@@ -424,7 +459,7 @@ rec {
     })
 
     # boot-hibernation
-    (mkKnob [ "seneca" ] {
+    (mkKnob true {
       my.home.packages = [ pkgs.pmutils ];
       boot.resumeDevice = "/dev/sda2";
       powerManagement.resumeCommands = ''
@@ -455,12 +490,11 @@ rec {
     })
 
     # console-base
-    (mkKnob true {
-      console = {
-        packages = with pkgs; [ terminus_font ];
-        font = "ter-v32n";
-      };
-    })
+    # (mkKnob true {
+    #   console = {
+    #     packages = with pkgs; [ terminus_font ];
+    #   };
+    # })
 
     # user-base
     (mkKnob true {
@@ -482,7 +516,7 @@ rec {
     })
     
     # network-seneca
-    (mkKnob [ "seneca" ] {
+    (mkKnob "seneca" {
       networking = {
         hostName = "seneca";
         interfaces = {
@@ -494,7 +528,7 @@ rec {
     })
 
     # network-aurelius
-    (mkKnob [ "aurelius" ] {
+    (mkKnob "aurelius" {
       networking = {
         hostName = "aurelius";
         firewall.enable = false;
@@ -795,18 +829,18 @@ rec {
     })
 
     # x-base
-    (mkKnob "seneca" {
+    (mkKnob true {
       services.xserver = {
         enable = true;
         libinput.enable = true;
 
         # this should fix the constant display powersaving
         # (that doesn't even work properly with the dock)
-        config = lib.mkAfter ''
-          Section "Extensions"
-            Option "DPMS" "Disable"
-          EndSection
-        '';
+        # config = lib.mkAfter ''
+        #   Section "Extensions"
+        #     Option "DPMS" "Disable"
+        #   EndSection
+        # '';
       };
 
       my = {
@@ -824,7 +858,7 @@ rec {
     # can't remember why this is needed, but it
     # has something  to do with i3 being a (T)WM
     # and fast x login 
-    (mkKnob [ "seneca" ] {
+    (mkKnob true {
       services.xserver.displayManager = {
         autoLogin = {
           enable = true;
@@ -841,9 +875,52 @@ rec {
 
       my.xsession.enable = true;
     })
+  
+    # x-autorandr-generic
+    (mkKnob true {
+      # my.services.polybar.settings = (
+      #   let
+      #     allBars = filterAtts (n: v: hasPrefix "bar/" n) my.services.polybar.settings;
+      #     batteryBars = filterAttrs (n: v: hasInfix "battery" n) allBars;
+      #     pulseaudioBars = filterAttrs (n: v: hasInfix "pulseaudio" n) allBars;
+      #   in
+      #     mkForce (
+      #       mapAttr 
+      #         (n: v: v = 
+      #     )
+      # );
+    
+      my.programs.autorandr = { 
+        enable = true;
+        profiles = 
+          let
+            baseScreen = { enable = true; mode = "1920x1080"; rate = "60.00"; };
+          in {
+            "nvidiaDesk" = {
+              fingerprint = {
+                # middle
+                "DP-0" = "00ffffffffffff0006b3a425010101011a1e0104a5361e783b4c00a75552a028135054b7ef00714f8180814081c081009500b3000101023a801871382d40582c4500202f2100001e000000fd0028a5c3c329010a202020202020000000fc0056473235380a20202020202020000000ff004c364c4d51533136373535320a01a0020318f14b900504030201111213141f2309070783010000a49c80a07038594030203500202f2100001a8a4d80a070382c4030203500202f2100001afe5b80a07038354030203500202f2100001a866f80a07038404030203500202f2100001afc7e80887038124018203500202f2100001e00000000000000000000000000af";
+                "DVI-D-0" = "00ffffffffffff0006b3a32501010101191e010380361e78ea4c00a75552a028135054b7ef00714f8180814081c081009500b3000101023a801871382d40582c4500202f2100001e000000fd0032901ea021000a202020202020000000fc0056473235380a20202020202020000000ff004c364c4d51533131323037380a01fc020104008a4d80a070382c4030203500202f2100001afe5b80a07038354030203500202f2100001a866f80a07038404030203500202f2100001afc7e80887038124018203500202f2100001e00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000077";
+              };
+            
+              config = funcs.general.doRecursiveUpdates baseScreen {
+                "DP-0" = {
+                  primary = true;
+                  position = "0x0";
+                };
+                
+                "DVI-D-0" = {
+                  position = "1920x0";
+                };
+              };
+            };
+          }
+        ;
+      };
+    })
 
     # display-power
-    (mkKnob [ "seneca" ] {
+    (mkKnob "seneca" {
       services.logind.lidSwitch = "ignore";
       
       systemd.targets = {
@@ -854,7 +931,7 @@ rec {
     })
 
     # display-hardware
-    (mkKnob [ "seneca" ] {
+    (mkKnob true {
       hardware.opengl.enable = true;
     })
 
@@ -1017,11 +1094,21 @@ rec {
             '')
             ;
 
-            windowManager.i3.config.workspaceOutputAssign = funcs.domain.i3.genWorkspaceOutputs cfg.i3Workspaces;
+            # windowManager.i3.config.workspaceOutputAssign = funcs.domain.i3.genWorkspaceOutputs cfg.i3Workspaces;
           };
         };
       };
     }))
+  
+    # i3-aurelius
+    (mkKnob "aurelius" {
+      my.xsession.windowManager.i3.config.workspaceOutputAssign =
+        funcs.domain.i3.genWorkspaceOutputs {
+          "DP-0" = range 1 5;
+          "DVI-D-0" = range 6 10;
+        }
+      ;
+    })
 
     # these are the knobs that uses periph-env
     (mkKnob "seneca" { periph-env.enable = true; })
@@ -1132,7 +1219,7 @@ rec {
     }))
 
     # pkgs-i3
-    (mkKnob "seneca" {
+    (mkKnob true {
       my.xsession.windowManager.i3 = with funcs.domain.i3; {
         enable = true;
         package = pkgs.i3-gaps;
@@ -1192,7 +1279,7 @@ rec {
     })
 
     # pkgs-polybar
-    (mkKnob "seneca" {
+    (mkKnob true {
       my.services.polybar = with funcs.domain.polybar; {
         enable = true;
         package = pkgs.polybar.override {
@@ -1222,8 +1309,11 @@ rec {
                 padding = 1;
               };
             };
+          
+            monitors = funcs.general.getAllScreens;
+            
           in
-            funcs.general.doRecursiveUpdates bar-defaults (applyToEachMonitor rec {
+            funcs.general.doRecursiveUpdates bar-defaults (applyToEachMonitor monitors (rec {
               workspaces = makeAbsoluteLeft {
                 width = 180;
                 modules-left = "i3";
@@ -1246,7 +1336,7 @@ rec {
                 font = bar-defaults.font ++ [ "Material Design Icons:size=18:style=Regular;3" ];
               };
 
-              pulseaudio = makeLeftOf battery {
+              pulseaudio = makeLeftOf date {
                 width = 135;
                 modules-center = "pulseaudio";
                 font = bar-defaults.font ++ [ "Material Design Icons:size=18:style=Regular;3" ];
@@ -1257,10 +1347,7 @@ rec {
                 modules-center = "network";
                 font = bar-defaults.font ++ [ "Material Design Icons:size=18:style=Regular;3" ];
               };
-
-
-
-            })
+            }))
 
             //
 
@@ -1338,7 +1425,7 @@ rec {
 
               "module/network" = {
                 type = "internal/network";
-                interface = "wlan0";
+                interface = "wlp2s0";
                 ramp-signal = [
                   "󰣾"
                   "󰣴"
@@ -1396,7 +1483,7 @@ rec {
     })
 
     # pkgs-kitty 
-    (mkKnob [ "seneca" ] {
+    (mkKnob true {
       my.programs.kitty = {
         enable = true;
         font = {
@@ -1467,7 +1554,7 @@ rec {
 
     # qutebrowser-extra
     # Sets some extra hardcoded python stuff by overlaying the postInstall and sedding away
-    (mkKnob "seneca" {
+    (mkKnob true {
       my.nixpkgs.overlays = 
         let
           # custom variables
@@ -1526,7 +1613,7 @@ rec {
     })
 
     # pkgs-qutebrowser
-    (mkKnob "seneca" {
+    (mkKnob true {
       my.programs.qutebrowser = {
         enable = true;
         searchEngines = {
@@ -1549,7 +1636,7 @@ rec {
     })
 
     # pkgs-qutebrowser-qms
-    (mkKnob "seneca" {
+    (mkKnob true {
       my.programs.qutebrowser.quickmarks = {
         # f (feed)
         f-m = "https://mail.google.com/mail/u/0/#inbox";
@@ -1712,7 +1799,7 @@ rec {
     })
 
     # misc-dircolors
-    (mkKnob [ "seneca" ] {
+    (mkKnob true {
       my.programs.dircolors = {
         enable = true;
         settings = {
@@ -1720,12 +1807,8 @@ rec {
         };
       };
     })
-
-
-
-
     # misc seneca packages
-    (mkKnob [ "seneca" ] {
+    (mkKnob true {
       my.home.packages = with pkgs; [
         dmenu
         i3status
