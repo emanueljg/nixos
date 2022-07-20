@@ -231,6 +231,8 @@ rec {
         xclip
         scrot
         nixos-option
+        zip
+        unzip
       ];
     })
 
