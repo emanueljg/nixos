@@ -1724,6 +1724,11 @@ rec {
     (mkKnob [ "aurelius" ] {
       programs.steam.enable = true;
     })
+  
+    # misc-pyradio
+    (mkKnob [ "aurelius" "seneca" ] {
+      my.home.packages = [ pkgs.pyradio ];
+    })
   ];
 }
 
