@@ -1714,6 +1714,11 @@ rec {
       #   in "WINEPREFIX=${wpfx} wine ${wpfx}/MusicBee.exe"
       # );  
     })
+  
+    # games-steam
+    (mkKnob [ "aurelius" ] {
+      programs.steam.enable = true;
+    })
   ];
 }
 
