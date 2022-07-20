@@ -1354,6 +1354,11 @@ rec {
         # s (server)
         s-dl = "192.168.1.2:34012";
         s-jf = "192.168.1.2:8096";
+      
+        # m (my)
+          
+          # m-j (my-japanese)
+          m-j-k = "https://itazuraneko.neocities.org/learn/kana.html";
       };
     })
 
