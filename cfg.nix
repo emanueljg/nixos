@@ -1682,6 +1682,15 @@ rec {
         };
       };
     })
+  
+    (mkKnob [ "aurelius" "seneca" ] {
+      hardware.opengl.driSupport32Bit = true;
+    
+      my.home.packages = with pkgs; [
+        wineWowPackages.staging
+        winetricks
+      ];
+    })
   ];
 }
 
