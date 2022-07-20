@@ -1685,13 +1685,34 @@ rec {
       };
     })
   
-    (mkKnob [ "aurelius" "seneca" ] {
+    # wine-base
+    (mkKnob [ "aurelius" ] {
       hardware.opengl.driSupport32Bit = true;
     
       my.home.packages = with pkgs; [
         wineWowPackages.staging
         winetricks
       ];
+    })
+  
+    # wine-musicbee
+    (mkKnob [ "aurelius" ] {
+      my.home.packages = (
+        let
+          wpfx = "/home/ejg/musicbee";
+        in with pkgs; [(
+          writeShellScriptBin 
+            "mb"
+            ''
+              WINEPREFIX=${wpfx} wine ${wpfx}/MusicBee.exe
+            ''
+        )]
+      );
+            
+      # my.home.shellAliases."mb" = (
+      #   let wpfx = "/home/ejg/musicbee"; 
+      #   in "WINEPREFIX=${wpfx} wine ${wpfx}/MusicBee.exe"
+      # );  
     })
   ];
 }
