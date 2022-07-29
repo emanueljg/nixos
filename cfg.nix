@@ -280,12 +280,12 @@ rec {
 
       fileSystems = {
         "/" = {
-          device = "/dev/disk/by-uuid/900027f8-cc30-4b47-ab07-5c7ead9c2a93";
+          device = "/dev/disk/by-uuid/89f97719-9a2f-43ee-9279-42542470fa19";
           fsType = "ext4";
         };
 
         "/boot" = {
-          device = "/dev/disk/by-uuid/94ED-9055";
+          device = "/dev/disk/by-uuid/BE53-94B3";
           fsType = "vfat";
         };
 
@@ -295,7 +295,7 @@ rec {
         };
       };
       swapDevices =
-        [ { device = "/dev/disk/by-uuid/84ac4161-65c8-4497-9c40-14e40c69bd28"; } ];
+        [ { device = "/dev/disk/by-uuid/92a741d1-7a27-4ba6-b7d2-9476378ff865"; } ];
 
       powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
       hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
