@@ -233,6 +233,7 @@ rec {
         nixos-option
         zip
         unzip
+        efibootmgr
       ];
     })
 
