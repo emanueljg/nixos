@@ -286,7 +286,7 @@ rec {
         };
 
         "/boot" = {
-          device = "/dev/disk/by-uuid/BE53-94B3";
+          device = "/dev/disk/by-uuid/0246-560A";
           fsType = "vfat";
         };
 
@@ -305,9 +305,26 @@ rec {
     # boot-base
     (mkKnob [ "aurelius" "seneca" ] {
       boot.loader = {
-        systemd-boot.enable = true;
+        #systemd-boot.enable = true;
+        grub.enable = true;
+        grub.version = 2;
+        grub.efiSupport = true;
+        grub.device = "nodev";
+        grub.extraEntries = ''
+          menuentry "Windows 10" {
+            chainloader /EFI/Microsoft/Boot/.bootmgfw.efi
+          }
+        '';
         efi.canTouchEfiVariables = true;
       };
+    })
+  
+    # boot-dualboot-order-hack
+    (mkKnob [ "aurelius" ] {
+      boot.loader.systemd-boot.extraEntries."o-Win10.conf" = ''
+        title Win10
+        efi /efi/Microsoft/Boot/.bootmgfw.efi
+      '';
     })
 
     # boot-silent
