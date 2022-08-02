@@ -1778,6 +1778,32 @@ rec {
     (mkKnob [ "aurelius" "seneca" ] {
       my.home.packages = [ pkgs.pyradio ];
     })
+  
+    # misc-keepass
+    (mkKnob [ "aurelius" "seneca" ] {
+      services.udev.extraRules = (
+        let
+          device = "F523-1613";
+          flags = [
+            ''ACTION=="add"''
+            ''SUBSYSTEMS=="usb"''
+            ''SUBSYSTEM=="block"''
+            # ''ENV{ID_FS_USAGE}=="filesystem"'' # x?
+            ''ENV{ID_FS_UUID}=="${device}"''
+            ''RUN+="${pkgs.util-linux}/bin/logger --tag my-manual-usb-mount Mounting the device with UUID ${device}"''
+            ''RUN{program}+="${pkgs.systemd}/bin/systemd-mount --no-block --automount=yes --collect /dev/disk/by-uuid/${device} /mnt/keychain"''       
+          ];
+        in (
+          concatStringsSep
+            ", "
+            flags
+        )
+      );
+
+      my.home.packages = [ pkgs.keepassxc ];
+      
+
+    })
   ];
 }
 
