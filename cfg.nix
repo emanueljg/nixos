@@ -1781,6 +1781,8 @@ rec {
   
     # misc-keepass
     (mkKnob [ "aurelius" "seneca" ] {
+    
+      # add the keychain usb stick
       services.udev.extraRules = (
         let
           device = "F523-1613";
@@ -1799,10 +1801,20 @@ rec {
             flags
         )
       );
-
-      my.home.packages = [ pkgs.keepassxc ];
-      
-
+    
+      # patch in functionality for qutebrowser
+      my.programs.qutebrowser.keyBindings.normal.",p" = (
+        "spawn --userscript qute-keepass -p /mnt/keychain/secrets.kdbx"
+      );
+    
+      my.home.packages = with pkgs; [
+        keepassxc
+        
+        # for qute-keepass
+        python310Packages.pykeepass
+        python310Packages.pyqt5  
+      ];
+    
     })
   ];
 }
