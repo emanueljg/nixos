@@ -1802,11 +1802,6 @@ rec {
         )
       );
     
-      # patch in functionality for qutebrowser
-      my.programs.qutebrowser.keyBindings.normal.",p" = (
-        "spawn --userscript qute-keepass -p /mnt/keychain/secrets.kdbx"
-      );
-    
       my.home.packages = with pkgs; [
         keepassxc
         
@@ -1814,6 +1809,61 @@ rec {
         python310Packages.pykeepass
         python310Packages.pyqt5  
       ];
+    
+      # patch in functionality for qutebrowser
+      my.programs.qutebrowser = {
+        keyBindings.normal.",p" = (
+          "spawn --userscript qute-keepass -p /mnt/keychain/secrets.kdbx"
+        );
+      
+        aliases."kpa" = "spawn --userscript kp-save";
+      };
+    
+      # add password creation functionality
+      my.xdg.dataFile."qutebrowser/userscripts/kp-save" = {
+        executable = true;
+        text = ''
+          #!${pkgs.bash}/bin/bash
+        
+          fifo () {
+            echo "$1" >> "$QUTE_FIFO"
+          }
+        
+          if [ "$1" = "-" ]; then
+            URL=$(echo "$QUTE_URL" | grep -Po '.*?//\K.*?(?=/)') 
+          else
+            URL="$1"
+          fi
+         
+          if [ "$2" = "-" ]; then 
+            USERNAME="emanueljohnsongodin@gmail.com"
+          else
+            USERNAME="$2"
+          fi
+        
+          PASSWORD="$(keepassxc-cli generate --every-group)"
+          echo "$PASSWORD" | xclip -sel clip
+          OBSCURED_PASSWORD="$(echo "$PASSWORD" | sed "s/./*/g")"
+        
+          fifo "message-info 'Setting new keepassxc entry:'"
+          fifo "message-info '______________________'"
+          fifo "message-info 'URL/Title: "$URL"'"
+          fifo "message-info 'Username: "$USERNAME"'"
+          fifo "message-info 'Password: "$OBSCURED_PASSWORD" (copied!)'"
+          fifo "message-info '______________________'"
+          
+          kitty --hold \
+            sudo keepassxc-cli add \
+            --url "$URL" \
+            --username "$USERNAME" \
+            --password-prompt \
+            /mnt/keychain/secrets.kdbx \
+            "/''${URL}"
+
+          # clear clipboard for security reasons
+          echo "" | xclip -sel clip
+        '';
+      };
     
     })
   ];
