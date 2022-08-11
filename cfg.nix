@@ -12,6 +12,8 @@ rec {
     listToAttrs
     length
     replaceStrings
+    attrValues
+    all
   ;
 
   inherit (lib)
@@ -29,6 +31,7 @@ rec {
     collect
     optionalAttrs
     cartesianProductOfSets
+    getAttrFromPath
   ;
 
   inherit (lib.lists)
@@ -36,6 +39,9 @@ rec {
     concatMap
     optionals
     optional
+    range
+    head
+    findFirst
   ;
 
   inherit (lib.strings)
@@ -45,8 +51,14 @@ rec {
     stringToCharacters
     removeSuffix
     intersperse
+    hasInfix
+    splitString
+    hasPrefix
   ; 
 
+  inherit (lib.trivial)
+    const
+  ;
 
   constants = {
     HOSTS = [
@@ -55,8 +67,6 @@ rec {
     ];
 
     HM-VERSION = "22.05";
-
-    SENECA-SPECS = [ "mobile" "docked" "tv" ];
 
     GAP = 10;
     BAR-HEIGHT = 32;
@@ -80,8 +90,7 @@ rec {
       light-orange = "#F88379";
     };
   };
-
-
+  
   funcs = rec {
     general = rec {
       getOrElse = key: default: set: 
@@ -162,7 +171,7 @@ rec {
             )
         ;
 
-        genPolybarStartup = 
+        genPolybarStartup =  
           concatMapStrings
             (bar: "polybar " + removePrefix "bar/" bar + " &") 
             (attrNames 
@@ -171,66 +180,6 @@ rec {
                 config.home-manager.users.ejg.services.polybar.settings
               )
             )
-        ;
-
-        genWorkspaceOutputs = outputRanges:
-          flatten
-            (mapAttrsToList 
-              (output: workspaces: 
-                (map 
-                  (workspace: { "output" = output; "workspace" = toString workspace; }) 
-                  workspaces
-                )
-              )
-              outputRanges
-            )
-        ;
-      };
-
-      polybar = rec {
-        getSetting = string: config.my.services.polybar.settings.${string};
-        makeXAdjusted = adj: int: adj // { offset-x = int; };  
-
-        makeAbsoluteLeft = adj: makeXAdjusted adj 20;
-        makeAbsoluteRight = adj: makeXAdjusted adj (1920 - 20 - adj.width);
-
-        makeRelativeOfWrapper = f: abs: adj: f abs adj;
-        makeRightOf = abs: adj: makeRelativeOfWrapper (abs: adj: makeXAdjusted adj (abs.offset-x + abs.width + 20)) abs adj;  
-        makeLeftOf = abs: adj: makeRelativeOfWrapper (abs: adj: makeXAdjusted adj (abs.offset-x - 20 - adj.width)) abs adj; 
-
-        getWidthForMonitorWorkspaces = monitor: 
-          let 
-            workspaceList = getAttr monitor config.periph-env.i3Workspaces;
-            chars = 
-              foldl
-                (a: b: a + b)
-                0
-                (map 
-                  (workspaceNum: 
-                    length (stringToCharacters (toString (workspaceNum)))
-                    )
-                  workspaceList
-                  )
-            ;
-          in
-            (chars + (length workspaceList) * 2) * 12
-        ;
-            
-            
-
-        applyToEachMonitor = bars:   
-          listToAttrs (
-            concatMap (m: 
-              mapAttrsToList (name: value:
-              nameValuePair ("bar/" + name + "-" + m) (value // { monitor = "\${env:MONITOR:" + m + "}"; 
-                                                                } // (optionalAttrs 
-                                                                    (name == "workspaces" && hasAttr m config.periph-env.i3Workspaces) 
-                                                                    { width = (getWidthForMonitorWorkspaces m); } 
-                                                                    )
-                                                      )
-              ) bars
-            ) (collect isString config.periph-env.screens)   
-          )
         ;
       };
     };
@@ -253,7 +202,7 @@ rec {
 
   knobs = [
     # IMPORTANT - generates the host etc files
-    (mkKnob true 
+    (mkKnob [ "aurelius" "seneca" ]
       (let
         home-manager = 
           builtins.fetchTarball 
@@ -271,7 +220,7 @@ rec {
     )
 
     # meta
-    (mkKnob true {
+    (mkKnob [ "aurelius" "seneca" ] {
       system.stateVersion = "22.05";
       nixpkgs.config.allowUnfree = true;
       environment.systemPackages = with pkgs; [
@@ -281,53 +230,14 @@ rec {
         htop
         xclip
         scrot
+        nixos-option
+        zip
+        unzip
+        efibootmgr
       ];
     })
 
-    # add nixos configuration switcher...
-    (mkKnob true {
-      my.home.shellAliases = 
-        let
-          cmdAliases = 
-            let
-              link = ''sudo ln -sf "/config/<HOST>.nix" "/etc/nixos/configuration.nix"'';
-              rebuild = " && sudo nixos-rebuild switch";
-              poweroff = " && sudo poweroff";
-              reboot = " && sudo reboot";
-            in {
-              "s" = link;
-              "sr" = link + rebuild;
-              "srp" = link + rebuild + poweroff;
-              "srr" = link + rebuild + reboot;
-            }
-          ;
-
-          hostAliases = {
-            "sm" = "seneca-mobile";
-            "sd" = "seneca-docked";
-            "st" = "seneca-tv";
-            "a" = "aurelius";
-          };
-        in
-          listToAttrs 
-            (map
-              (alias: 
-                nameValuePair 
-                  ("${alias.cmd}-${alias.host}") 
-                  (replaceStrings 
-                    [ "<HOST>" ] 
-                    [ hostAliases.${alias.host} ] 
-                    cmdAliases.${alias.cmd}
-                    )
-                )
-              (cartesianProductOfSets 
-                { "cmd" = (attrNames cmdAliases); "host" = (attrNames hostAliases); } 
-                )
-              )
-      ;
-    })
-
-    # hw-config-seneca
+    # hwconfig-seneca
     (mkKnob [ "seneca" ] {
       imports =
         [ (modulesPath + "/installer/scan/not-detected.nix")
@@ -356,7 +266,7 @@ rec {
       hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
     })
 
-    # hw-config-aurelius
+    # hwconfig-aurelius
     (mkKnob [ "aurelius" ] {
       imports =
         [ (modulesPath + "/installer/scan/not-detected.nix")
@@ -371,12 +281,12 @@ rec {
 
       fileSystems = {
         "/" = {
-          device = "/dev/disk/by-uuid/900027f8-cc30-4b47-ab07-5c7ead9c2a93";
+          device = "/dev/disk/by-uuid/89f97719-9a2f-43ee-9279-42542470fa19";
           fsType = "ext4";
         };
 
         "/boot" = {
-          device = "/dev/disk/by-uuid/94ED-9055";
+          device = "/dev/disk/by-uuid/0246-560A";
           fsType = "vfat";
         };
 
@@ -386,23 +296,40 @@ rec {
         };
       };
       swapDevices =
-        [ { device = "/dev/disk/by-uuid/84ac4161-65c8-4497-9c40-14e40c69bd28"; } ];
+        [ { device = "/dev/disk/by-uuid/92a741d1-7a27-4ba6-b7d2-9476378ff865"; } ];
 
       powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
       hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
     })
     
     # boot-base
-    (mkKnob true {
+    (mkKnob [ "aurelius" "seneca" ] {
       boot.loader = {
-        systemd-boot.enable = true;
+        #systemd-boot.enable = true;
+        grub.enable = true;
+        grub.version = 2;
+        grub.efiSupport = true;
+        grub.device = "nodev";
+        grub.extraEntries = ''
+          menuentry "Windows 10" {
+            chainloader /EFI/Microsoft/Boot/.bootmgfw.efi
+          }
+        '';
         efi.canTouchEfiVariables = true;
       };
     })
+  
+    # boot-dualboot-order-hack
+    (mkKnob [ "aurelius" ] {
+      boot.loader.systemd-boot.extraEntries."o-Win10.conf" = ''
+        title Win10
+        efi /efi/Microsoft/Boot/.bootmgfw.efi
+      '';
+    })
 
-    # boot-silent boot
+    # boot-silent
     # want to keep it off for now, easier that way
-    (mkKnob false {
+    (mkKnob [ ] {
       boot = {
         consoleLogLevel = 0;
         initrd.verbose = false;
@@ -424,46 +351,44 @@ rec {
     })
 
     # boot-hibernation
-    (mkKnob [ "seneca" ] {
+    (mkKnob [ "aurelius" "seneca"] {
       my.home.packages = [ pkgs.pmutils ];
       boot.resumeDevice = "/dev/sda2";
-      powerManagement.resumeCommands = ''
-        ${config.my.xsession.windowManager.i3.package}/bin/i3-msg restart
-      '';
+      # used to be needed for dock
+      # powerManagement.resumeCommands = ''
+      #   ${config.my.xsession.windowManager.i3.package}/bin/i3-msg restart
+      # '';
       my.home.shellAliases."hib" = "sudo pm-hibernate";
     })
-
+  
     # locale-base
-    (mkKnob true {
-      i18n = 
+    (mkKnob [ "aurelius" "seneca" ] {
+      i18n = ( 
         let
           en = "en_US.UTF-8";
           sv = "sv_SE.UTF-8";
         in {
           defaultLocale = en;
-          extraLocaleSettings = {
-            LC_TIME = sv;
-            LC_MONETARY = sv;
-            LC_PAPER = sv;
-            LC_NAME = sv;
-            LC_TELEPHONE = sv;
-          };
-        };
+          extraLocaleSettings = (
+            genAttrs
+              [ 
+                "LC_TIME"
+                "LC_MONETARY"
+                "LC_PAPER"
+                "LC_NAME"
+                "LC_TELEPHONE"
+              ]
+              (const sv)
+          );
+        }
+      );
 
       time.timeZone = "Europe/Stockholm";
       console.keyMap = "sv-latin1";
     })
 
-    # console-base
-    (mkKnob true {
-      console = {
-        packages = with pkgs; [ terminus_font ];
-        font = "ter-v32n";
-      };
-    })
-
     # user-base
-    (mkKnob true {
+    (mkKnob [ "aurelius" "seneca" ] {
       users.users.ejg = {
         isNormalUser = true;
         extraGroups = [ "wheel" ];
@@ -473,7 +398,7 @@ rec {
     })
 
     # network-base
-    (mkKnob true { 
+    (mkKnob [ "aurelius" "seneca" ] { 
       networking = {
         useDHCP = false;
         wireless.enable = false;
@@ -505,8 +430,8 @@ rec {
       };
     })
 
-    # ssh server 
-    (mkKnob "aurelius" {
+    # server-ssh 
+    (mkKnob [ "aurelius" ] {
       services.openssh = {
         enable = true;
         ports = [ 34022 ];
@@ -514,8 +439,8 @@ rec {
       };
     })
 
-    # deluge server
-    (mkKnob "aurelius" {
+    # server-deluge
+    (mkKnob [ "aurelius" ] {
       services.deluge = {
         enable = true;
         declarative = true;
@@ -553,8 +478,8 @@ rec {
       services.deluge.authFile = "/tmp/deluge/deluge-auth";
     })
 
-    # jellyfin nvidia-accelerated server
-    (mkKnob "aurelius" {
+    # server-jellyfin
+    (mkKnob [ "aurelius" ] {
       hardware.opengl.driSupport32Bit = true;
       services.xserver.videoDrivers =  [ "nvidia" ];
       hardware.opengl.enable = true;
@@ -584,8 +509,8 @@ rec {
       };
     })
   
-    # srv-invidious
-    (mkKnob "aurelius" {
+    # server-invidious
+    (mkKnob [ "aurelius" ] {
       services.invidious.enable = true;
       
       # setup ports
@@ -600,8 +525,8 @@ rec {
       ];
     })
   
-    # srv-yt-custom
-    (mkKnob true (let cfg = config.ytd; in with lib; {
+    # server-ytd-basedef
+    (mkKnob [ "aurelius" ] (let cfg = config.ytd; in with lib; {
       options.ytd = {
         enable =  mkEnableOption "Enables ytd.";
 
@@ -689,7 +614,8 @@ rec {
       ;
     }))
   
-    (mkKnob "aurelius" {
+    # server-ytd-impl
+    (mkKnob [ "aurelius" ] {
       ytd = 
         let
           baseDir = "/mnt/data/vids/yt";
@@ -723,23 +649,24 @@ rec {
       ;
     })
 
-    # Sound 
-    (mkKnob true {
+    # sound
+    (mkKnob [ "aurelius" "seneca" ] {
       sound.enable = true;
       hardware.pulseaudio.enable = true;
     })
 
     # shell-base
-    (mkKnob true {
+    (mkKnob [ "aurelius" "seneca" ] {
       my = {
         # enable current shell to allow HM to inject stuff
         programs.zsh.enable = true;
         home = {
-          sessionVariables = {
+          sessionVariables = rec {
             VISUAL = "hx";
-            EDITOR = "hx";
-            SUDO_EDITOR = "hx";
+            EDITOR = VISUAL;
+            SUDO_EDITOR = VISUAL;
           };
+
           shellAliases = {
             "c" = "cd /config";
             "..." = "cd ../..";
@@ -787,7 +714,8 @@ rec {
             "aurti" = "aurt info";
             "aurta" = "aurt add";
             "aurtax" = "aurta $(xp)"; 
-
+          
+            "pling" = ''while :; do sleep 0.75 && echo -e "\a"; done''; 
           } 
           ;
         };
@@ -795,18 +723,18 @@ rec {
     })
 
     # x-base
-    (mkKnob "seneca" {
+    (mkKnob [ "aurelius" "seneca" ] {
       services.xserver = {
         enable = true;
         libinput.enable = true;
 
         # this should fix the constant display powersaving
         # (that doesn't even work properly with the dock)
-        config = lib.mkAfter ''
-          Section "Extensions"
-            Option "DPMS" "Disable"
-          EndSection
-        '';
+        # config = lib.mkAfter ''
+        #   Section "Extensions"
+        #     Option "DPMS" "Disable"
+        #   EndSection
+        # '';
       };
 
       my = {
@@ -824,7 +752,7 @@ rec {
     # can't remember why this is needed, but it
     # has something  to do with i3 being a (T)WM
     # and fast x login 
-    (mkKnob [ "seneca" ] {
+    (mkKnob [ "aurelius" "seneca" ] {
       services.xserver.displayManager = {
         autoLogin = {
           enable = true;
@@ -841,7 +769,7 @@ rec {
 
       my.xsession.enable = true;
     })
-
+  
     # display-power
     (mkKnob [ "seneca" ] {
       services.logind.lidSwitch = "ignore";
@@ -853,184 +781,863 @@ rec {
       };
     })
 
-    # display-hardware
-    (mkKnob [ "seneca" ] {
+    # display-opengl
+    (mkKnob [ "aurelius" "seneca" ] {
       hardware.opengl.enable = true;
     })
 
-    # display-temp
-    # TODO for now this just supports mobile mode and docked
-    # mode because things are hard
-    (mkKnob [ "seneca" ] (with lib; let cfg = config.periph-env; in {
-      options.periph-env = {
-        enable = mkEnableOption "Per-config computer peripherals configuration";
 
-        env = mkOption {
-          type = types.str;
+    # pkgs-i3
+    (mkKnob [ "aurelius" "seneca" ] {
+      my.xsession.windowManager.i3 = with funcs.domain.i3; {
+        enable = true;
+        package = pkgs.i3-gaps;
+          config = rec {
+            startup = [
+              {
+                command = "feh --bg-fill ~/pape";
+                always = true;
+                notification = false;
+              }
+              {
+                command = genPolybarStartup; 
+                always = true;
+                notification = false;
+              }
+            ];
+        
+            defaultWorkspace = "workspace number 1";
+            
+            gaps = { 
+              "bottom" = constants.GAP + constants.BAR-HEIGHT + constants.GAP; 
+              "inner" = constants.GAP + constants.GAP; 
+            };
+
+            window.border = constants.GAP / 2;
+
+            colors =  
+              genColors 
+                constants.COLORS.dark-blue 
+                constants.COLORS.light-blue 
+                constants.COLORS.black;
+
+            bars = [ ];
+            terminal = "kitty";
+            modifier = "Mod4";
+            keybindings = lib.mkOptionDefault {
+                "${modifier}+q" = "split toggle";
+
+                "${modifier}+Return" = "exec ${terminal}";
+                "${modifier}+BackSpace" = "exec qutebrowser";
+
+                "${modifier}+h" = "focus left";
+                "${modifier}+j" = "focus down";
+                "${modifier}+k" = "focus up";
+                "${modifier}+l" = "focus right";
+
+                "${modifier}+Shift+h" = "move left";
+                "${modifier}+Shift+j" = "move down";
+                "${modifier}+Shift+k" = "move up";
+                "${modifier}+Shift+l" = "move right";
+
+                "${modifier}+Up" = "exec pactl set-sink-volume @DEFAULT_SINK@ +5%";
+                "${modifier}+Down" = "exec pactl set-sink-volume @DEFAULT_SINK@ -5%";
+            };
+          };
         };
+    })
 
-        # inferred
-        screens = mkOption {
-          type = types.attrs;
+    # pkgs-polybar
+    (mkKnob [ "aurelius" "seneca" ] {
+      my.services.polybar = {
+        enable = true;
+        package = pkgs.polybar.override {
+          i3GapsSupport = true;
+          githubSupport = true;
+          pulseSupport = true;
         };
+        script = "";
+        settings = (
+          funcs.general.doRecursiveUpdates
+            {
+              format = {
+                background = constants.COLORS.dark-blue;
+                padding = 1;
+              };
+            }
+            {
+              "module/i3" = 
+                let
+                  labels = genAttrs 
+                    [ "label-focused" "label-unfocused" "label-visible" ] 
+                    (name: { text = "%name%"; padding = 1; background = constants.COLORS.dark-blue; });
+                in 
+                  recursiveUpdate labels {
+                    format.padding = 0;
+                    type = "internal/i3";
+                    pin-workspaces = true;
+                    show-urgent = true;
+                    strip-wsnumbers = true;
+                    index-sort = true;
+                    enable-click = false;
+                    enable-scroll = false;
+                    wrapping-scroll = false;
+                    reverse-scroll = false;
+                    label-focused.background = constants.COLORS.light-blue;
+              };
+              "module/time" = {
+                type = "internal/date";
+                internal = 5;
+                time = "%H:%M";
+                label = "%time%";
+              };
+              "module/date" = {
+                type = "internal/date";
+                internal = 5;
+                date = "%Y-%m-%d | %a"; 
+                label = "%date%";
+              };
+              "module/xwindow" = {
+                type = "internal/xwindow";
+              };
+              "module/battery" = {
+                type = "internal/battery";
+                battery = "BAT0";
+                adapter = "AC";
+                ramp-capacity = [ "󰂎" "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹" ];
+                format = {
+                  discharging.text = "<ramp-capacity>󱐥 <label-discharging>";
+                  charging.text = "<ramp-capacity>󰚥 <label-charging>";
+                  full.text = "<ramp-capacity>󰸞 <label-full>";
+                };
+                label.text = "%percentage%%";
+                low-at = 10; 
+              };
 
-        i3Workspaces = mkOption {
-          type = types.attrs;
+              "module/pulseaudio" = {
+                type = "internal/pulseaudio";
+                format-volume = "<ramp-volume> <label-volume>";
+                ramp-volume = [ "󰕿" "󰖀" "󰕾" ];
+                label-muted = "󰖁";
+              };
+
+              "module/network" = (
+                let
+                  guessWirelessIface = (
+                    findFirst
+                      (hasPrefix "w")
+                      null
+                      (attrNames config.networking.interfaces)
+                  );
+                in {
+                  type = "internal/network";
+                  interface = guessWirelessIface;
+                  ramp-signal = [ "󰣾" "󰣴" "󰣶" "󰣸" "󰣺" ];
+                  format = {
+                    connected.text = "<ramp-signal>";
+                    disconnected.text = "󰣽";
+                    packetloss.text = "󰣻";
+                  };
+                }
+              );
+            }
+          );
         };
+    })
+  
+    (mkKnob [ "aurelius" "seneca" ] (let cfg = config.custom; in with lib; {
+      options.custom = rec {
+        defaultMonitor = mkOption {
+          description = "defaut pseudo monitor that all other monitors update";
+          type = with types; submodule {
+            options = {
+              autorandr = mkOption {
+                type = attrs;
+              };
+              
+              workspaces = mkOption {
+                type = listOf int;
+                default = range 1 10;
+              };
 
-        fingerprint = mkOption {
-          type = types.attrs;
+              bars = mkOption {
+                type = attrs;
+              };            
+            };
+          };
+        };
+              
+        monitors = mkOption {
+          description = "all monitors";
+          type = types.attrsOf defaultMonitor.type;
+          apply = (ms:
+            funcs.general.doRecursiveUpdates
+              config.custom.defaultMonitor
+              ms
+          );
         };
       };
 
-      config = mkIf cfg.enable {
-        # infer screen names from set env
-        periph-env.screens = {
-          laptop = "eDP1";
+      config = ( 
+        let
+          getBar = monitor: adjustStr: 
+            config.my.services.polybar.settings."bar/${monitor}-${elemAt (splitString " " adjustStr) 1}"
+          ;
+          resolveBars = (
+            mapAttrs
+              (monName: monValue: 
+                recursiveUpdate 
+                  (removeAttrs monValue [ "autorandr" "workspaces" ]) 
+                  {
+                    bars = (  
+                      mapAttrs'
+                        (barName: barValue: 
+                          nameValuePair
+                            ("bar/${monName}-${barName}")
+                            (pipe barValue [
+                              # set monitor
+                              (bar: bar // { "monitor" = "\${env:MONITOR:${monName}}"; })
+                              # add in modules-center if not found
+                              (bar: bar // (
+                                      optionalAttrs
+                                        (! (any (hasPrefix "modules") (attrNames bar)))
+                                        { "modules-center" = "${barName}"; }
+                                    )
+                              )
+                              # set workspace bar width
+                              (bar: bar // (
+                                      optionalAttrs 
+                                        (barName == "workspaces")
+                                        { width = (
+                                            let 
+                                              workspaceList = cfg.monitors.${monName}.workspaces;
+                                              chars = 
+                                                foldl
+                                                  (a: b: a + b)
+                                                  0
+                                                  (map 
+                                                    (workspaceNum: 
+                                                      length (stringToCharacters (toString (workspaceNum)))
+                                                      )
+                                                    workspaceList
+                                                    )
+                                              ;
+                                            in
+                                              (chars + (length workspaceList) * 2) * 12
+                                          ); 
+                                        }
+                                    )
+                              )
+                              # set width for workspace bar
+                              (bar: if (bar."_adjust" == "left")
+                                    then (bar // { "offset-x" = 20; })
+                                    
+                                    else if (bar."_adjust" == "right") 
+                                    then (bar // { "offset-x" = (1920 - 20 - bar."width"); })
 
-          dock = { 
-            center-HDMI = "DVI-I-2-2";
-            right-DP = "DVI-I-1-1";
-          };
+                                    else if (hasPrefix "leftOf" bar."_adjust") 
+                                    then (bar // { "offset-x" = (let abs = (getBar monName bar."_adjust"); in abs.offset-x - 20 - bar.width); })
 
-          tv = "HDMI1";
-        };
-        
-        periph-env.fingerprint = with cfg.screens; {
-          ${laptop} = "00ffffffffffff0009e5c00600000000011a0104951c10780af6a0995951942d1f505400000001010101010101010101010101010101c93680cd703814403020360018a51000001ad42b80cd703814406464440518a51000001a000000fe003138364743804e5631324e353100000000000041119e001000000a010a202000d6";
-          ${dock.center-HDMI} = "00ffffffffffff0006b3a325010101011a1e010380361e78ea4c00a75552a028135054b7ef00714f8180814081c081009500b3000101023a801871382d40582c4500202f2100001e000000fd0028781e8c1e000a202020202020000000fc0056473235380a20202020202020000000ff004c364c4d51533136373535320a012d020329f14b900504030201111213141f230907078301000067030c0010000044681a000001012878008a4d80a070382c4030203500202f2100001afe5b80a07038354030203500202f2100001a866f80a07038404030203500202f2100001a0000000000000000000000000000000000000000000000000000000000000000d7";
-          ${dock.right-DP} = "00ffffffffffff0006b3a42501010101191e0104a5361e783b4c00a75552a028135054b7ef00714f8180814081c081009500b3000101023a801871382d40582c4500202f2100001e000000fd0028a5c3c329010a202020202020000000fc0056473235380a20202020202020000000ff004c364c4d51533131323037380a01a8020318f14b900504030201111213141f2309070783010000a49c80a07038594030203500202f2100001a8a4d80a070382c4030203500202f2100001afe5b80a07038354030203500202f2100001a866f80a07038404030203500202f2100001afc7e80887038124018203500202f2100001e00000000000000000000000000af";
-          ${tv} = "00ffffffffffff0006b3a32501010101191e010380361e78ea4c00a75552a028135054b7ef00714f8180814081c081009500b3000101023a801871382d40582c4500202f2100001e000000fd0028781e8c1e000a202020202020000000fc0056473235380a20202020202020000000ff004c364c4d51533131313737320a0135020329f14b900504030201111213141f230907078301000067030c0010000044681a000001012878008a4d80a070382c4030203500202f2100001afe5b80a07038354030203500202f2100001a866f80a07038404030203500202f2100001a0000000000000000000000000000000000000000000000000000000000000000d7";
-        };
+                                    else if (hasPrefix "rightOf" bar."_adjust") 
+                                    then (bar // { "offset-x" = (let abs = (getBar monName bar."_adjust"); in abs.offset-x + abs.width + 20); })
+  
+                                    else bar
+                              )
+                              (bar: removeAttrs bar [ "_adjust" ])                     
+                            ])
+                        )
+                        monValue.bars
+                
+                    );
+                  }
+              )
+              cfg.monitors 
+          );
+        in {       
+          my.services.polybar.settings = (
+            funcs.general.doRecursiveUpdates 
+              ({
+                bottom = true;
+                background = constants.COLORS.dark-blue;
+                foreground = constants.COLORS.white;
+                override-redirect = true;
+                wm-restack = "i3";
+                height = constants.BAR-HEIGHT;
+                offset.y = 20;
+                # radius = 0;
+                font = [ 
+                  "JetBrains Mono:pixelsize=16:weight=bold;3" 
+                  "Material Design Icons:size=18:style=Regular;3"
+                ];
+                locale = config.i18n.extraLocaleSettings.LC_TIME;
+              })
+            
+              (
+                funcs.general.updateAttrs 
+                  (
+                    collect 
+                      (s: any (hasAttr "width") (attrValues s))
+                      (resolveBars)
+                  )
+                  {}
+              )
+          );
 
-        # infer i3 workspaces
-        periph-env.i3Workspaces = with cfg.screens;
-          if cfg.env == "docked" then {
-            ${dock.center-HDMI} = range 1 5;
-            ${dock.right-DP} = range 6 10;
-          } else if cfg.env == "tv" then {
-            ${tv} = [ 1 ];
-            ${laptop} = range 2 10;
-          } else {  # assume mobile even if we should never get here
-            ${laptop} = range 1 10;
-          }
-        ;
+          my.xsession.windowManager.i3.config.workspaceOutputAssign = (
+            flatten
+              (mapAttrsToList 
+                (output: workspaces: 
+                  (map 
+                    (workspace: { "output" = output; "workspace" = toString workspace; }) 
+                    workspaces
+                  )
+                )
+                (
+                  mapAttrs
+                    (n: v: v.workspaces)
+                    cfg.monitors
+                )
+              )
+          );
+        }
+      );
+    }))
 
-        # set external options
-        services.xserver = {
-          # for now, let's try using intel on all modes
-          videoDrivers = [ "intel" ] ++ optional (cfg.env == "docked") "displaylink";
-          deviceSection = mkIf (cfg.env == "tv") ''
-            Option "TearFree" "true"
-          '';
+    (mkKnob [ "aurelius" "seneca" ] {
+      custom.defaultMonitor = {
+        autorandr = {
+          enable = true;
+          inProfile = "default";
+          mode = "1920x1080";
+          rate = "60.00";
+          # fingerprint = ???
+          # primary = ???
         };
       
-        # first of all, configure qjoypad correctly
-        qjoypad = {
-          enable = cfg.env == "tv";
-          defaultLayout = "main";
-          layouts = {
-            "main" = {
-              isDefault = true;
-              lyt = {
-                "Joystick 1" = {
-                  "Axis 1" = [ "gradient" "maxSpeed 3" "mouse+h" ];
-                  "Axis 2" = [ "gradient" "maxSpeed 3" "mouse+v" ];
-                  "Axis 3" = [ "gradient" "+key 0" "-key 0" ];
-                  "Axis 4" = [ "gradient" "+key 0" "-key 0" ];
-                  "Axis 7" = [ "+key 114" "-key 113" ];
-                  "Axis 8" = [ "+key 116" "-key 111" ];
-                  "Button 1" = [ "key 0" ];
-                  "Button 3" = [ "key 0" ];
-                  "Button 4" = [ "mouse 1" ];
-                };
+        workspaces = range 1 10;
+
+        # old battery width = 135
+        bars = {
+          workspaces = { modules-left="i3"; width = "x"; _adjust = "left"; };
+
+          time =       {                    width = 84;  _adjust = "right"; };
+          date =       {                    width = 216; _adjust = "leftOf time"; };
+          battery =    {                    width = 0;   _adjust = "leftOf date"; };
+          pulseaudio = {                    width = 110; _adjust = "leftOf date"; };
+          network =    {                    width = 40;  _adjust = "leftOf pulseaudio"; };
+        };
+      };
+    })
+    
+    (mkKnob [ "aurelius" ] {
+      custom.monitors = {
+        "DP-0" = {
+          autorandr = {
+            fingerprint = "00ffffffffffff0006b3a425010101011a1e0104a5361e783b4c00a75552a028135054b7ef00714f8180814081c081009500b3000101023a801871382d40582c4500202f2100001e000000fd0028a5c3c329010a202020202020000000fc0056473235380a20202020202020000000ff004c364c4d51533136373535320a01a0020318f14b900504030201111213141f2309070783010000a49c80a07038594030203500202f2100001a8a4d80a070382c4030203500202f2100001afe5b80a07038354030203500202f2100001a866f80a07038404030203500202f2100001afc7e80887038124018203500202f2100001e00000000000000000000000000af"; 
+            primary = true;
+            position = "0x0";
+          };
+
+          workspaces = range 1 5;
+        };
+
+        "DVI-D-0" = {
+          autorandr = {
+            fingerprint = "00ffffffffffff0006b3a32501010101191e010380361e78ea4c00a75552a028135054b7ef00714f8180814081c081009500b3000101023a801871382d40582c4500202f2100001e000000fd0032901ea021000a202020202020000000fc0056473235380a20202020202020000000ff004c364c4d51533131323037380a01fc020104008a4d80a070382c4030203500202f2100001afe5b80a07038354030203500202f2100001a866f80a07038404030203500202f2100001afc7e80887038124018203500202f2100001e00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000077";
+            position = "1920x0";
+          };
+      
+          workspaces = range 6 10;
+        };
+      };
+    })
+  
+    (mkKnob [ "seneca" ] {
+      custom.monitors = {
+        "eDP-1" = {
+          autorandr.fingerprint = "00ffffffffffff0009e5c00600000000011a0104951c10780af6a0995951942d1f505400000001010101010101010101010101010101c93680cd703814403020360018a51000001ad42b80cd703814406464440518a51000001a000000fe003138364743804e5631324e353100000000000041119e001000000a010a202000d6";
+          
+          # make room for battery bar
+          bars.battery.width = 135;
+          bars.pulseaudio._adjust = "leftOf battery";
+        };
+      };
+    })
+  
+    # pkgs-zsh
+    (mkKnob [ "aurelius" "seneca" ] {
+      # sets default shell
+      users.users.ejg.shell = pkgs.zsh;
+
+      # required for
+      # https://nix-community.github.io/home-manager/options.html#opt-programs.zsh.enableCompletion
+      environment.pathsToLink = [ "/share/zsh" ];
+
+      my.programs.zsh = {
+        enable = true;
+        enableSyntaxHighlighting = true;
+        enableVteIntegration = true;
+        autocd = true;
+        # cdpath = [ ]  could try and add this later?
+        # defaultKeymap  perhaps this too
+        # dirHashes     definitely this, could be very useful
+      
+        localVariables = {
+          PROMPT="%F{68}%n@%m%f:%F{14}%~%f $ ";
+        };
+      };
+    })
+  
+    # pkgs-pfetch
+    (mkKnob [ "aurelius" "seneca" ] {
+      my.home = {
+        packages = [ pkgs.pfetch ]; 
+        shellAliases."pf" = "echo && pfetch"; # inserts a newline before pfetch 
+        sessionVariables = {
+          PF_INFO = "ascii os host kernel wm editor pkgs memory";
+          PF_COL1 = 6;
+          PF_COL2 = 4; 
+          PF_COL3 = 4;
+        };
+      };
+    })
+
+    # pkgs-kitty 
+    (mkKnob [ "aurelius" "seneca" ] {
+      my.programs.kitty = {
+        enable = true;
+        font = {
+          name = "JetBrains Mono";
+        };
+
+        settings = { 
+          confirm_os_window_close = 0; 
+          window_padding_width = 4;
+        };
+
+        # manually load the Clrs theme
+        extraConfig = ''
+          # vim:ft=kitty
+          ## name: Doom One Light
+          ## author: Henrik Lissner <https://github.com/hlissner>
+          ## license: MIT
+          ## blurb: Doom Emacs flagship theme based on atom One Light
+          # The basic colors
+          foreground                      #383a42
+          background                      #fafafa
+          selection_foreground            #383a42
+          selection_background            #dfdfdf
+          # Cursor colors
+          cursor                          #383a42
+          cursor_text_color               #fafafa
+          # kitty window border colors
+          active_border_color     #0184bc
+          inactive_border_color   #c6c7c7
+          # Tab bar colors
+          active_tab_foreground   #fafafa
+          active_tab_background   #383a42
+          inactive_tab_foreground #f0f0f0
+          inactive_tab_background #c6c7c7
+          # The basic 16 colors
+          # black
+          color0 #383a42
+          color8 #c6c7c7
+          # red
+          color1 #e45649
+          color9 #e45649
+          # green
+          color2  #50a14f
+          color10 #50a14f
+          # yellow
+          color3  #986801
+          color11 #986801
+          # blue
+          color4  #4078f2
+          color12 #4078f2
+          # magenta
+          color5  #a626a4
+          color13 #b751b6
+          # cyan
+          color6  #005478
+          color14 #0184bc
+          # white
+          color7  #f0f0f0
+          color15 #383a42
+        '';
+    #    settings = {
+    #      background = COLORS.dark-blue;
+    #      foreground = COLORS.white;
+    #    };
+        
+      };
+    })
+
+    # qutebrowser-extra
+    # Sets some extra hardcoded python stuff by overlaying the postInstall and sedding away
+    (mkKnob [ "aurelius" "seneca" ] {
+      my.nixpkgs.overlays = 
+        let
+          # custom variables
+          activeDownloadFormat = "({index}) {name} | {total} | {perc:<2}% | {speed:<10}";
+          doneDownloadFormat = "({index}) {name} | {total} | {perc:<2}% | Finished!"; 
+
+          # inferred
+          setActiveDownloadsFormat = concatStrings [
+            # This format is defined over two lines in the original python class, 
+            # requiring two sed commands to fully change it.
+
+            ''cat ''
+              ''"qutebrowser/browser/downloads.py"''
+            
+            " | "
+
+            ''sed "s''
+                ''/{index}: {name} \[{speed:>10}|{remaining:>5}|{perc:>2}%|''
+                ''/${activeDownloadFormat}''
+            ''/g"''
+            
+            " | "
+
+            ''sed "s''
+                ''/{down}\/{total}\]''
+                ''/''  # delete
+            ''/g"''
+
+            # Set done downloads format
+            # sed "s/{index}: {name} \[{perc:>2}%|{total}\]/FOUND2/g"
+
+            " | "
+
+            ''sed "s''
+              ''/{index}: {name} \[{perc:>2}%|{total}\]''
+              ''/${doneDownloadFormat}''
+            ''/g"''
+              
+            " > "
+              
+            ''"$out/lib/python3.9/site-packages/qutebrowser/browser/downloads.py"''
+          ];
+
+
+
+        in
+          [(self: super: {
+              qutebrowser = super.qutebrowser.overrideAttrs (oldAttrs: rec {
+                postInstall = oldAttrs.postInstall + ''
+                  ${setActiveDownloadsFormat}
+                '';
+              });
+            }
+          )]
+      ;
+    })
+
+    # pkgs-qutebrowser
+    (mkKnob [ "aurelius" "seneca" ] {
+      my.programs.qutebrowser = {
+        enable = true;
+        searchEngines = {
+          DEFAULT = "https://www.google.com/search?q={}";
+          yt = "http://192.168.1.2:34030/search?q={}";
+        };
+        keyBindings = {
+          normal = {
+            "J" = "tab-prev";
+            "K" = "tab-next";
+            "gJ" = "tab-move -";
+            "gK" = "tab-move +";
+            "ew" = "jseval -q document.activeElement.blur()";
+            "eb" = "spawn --userscript /config/parts/home/programs/qutebrowser/edit-quickmarks.sh";  # doesn't work as of yet
+            ",d" = ''hint links spawn zsh -lic "aurta {hint-url}"''; 
+            ",yy" = ''yank inline https://youtube.com/watch?{url:query}'';
+          };
+        };
+        settings = with constants.COLORS; {
+          colors = {
+            statusbar = {
+              normal = {
+                fg = white;
+                bg = dark-blue;
+              };
+              insert = {
+                fg = white;
+                bg = light-blue;
               };
             };
           };
         };
+      };
+    })
+  
+    # pkgs-qutebrowser-translate
+    (mkKnob [ "aurelius" "seneca" ] {
+      my = with pkgs; ( 
+        let
+          qute-translate = (
+            callPackage
+              ({lib, pkgs}: stdenv.mkDerivation rec {
+                name = "qute-translate";
+    
+                src = pkgs.fetchFromGitHub {
+                  owner = "AckslD";
+                  repo = "Qute-Translate";
+                  rev = "cd2d201d17bb2d7490700b20d94495327af15e78";
+                  sha256 = "sha256-xCbeEAw8a/5/ZD9+aB1J7FxLLBlP65kslGtpYGn3efs=";
+                };
+            
+                installPhase = "install -Dm555 translate $out/translate";
+              })
+            {}
+          );
+        in {
+          home.packages = [ qute-translate ];
+          programs.qutebrowser.keyBindings.normal.",t" = (
+            "spawn --userscript ${qute-translate}/translate"
+          );
+        }
+      );
+    })
+  
+    # pkgs-qutebrowser-qms
+    (mkKnob [ "aurelius" "seneca" ] {
+      my.programs.qutebrowser.quickmarks = {
+        # f (feed)
+        f-m = "https://mail.google.com/mail/u/0/#inbox";
+        f-d = "https://discord.com/channels/@me";
+        f-ch = "https://https://4chan.org/";
+
+        # t (tech)
+          t-1 = "https://github.com/emanueljg/nixos";
+
+          # t-no (tech-nixos)
+          t-no-opt = "https://search.nixos.org/options";
+          t-no-hm = "https://nix-community.github.io/home-manager/options.html";
+          t-no-pkgs = "https://search.nixos.org/packages";
+          t-no-lang = "https://teu5us.github.io/nix-lib.html#nix-builtin-functions";
+
+          # t-qb (tech-qutebrowser)
+          t-qb-faq = "https://qutebrowser.org/FAQ.html";
+          t-qb-func = "https://qutebrowser.org/doc/help/commands.html";
+          t-qb-us = "https://qutebrowser.org/doc/userscripts.html";
+
+          # t-dl (tech-downloads)
+          t-dl-nsi = "https://nyaa.si/";
+          t-dl-rbg  = "https://rarbg.to/torrents.php";
+          t-dl-1337x = "https://www.1377x.to/";
+
+        # s (server)
+        s-dl = "192.168.1.2:34012";
+        s-jf = "192.168.1.2:8096";
+      
+        # m (my)
+          
+          # m-j (my-japanese)
+          m-j-k = "https://itazuraneko.neocities.org/learn/kana.html";
+      };
+    })
+
+    # pkgs-git
+    (mkKnob [ "aurelius" "seneca" ] {
+      my.programs = {
+        git = {
+          enable = true;
+          userEmail = "emanueljohnsongodin@gmail.com";
+          userName = "emanueljg";
+        };
         
-        my = with cfg.screens; {
-          programs.autorandr =
-            let
-              fingerprint = cfg.fingerprint;  
-              base-config = {
-                enable = true;
-                mode = "1920x1080";
-                rate = "60.00";
-              };
-            in {
-              enable = true;
-              profiles = {
-                "mobile" = {
-                  fingerprint.${laptop} = fingerprint.${laptop};
-                  config.${laptop} = base-config;
-                };
-                
-                "docked" = {
-                  inherit fingerprint;
-                  config = funcs.general.doRecursiveUpdates base-config {
-                    ${dock.center-HDMI} = {
-                      primary = true;
-                      position = "0x0";
-                    };
+        gh.enable = true;
+      };
+    })
 
-                    ${dock.right-DP} = {
-                      position = "1920x0";
-                    };
+    # pkgs-neovim
+    (mkKnob [ "aurelius" "seneca" ] {
+      my.programs.neovim = {
+        enable = true;
+        plugins = with pkgs.vimPlugins; [ 
+          vim-nix 
+        ];
+        extraConfig = ''
+         set number
+         set tabstop=4 shiftwidth=4
+         autocmd Filetype nix setlocal ts=2 sw=2
+         :command Nrs !sudo nixos-rebuild switch
+        '';
+      };
+    })
 
-                    ${laptop} = {
-                      position = "3840x0";
-                    };
-                  };
-                };
-
-                "tv" = {
-                  fingerprint.${laptop} = fingerprint.${laptop};
-                  fingerprint.${tv} = fingerprint.${tv};
-
-                  config = funcs.general.doRecursiveUpdates base-config {
-                    ${tv} = { 
-                      position = "0x0";
-                    };
-
-                    ${laptop} = {
-                      position = "0x1080";
-                    };
-                  };
-                };
-              };
-            }
-          ;
-
-          xsession = {
-            # TODO fix qjoypad bullshit
-            initExtra = strings.optionalString (cfg.env == "docked") (''
-              xrandr --setprovideroutputsource 1 0; 
-              xrandr --setprovideroutputsource 2 0;
-            '') + ''
-              autorandr -l mobile
-            '' + strings.optionalString (cfg.env != "mobile") (''
-              autorandr -l ${cfg.env}
-            '') + strings.optionalString (cfg.env == "tv") (''
-              qjoypad &
-              bluetoothctl connect 5C:EB:68:79:BA:6F &
-            '')
-            ;
-
-            windowManager.i3.config.workspaceOutputAssign = funcs.domain.i3.genWorkspaceOutputs cfg.i3Workspaces;
+    # try out helix on trial
+    (mkKnob [ "aurelius" "seneca" ] {
+      my.programs.helix = {
+        enable = true;
+        package = unstable.helix;
+        settings = {
+          theme = "snowy";
+          editor = {
+            line-number = "relative";
+            auto-pairs = false;  # simple fix, having it on is more trouble than it's worth for now
           };
         };
+
+        themes = {
+          snowy = with constants;
+            let
+              transparent = "none";
+              gray = "#665c54";
+              dark-gray = "#3c3836";
+              white = "#fbf1c7";
+              black = "#282828";
+              red = "#fb4934";
+              green = "#b8bb26";
+              yellow = "#fabd2f";
+              blue = "#83a598";
+              magenta = "#d3869b";
+              cyan = "#8ec07c";
+            in rec {
+              # menu
+                # bottom 
+                  # status bar 
+                    "ui.statusline" = { fg = COLORS.white; bg = COLORS.dark-blue; };
+                    "ui.statusline.inactive" = { fg = COLORS.dark-blue; bg = white; };
+
+                  # command autocomplete popup
+                    "ui.menu" = { fg = COLORS.white; bg = COLORS.dark-blue; };
+                    "ui.menu.selected" = { fg = COLORS.white; bg = COLORS.light-blue; };
+                    "ui.help" = { fg = COLORS.white; bg = COLORS.light-blue; };
+                
+                # left side (gutters)
+                  # diagnostics (left of line numbers)
+                    "diagnostics" = { fg = COLORS.white; bg = COLORS.dark-blue; };
+              
+                  # line numbers
+                    "ui.linenr" = { fg = COLORS.white; bg = COLORS.dark-blue; };
+                    "ui.linenr.selected" = { fg = COLORS.white; bg = COLORS.light-blue; modifiers = [ "bold" ]; };
+
+                # right side (only "extra commands"-popup for now)              
+                  "ui.popup" = COLORS.dark-blue;
+
+              # otherwise meta
+                "ui.selection" = { modifiers = [ "underlined" ]; };
+                "ui.selection.primary" = {  modifiers = [ "underlined" ]; };
+                "ui.cursor" = { modifiers = [ "reversed" ]; };
+                "ui.cursor.match" = { modifiers = [ "reversed" "bold" ]; };
+              
+              # syntax
+                "comment" = { fg = gray; };
+                "variable" = COLORS.dark-blue;
+                "constant" = COLORS.gold;
+                "attributes" = yellow;
+                "type" = "#fa0590";
+                "string" = COLORS.green;
+                "variable.other.member" = COLORS.very-dark-blue;
+                "function" = COLORS.pink;
+                "keyword" = COLORS.purple;
+
+              # (unknowns/unused)
+                "ui.window" = COLORS.pink;
+                "variable.builtin" = COLORS.pink;
+                "constant.numeric" = COLORS.pink;
+                "constant.character.escape" = COLORS.pink;
+                "constructor" = COLORS.pink;
+                "special" = COLORS.pink;
+                "label" = COLORS.pink;
+                "namespace" = COLORS.pink;
+                "diff.plus" = COLORS.pink;
+                "diff.delta" = COLORS.pink;
+                "diff.minus" = COLORS.pink;
+                "diagnostic" = COLORS.pink;
+                "info" = COLORS.pink;
+                "hint" = COLORS.pink;
+                "debug" = COLORS.pink;
+                "warning" = COLORS.pink;
+                "error" = COLORS.pink;
+            }
+          ;
+        };
       };
-    }))
+    })
+    
+    # pkgs-helix-patch-aurelius-default-editor
+    (mkKnob [ "aurelius" ] {
+      environment.sessionVariables."EDITOR" = "hx";
+    })
 
-    # these are the knobs that uses periph-env
-    (mkKnob "seneca" { periph-env.enable = true; })
-    (mkKnob "seneca-docked" { periph-env.env = "docked"; })
-    (mkKnob "seneca-mobile" { periph-env.env = "mobile"; })
-    (mkKnob "seneca-tv" { periph-env.env = "tv"; })
+    # misc-dircolors
+    (mkKnob [ "aurelius" "seneca" ] {
+      my.programs.dircolors = {
+        enable = true;
+        settings = {
+          OTHER_WRITABLE = "01;33";
+        };
+      };
+    })
 
-    # tv stuff
-    (mkKnob "seneca" (let cfg = config.qjoypad; in with lib; {
+    # misc seneca packages
+    (mkKnob [ "aurelius" "seneca" ] {
+      my.home.packages = with pkgs; [
+        dmenu
+        i3status
+        i3lock
+        xclip
+        vegur
+        material-design-icons
+        feh
+        mpv
+        pv
+        jetbrains-mono
+        appimage-run
+      ];
+    })
+
+    # seneca flatpaks
+    (mkKnob [ "seneca" ] {
+      services.flatpak.enable = true;
+      xdg.portal.enable = true;
+      xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    })
+
+    # pkgs-appimage-artix-games-launcher
+    (mkKnob [ "seneca" ] {
+      environment.systemPackages = [
+        (pkgs.callPackage 
+          ({appimageTools, lib, pkgs }: appimageTools.wrapType2 rec {
+            pname = "artix-games-launcher";
+            version = "latest";
+        
+            src = builtins.fetchurl {
+              url = "https://launch.artix.com/latest/Artix_Games_Launcher-x86_64.AppImage";
+              sha256 = "0qa5rrrmvxgy90lbpxjxsyf22wj1l5im0p4idizkdwb1cwc3rnjk";
+            };
+            })
+          {}
+        )
+      ];
+      my.home.shellAliases = { "agll" = "artix-games-launcher-latest"; };
+    })
+  
+    # misc-byzanz
+    (mkKnob [ "aurelius" ] {
+      my.home.packages = [ pkgs.byzanz ];
+    
+      my.home.shellAliases = {
+        "record-single" = "byzanz-record --exec 'sleep infinity'  -x 0 -y -0 -w 1920 -h 1080";
+        "record-double" = "byzanz-record --exec 'sleep infinity'  -x 0 -y -0 -w 3840 -h 1080";
+      };
+    })
+  
+    # misc-android
+    (mkKnob [ "aurelius" "seneca" ] {
+      my.home.packages = with pkgs; [
+        android-tools
+        scrcpy
+      ];
+    
+      my.home.shellAliases = {
+        phone = "adb connect 192.168.1.4 && scrcpy";
+      };
+    })
+
+    # misc-qjoypad-basedef
+    (mkKnob [ "aurelius" "seneca" ] (let cfg = config.qjoypad; in with lib; {
       options.qjoypad = {
         enable = mkEnableOption "foo";
 
@@ -1131,672 +1738,159 @@ rec {
       };
     }))
 
-    # pkgs-i3
-    (mkKnob "seneca" {
-      my.xsession.windowManager.i3 = with funcs.domain.i3; {
+    # misc-qjoypad-impl  
+    (mkKnob [ "aurelius" "seneca" ] {
+      qjoypad = {
         enable = true;
-        package = pkgs.i3-gaps;
-          config = rec {
-            startup = [
-              {
-                command = "feh --bg-fill ~/pape";
-                always = true;
-                notification = false;
-              }
-              {
-                command = genPolybarStartup; 
-                always = true;
-                notification = false;
-              }
-            ];
-        
-            defaultWorkspace = "workspace number 1";
-            
-            gaps = { 
-              "bottom" = constants.GAP + constants.BAR-HEIGHT + constants.GAP; 
-              "inner" = constants.GAP + constants.GAP; 
-            };
-
-            window.border = constants.GAP / 2;
-
-            colors =  
-              genColors 
-                constants.COLORS.dark-blue 
-                constants.COLORS.light-blue 
-                constants.COLORS.black;
-
-            bars = [ ];
-            terminal = "kitty";
-            modifier = "Mod4";
-            keybindings = lib.mkOptionDefault {
-                "${modifier}+q" = "split toggle";
-
-                "${modifier}+Return" = "exec ${terminal}";
-                "${modifier}+BackSpace" = "exec qutebrowser";
-
-                "${modifier}+h" = "focus left";
-                "${modifier}+j" = "focus down";
-                "${modifier}+k" = "focus up";
-                "${modifier}+l" = "focus right";
-
-                "${modifier}+Shift+h" = "move left";
-                "${modifier}+Shift+j" = "move down";
-                "${modifier}+Shift+k" = "move up";
-                "${modifier}+Shift+l" = "move right";
-
-                "${modifier}+Up" = "exec pactl set-sink-volume @DEFAULT_SINK@ +5%";
-                "${modifier}+Down" = "exec pactl set-sink-volume @DEFAULT_SINK@ -5%";
+        defaultLayout = "main";
+        layouts = {
+          "main" = {
+            isDefault = true;
+            lyt = {
+              "Joystick 1" = {
+                "Axis 1" = [ "gradient" "maxSpeed 3" "mouse+h" ];
+                "Axis 2" = [ "gradient" "maxSpeed 3" "mouse+v" ];
+                "Axis 3" = [ "gradient" "+key 0" "-key 0" ];
+                "Axis 4" = [ "gradient" "+key 0" "-key 0" ];
+                "Axis 7" = [ "+key 114" "-key 113" ];
+                "Axis 8" = [ "+key 116" "-key 111" ];
+                "Button 1" = [ "key 0" ];
+                "Button 3" = [ "key 0" ];
+                "Button 4" = [ "mouse 1" ];
+              };
             };
           };
         };
-    })
-
-    # pkgs-polybar
-    (mkKnob "seneca" {
-      my.services.polybar = with funcs.domain.polybar; {
-        enable = true;
-        package = pkgs.polybar.override {
-          i3GapsSupport = true;
-          githubSupport = true;
-          pulseSupport = true;
-        };
-        script = "";
-        settings =
-          let 
-            bar-defaults = {
-              bottom = true;
-              background = constants.COLORS.dark-blue;
-              foreground = constants.COLORS.white;
-              override-redirect = true;
-              wm-restack = "i3";
-              height = constants.BAR-HEIGHT;
-              offset.y = 20;
-              radius = 0;
-    #          font = [ "Vegur:pixelsize=16:weight=bold;3" ];
-              font = [ "JetBrains Mono:pixelsize=16:weight=bold;3" ];
-            };
-
-            module-defaults = {
-              format = {
-                background = constants.COLORS.dark-blue;
-                padding = 1;
-              };
-            };
-          in
-            funcs.general.doRecursiveUpdates bar-defaults (applyToEachMonitor rec {
-              workspaces = makeAbsoluteLeft {
-                width = 180;
-                modules-left = "i3";
-              };
-
-              time = makeAbsoluteRight {
-                width = 84;
-                modules-center = "time";
-              }; 
-
-              date = makeLeftOf time {
-                locale = config.i18n.extraLocaleSettings.LC_TIME;
-                width = 216;
-                modules-center = "date";
-              }; 
-
-              battery = makeLeftOf date {
-                width = 135;
-                modules-center = "battery";
-                font = bar-defaults.font ++ [ "Material Design Icons:size=18:style=Regular;3" ];
-              };
-
-              pulseaudio = makeLeftOf battery {
-                width = 135;
-                modules-center = "pulseaudio";
-                font = bar-defaults.font ++ [ "Material Design Icons:size=18:style=Regular;3" ];
-              };
-              
-              network = makeLeftOf pulseaudio {
-                width = 40;
-                modules-center = "network";
-                font = bar-defaults.font ++ [ "Material Design Icons:size=18:style=Regular;3" ];
-              };
-
-
-
-            })
-
-            //
-
-            funcs.general.doRecursiveUpdates module-defaults { 
-              "module/i3" = 
-                let
-                  labels = genAttrs 
-                    [ "label-focused" "label-unfocused" "label-visible" ] 
-                    (name: { text = "%name%"; padding = 1; background = constants.COLORS.dark-blue; });
-                in 
-                  recursiveUpdate labels {
-                    format.padding = 0;
-                    type = "internal/i3";
-                    pin-workspaces = true;
-                    show-urgent = true;
-                    strip-wsnumbers = true;
-                    index-sort = true;
-                    enable-click = false;
-                    enable-scroll = false;
-                    wrapping-scroll = false;
-                    reverse-scroll = false;
-                    label-focused.background = constants.COLORS.light-blue;
-                  };
-              "module/time" = {
-                type = "internal/date";
-                internal = 5;
-                time = "%H:%M";
-                label = "%time%";
-              };
-              "module/date" = {
-                type = "internal/date";
-                internal = 5;
-                date = "%Y-%m-%d | %a"; 
-                label = "%date%";
-              };
-              "module/xwindow" = {
-                type = "internal/xwindow";
-              };
-              "module/battery" = {
-                type = "internal/battery";
-                battery = "BAT0";
-                adapter = "AC";
-                ramp-capacity = [
-                  "󰂎"
-                  "󰁺"
-                  "󰁻"
-                  "󰁼"
-                  "󰁽"
-                  "󰁾"
-                  "󰁿"
-                  "󰂀"
-                  "󰂁"
-                  "󰂂"
-                  "󰁹"
-                ];
-                format = {
-                  discharging.text = "<ramp-capacity>󱐥 <label-discharging>";
-                  charging.text = "<ramp-capacity>󰚥 <label-charging>";
-                  full.text = "<ramp-capacity>󰸞 <label-full>";
-                };
-                label.text = "%percentage%%";
-                low-at = 10; 
-              };
-
-              "module/pulseaudio" = {
-                type = "internal/pulseaudio";
-                format-volume = "<ramp-volume> <label-volume>";
-                ramp-volume = [
-                  "󰕿"
-                  "󰖀"
-                  "󰕾"
-                ];
-                label-muted = "󰖁";
-              };
-
-              "module/network" = {
-                type = "internal/network";
-                interface = "wlan0";
-                ramp-signal = [
-                  "󰣾"
-                  "󰣴"
-                  "󰣶"
-                  "󰣸"
-                  "󰣺"
-                ];
-                format = {
-                  connected.text = "<ramp-signal>";
-                  disconnected.text = "󰣽";
-                  packetloss.text = "󰣻";
-                };
-              };
-            };
-        };
-    })
-  
-    # pkgs-zsh
-    (mkKnob true {
-      # sets default shell
-      users.users.ejg.shell = pkgs.zsh;
-
-      # required for
-      # https://nix-community.github.io/home-manager/options.html#opt-programs.zsh.enableCompletion
-      environment.pathsToLink = [ "/share/zsh" ];
-
-      my.programs.zsh = {
-        enable = true;
-        enableSyntaxHighlighting = true;
-        enableVteIntegration = true;
-        autocd = true;
-        # cdpath = [ ]  could try and add this later?
-        # defaultKeymap  perhaps this too
-        # dirHashes     definitely this, could be very useful
-      
-        localVariables = {
-          PROMPT="%F{68}%n@%m%f:%F{14}%~%f $ ";
-        };
       };
     })
   
-    # pkgs-pfetch
-    (mkKnob true {
-      my.home = {
-        packages = [ pkgs.pfetch ]; 
-        shellAliases."pf" = "echo && pfetch"; # inserts a newline before pfetch 
-        sessionVariables = {
-          PF_INFO = "ascii os host kernel wm editor pkgs memory";
-          PF_COL1 = 6;
-          PF_COL2 = 4; 
-          PF_COL3 = 4;
-        };
-      };
-      
+    # wine-base
+    (mkKnob [ "aurelius" ] {
+      hardware.opengl.driSupport32Bit = true;
+    
+      my.home.packages = with pkgs; [
+        wineWowPackages.staging
+        winetricks
+      ];
     })
-
-    # pkgs-kitty 
-    (mkKnob [ "seneca" ] {
-      my.programs.kitty = {
-        enable = true;
-        font = {
-          name = "JetBrains Mono";
-        };
-
-        settings = { 
-          confirm_os_window_close = 0; 
-          window_padding_width = 4;
-        };
-
-        # manually load the Clrs theme
-        extraConfig = ''
-          # vim:ft=kitty
-          ## name: Doom One Light
-          ## author: Henrik Lissner <https://github.com/hlissner>
-          ## license: MIT
-          ## blurb: Doom Emacs flagship theme based on atom One Light
-          # The basic colors
-          foreground                      #383a42
-          background                      #fafafa
-          selection_foreground            #383a42
-          selection_background            #dfdfdf
-          # Cursor colors
-          cursor                          #383a42
-          cursor_text_color               #fafafa
-          # kitty window border colors
-          active_border_color     #0184bc
-          inactive_border_color   #c6c7c7
-          # Tab bar colors
-          active_tab_foreground   #fafafa
-          active_tab_background   #383a42
-          inactive_tab_foreground #f0f0f0
-          inactive_tab_background #c6c7c7
-          # The basic 16 colors
-          # black
-          color0 #383a42
-          color8 #c6c7c7
-          # red
-          color1 #e45649
-          color9 #e45649
-          # green
-          color2  #50a14f
-          color10 #50a14f
-          # yellow
-          color3  #986801
-          color11 #986801
-          # blue
-          color4  #4078f2
-          color12 #4078f2
-          # magenta
-          color5  #a626a4
-          color13 #b751b6
-          # cyan
-          color6  #005478
-          color14 #0184bc
-          # white
-          color7  #f0f0f0
-          color15 #383a42
-        '';
-    #    settings = {
-    #      background = COLORS.dark-blue;
-    #      foreground = COLORS.white;
-    #    };
-        
-      };
-    })
-
-    # qutebrowser-extra
-    # Sets some extra hardcoded python stuff by overlaying the postInstall and sedding away
-    (mkKnob "seneca" {
-      my.nixpkgs.overlays = 
+  
+    # wine-musicbee
+    (mkKnob [ "aurelius" ] {
+      my.home.packages = (
         let
-          # custom variables
-          activeDownloadFormat = "({index}) {name} | {total} | {perc:<2}% | {speed:<10}";
-          doneDownloadFormat = "({index}) {name} | {total} | {perc:<2}% | Finished!"; 
-
-          # inferred
-          setActiveDownloadsFormat = concatStrings [
-            # This format is defined over two lines in the original python class, 
-            # requiring two sed commands to fully change it.
-
-            ''cat ''
-              ''"qutebrowser/browser/downloads.py"''
+          wpfx = "/home/ejg/musicbee";
+        in with pkgs; [(
+          writeShellScriptBin 
+            "mb"
+            ''
+              WINEPREFIX=${wpfx} wine ${wpfx}/MusicBee.exe
+            ''
+        )]
+      );
             
-            " | "
-
-            ''sed "s''
-                ''/{index}: {name} \[{speed:>10}|{remaining:>5}|{perc:>2}%|''
-                ''/${activeDownloadFormat}''
-            ''/g"''
-            
-            " | "
-
-            ''sed "s''
-                ''/{down}\/{total}\]''
-                ''/''  # delete
-            ''/g"''
-
-            # Set done downloads format
-            # sed "s/{index}: {name} \[{perc:>2}%|{total}\]/FOUND2/g"
-
-            " | "
-
-            ''sed "s''
-              ''/{index}: {name} \[{perc:>2}%|{total}\]''
-              ''/${doneDownloadFormat}''
-            ''/g"''
-              
-            " > "
-              
-            ''"$out/lib/python3.9/site-packages/qutebrowser/browser/downloads.py"''
-          ];
-
-
-
-        in
-          [(self: super: {
-              qutebrowser = super.qutebrowser.overrideAttrs (oldAttrs: rec {
-                postInstall = oldAttrs.postInstall + ''
-                  ${setActiveDownloadsFormat}
-                '';
-              });
-            }
-          )]
-      ;
-    })
-
-    # pkgs-qutebrowser
-    (mkKnob "seneca" {
-      my.programs.qutebrowser = {
-        enable = true;
-        searchEngines = {
-          DEFAULT = "https://www.google.com/search?q={}";
-          yt = "http://192.168.1.2:34030/search?q={}";
-        };
-        keyBindings = {
-          normal = {
-            "J" = "tab-prev";
-            "K" = "tab-next";
-            "gJ" = "tab-move -";
-            "gK" = "tab-move +";
-            "ew" = "jseval -q document.activeElement.blur()";
-            "eb" = "spawn --userscript /config/parts/home/programs/qutebrowser/edit-quickmarks.sh";  # doesn't work as of yet
-            ",d" = ''hint links spawn zsh -lic "aurta {hint-url}"''; 
-            ",yy" = ''yank inline https://youtube.com/watch?{url:query}'';
-          };
-        };
-      };
-    })
-
-    # pkgs-qutebrowser-qms
-    (mkKnob "seneca" {
-      my.programs.qutebrowser.quickmarks = {
-        # f (feed)
-        f-m = "https://mail.google.com/mail/u/0/#inbox";
-        f-d = "https://discord.com/channels/@me";
-        f-ch = "https://https://4chan.org/";
-
-        # t (tech)
-          t-1 = "https://github.com/emanueljg/nixos";
-
-          # t-no (tech-nixos)
-          t-no-opt = "https://search.nixos.org/options";
-          t-no-hm = "https://nix-community.github.io/home-manager/options.html";
-          t-no-pkgs = "https://search.nixos.org/packages";
-          t-no-lang = "https://teu5us.github.io/nix-lib.html#nix-builtin-functions";
-
-          # t-qb (tech-qutebrowser)
-          t-qb-faq = "https://qutebrowser.org/FAQ.html";
-          t-qb-func = "https://qutebrowser.org/doc/help/commands.html";
-          t-qb-us = "https://qutebrowser.org/doc/userscripts.html";
-
-          # t-dl (tech-downloads)
-          t-dl-nsi = "https://nyaa.si/";
-          t-dl-rbg  = "https://rarbg.to/torrents.php";
-          t-dl-1337x = "https://www.1377x.to/";
-
-        # s (server)
-        s-dl = "192.168.1.2:34012";
-        s-jf = "192.168.1.2:8096";
-      };
-    })
-
-
-    # pkgs-git
-    (mkKnob true {
-      my.programs.git = {
-        enable = true;
-        userEmail = "emanueljohnsongodin@gmail.com";
-        userName = "emanueljg";
-      };
+      # my.home.shellAliases."mb" = (
+      #   let wpfx = "/home/ejg/musicbee"; 
+      #   in "WINEPREFIX=${wpfx} wine ${wpfx}/MusicBee.exe"
+      # );  
     })
   
-    # pkgs-gh
-    # allows for a local gh interface
-    (mkKnob true {
-      my.programs.gh = {
-        enable = true;
-      };
+    # games-steam
+    (mkKnob [ "aurelius" ] {
+      programs.steam.enable = true;
     })
+  
+    # misc-pyradio
+    (mkKnob [ "aurelius" "seneca" ] {
+      my.home.packages = [ pkgs.pyradio ];
+    })
+  
+    # misc-keepass
+    (mkKnob [ "aurelius" "seneca" ] {
+    
+      # add the keychain usb stick
+      services.udev.extraRules = (
+        let
+          device = "F523-1613";
+          flags = [
+            ''ACTION=="add"''
+            ''SUBSYSTEMS=="usb"''
+            ''SUBSYSTEM=="block"''
+            # ''ENV{ID_FS_USAGE}=="filesystem"'' # x?
+            ''ENV{ID_FS_UUID}=="${device}"''
+            ''RUN+="${pkgs.util-linux}/bin/logger --tag my-manual-usb-mount Mounting the device with UUID ${device}"''
+            ''RUN{program}+="${pkgs.systemd}/bin/systemd-mount --no-block --automount=yes --collect /dev/disk/by-uuid/${device} /mnt/keychain"''       
+          ];
+        in (
+          concatStringsSep
+            ", "
+            flags
+        )
+      );
+    
+      my.home.packages = with pkgs; [
+        keepassxc
+        
+        # for qute-keepass
+        python310Packages.pykeepass
+        python310Packages.pyqt5  
+      ];
+    
+      # patch in functionality for qutebrowser
+      my.programs.qutebrowser = {
+        keyBindings.normal.",p" = (
+          "spawn --userscript qute-keepass -p /mnt/keychain/secrets.kdbx"
+        );
+      
+        aliases."kpa" = "spawn --userscript kp-save";
+      };
+    
+      # add password creation functionality
+      my.xdg.dataFile."qutebrowser/userscripts/kp-save" = {
+        executable = true;
+        text = ''
+          #!${pkgs.bash}/bin/bash
+        
+          fifo () {
+            echo "$1" >> "$QUTE_FIFO"
+          }
+        
+          if [ "$1" = "-" ]; then
+            URL=$(echo "$QUTE_URL" | grep -Po '.*?//\K.*?(?=/)') 
+          else
+            URL="$1"
+          fi
+         
+          if [ "$2" = "-" ]; then 
+            USERNAME="emanueljohnsongodin@gmail.com"
+          else
+            USERNAME="$2"
+          fi
+        
+          PASSWORD="$(keepassxc-cli generate --every-group)"
+          echo "$PASSWORD" | xclip -sel clip
+          OBSCURED_PASSWORD="$(echo "$PASSWORD" | sed "s/./*/g")"
+        
+          fifo "message-info 'Setting new keepassxc entry:'"
+          fifo "message-info '______________________'"
+          fifo "message-info 'URL/Title: "$URL"'"
+          fifo "message-info 'Username: "$USERNAME"'"
+          fifo "message-info 'Password: "$OBSCURED_PASSWORD" (copied!)'"
+          fifo "message-info '______________________'"
+          
+          kitty --hold \
+            sudo keepassxc-cli add \
+            --url "$URL" \
+            --username "$USERNAME" \
+            --password-prompt \
+            /mnt/keychain/secrets.kdbx \
+            "/''${URL}"
 
-    # pkgs-neovim
-    (mkKnob true {
-      my.programs.neovim = {
-        enable = true;
-        plugins = with pkgs.vimPlugins; [ 
-          vim-nix 
-        ];
-        extraConfig = ''
-         set number
-         set tabstop=4 shiftwidth=4
-         autocmd Filetype nix setlocal ts=2 sw=2
-         :command Nrs !sudo nixos-rebuild switch
+          # clear clipboard for security reasons
+          echo "" | xclip -sel clip
         '';
       };
-    })
-
-    # try out helix on trial
-    (mkKnob true {
-      my.programs.helix = {
-        enable = true;
-        package = unstable.helix;
-        settings = {
-          theme = "snowy";
-          editor = {
-            line-number = "relative";
-            auto-pairs = false;  # simple fix, having it on is more trouble than it's worth for now
-          };
-        };
-
-        themes = {
-          snowy = with constants;
-            let
-              transparent = "none";
-              gray = "#665c54";
-              dark-gray = "#3c3836";
-              white = "#fbf1c7";
-              black = "#282828";
-              red = "#fb4934";
-              green = "#b8bb26";
-              yellow = "#fabd2f";
-              blue = "#83a598";
-              magenta = "#d3869b";
-              cyan = "#8ec07c";
-            in rec {
-              # menu
-                # bottom 
-                  # status bar 
-                    "ui.statusline" = { fg = COLORS.white; bg = COLORS.dark-blue; };
-                    "ui.statusline.inactive" = { fg = COLORS.dark-blue; bg = white; };
-
-                  # command autocomplete popup
-                    "ui.menu" = { fg = COLORS.white; bg = COLORS.dark-blue; };
-                    "ui.menu.selected" = { fg = COLORS.white; bg = COLORS.light-blue; };
-                    "ui.help" = { fg = COLORS.white; bg = COLORS.light-blue; };
-                
-                # left side (gutters)
-                  # diagnostics (left of line numbers)
-                    "diagnostics" = { fg = COLORS.white; bg = COLORS.dark-blue; };
-              
-                  # line numbers
-                    "ui.linenr" = { fg = COLORS.white; bg = COLORS.dark-blue; };
-                    "ui.linenr.selected" = { fg = COLORS.white; bg = COLORS.light-blue; modifiers = [ "bold" ]; };
-
-                # right side (only "extra commands"-popup for now)              
-                  "ui.popup" = COLORS.dark-blue;
-
-              # otherwise meta
-                "ui.selection" = { modifiers = [ "underlined" ]; };
-                "ui.selection.primary" = {  modifiers = [ "underlined" ]; };
-                "ui.cursor" = { modifiers = [ "reversed" ]; };
-                "ui.cursor.match" = { modifiers = [ "reversed" "bold" ]; };
-              
-              # syntax
-                "comment" = { fg = gray; };
-                "variable" = COLORS.dark-blue;
-                "constant" = COLORS.gold;
-                "attributes" = yellow;
-                "type" = "#fa0590";
-                "string" = COLORS.green;
-                "variable.other.member" = COLORS.very-dark-blue;
-                "function" = COLORS.pink;
-                "keyword" = COLORS.purple;
-
-              # (unknowns/unused)
-                "ui.window" = COLORS.pink;
-                "variable.builtin" = COLORS.pink;
-                "constant.numeric" = COLORS.pink;
-                "constant.character.escape" = COLORS.pink;
-                "constructor" = COLORS.pink;
-                "special" = COLORS.pink;
-                "label" = COLORS.pink;
-                "namespace" = COLORS.pink;
-                "diff.plus" = COLORS.pink;
-                "diff.delta" = COLORS.pink;
-                "diff.minus" = COLORS.pink;
-                "diagnostic" = COLORS.pink;
-                "info" = COLORS.pink;
-                "hint" = COLORS.pink;
-                "debug" = COLORS.pink;
-                "warning" = COLORS.pink;
-                "error" = COLORS.pink;
-            }
-          ;
-        };
-      };
-    })
     
-    # pkgs-helix-patch-aurelius-default-editor
-    (mkKnob "aurelius" {
-      environment.sessionVariables."EDITOR" = "hx";
     })
-
-    # misc-dircolors
-    (mkKnob [ "seneca" ] {
-      my.programs.dircolors = {
-        enable = true;
-        settings = {
-          OTHER_WRITABLE = "01;33";
-        };
-      };
-    })
-
-
-
-
-    # misc seneca packages
-    (mkKnob [ "seneca" ] {
-      my.home.packages = with pkgs; [
-        dmenu
-        i3status
-        i3lock
-        xclip
-        vegur
-        material-design-icons
-        feh
-        mpv
-        pv
-        jetbrains-mono
-      ];
-    })
-
-    # seneca flatpaks
-    (mkKnob [ "seneca" ] {
-      services.flatpak.enable = true;
-      xdg.portal.enable = true;
-      xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-    })
-  
-    # pkgs-appimage
-    (mkKnob "seneca" {
-      my.home.packages = with pkgs; [ 
-        appimage-run 
-      ];
-    })
-  
-    # pkgs-appimage-artix-games-launcher
-    (mkKnob "seneca" {
-      environment.systemPackages = [
-        (pkgs.callPackage 
-          ({appimageTools, lib, pkgs }: appimageTools.wrapType2 rec {
-            pname = "artix-games-launcher";
-            version = "latest";
-        
-            src = builtins.fetchurl {
-              url = "https://launch.artix.com/latest/Artix_Games_Launcher-x86_64.AppImage";
-              sha256 = "0qa5rrrmvxgy90lbpxjxsyf22wj1l5im0p4idizkdwb1cwc3rnjk";
-            };
-            })
-          {}
-        )
-      ];
-      my.home.shellAliases = { "agll" = "artix-games-launcher-latest"; };
-    })
-  
-    # pkgs-byzanz
-    (mkKnob "seneca" {
-      my.home.packages = with pkgs; [
-        byzanz
-      ];
-    
-      my.home.shellAliases = {
-        "record-single" = "byzanz-record --exec 'sleep infinity'  -x 0 -y -0 -w 1920 -h 1080";
-        "record-double" = "byzanz-record --exec 'sleep infinity'  -x 0 -y -0 -w 3840 -h 1080";
-      };
-    })
-  
-    # pkgs-android
-    (mkKnob "seneca" {
-      my.home.packages = with pkgs; [
-        android-tools
-        scrcpy
-      ];
-    
-      my.home.shellAliases = {
-        phone = "adb connect 192.168.1.4 && scrcpy";
-      };
-    })
-
   ];
 }
 
