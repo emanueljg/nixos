@@ -1891,6 +1891,14 @@ rec {
       };
     
     })
+  
+    (mkKnob [ "aurelius" "seneca" ] {
+      programs.ssh.startAgent = true;
+      my.home.packages = with pkgs; [ 
+        libsecret
+        x11_ssh_askpass
+      ];
+    })
   ];
 }
 
