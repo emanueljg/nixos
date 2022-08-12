@@ -946,10 +946,10 @@ rec {
     })
   
     (mkKnob [ "aurelius" "seneca" ] (let cfg = config.custom; in with lib; {
-      options.custom = {
-        monitors = mkOption {
-          description = "all monitors";
-          type = with types; attrsOf (submodule {
+      options.custom = rec {
+        defaultMonitor = mkOption {
+          description = "defaut pseudo monitor that all other monitors update";
+          type = with types; submodule {
             options = {
               autorandr = mkOption {
                 type = attrs;
@@ -957,13 +957,24 @@ rec {
               
               workspaces = mkOption {
                 type = listOf int;
+                default = range 1 10;
               };
 
               bars = mkOption {
                 type = attrs;
               };            
             };
-          });
+          };
+        };
+              
+        monitors = mkOption {
+          description = "all monitors";
+          type = types.attrsOf defaultMonitor.type;
+          apply = (ms:
+            funcs.general.doRecursiveUpdates
+              config.custom.defaultMonitor
+              ms
+          );
         };
       };
 
@@ -1093,50 +1104,83 @@ rec {
     }))
 
     (mkKnob [ "aurelius" "seneca" ] {
-      custom.monitors = 
-        let
-          default = {
-            autorandr = {
-              enable = true;
-              inProfile = "default";
-              mode = "1920x1080";
-              rate = "60.00";
-              # fingerprint = ???
-              # primary = ???
-            };
-      
-            # old battery width = 135
-            bars = {
-              workspaces = { modules-left="i3"; width = "x"; _adjust = "left"; };
-
-              time =       {                    width = 84;  _adjust = "right"; };
-              date =       {                    width = 216; _adjust = "leftOf time"; };
-              battery =    {                    width = 0;   _adjust = "leftOf date"; };
-              pulseaudio = {                    width = 110; _adjust = "leftOf date"; };
-              network =    {                    width = 40;  _adjust = "leftOf pulseaudio"; };
-            };
-          };
-
-        in funcs.general.doRecursiveUpdates default {        
-          "DP-0" = {
-            autorandr = {
-              fingerprint = "00ffffffffffff0006b3a425010101011a1e0104a5361e783b4c00a75552a028135054b7ef00714f8180814081c081009500b3000101023a801871382d40582c4500202f2100001e000000fd0028a5c3c329010a202020202020000000fc0056473235380a20202020202020000000ff004c364c4d51533136373535320a01a0020318f14b900504030201111213141f2309070783010000a49c80a07038594030203500202f2100001a8a4d80a070382c4030203500202f2100001afe5b80a07038354030203500202f2100001a866f80a07038404030203500202f2100001afc7e80887038124018203500202f2100001e00000000000000000000000000af"; 
-              primary = true;
-              position = "0x0";
-            };
-    
-            workspaces = range 1 5;
-          };
-
-          "DVI-D-0" = {
-            autorandr = {
-              fingerprint = "00ffffffffffff0006b3a32501010101191e010380361e78ea4c00a75552a028135054b7ef00714f8180814081c081009500b3000101023a801871382d40582c4500202f2100001e000000fd0032901ea021000a202020202020000000fc0056473235380a20202020202020000000ff004c364c4d51533131323037380a01fc020104008a4d80a070382c4030203500202f2100001afe5b80a07038354030203500202f2100001a866f80a07038404030203500202f2100001afc7e80887038124018203500202f2100001e00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000077";
-              position = "1920x0";
-            };
-            
-            workspaces = range 6 10;
-          };
+      custom.defaultMonitor = {
+        autorandr = {
+          enable = true;
+          inProfile = "default";
+          mode = "1920x1080";
+          rate = "60.00";
+          # fingerprint = ???
+          # primary = ???
         };
+    })
+  
+    # pkgs-zsh
+    (mkKnob [ "aurelius" "seneca" ] {
+      # sets default shell
+      users.users.ejg.shell = pkgs.zsh;
+
+      # required for
+      # https://nix-community.github.io/home-manager/options.html#opt-programs.zsh.enableCompletion
+      environment.pathsToLink = [ "/share/zsh" ];
+
+      my.programs.zsh = {
+        enable = true;
+        enableSyntaxHighlighting = true;
+        enableVteIntegration = true;
+        autocd = true;
+        # cdpath = [ ]  could try and add this later?
+        # defaultKeymap  perhaps this too
+        # dirHashes     definitely this, could be very useful
+      
+        workspaces = range 1 10;
+
+        # old battery width = 135
+        bars = {
+          workspaces = { modules-left="i3"; width = "x"; _adjust = "left"; };
+
+          time =       {                    width = 84;  _adjust = "right"; };
+          date =       {                    width = 216; _adjust = "leftOf time"; };
+          battery =    {                    width = 0;   _adjust = "leftOf date"; };
+          pulseaudio = {                    width = 110; _adjust = "leftOf date"; };
+          network =    {                    width = 40;  _adjust = "leftOf pulseaudio"; };
+        };
+      };
+    })
+    
+    (mkKnob [ "aurelius" ] {
+      custom.monitors = {
+        "DP-0" = {
+          autorandr = {
+            fingerprint = "00ffffffffffff0006b3a425010101011a1e0104a5361e783b4c00a75552a028135054b7ef00714f8180814081c081009500b3000101023a801871382d40582c4500202f2100001e000000fd0028a5c3c329010a202020202020000000fc0056473235380a20202020202020000000ff004c364c4d51533136373535320a01a0020318f14b900504030201111213141f2309070783010000a49c80a07038594030203500202f2100001a8a4d80a070382c4030203500202f2100001afe5b80a07038354030203500202f2100001a866f80a07038404030203500202f2100001afc7e80887038124018203500202f2100001e00000000000000000000000000af"; 
+            primary = true;
+            position = "0x0";
+          };
+
+          workspaces = range 1 5;
+        };
+
+        "DVI-D-0" = {
+          autorandr = {
+            fingerprint = "00ffffffffffff0006b3a32501010101191e010380361e78ea4c00a75552a028135054b7ef00714f8180814081c081009500b3000101023a801871382d40582c4500202f2100001e000000fd0032901ea021000a202020202020000000fc0056473235380a20202020202020000000ff004c364c4d51533131323037380a01fc020104008a4d80a070382c4030203500202f2100001afe5b80a07038354030203500202f2100001a866f80a07038404030203500202f2100001afc7e80887038124018203500202f2100001e00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000077";
+            position = "1920x0";
+          };
+      
+          workspaces = range 6 10;
+        };
+      };
+    })
+  
+    (mkKnob [ "seneca" ] {
+      custom.monitors = {
+        "eDP-1" = {
+          autorandr.fingerprint = "00ffffffffffff0009e5c00600000000011a0104951c10780af6a0995951942d1f505400000001010101010101010101010101010101c93680cd703814403020360018a51000001ad42b80cd703814406464440518a51000001a000000fe003138364743804e5631324e353100000000000041119e001000000a010a202000d6";
+          
+          # make room for battery bar
+          bars.battery.width = 135;
+          bars.pulseaudio._adjust = "leftOf battery";
+        };
+      };
     })
   
     # pkgs-zsh
@@ -1865,6 +1909,14 @@ rec {
         '';
       };
     
+    })
+  
+    (mkKnob [ "aurelius" "seneca" ] {
+      programs.ssh.startAgent = true;
+      my.home.packages = with pkgs; [ 
+        libsecret
+        x11_ssh_askpass
+      ];
     })
   ];
 }
