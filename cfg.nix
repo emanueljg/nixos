@@ -1902,6 +1902,12 @@ rec {
         x11_ssh_askpass
       ];
     })
+  
+    (mkKnob [ "aurelius" "seneca" ] {
+      my.home.packages = with pkgs; [ 
+        python311 
+      ];
+    })
   ];
 }
 
