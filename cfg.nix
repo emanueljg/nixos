@@ -1908,6 +1908,12 @@ rec {
         python311 
       ];
     })
+  
+    (mkKnob [ "aurelius" "seneca" ] {
+      my.home.packages = with pkgs; {
+        mupdf
+      ];
+    })
   ];
 }
 
