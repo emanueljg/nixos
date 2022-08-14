@@ -795,7 +795,7 @@ rec {
           config = rec {
             startup = [
               {
-                command = "feh --bg-fill ~/pape";
+                command = "feh --bg-fill ~/.pape";
                 always = true;
                 notification = false;
               }
