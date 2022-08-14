@@ -1139,6 +1139,8 @@ rec {
           };
 
           workspaces = range 1 5;
+        
+          bars = { };
         };
 
         "DVI-D-0" = {
@@ -1148,6 +1150,8 @@ rec {
           };
       
           workspaces = range 6 10;
+        
+          bars = { };
         };
       };
     })
