@@ -795,7 +795,7 @@ rec {
           config = rec {
             startup = [
               {
-                command = "feh --bg-fill ~/pape";
+                command = "feh --bg-fill ~/.pape";
                 always = true;
                 notification = false;
               }
@@ -1139,6 +1139,8 @@ rec {
           };
 
           workspaces = range 1 5;
+        
+          bars = { };
         };
 
         "DVI-D-0" = {
@@ -1148,6 +1150,8 @@ rec {
           };
       
           workspaces = range 6 10;
+        
+          bars = { };
         };
       };
     })
@@ -1815,7 +1819,6 @@ rec {
             ''ACTION=="add"''
             ''SUBSYSTEMS=="usb"''
             ''SUBSYSTEM=="block"''
-            # ''ENV{ID_FS_USAGE}=="filesystem"'' # x?
             ''ENV{ID_FS_UUID}=="${device}"''
             ''RUN+="${pkgs.util-linux}/bin/logger --tag my-manual-usb-mount Mounting the device with UUID ${device}"''
             ''RUN{program}+="${pkgs.systemd}/bin/systemd-mount --no-block --automount=yes --collect /dev/disk/by-uuid/${device} /mnt/keychain"''       
@@ -1897,6 +1900,19 @@ rec {
       my.home.packages = with pkgs; [ 
         libsecret
         x11_ssh_askpass
+      ];
+    })
+  
+    (mkKnob [ "aurelius" "seneca" ] {
+      my.home.packages = with pkgs; [ 
+        python311 
+      ];
+    })
+  
+    (mkKnob [ "aurelius" "seneca" ] {
+      # https://askubuntu.com/questions/314802/is-there-a-comprehensive-list-of-mupdf-keyboard-shortcuts
+      my.home.packages = with pkgs; [
+        mupdf
       ];
     })
   ];
