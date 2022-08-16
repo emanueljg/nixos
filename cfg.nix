@@ -411,7 +411,7 @@ rec {
       networking = {
         hostName = "seneca";
         interfaces = {
-          enp0s20f0u3u1i5.useDHCP = false;
+          # enp0s20f0u3u1i5.useDHCP = false;
           enp0s31f6.useDHCP = false;
           wlan0.useDHCP = true;
         };
