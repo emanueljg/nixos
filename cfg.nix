@@ -310,20 +310,16 @@ rec {
         grub.version = 2;
         grub.efiSupport = true;
         grub.device = "nodev";
-        grub.extraEntries = ''
-          menuentry "Windows 10" {
-            chainloader /EFI/Microsoft/Boot/.bootmgfw.efi
-          }
-        '';
         efi.canTouchEfiVariables = true;
       };
     })
   
-    # boot-dualboot-order-hack
+    # boot-base-windows-hack
     (mkKnob [ "aurelius" ] {
-      boot.loader.systemd-boot.extraEntries."o-Win10.conf" = ''
-        title Win10
-        efi /efi/Microsoft/Boot/.bootmgfw.efi
+      boot.loader.grub.extraEntries = ''
+        menuentry "Windows 10" {
+          chainloader /EFI/Microsoft/Boot/.bootmgfw.efi
+        }
       '';
     })
 
