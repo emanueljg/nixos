@@ -1911,6 +1911,12 @@ rec {
         mupdf
       ];
     })
+  
+    (mkKnob [ "aurelius" "seneca" ] {
+      my.home.packages = with pkgs; [
+        texlive.combined.scheme-basic
+      ];
+    })
   ];
 }
 
