@@ -1891,6 +1891,7 @@ rec {
     
     })
   
+    # misc-secrets
     (mkKnob [ "aurelius" "seneca" ] {
       programs.ssh.startAgent = true;
       my.home.packages = with pkgs; [ 
@@ -1899,12 +1900,14 @@ rec {
       ];
     })
   
+    # prog-py
     (mkKnob [ "aurelius" "seneca" ] {
       my.home.packages = with pkgs; [ 
         python311 
       ];
     })
   
+    # misc-pdf
     (mkKnob [ "aurelius" "seneca" ] {
       # https://askubuntu.com/questions/314802/is-there-a-comprehensive-list-of-mupdf-keyboard-shortcuts
       my.home.packages = with pkgs; [
@@ -1912,6 +1915,7 @@ rec {
       ];
     })
   
+    # misc-latex
     (mkKnob [ "aurelius" "seneca" ] {
       my.home.packages = with pkgs; [
         texlive.combined.scheme-basic
