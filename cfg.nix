@@ -357,6 +357,10 @@ rec {
       my.home.shellAliases."hib" = "sudo pm-hibernate";
     })
   
+    # boot-hibernation-seneca
+    (mkKnob [ "seneca" ] {
+      boot.resumeDevice = 
+  
     # locale-base
     (mkKnob [ "aurelius" "seneca" ] {
       i18n = ( 
