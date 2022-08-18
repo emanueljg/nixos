@@ -1787,13 +1787,7 @@ rec {
             ''
         )]
       );
-            
-      # my.home.shellAliases."mb" = (
-      #   let wpfx = "/home/ejg/musicbee"; 
-      #   in "WINEPREFIX=${wpfx} wine ${wpfx}/MusicBee.exe"
-      # );  
-    })
-  
+ 
     # games-steam
     (mkKnob [ "aurelius" ] {
       programs.steam.enable = true;
