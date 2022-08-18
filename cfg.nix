@@ -349,17 +349,15 @@ rec {
     # boot-hibernation
     (mkKnob [ "aurelius" "seneca"] {
       my.home.packages = [ pkgs.pmutils ];
-      boot.resumeDevice = "/dev/sda2";
+      boot.resumeDevice = (
+        (builtins.head config.swapDevices)."device"
+      );
       # used to be needed for dock
       # powerManagement.resumeCommands = ''
       #   ${config.my.xsession.windowManager.i3.package}/bin/i3-msg restart
       # '';
       my.home.shellAliases."hib" = "sudo pm-hibernate";
     })
-  
-    # boot-hibernation-seneca
-    (mkKnob [ "seneca" ] {
-      boot.resumeDevice = 
   
     # locale-base
     (mkKnob [ "aurelius" "seneca" ] {
@@ -1793,6 +1791,7 @@ rec {
             ''
         )]
       );
+    })
  
     # games-steam
     (mkKnob [ "aurelius" ] {
