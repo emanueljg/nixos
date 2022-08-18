@@ -418,7 +418,9 @@ rec {
     (mkKnob [ "aurelius" ] {
       networking = {
         hostName = "aurelius";
-        firewall.enable = false;
+        # this should have been enabled long ago
+        # need to check if everything works
+        firewall.enable = true;
         interfaces = {
           wlp2s0.useDHCP = true;
           eno1.useDHCP = false;
