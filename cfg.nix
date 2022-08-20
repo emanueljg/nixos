@@ -1918,7 +1918,14 @@ rec {
     # misc-latex
     (mkKnob [ "aurelius" "seneca" ] {
       my.home.packages = with pkgs; [
-        texlive.combined.scheme-basic
+        (
+          texlive.combine {
+            inherit (pkgs.texlive) 
+              scheme-basic
+              blindtext
+            ;
+          }
+        )
       ];
     })
   ];
