@@ -349,7 +349,9 @@ rec {
     # boot-hibernation
     (mkKnob [ "aurelius" "seneca"] {
       my.home.packages = [ pkgs.pmutils ];
-      boot.resumeDevice = "/dev/sda2";
+      boot.resumeDevice = (
+        (builtins.head config.swapDevices)."device"
+      );
       # used to be needed for dock
       # powerManagement.resumeCommands = ''
       #   ${config.my.xsession.windowManager.i3.package}/bin/i3-msg restart
@@ -418,7 +420,9 @@ rec {
     (mkKnob [ "aurelius" ] {
       networking = {
         hostName = "aurelius";
-        firewall.enable = false;
+        # this should have been enabled long ago
+        # need to check if everything works
+        firewall.enable = true;
         interfaces = {
           wlp2s0.useDHCP = true;
           eno1.useDHCP = false;
@@ -1787,13 +1791,8 @@ rec {
             ''
         )]
       );
-            
-      # my.home.shellAliases."mb" = (
-      #   let wpfx = "/home/ejg/musicbee"; 
-      #   in "WINEPREFIX=${wpfx} wine ${wpfx}/MusicBee.exe"
-      # );  
     })
-  
+ 
     # games-steam
     (mkKnob [ "aurelius" ] {
       programs.steam.enable = true;
