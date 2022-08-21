@@ -1936,9 +1936,15 @@ rec {
     # prog-java
     (mkKnob [ "aurelius" "seneca" ] {
       # installs package and sets JAVA_HOME
-      my.programs.java = {
-        enable = true;
-        package = pkgs.openjdk11;
+      my = {
+        programs.java = {
+          enable = true;
+          package = pkgs.openjdk11;
+        };
+        
+        home.packages = with pkgs; [
+          gradle_6
+        ];
       };
     })
   ];
