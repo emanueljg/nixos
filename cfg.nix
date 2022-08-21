@@ -1476,7 +1476,9 @@ rec {
         package = unstable.helix;
         
         languages = [
-          { name = "nix"; auto-pairs = false; }
+          { name = "nix"; auto-pairs = false; 
+            #language-server.command = "jdt-language-server"; 
+          }
         ];
         
         settings = {
@@ -1506,7 +1508,7 @@ rec {
                 # bottom 
                   # status bar 
                     "ui.statusline" = { fg = COLORS.white; bg = COLORS.dark-blue; };
-                    "ui.statusline.inactive" = { fg = COLORS.dark-blue; bg = white; };
+                    #"ui.statusline.inactive" = { fg = COLORS.dark-blue; bg = white; };
 
                   # command autocomplete popup
                     "ui.menu" = { fg = COLORS.white; bg = COLORS.dark-blue; };
@@ -1522,13 +1524,22 @@ rec {
                     "ui.linenr.selected" = { fg = COLORS.white; bg = COLORS.light-blue; modifiers = [ "bold" ]; };
 
                 # right side (only "extra commands"-popup for now)              
-                  "ui.popup" = COLORS.dark-blue;
+#                  "ui.popup" = COLORS.dark-blue;
 
               # otherwise meta
                 "ui.selection" = { modifiers = [ "underlined" ]; };
                 "ui.selection.primary" = {  modifiers = [ "underlined" ]; };
                 "ui.cursor" = { modifiers = [ "reversed" ]; };
                 "ui.cursor.match" = { modifiers = [ "reversed" "bold" ]; };
+            
+              # LSP-y
+                "ui.popup" = { fg = COLORS.white; bg = COLORS.light-blue; };
+                "diagnostic" = { fg = COLORS.white; bg = COLORS.light-blue; };
+                "info" = { fg = COLORS.white; bg = COLORS.light-blue; };
+                "hint" = { fg = COLORS.white; bg = COLORS.light-blue; };
+                "debug" = { fg = COLORS.white; bg = COLORS.light-blue; };
+                "warning" = { fg = COLORS.white; bg = COLORS.light-blue; };
+                "error" = { fg = COLORS.white; bg = COLORS.light-blue; };
               
               # syntax
                 "comment" = { fg = gray; };
@@ -1553,12 +1564,6 @@ rec {
                 "diff.plus" = COLORS.pink;
                 "diff.delta" = COLORS.pink;
                 "diff.minus" = COLORS.pink;
-                "diagnostic" = COLORS.pink;
-                "info" = COLORS.pink;
-                "hint" = COLORS.pink;
-                "debug" = COLORS.pink;
-                "warning" = COLORS.pink;
-                "error" = COLORS.pink;
             }
           ;
         };
@@ -1936,14 +1941,17 @@ rec {
     # prog-java
     (mkKnob [ "aurelius" "seneca" ] {
       # installs package and sets JAVA_HOME
-      my = {
+      my = let pkg = pkgs.openjdk11; in {
         programs.java = {
           enable = true;
-          package = pkgs.openjdk11;
+          package = pkg;
         };
         
         home.packages = with pkgs; [
-          (gradle.override {java = openjdk11; })
+          (gradle.override { java = pkg; })
+          (jdt-language-server.override { jdk = pkg; })
+          # required for helix to notice it
+          (writeShellScriptBin "jdtls" "jdt-language-server")
         ];
       };
     })
