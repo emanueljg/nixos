@@ -1474,12 +1474,17 @@ rec {
       my.programs.helix = {
         enable = true;
         package = unstable.helix;
+        
+        languages = [
+          { name = "nix"; auto-pairs = false; }
+        ];
+        
         settings = {
-          theme = "snowy";
           editor = {
             line-number = "relative";
-            auto-pairs = false;  # simple fix, having it on is more trouble than it's worth for now
           };
+          lsp.display-messages = true;
+          theme = "snowy";
         };
 
         themes = {
