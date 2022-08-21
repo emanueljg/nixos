@@ -1943,7 +1943,7 @@ rec {
         };
         
         home.packages = with pkgs; [
-          gradle_6
+          (gradle.override {java = openjdk11; })
         ];
       };
     })
