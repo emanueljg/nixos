@@ -1476,7 +1476,7 @@ rec {
         package = unstable.helix;
         
         languages = [
-          { name = "nix"; auto-pairs = false; }
+          { name = "nix"; language.auto-pairs = false; }
         ];
         
         settings = {
