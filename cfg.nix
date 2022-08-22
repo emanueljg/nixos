@@ -1405,6 +1405,9 @@ rec {
     # pkgs-qutebrowser-qms
     (mkKnob [ "aurelius" "seneca" ] {
       my.programs.qutebrowser.quickmarks = {
+        # yh 
+        yh-1 = "https://jenseneducation.learnpoint.se";
+
         # f (feed)
         f-m = "https://mail.google.com/mail/u/0/#inbox";
         f-d = "https://discord.com/channels/@me";
