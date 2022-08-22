@@ -1479,7 +1479,7 @@ rec {
         package = unstable.helix;
         
         languages = [
-          { name = "nix"; auto-indent = false; 
+          { name = "nix"; auto-pairs = false; 
             #language-server.command = "jdt-language-server"; 
           }
         ];
