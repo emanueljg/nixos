@@ -662,7 +662,7 @@ rec {
         programs.zsh.enable = true;
         home = {
           sessionVariables = rec {
-            VISUAL = "hx";
+            VISUAL = "vim";
             EDITOR = VISUAL;
             SUDO_EDITOR = VISUAL;
           };
@@ -1962,6 +1962,14 @@ rec {
           # required for helix to notice it
           (writeShellScriptBin "jdtls" "jdt-language-server")
         ];
+      };
+    })
+  
+    # prog-vim
+    # let's try this again
+    (mkKnob [ "aurelius" "seneca" ] {
+      my.programs.vim = {
+        enable = true;  
       };
     })
   ];
