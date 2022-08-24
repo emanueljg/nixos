@@ -1407,6 +1407,8 @@ rec {
       my.programs.qutebrowser.quickmarks = {
         # yh 
         yh-1 = "https://jenseneducation.learnpoint.se";
+        yh-pj = "https://devop22.lms.nodehill.se";
+        yh-pj-n = "https://snake.nodehill.com/?Devops%20Engineer%202022";
 
         # f (feed)
         f-m = "https://mail.google.com/mail/u/0/#inbox";
