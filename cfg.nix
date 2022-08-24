@@ -1442,6 +1442,10 @@ rec {
           
           # m-j (my-japanese)
           m-j-k = "https://itazuraneko.neocities.org/learn/kana.html";
+      
+        # misc
+        # skånetrafikens login
+        misc-st = "http://172.16.0.1/portal.php";
       };
     })
 
