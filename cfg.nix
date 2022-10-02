@@ -662,7 +662,7 @@ rec {
         programs.zsh.enable = true;
         home = {
           sessionVariables = rec {
-            VISUAL = "vim";
+            VISUAL = "nvim";
             EDITOR = VISUAL;
             SUDO_EDITOR = VISUAL;
           };
@@ -1413,7 +1413,10 @@ rec {
         # f (feed)
         f-m = "https://mail.google.com/mail/u/0/#inbox";
         f-d = "https://discord.com/channels/@me";
-        f-ch = "https://https://4chan.org/";
+          # f-ch
+          f-ch-g = "https://boards.4channel.org/g/catalog";
+          f-ch-wg = "https://boards.4chan.org/wg/catalog";
+          f-ch-w = "https://boards.4channel.org/w/catalog";
 
         # t (tech)
           t-1 = "https://github.com/emanueljg/nixos";
@@ -1470,10 +1473,21 @@ rec {
           vim-nix 
         ];
         extraConfig = ''
+         " OLD
          set number
-         set tabstop=4 shiftwidth=4
+         set relativenumber
+         set tabstop=4 shiftwidth=4 expandtab
          autocmd Filetype nix setlocal ts=2 sw=2
          :command Nrs !sudo nixos-rebuild switch
+
+         " here comes the stuff from 
+         " https://www.youtube.com/watch?v=XA2WjJbmmoM
+
+         " FINDING FILES
+         " Search down into subfolders
+         " 
+         set path+=**
+         set wildmenu
         '';
       };
     })
@@ -1950,7 +1964,7 @@ rec {
     # prog-java
     (mkKnob [ "aurelius" "seneca" ] {
       # installs package and sets JAVA_HOME
-      my = let pkg = pkgs.openjdk11; in {
+      my = let pkg = pkgs.openjdk17; in {
         programs.java = {
           enable = true;
           package = pkg;
@@ -1971,6 +1985,10 @@ rec {
       my.programs.vim = {
         enable = true;  
       };
+
+      my.home.packages = with pkgs; [
+        polymc
+      ];
     })
   ];
 }
