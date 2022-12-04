@@ -33,9 +33,9 @@
 				./zsh.nix
 				./pfetch.nix
 
+				./x.nix
+        ./dwm/dwm.nix
 				./st/st.nix
-	
-				./x-base.nix
 		
 				./qutebrowser/qutebrowser.nix
         # upstream broke this
