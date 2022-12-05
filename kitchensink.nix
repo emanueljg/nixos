@@ -13,5 +13,6 @@
     pv
     jetbrains-mono
     appimage-run
+    mupdf
   ];
 }

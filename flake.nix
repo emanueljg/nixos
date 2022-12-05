@@ -33,25 +33,27 @@
 				./zsh.nix
 				./pfetch.nix
 
-				./x.nix
-        ./dwm/dwm.nix
-				./st/st.nix
-		
-				./qutebrowser/qutebrowser.nix
-        # upstream broke this
-#				./qutebrowser/overlay.nix
-				./qutebrowser/quickmarks.nix
-				./qutebrowser/translate.nix
-			
 				./git.nix
 				./python.nix
 				./java.nix
 				./mysql.nix
-				./latex.nix
-				
-				./android.nix
+
 				./pyradio.nix
-				./pdf.nix
+
+        ./x/x.nix
+          ./x/bspwm.nix
+          ./x/sxhkd.nix
+
+          ./x/st/st.nix
+
+          ./x/qutebrowser/qutebrowser.nix
+          # upstream broke this
+          #./x/qutebrowser/overlay.nix
+          ./x/qutebrowser/quickmarks.nix
+          ./x/qutebrowser/translate.nix
+			
+				  ./x/latex.nix
+          ./x/android.nix
 
 				./kitchensink.nix
 
