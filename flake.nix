@@ -2,8 +2,10 @@
   inputs.nixpkgs.url = github:NixOS/nixpkgs/nixos-unstable;
   inputs.home-manager.url = github:nix-community/home-manager;
 
-  inputs.auctionista.url = github:emanueljg/auctionista;
-  inputs.auctionista.inputs.nixpkgs.follows = "nixpkgs";
+  inputs.auctionista = {
+    url = github:emanueljg/auctionista;
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
   # currently broken upstream
   # inputs.discordo.url = github:emanueljg/discordo;
   
@@ -35,6 +37,8 @@
 				./neovim.nix
 				./zsh.nix
 				./pfetch.nix
+
+        ./auctionista.nix
 
 				./git.nix
 				./python.nix
