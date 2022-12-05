@@ -38,6 +38,9 @@
       # focus the node in the given direction
       "super + {_,shift + }{h,j,k,l}" = "bspc node -{f,s} {west,south,north,east}";
 
+      # parent jump?
+      "super + {p,b,comma,period}" = "bspc node -f @{parent,brother,first,second}";
+
       # set tiled, floating, fullscreen
       "super + {t, s, f}" = "bspc node -t {tiled,floating,fullscreen}";
 
