@@ -7,11 +7,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1670258786,
-        "narHash": "sha256-K/pG7qcrLDdBxxpcsngqPcIe0cbQrVVDd3ht0FZsXFM=",
+        "lastModified": 1670260076,
+        "narHash": "sha256-Ur4ba7yREODvwQZ78s0RTgO5tADFNRsmI6EIUYyljwg=",
         "owner": "emanueljg",
         "repo": "auctionista",
-        "rev": "97a58068e138bce128e8386beb37d8195cc9fd5f",
+        "rev": "dcd3755e8c1b31ec9d99bac84b9780e0665cbcb1",
         "type": "github"
       },
       "original": {
