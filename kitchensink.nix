@@ -14,5 +14,6 @@
     jetbrains-mono
     appimage-run
     mupdf
+    jq
   ];
 }
