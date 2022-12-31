@@ -1,10 +1,10 @@
 { config, ... }:
 
 {
-  my.xdg.configFile."sxhkd/sxhkdrc".onChange = "pkill -USR1 -x sxhkd"; 
+  #my.xdg.configFile."sxhkd/sxhkdrc".onChange = "pkill -USR1 -x sxhkd"; 
 
   my.services.sxhkd = {
-    enable = true;
+    enable = false;
 
     keybindings = {
 
