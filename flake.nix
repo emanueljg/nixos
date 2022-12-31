@@ -49,6 +49,7 @@
 
         ./x/x.nix
           ./x/bspwm.nix
+          ./x/wallpaper/wallpaper.nix
           ./x/sxhkd.nix
 
           ./x/st/st.nix
