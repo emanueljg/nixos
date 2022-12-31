@@ -19,6 +19,9 @@
         ",yy" = ''yank inline https://youtube.com/watch?{url:query}'';
       };
     };
+    settings = {
+      "auto_save.session" = false;
+    };
   };
   # required for qutebrowser to work iirc
   hardware.opengl.enable = true;
