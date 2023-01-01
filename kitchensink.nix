@@ -15,5 +15,6 @@
     appimage-run
     mupdf
     jq
+    pywal
   ];
 }
