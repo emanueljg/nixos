@@ -55,8 +55,6 @@
 
         ./x/x.nix
           ./x/i3.nix
-          ./x/wallpaper.nix
-
           ./x/st/st.nix
 
           ./x/qutebrowser/qutebrowser.nix
@@ -64,6 +62,10 @@
           #./x/qutebrowser/overlay.nix
           ./x/qutebrowser/quickmarks.nix
           ./x/qutebrowser/translate.nix
+
+          ./x/pywal/wallpaper.nix
+          ./x/pywal/pywalQute.nix
+
 			
 				  ./x/latex.nix
           ./x/android.nix

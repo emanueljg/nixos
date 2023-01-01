@@ -6,6 +6,24 @@ let
   pape = "copland.png";
   papePath = "${papes}/${pape}"; 
 in {
+  nixpkgs.overlays = [(self: super: {
+    pywal = super.pywal.overrideAttrs (oldAttrs: {
+      propagatedBuildInputs = oldAttrs.propagatedBuildInputs ++ [(
+        super.python3Packages.toPythonModule super.colorz
+      )];
+    });
+  })];
+
+  my.programs.pywal.enable = true;
+
+ # my.home.packages = with pkgs; [ pywal ];
+
+  my.home.shellAliases."mkpape" =
+  let
+    wal = "${pkgs.pywal}/bin/wal";
+  in
+    "${wal} -c && ${wal} --backend colorz -i /home/ejg/.pape";
+  #my.programs.pywal.enable = true;
   my.home.file.".pape" = {
     source =
       if builtins.pathExists papePath 
