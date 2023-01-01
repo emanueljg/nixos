@@ -71,11 +71,28 @@
         "type": "github"
       }
     },
+    "papes": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1672505481,
+        "narHash": "sha256-5vMRhi6+JK5tSdLdxa3JwL/BRUKmy0xHygnM69Vrmj0=",
+        "owner": "emanueljg",
+        "repo": "papes",
+        "rev": "9a280bbecc5eefb7d51c2fb924edd1761819242d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "emanueljg",
+        "repo": "papes",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "auctionista": "auctionista",
         "home-manager": "home-manager",
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": "nixpkgs_2",
+        "papes": "papes"
       }
     },
     "utils": {

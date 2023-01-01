@@ -6,6 +6,12 @@
     url = github:emanueljg/auctionista;
     inputs.nixpkgs.follows = "nixpkgs";
   };
+
+  inputs.papes = {
+    url = github:emanueljg/papes;
+    flake = false;
+  };
+
   # currently broken upstream
   # inputs.discordo.url = github:emanueljg/discordo;
   
@@ -49,7 +55,7 @@
 
         ./x/x.nix
           ./x/bspwm.nix
-          ./x/wallpaper/wallpaper.nix
+          ./x/wallpaper.nix
           ./x/sxhkd.nix
 
           ./x/st/st.nix
