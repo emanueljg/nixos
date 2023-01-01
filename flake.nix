@@ -54,9 +54,8 @@
 				./pyradio.nix
 
         ./x/x.nix
-          ./x/bspwm.nix
+          ./x/i3.nix
           ./x/wallpaper.nix
-          ./x/sxhkd.nix
 
           ./x/st/st.nix
 
