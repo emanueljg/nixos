@@ -26,6 +26,16 @@
         "${modifier}+Up" = "exec pactl set-sink-volume @DEFAULT_SINK@ +5%";
         "${modifier}+Down" = "exec pactl set-sink-volume @DEFAULT_SINK@ -5%";
       };
+      bars = [
+        ({
+          fonts = {
+            names = [ "pango" ];
+            style = "monospace";
+            size = 19.0;
+          };
+        })
+      ];
     };
+    extraConfig = ''font pango:monospace 16'';
   };
 }

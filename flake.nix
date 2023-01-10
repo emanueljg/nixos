@@ -63,6 +63,7 @@
           ./x/qutebrowser/quickmarks.nix
           ./x/qutebrowser/translate.nix
 
+          ./x/picom.nix
           ./x/pywal/wallpaper.nix
           ./x/pywal/pywalQute.nix
 

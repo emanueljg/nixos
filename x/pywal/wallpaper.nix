@@ -32,11 +32,18 @@ in {
     onChange = "${pkgs.i3}/bin/i3-msg restart";
   };
 
-  my.xsession.windowManager.i3.config.startup = [{
-    command = "${pkgs.feh}/bin/feh --bg-fill ~/.pape";
-    always = true;
-    notification = false;
-  }];
+  my.xsession.windowManager.i3.config.startup = [
+    ({
+      command = "${pkgs.feh}/bin/feh --bg-fill ~/.pape";
+      always = true;
+      notification = false; 
+     })
+    ({
+      command = config.my.home.shellAliases.mkpape;
+      always = true;
+      notification = false;
+    })
+  ];
 
   warnings =
     lib.lists.optional
