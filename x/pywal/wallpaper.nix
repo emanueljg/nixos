@@ -3,7 +3,7 @@
 
 
 let 
-  pape = "copland.png";
+  pape = "daytona-highway.jpg";
   papePath = "${papes}/${pape}"; 
 in {
   nixpkgs.overlays = [(self: super: {
