@@ -16,6 +16,42 @@
   # inputs.discordo.url = github:emanueljg/discordo;
   
   outputs = { self, nixpkgs, ... }@attrs: {
+    nixosConfigurations."DESKTOP-N9J57NT" = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      specialArgs = attrs;
+      modules = [
+        ./wsl.nix
+
+				./enable-flakes.nix
+				./allow-unfree.nix
+        ./hm.nix
+				./misc-pkgs.nix
+				./state.nix
+
+        ./sound.nix
+        ./locale.nix
+        ./stateful-network.nix
+
+        ./user.nix
+
+				./aliases.nix
+				./neovim.nix
+				./zsh.nix
+				./pfetch.nix
+
+        ./auctionista.nix
+
+				./git.nix
+				./python.nix
+				./java.nix
+        ./nodejs.nix
+				./mysql.nix
+
+				./pyradio.nix
+				./kitchensink.nix
+      ];
+    };
+        
     nixosConfigurations.seneca = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = attrs;
