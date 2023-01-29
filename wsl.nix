@@ -1,17 +1,13 @@
-{ lib, pkgs, config, modulesPath, ... }:
+{ lib, pkgs, config, modulesPath, nixos-wsl, ... }:
 
-with lib;
-let
-  nixos-wsl = import ./nixos-wsl;
-in
+#with lib;
+#let
+#  nixos-wsl = import ./nixos-wsl;
+#in
 {
   imports = [
-    "${modulesPath}/profiles/minimal.nix"
-
-    nixos-wsl.nixosModules.wsl
+     nixos-wsl.nixosModules.wsl
   ];
-
-  environment.systemPackages = [ pkgs.wget ];
 
   networking.hostName = "DESKTOP-N9J57NT";
 
@@ -20,6 +16,7 @@ in
     automountPath = "/mnt";
     defaultUser = "ejg";
     startMenuLaunchers = true;
+    nativeSystemd = true;   
 
     # Enable native Docker support
     # docker-native.enable = true;
