@@ -1,11 +1,24 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
-{
+let currentShell = "zsh"; in {
   my.home.sessionVariables = rec {
-    VISUAL = "nvim";
-    EDITOR = VISUAL;
-    SUDO_EDITOR = VISUAL;
+    EDITOR = "nvim";
+    SUDO_EDITOR = EDITOR;
+    VISUAL = EDITOR;
   };
+
+  # hack for setting editor as the EDITOR for login shells
+  # due to upstream bug
+  my.programs.${currentShell}.initExtra = ''
+    export EDITOR="${config.my.home.sessionVariables.EDITOR}"
+  '';
+
+  # due to the nature of the hack this warning can be good
+  warnings =
+    lib.lists.optional
+    (!config.my.programs."${currentShell}".enable) 
+    ''$EDITOR hack for login shells won't work; 
+    target shell (${currentShell}) not enabled.'';
 
   my.programs.neovim = {
     enable = true;
