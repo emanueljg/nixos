@@ -42,6 +42,7 @@
 				./neovim.nix
 				./zsh.nix
 				./pfetch.nix
+        ./jq.nix
 
         ./auctionista.nix
 
@@ -83,6 +84,7 @@
 				./neovim.nix
 				./zsh.nix
 				./pfetch.nix
+        ./jq.nix
 
         ./auctionista.nix
 
