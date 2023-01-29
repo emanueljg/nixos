@@ -35,7 +35,6 @@
 
         ./sound.nix
         ./locale.nix
-        ./stateful-network.nix
 
         ./user.nix
 
