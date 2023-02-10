@@ -48,10 +48,10 @@
 	./pfetch.nix
 	./jq.nix
 	
-        ./python.nix
-	./java.nix
-	./nodejs.nix
-	./mysql.nix
+  ./langs/python.nix
+	./langs/java.nix
+	./langs/nodejs.nix
+	./langs/mysql.nix
 	
 	./pyradio.nix
 
