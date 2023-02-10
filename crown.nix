@@ -9,6 +9,10 @@
     ];
 
   networking.hostName = "crown";
+  environment.systemPackages = with pkgs; [
+    git
+    efibootmgr
+  ];
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "ohci_pci" "ehci_pci" "usb_storage" "usbhid" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
