@@ -20,7 +20,14 @@
 
         ./enable-flakes.nix
         ./allow-unfree.nix
+        ./hm.nix
         ./git.nix
+
+        ./aliases.nix
+        ./user.nix
+	      ./neovim.nix
+	      ./zsh.nix
+	      ./pfetch.nix
 
         ./boot.nix 
         ./locale.nix
