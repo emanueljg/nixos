@@ -20,6 +20,7 @@
 
         ./enable-flakes.nix
         ./allow-unfree.nix
+        ./git.nix
 
         ./boot.nix 
         ./locale.nix
