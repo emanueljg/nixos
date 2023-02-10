@@ -2,16 +2,6 @@
   inputs.nixpkgs.url = github:NixOS/nixpkgs/nixos-unstable;
   inputs.home-manager.url = github:nix-community/home-manager;
 
-  inputs.nixos-wsl = {
-    url = github:nix-community/NixOs-WSL;
-    inputs.nixpkgs.follows = "nixpkgs";
-  };
-
-  inputs.auctionista = {
-    url = github:emanueljg/auctionista;
-    inputs.nixpkgs.follows = "nixpkgs";
-  };
-
   inputs.papes = {
     url = github:emanueljg/papes;
     flake = false;
@@ -104,8 +94,6 @@
 				./zsh.nix
 				./pfetch.nix
         ./jq.nix
-
-        ./auctionista.nix
 
 				./git.nix
 				./python.nix
