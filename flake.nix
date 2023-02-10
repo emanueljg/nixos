@@ -11,6 +11,22 @@
   # inputs.discordo.url = github:emanueljg/discordo;
   
   outputs = { self, nixpkgs, ... }@attrs: {
+    nixosConfigurations."crown" = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      specialArgs = attrs;
+      modules = [
+        ./crown.nix
+        ./2211-state.nix
+
+        ./enable-flakes.nix
+        ./allow-unfree.nix
+        ./git.nix
+
+        ./boot.nix 
+        ./locale.nix
+        ./stateful-network.nix
+      ];
+  };
     nixosConfigurations."void" = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = attrs;
