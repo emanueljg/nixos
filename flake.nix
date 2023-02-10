@@ -22,6 +22,7 @@
         ./allow-unfree.nix
         ./hm.nix
         ./git.nix
+        ./ssh.nix
 
         ./aliases.nix
         ./user.nix
