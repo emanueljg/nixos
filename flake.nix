@@ -21,39 +21,58 @@
   # inputs.discordo.url = github:emanueljg/discordo;
   
   outputs = { self, nixpkgs, ... }@attrs: {
-    nixosConfigurations."DESKTOP-N9J57NT" = nixpkgs.lib.nixosSystem {
+    nixosConfigurations."void" = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = attrs;
       modules = [
-        ./wsl.nix
+        ./void.nix
+	./void-hw.nix
+	./2211-state.nix
 
-				./enable-flakes.nix
-				./allow-unfree.nix
-        ./hm.nix
-				./misc-pkgs.nix
-				./state.nix
+	./enable-flakes.nix
+	./allow-unfree.nix
+	./hm.nix
+	./misc-pkgs.nix
+	./git.nix
 
+        ./boot.nix 
         ./sound.nix
-        ./locale.nix
+	./locale.nix
+	./stateful-network.nix
 
+
+  ./aliases.nix
         ./user.nix
+	./neovim.nix
+	./zsh.nix
+	./pfetch.nix
+	./jq.nix
+	
+        ./python.nix
+	./java.nix
+	./nodejs.nix
+	./mysql.nix
+	
+	./pyradio.nix
 
-				./aliases.nix
-				./neovim.nix
-				./zsh.nix
-				./pfetch.nix
-        ./jq.nix
+        ./x/x.nix
+          ./x/nvidia.nix
+          ./x/i3.nix
+          ./x/st/st.nix
 
-        ./auctionista.nix
+          ./x/qutebrowser/qutebrowser.nix
+          ./x/qutebrowser/quickmarks.nix
+          ./x/qutebrowser/translate.nix
 
-				./git.nix
-				./python.nix
-				./java.nix
-        ./nodejs.nix
-				./mysql.nix
+          ./x/picom.nix
+          ./x/pywal/wallpaper.nix
+          ./x/pywal/pywalQute.nix
 
-				./pyradio.nix
-				./kitchensink.nix
+			
+	  ./x/latex.nix
+          ./x/android.nix
+
+	  ./kitchensink.nix
       ];
     };
         
