@@ -2,7 +2,7 @@
 
 {
   my.home.shellAliases = {
-    "c" = "cd ~/nixos";
+    "c" = "cd /etc/nixos";
     "..." = "cd ../..";
 
     "e" = "$EDITOR";
