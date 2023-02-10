@@ -32,7 +32,9 @@
 
         ./boot.nix 
         ./locale.nix
-        ./stateful-network.nix
+        ./crown-networking.nix
+
+        ./invidious.nix
       ];
   };
     nixosConfigurations."void" = nixpkgs.lib.nixosSystem {
