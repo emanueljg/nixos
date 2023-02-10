@@ -22,6 +22,11 @@
     { device = "/dev/disk/by-uuid/8080-DCAE";
       fsType = "vfat";
     };
+  
+  fileSystems."/mnt/data" = {
+    device = "/dev/disk/by-uuid/F678974478970313";
+    fsType = "ntfs";
+  };
 
   swapDevices =
     [ { device = "/dev/disk/by-uuid/d844e111-0c8f-43cd-8af5-b3123ee026f7"; }

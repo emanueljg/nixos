@@ -41,6 +41,9 @@
       system = "x86_64-linux";
       specialArgs = attrs;
       modules = [
+        # tmp
+        ./rtorrent.nix
+
         ./void.nix
 	./void-hw.nix
 	./2211-state.nix
