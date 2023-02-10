@@ -7,6 +7,10 @@
   services.invidious = {
     port = 34030;
     database.port = 34031;
+    settings = {
+      quality = "dash";
+      quality_dash = "1080p";
+    };
   };
 
   networking.firewall.allowedTCPPorts = [ 
