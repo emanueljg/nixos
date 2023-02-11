@@ -75,6 +75,7 @@
 	./pyradio.nix
 
         ./x/x.nix
+          ./x/void-screens.nx
           ./x/nvidia.nix
           ./x/i3.nix
           ./x/st/st.nix
