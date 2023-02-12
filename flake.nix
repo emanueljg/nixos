@@ -1,6 +1,10 @@
 {
   inputs.nixpkgs.url = github:NixOS/nixpkgs/nixos-unstable;
   inputs.home-manager.url = github:nix-community/home-manager;
+  inputs.filmvisarna = {
+    url = github:emanueljg/filmvisarna/nixy;
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
 
   inputs.papes = {
     url = github:emanueljg/papes;
@@ -35,6 +39,7 @@
         ./crown-networking.nix
 
         ./invidious.nix
+        ./filmvisarna.nix
       ];
   };
     nixosConfigurations."void" = nixpkgs.lib.nixosSystem {
