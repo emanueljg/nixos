@@ -34,6 +34,8 @@
 	      ./zsh.nix
 	      ./pfetch.nix
 
+        ./langs/python.nix
+
         ./boot.nix 
         ./locale.nix
         ./crown-networking.nix
