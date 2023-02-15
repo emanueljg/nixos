@@ -8,6 +8,6 @@
   services.porkbun-ddns = {
     enable = true;
     rootDomain = "emanueljg.com";
-    configPath = "/var/lib/porkbun-ddns.json"
+    configPath = "/var/lib/porkbun-ddns.json";
   };
 }
