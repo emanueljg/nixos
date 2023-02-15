@@ -6,6 +6,11 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
 
+  inputs.porkbun-ddns = {
+    url = "github:emanueljg/porkbun-dynamic-dns-python";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
+
   inputs.papes = {
     url = github:emanueljg/papes;
     flake = false;
@@ -40,6 +45,7 @@
         ./locale.nix
         ./crown-networking.nix
 
+        ./porkbun-ddns.nix
         ./invidious.nix
         ./filmvisarna.nix
       ];
