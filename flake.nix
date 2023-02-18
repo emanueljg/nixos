@@ -1,6 +1,15 @@
 {
   inputs.nixpkgs.url = github:NixOS/nixpkgs/nixos-unstable;
   inputs.home-manager.url = github:nix-community/home-manager;
+  inputs.filmvisarna = {
+    url = github:emanueljg/filmvisarna-backend;
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
+
+  inputs.porkbun-ddns = {
+    url = "github:emanueljg/porkbun-dynamic-dns-python";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
 
   inputs.papes = {
     url = github:emanueljg/papes;
@@ -30,11 +39,15 @@
 	      ./zsh.nix
 	      ./pfetch.nix
 
+        ./langs/python.nix
+
         ./boot.nix 
         ./locale.nix
         ./crown-networking.nix
 
+        ./porkbun-ddns.nix
         ./invidious.nix
+        ./filmvisarna.nix
       ];
   };
     nixosConfigurations."void" = nixpkgs.lib.nixosSystem {

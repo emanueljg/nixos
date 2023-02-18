@@ -1,5 +1,41 @@
 {
   "nodes": {
+    "filmvisarna": {
+      "inputs": {
+        "flake-utils": "flake-utils",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1676394822,
+        "narHash": "sha256-aXXJ/UTS8UTbUU8yWuHWKLNHCyTZk433OLJJ7Pj5cIw=",
+        "owner": "emanueljg",
+        "repo": "filmvisarna-backend",
+        "rev": "81b0869bcd9ffeaab198b1c32ca028aa7ba0792c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "emanueljg",
+        "repo": "filmvisarna-backend",
+        "type": "github"
+      }
+    },
+    "flake-utils": {
+      "locked": {
+        "lastModified": 1676283394,
+        "narHash": "sha256-XX2f9c3iySLCw54rJ/CZs+ZK6IQy7GXNY4nSOyu2QG4=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "3db36a8b464d0c4532ba1c7dda728f4576d6d073",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": "nixpkgs",
@@ -69,6 +105,7 @@
     },
     "root": {
       "inputs": {
+        "filmvisarna": "filmvisarna",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs_2",
         "papes": "papes"
