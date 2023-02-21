@@ -16,8 +16,7 @@
     flake = false;
   };
 
-  # currently broken upstream
-  # inputs.discordo.url = github:emanueljg/discordo;
+  inputs.discordo.url = github:emanueljg/discordo;
   
   outputs = { self, nixpkgs, ... }@attrs: {
     nixosConfigurations."crown" = nixpkgs.lib.nixosSystem {
@@ -54,6 +53,7 @@
       system = "x86_64-linux";
       specialArgs = attrs;
       modules = [
+        ./discordo.nix
         # tmp
         ./rtorrent.nix
 
@@ -166,7 +166,6 @@
 				./kitchensink.nix
 
         # currently broken upstream
-        # ./discordo.nix
       ];
     };
   };

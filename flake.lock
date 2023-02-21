@@ -1,5 +1,23 @@
 {
   "nodes": {
+    "discordo": {
+      "inputs": {
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1677011611,
+        "narHash": "sha256-KChDOhnH6GVQmEfIcdXL/DTx5QyZp1LSzTwdbo+8Auo=",
+        "owner": "emanueljg",
+        "repo": "discordo",
+        "rev": "852eb8ee5d8742052f017edc2a8d7acc458a51b2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "emanueljg",
+        "repo": "discordo",
+        "type": "github"
+      }
+    },
     "filmvisarna": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -53,7 +71,7 @@
     },
     "home-manager": {
       "inputs": {
-        "nixpkgs": "nixpkgs",
+        "nixpkgs": "nixpkgs_2",
         "utils": "utils"
       },
       "locked": {
@@ -72,6 +90,21 @@
     },
     "nixpkgs": {
       "locked": {
+        "lastModified": 1669969257,
+        "narHash": "sha256-mOS13sK3v+kfgP+1Mh56ohiG8uVhLHAo7m/q9kqAehc=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "b72b8b94cf0c012b0252a9100a636cad69696666",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "ref": "nixos-unstable",
+        "type": "indirect"
+      }
+    },
+    "nixpkgs_2": {
+      "locked": {
         "lastModified": 1675115703,
         "narHash": "sha256-4zetAPSyY0D77x+Ww9QBe8RHn1akvIvHJ/kgg8kGDbk=",
         "owner": "nixos",
@@ -86,7 +119,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_2": {
+    "nixpkgs_3": {
       "locked": {
         "lastModified": 1675942811,
         "narHash": "sha256-/v4Z9mJmADTpXrdIlAjFa1e+gkpIIROR670UVDQFwIw=",
@@ -141,9 +174,10 @@
     },
     "root": {
       "inputs": {
+        "discordo": "discordo",
         "filmvisarna": "filmvisarna",
         "home-manager": "home-manager",
-        "nixpkgs": "nixpkgs_2",
+        "nixpkgs": "nixpkgs_3",
         "papes": "papes",
         "porkbun-ddns": "porkbun-ddns"
       }
