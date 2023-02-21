@@ -5,6 +5,13 @@
   my.xsession.windowManager.i3 = {
     enable = true;
     config = rec {
+      startup = [
+        {
+          command = "autorandr -l default";
+          always = true;
+          notification = false;
+        }
+      ];
       terminal = "st";
       modifier = "Mod1";
       keybindings = lib.mkOptionDefault {
