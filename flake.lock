@@ -8,11 +8,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1676394822,
-        "narHash": "sha256-aXXJ/UTS8UTbUU8yWuHWKLNHCyTZk433OLJJ7Pj5cIw=",
+        "lastModified": 1677000578,
+        "narHash": "sha256-4TBuyL3IVFV1VShF9jCfZBD0eXiU9KUxL7+obpPwuHI=",
         "owner": "emanueljg",
         "repo": "filmvisarna-backend",
-        "rev": "81b0869bcd9ffeaab198b1c32ca028aa7ba0792c",
+        "rev": "9e497dab67b1d86b49b986397c52daeff459ec42",
         "type": "github"
       },
       "original": {
@@ -126,11 +126,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1676419799,
-        "narHash": "sha256-EHE7Bm9PMAGTPP1787ix+ZX2Kz8qbfs3OaRWonuTj4M=",
+        "lastModified": 1676421634,
+        "narHash": "sha256-PvXbcKeVFNVeA/WWjLGIqbjBGY2HYLMdQKKyieMI5t4=",
         "owner": "emanueljg",
         "repo": "porkbun-dynamic-dns-python",
-        "rev": "eba7f9019dc4671a35904cbf3295fda240b6dc32",
+        "rev": "be70a1f574b9f96e4633ef40e5c43efc69b79f9f",
         "type": "github"
       },
       "original": {
