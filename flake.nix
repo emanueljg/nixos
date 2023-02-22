@@ -30,7 +30,7 @@
         ./allow-unfree.nix
         ./hm.nix
         ./git.nix
-        ./ssh.nix
+        ./ssh/fleet-relay.nix
 
         ./aliases.nix
         ./user.nix
