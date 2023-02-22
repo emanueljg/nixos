@@ -53,6 +53,7 @@
       system = "x86_64-linux";
       specialArgs = attrs;
       modules = [
+        ./ssh/mothership-aliases.nix
         ./discordo.nix
         # tmp
         ./rtorrent.nix

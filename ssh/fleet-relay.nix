@@ -12,7 +12,7 @@
   '';
 
   users.users."ejg".openssh.authorizedKeys.keyFiles = [
-    ./pubkeys/fleet_id_rsa.pub
+    ./pubkeys/id_rsa_mothership.pub
   ];
 
 }
