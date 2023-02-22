@@ -11,6 +11,8 @@
     ./pubkeys/id_rsa_mothership.pub
   ];
 
+  nix.settings.trusted-users = [ "ejg" ];
+
 }
 
 
