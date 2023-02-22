@@ -19,36 +19,17 @@
   inputs.discordo.url = github:emanueljg/discordo;
   
   outputs = { self, nixpkgs, ... }@attrs: {
-    nixosConfigurations."crown" = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      specialArgs = attrs;
-      modules = [
-        ./crown.nix
-        ./2211-state.nix
+    colmena = {
+      meta = {
+        nixpkgs = import nixpkgs {
+          system = "x86_64-linux";
+        };
+        nodeSpecialArgs = {
+          inherit home-manager, 
+          nixpkgs,
+      };
 
-        ./enable-flakes.nix
-        ./allow-unfree.nix
-        ./hm.nix
-        ./git.nix
-        ./ssh/fleet-relay.nix
 
-        ./aliases.nix
-        ./user.nix
-	      ./neovim.nix
-	      ./zsh.nix
-	      ./pfetch.nix
-
-        ./langs/python.nix
-
-        ./boot.nix 
-        ./locale.nix
-        ./crown-networking.nix
-
-        ./porkbun-ddns.nix
-        ./invidious.nix
-        ./filmvisarna.nix
-      ];
-  };
     nixosConfigurations."void" = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = attrs;
