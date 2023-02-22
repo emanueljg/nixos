@@ -19,21 +19,45 @@
   inputs.discordo.url = github:emanueljg/discordo;
   
   outputs = { self, nixpkgs, ... }@attrs: {
-    colmena = {
+
+    colmena = let
+      pkgs = import nixpkgs { system = "x86_64-linux"; };
+    in {
+
       meta = {
-        nixpkgs = import nixpkgs {
-          system = "x86_64-linux";
-        };
-        nodeSpecialArgs = {
-          inherit home-manager, 
-          nixpkgs,
+
+        nixpkgs = pkgs;
+        specialArgs = attrs;
+
       };
 
+          
+
+      "crown" = {
+
+        imports = import ./hosts/crown.nix;
+
+        deployment = {
+          targetUser = "ejg";
+          targetHost = "192.168.0.2";
+        };
+
+      };
+
+    };
 
     nixosConfigurations."void" = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = attrs;
       modules = [
+        ({config, pkgs, ... }: {
+            nix.settings.trusted-users = [ "ejg" ];
+            my.home.sessionVariables."SSH_CONFIG_FILE" = 
+              pkgs.writeText "colmena-ssh-config" ''
+                Host 192.168.0.2
+                  IdentityFile ~/.ssh/id_rsa_mothership
+              '';
+        })
         ./ssh/mothership-aliases.nix
         ./discordo.nix
         # tmp
