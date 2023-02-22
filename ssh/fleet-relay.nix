@@ -7,6 +7,10 @@
 
   imports = [ ./_proper-ssh.nix ];
 
+  services.openssh.banner = ''
+    Welcome to ${config.networking.hostName}, Commander.
+  '';
+
   users.users."ejg".openssh.authorizedKeys.keyFiles = [
     ./pubkeys/fleet_id_rsa.pub
   ];
