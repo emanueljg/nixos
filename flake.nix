@@ -43,27 +43,18 @@
       "crown" = {
         imports = import ./hosts/crown.nix;
         deployment = {
+          allowLocalDeployment = true;
           targetUser = "ejg";
           targetHost = "192.168.0.2";
         };
       };
 
       "void" = {
-
-        imports = (import ./hosts/void.nix) ++ [
-          ({config, pkgs, ... }: {
-              nix.settings.trusted-users = [ "ejg" ];
-              my.home.sessionVariables."SSH_CONFIG_FILE" = 
-                pkgs.writeText "colmena-ssh-config" ''
-                  Host 192.168.0.2
-                    IdentityFile ~/.ssh/id_rsa_mothership
-                '';
-          })
-        ];
-
+        imports = import ./hosts/void.nix;
         deployment = {
           allowLocalDeployment = true;
-          targetHost = null;
+          targetUser = "ejg";
+          targetHost = "127.0.0.1";
         };
       };
     };
@@ -71,16 +62,7 @@
     nixosConfigurations."void" = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = attrs;
-        modules = (import ./hosts/void.nix) ++ [
-          ({config, pkgs, ... }: {
-              nix.settings.trusted-users = [ "ejg" ];
-              my.home.sessionVariables."SSH_CONFIG_FILE" = 
-                pkgs.writeText "colmena-ssh-config" ''
-                  Host 192.168.0.2
-                    IdentityFile ~/.ssh/id_rsa_mothership
-                '';
-          })
-        ];
+        modules = import ./hosts/void.nix;
     };
         
     nixosConfigurations.seneca = nixpkgs.lib.nixosSystem {

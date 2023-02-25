@@ -1,6 +1,7 @@
 [
   ../colmena.nix
   ../ssh/mothership-aliases.nix
+  ../ssh/mothership.nix
   ../discordo.nix
   # tmp
   ../rtorrent.nix

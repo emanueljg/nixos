@@ -1,6 +1,7 @@
 [
   ../crown.nix
   ../2211-state.nix
+  ../colmena.nix
 
   ../enable-flakes.nix
   ../allow-unfree.nix
