@@ -64,6 +64,12 @@
       specialArgs = attrs;
         modules = import ./hosts/void.nix;
     };
+
+    nixosConfigurations."crown" = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      specialArgs = attrs;
+        modules = import ./hosts/crown.nix;
+    };
         
     nixosConfigurations.seneca = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
