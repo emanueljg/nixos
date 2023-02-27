@@ -1,5 +1,6 @@
 { 
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+  inputs.nixos-2211.url = "github:NixOS/nixpkgs/nixos-22.11";
 
   inputs.home-manager.url = "github:nix-community/home-manager";
 
@@ -59,6 +60,14 @@
       };
     };
 
+    nixosConfigurations."loki" = attrs.nixos-2211.lib.nixosSystem {
+      system = "x86_64-linux";
+      specialArgs = attrs;
+        modules = [
+          ./loki/c.nix
+          ./loki/h.nix 
+       	];
+    };
     nixosConfigurations."void" = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = attrs;
