@@ -70,7 +70,7 @@
       };
 
       "void" = {
-        imports = import ./hosts/void.nix;
+        imports = import ./hosts/void/void.nix;
         deployment = {
           allowLocalDeployment = true;
           targetUser = "ejg";
@@ -87,13 +87,13 @@
     nixosConfigurations."void" = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = attrs;
-        modules = import ./hosts/void.nix;
+        modules = import ./hosts/void/void.nix;
     };
 
     nixosConfigurations."crown" = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = attrs;
-        modules = import ./hosts/crown.nix;
+        modules = import ./hosts/crown/crown.nix;
     };
         
     nixosConfigurations.seneca = nixpkgs.lib.nixosSystem {
