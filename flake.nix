@@ -42,7 +42,7 @@
       };
 
       "loki" = {
-        imports = import ./hoasts/loki/loki.nix;
+        imports = import ./hosts/loki/loki.nix;
         deployment = {
           allowLocalDeployment = true;
           targetUser = "ejg";
