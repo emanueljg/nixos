@@ -60,13 +60,10 @@
       };
     };
 
-    nixosConfigurations."loki" = attrs.nixos-2211.lib.nixosSystem {
+    nixosConfigurations."loki" = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = attrs;
-        modules = [
-          ./loki/c.nix
-          ./loki/h.nix 
-       	];
+        modules = import ./hosts/loki/loki.nix;
     };
     nixosConfigurations."void" = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
