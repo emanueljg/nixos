@@ -48,7 +48,7 @@
           targetUser = "ejg";
           targetHost = "139.144.74.51";
         };
-      }
+      };
 
       "crown" = {
         imports = import ./hosts/crown.nix;
