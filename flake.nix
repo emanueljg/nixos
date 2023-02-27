@@ -61,7 +61,7 @@
       };
 
       "crown" = {
-        imports = import ./hosts/crown.nix;
+        imports = import ./hosts/crown/crown.nix;
         deployment = {
           allowLocalDeployment = true;
           targetUser = "ejg";
