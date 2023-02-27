@@ -1,6 +1,8 @@
 [
   ./configuration.nix
 
+  ../../ssh/fleet-relay.nix
+
   ../../enable-flakes.nix
   ../../allow-unfree.nix
 

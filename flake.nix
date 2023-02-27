@@ -41,6 +41,15 @@
 
       };
 
+      "seneca" = {
+        imports = import ./hosts/seneca/seneca.nix;
+        deployment = {
+          allowLocalDeployment = true;
+          targetUser = "ejg";
+          targetHost = "192.168.0.4";
+        }
+      }
+
       "loki" = {
         imports = import ./hosts/loki/loki.nix;
         deployment = {
