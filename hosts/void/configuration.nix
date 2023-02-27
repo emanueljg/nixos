@@ -3,7 +3,6 @@
 {
   imports = [
     ./hardware_configuration.nix
-    ./screens.nix
   ];
 
   networking.hostName = "void";
