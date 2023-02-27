@@ -37,6 +37,7 @@
         nodeSpecialArgs = {
           "crown" = { inherit (attrs) filmvisarna porkbun-ddns; };
           "void" = { inherit (attrs) papes discordo; };
+          "seneca" = { inherit (attrs) papes; };
         };
 
       };
@@ -47,8 +48,8 @@
           allowLocalDeployment = true;
           targetUser = "ejg";
           targetHost = "192.168.0.4";
-        }
-      }
+        };
+      };
 
       "loki" = {
         imports = import ./hosts/loki/loki.nix;
