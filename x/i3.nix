@@ -3,7 +3,7 @@
 {
  # my.xsession.enable = true;
   my.xsession.windowManager.i3 = {
-    enable = false;
+    enable = true;
     config = rec {
       startup = [
         {
