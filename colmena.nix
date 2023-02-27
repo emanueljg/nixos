@@ -1,6 +1,11 @@
 { config, pkgs, lib, ... }:
 
 {
+  my.home.shellAliases = {
+    "cola" = "colmena apply";
+    "coll" = "colmena apply-local --sudo";
+  }
+
   environment.systemPackages = with pkgs; [
     (colmena.overrideAttrs (oldAttrs: rec {
       version = "0.4.0pre";
