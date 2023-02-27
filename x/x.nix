@@ -4,15 +4,14 @@
   services = {
     xserver = {
       displayManager = {
-        session = let fakeSession = {
-          manage = "window";
-          name = "fake";
-          start = "";
-        }; in [ fakeSession ];
-        defaultSession = "none+fake";
+#        defaultSession = "none+dwl";
         autoLogin = {
           user = "ejg";
           enable = true;
+        };
+        sddm = {
+          enable = true;
+          #wayland = true;
         };
         lightdm.greeter.enable = false;
       };

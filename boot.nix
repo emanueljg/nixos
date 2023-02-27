@@ -2,18 +2,18 @@
 
 {
   boot = {
-    kernelParams = [ "quiet" "splash" ];
+    #kernelParams = [ "quiet" "splash" ];
     loader = {
       efi.canTouchEfiVariables = true;
-      timeout = 0;
+      timeout = 10;
       grub = {
         enable = true;
         version = 2;
         efiSupport = true;
         device = "nodev";
         extraConfig = ''
-          GRUB_HIDDEN_TIMEOUT=0
-          GRUB_HIDDEN_TIMEOUT_QUIET=true
+          GRUB_HIDDEN_TIMEOUT=10
+          GRUB_HIDDEN_TIMEOUT_QUIET=false
         '';
       };
     };
