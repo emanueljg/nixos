@@ -1,7 +1,23 @@
 { config, lib, pkgs, ... }:
 
 {
- # my.xsession.enable = true;
+  services.xserver.displayManager = {
+
+    lightdm.greeter.enable = false;
+
+    session = [{
+        manage = "window";
+        name = "fake";
+        start = "";
+    }];
+
+    defaultSession = "none+fake";
+
+  };
+
+
+
+  my.xsession.enable = true;
   my.xsession.windowManager.i3 = {
     enable = true;
     config = rec {
