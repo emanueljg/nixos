@@ -4,6 +4,7 @@
   ../../enable-flakes.nix
   ../../allow-unfree.nix
 
+  ../../hm.nix
   ../../misc-pkgs.nix
   ../../stay-awake.nix
   ../../efi-grub.nix
