@@ -12,7 +12,7 @@ let dwm = pkgs.dwm; in {
   services.xserver.windowManager.session = [{
     name = "dwm";
     start = ''
-      ${dwl}/bin/dwm &
+      ${dwm}/bin/dwm &
       waitPID=$!
     '';
   }];

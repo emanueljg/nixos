@@ -39,7 +39,7 @@
   ../x/x.nix
     ../x/void-screens.nix
     #../x/i3.nix
-    ../x/dwl.nix
+    ../x/dwm/dwm.nix
     ../x/st/st.nix
     ../x/nvidia.nix
 

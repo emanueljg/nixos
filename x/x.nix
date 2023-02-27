@@ -7,7 +7,7 @@
       layout = "se";
       # mousepad
       libinput.enable = true;
-      autoLogin = {
+      displayManager.autoLogin = {
         user = "ejg";
         enable = true;
       };
