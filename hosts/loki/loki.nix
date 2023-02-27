@@ -1,6 +1,6 @@
 [
   ./configuration.nix
-  #../../colmena.nix
+  ../../colmena.nix
 
   ../../enable-flakes.nix
   ../../allow-unfree.nix
