@@ -2,8 +2,9 @@
 
 {
   my.home.shellAliases = {
-    "cola" = "colmena apply";
-    "coll" = "colmena apply-local --sudo";
+    "col" = "colmena --config=/etc/nixos/flake.nix";
+    "cola" = "col apply";
+    "coll" = "col apply-local --sudo";
   };
 
   environment.systemPackages = with pkgs; [
