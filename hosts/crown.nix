@@ -17,7 +17,7 @@
 
   ../langs/python.nix
 
-  ../boot.nix 
+  ../efi-grub.nix 
   ../locale.nix
   ../crown-networking.nix
 

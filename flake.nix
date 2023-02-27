@@ -1,5 +1,6 @@
 { 
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+  inputs.nixos-2211.url = "github:NixOS/nixpkgs/nixos-22.11";
 
   inputs.home-manager.url = "github:nix-community/home-manager";
 
@@ -40,6 +41,15 @@
 
       };
 
+      "loki" = {
+        imports = import ./hoasts/loki/loki.nix;
+        deployment = {
+          allowLocalDeployment = true;
+          targetUser = "ejg";
+          targetHost = "139.144.74.51";
+        };
+      }
+
       "crown" = {
         imports = import ./hosts/crown.nix;
         deployment = {
@@ -59,6 +69,11 @@
       };
     };
 
+    nixosConfigurations."loki" = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      specialArgs = attrs;
+        modules = import ./hosts/loki/loki.nix;
+    };
     nixosConfigurations."void" = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = attrs;

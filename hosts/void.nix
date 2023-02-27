@@ -16,7 +16,7 @@
   ../misc-pkgs.nix
   ../git.nix
 
-  ../boot.nix 
+  ../efi-grub.nix 
   ../sound.nix
   ../locale.nix
   ../stateful-network.nix
