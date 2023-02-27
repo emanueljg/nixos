@@ -1,5 +1,0 @@
-{ config, ... }:
-
-{
-  networking.hostName = "seneca";
-}
