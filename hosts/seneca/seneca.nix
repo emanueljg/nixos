@@ -30,7 +30,7 @@
     ../../x/i3.nix
     ../../x/st/st.nix
 
-    ../../x/qutebrowser.nix
+    ../../x/qutebrowser/qutebrowser.nix
       ../../x/qutebrowser/quickmarks.nix
       ../../x/qutebrowser/translate.nix
 
