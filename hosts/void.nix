@@ -41,6 +41,7 @@
     #../x/i3.nix
     ../x/dwl.nix
     ../x/st/st.nix
+    ../x/nvidia.nix
 
     ../x/qutebrowser/qutebrowser.nix
     ../x/qutebrowser/quickmarks.nix

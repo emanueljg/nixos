@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 {
-  my.xsession.enable = true;
+ # my.xsession.enable = true;
   my.xsession.windowManager.i3 = {
     enable = false;
     config = rec {
