@@ -7,8 +7,8 @@
   ../../hm.nix
   ../../git.nix
   
-  ../../ssh/simple-ssh.nix
-  #../../ssh/fleet-relay.nix
+  #../../ssh/simple-ssh.nix
+  ../../ssh/fleet-relay.nix
 
   ../../aliases.nix
   ../../user.nix
