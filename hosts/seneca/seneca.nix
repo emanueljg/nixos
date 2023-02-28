@@ -6,6 +6,8 @@
   ../../enable-flakes.nix
   ../../allow-unfree.nix
 
+  ../../sekrit.nix
+
   ../../hm.nix
   ../../misc-pkgs.nix
   ../../stay-awake.nix
