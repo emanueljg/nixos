@@ -7,6 +7,7 @@
   ../../discordo.nix
   # tmp
   ../../rtorrent.nix
+  ../../sekrit.nix
 
   ../../enable-flakes.nix
   ../../allow-unfree.nix
