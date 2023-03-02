@@ -122,6 +122,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-stable": {
+      "locked": {
+        "lastModified": 1677560965,
+        "narHash": "sha256-Tqwt5alTtMnbYUPKCYRYZqlfbjprLgDWqjMhXpFMQ6k=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "40968a3aa489191cf4b7ba85cf2a54d8a75c8daa",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "release-22.11",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs_2": {
       "locked": {
         "lastModified": 1677342105,
@@ -183,7 +199,29 @@
         "nixos-2211": "nixos-2211",
         "nixpkgs": "nixpkgs_2",
         "papes": "papes",
-        "porkbun-ddns": "porkbun-ddns"
+        "porkbun-ddns": "porkbun-ddns",
+        "sops-nix": "sops-nix"
+      }
+    },
+    "sops-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "nixpkgs-stable": "nixpkgs-stable"
+      },
+      "locked": {
+        "lastModified": 1677594933,
+        "narHash": "sha256-qUoODrgbHRDKcg5r1Wsck01zIsJyKi/G4R2YAQafXPQ=",
+        "owner": "Mic92",
+        "repo": "sops-nix",
+        "rev": "27018a9084006b8371b1f833882adfb85bd23004",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Mic92",
+        "repo": "sops-nix",
+        "type": "github"
       }
     },
     "utils": {

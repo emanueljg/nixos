@@ -24,6 +24,12 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
 
+  inputs.sops-nix = {
+    url = "github:Mic92/sops-nix";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
+
+  
   outputs = { self, nixpkgs, ... }@attrs: {
 
     colmena = {
@@ -36,8 +42,8 @@
 
         nodeSpecialArgs = {
           "crown" = { inherit (attrs) filmvisarna porkbun-ddns; };
-          "void" = { inherit (attrs) papes discordo; };
-          "seneca" = { inherit (attrs) papes; };
+          "void" = { inherit (attrs) papes discordo sops-nix; };
+          "seneca" = { inherit (attrs) papes sops-nix; };
         };
 
       };
