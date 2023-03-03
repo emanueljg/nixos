@@ -3,6 +3,8 @@
 
   ../../colmena.nix
 
+  ../../sekrit.nix
+
   ../../enable-flakes.nix
   ../../allow-unfree.nix
   ../../hm.nix

@@ -1,0 +1,23 @@
+# Also see https://github.com/Mic92/dotfiles/blob/master/nixos/.sops.yaml
+# for a more complex example.
+keys:
+  - &admin_ejg age1ley3ejf6c2m702wuqhnyzs26km3wm3l5ld6kzkpaqwqdccup9yysnv0d9u
+  - &server_void age1ws2gphsp0qwzpw24j3wkmtgfz7e2cfhmkzpu8xkruyzrxjd334yshj2843
+  - &server_crown age1zhz42cv54wteed53463nt9d4e2awxrecs2km38c3j33fjrca8ftq0nx4fm
+  - &server_seneca age175fqcu2n47asd79r9jr9u4nn859vfp4q9jvzxknkgl6gkcn3udssauq5ew
+  - &server_loki age1pztrh4nrkxsqd88ylhkkuaf4ewlf2f4p9ad0h4ah3fhzyqrazemqq4k8cl
+creation_rules:
+  - path_regex: secrets/[^/]+\.yaml$
+    key_groups:
+    - age:
+      - *admin_ejg
+      - *server_void
+      - *server_crown
+      - *server_seneca
+      - *server_loki
+  - path_regex: secrets/crown/[^/]+\.(yaml)|(json)|(jso)$
+    key_groups:
+      - age:
+        - *admin_ejg
+        - *server_crown
+

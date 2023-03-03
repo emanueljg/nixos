@@ -178,11 +178,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1676421634,
-        "narHash": "sha256-PvXbcKeVFNVeA/WWjLGIqbjBGY2HYLMdQKKyieMI5t4=",
+        "lastModified": 1677862748,
+        "narHash": "sha256-8KG27/iQIRMV60/+xiSCR3VRiqFO0jpG9IPgV0s3V10=",
         "owner": "emanueljg",
         "repo": "porkbun-dynamic-dns-python",
-        "rev": "be70a1f574b9f96e4633ef40e5c43efc69b79f9f",
+        "rev": "929d6833923a54e87920bbfcc15163fa4e5955c2",
         "type": "github"
       },
       "original": {

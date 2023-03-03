@@ -41,9 +41,9 @@
         specialArgs = { inherit (attrs) home-manager; };
 
         nodeSpecialArgs = {
-          "crown" = { inherit (attrs) filmvisarna porkbun-ddns; };
+          "crown" = { inherit (attrs) filmvisarna porkbun-ddns sops-nix; };
           "void" = { inherit (attrs) papes discordo sops-nix; };
-          "seneca" = { inherit (attrs) papes sops-nix; };
+          "seneca" = { inherit (attrs) papes; };
         };
 
       };
