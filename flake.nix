@@ -49,7 +49,7 @@
       };
 
       "seneca" = {
-        imports = import ./hosts/seneca/seneca.nix;
+        imports = import ./hosts/seneca;
         deployment = {
           allowLocalDeployment = true;
           targetUser = "ejg";
@@ -58,7 +58,7 @@
       };
 
       "loki" = {
-        imports = import ./hosts/loki/loki.nix;
+        imports = import ./hosts/loki;
         deployment = {
           allowLocalDeployment = true;
           targetUser = "ejg";
@@ -67,7 +67,7 @@
       };
 
       "crown" = {
-        imports = import ./hosts/crown/crown.nix;
+        imports = import ./hosts/crown;
         deployment = {
           allowLocalDeployment = true;
           targetUser = "ejg";
@@ -76,7 +76,7 @@
       };
 
       "void" = {
-        imports = import ./hosts/void/void.nix;
+        imports = import ./hosts/void;
         deployment = {
           allowLocalDeployment = true;
           targetUser = "ejg";
@@ -88,24 +88,24 @@
     nixosConfigurations."loki" = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = attrs;
-        modules = import ./hosts/loki/loki.nix;
+        modules = import ./hosts/loki;
     };
     nixosConfigurations."void" = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = attrs;
-        modules = import ./hosts/void/void.nix;
+        modules = import ./hosts/void;
     };
 
     nixosConfigurations."crown" = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = attrs;
-        modules = import ./hosts/crown/crown.nix;
+        modules = import ./hosts/crown;
     };
         
     nixosConfigurations.seneca = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = attrs;
-      modules = import ./hosts/seneca/seneca.nix;
+      modules = import ./hosts/seneca;
     };
   };
 }
