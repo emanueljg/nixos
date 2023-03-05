@@ -6,6 +6,7 @@
   ../../ssh/mothership.nix
   ../../discordo.nix
 
+  ../../eosd.nix
   ../../pass.nix
   # tmp
   ../../rtorrent.nix
