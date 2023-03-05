@@ -5,6 +5,8 @@
   ../../ssh/mothership-aliases.nix
   ../../ssh/mothership.nix
   ../../discordo.nix
+
+  ../../pass.nix
   # tmp
   ../../rtorrent.nix
   ../../sekrit.nix
