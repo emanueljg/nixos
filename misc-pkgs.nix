@@ -12,6 +12,7 @@
     zip
     unzip
     efibootmgr
+    parted
   ];
 
   
