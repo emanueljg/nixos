@@ -7,6 +7,7 @@
   ../../allow-unfree.nix
 
   ../../pass.nix
+  ../../phone.nix
 
   ../../hm.nix
   ../../misc-pkgs.nix
