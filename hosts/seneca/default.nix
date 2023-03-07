@@ -1,11 +1,15 @@
 [
   ./configuration.nix
 
-  ../../ssh/fleet-relay.nix
+  #../../ssh/fleet-relay.nix
+  ../../ssh/mothership.nix
+  ../../ssh/mothership-aliases.nix
 
   ../../enable-flakes.nix
   ../../allow-unfree.nix
 
+  ../../colmena.nix
+  ../../
   ../../pass.nix
   ../../phone.nix
 
