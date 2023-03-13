@@ -1,6 +1,11 @@
 { config, pgks, ... }:
 
 {
+  imports = [
+    ./quickmarks.nix
+    ./translate.nix
+  ];
+
   my.programs.qutebrowser = {
     enable = true;
     searchEngines = {

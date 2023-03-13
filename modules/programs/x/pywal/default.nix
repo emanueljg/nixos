@@ -6,6 +6,10 @@ let
   pape = "daytona-highway.jpg";
   papePath = "${papes}/${pape}"; 
 in {
+  imports = [
+    ./pywalQute.nix
+  ];
+
   nixpkgs.overlays = [(self: super: {
     pywal = super.pywal.overrideAttrs (oldAttrs: {
       propagatedBuildInputs = oldAttrs.propagatedBuildInputs ++ [(

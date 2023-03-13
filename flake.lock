@@ -71,6 +71,21 @@
         "type": "github"
       }
     },
+    "flake-utils_3": {
+      "locked": {
+        "lastModified": 1676283394,
+        "narHash": "sha256-XX2f9c3iySLCw54rJ/CZs+ZK6IQy7GXNY4nSOyu2QG4=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "3db36a8b464d0c4532ba1c7dda728f4576d6d073",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": "nixpkgs",
@@ -88,6 +103,22 @@
         "owner": "nix-community",
         "repo": "home-manager",
         "type": "github"
+      }
+    },
+    "https-server-proxy": {
+      "inputs": {
+        "flake-utils": "flake-utils_2",
+        "nixpkgs": "nixpkgs_2"
+      },
+      "locked": {
+        "lastModified": 1678717854,
+        "narHash": "sha256-Z1LBTC5rzVfcDEKQa9N90ujOKC1YQMIQTefpj8Rx1Bo=",
+        "path": "/home/ejg/https-server-proxy",
+        "type": "path"
+      },
+      "original": {
+        "path": "/home/ejg/https-server-proxy",
+        "type": "path"
       }
     },
     "nixos-2211": {
@@ -140,6 +171,22 @@
     },
     "nixpkgs_2": {
       "locked": {
+        "lastModified": 1678614274,
+        "narHash": "sha256-kK9l45n9cQ4mEQeT4NvJ+pK2nwsHhfZGUyRgzI+XFOw=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "970402e6147c49603f4d06defe44d27fe51884ce",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-22.11",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_3": {
+      "locked": {
         "lastModified": 1677342105,
         "narHash": "sha256-kv1fpkfCJGb0M+LZaCHFUuIS9kRIwyVgupHu86Y28nc=",
         "owner": "NixOS",
@@ -172,7 +219,7 @@
     },
     "porkbun-ddns": {
       "inputs": {
-        "flake-utils": "flake-utils_2",
+        "flake-utils": "flake-utils_3",
         "nixpkgs": [
           "nixpkgs"
         ]
@@ -196,8 +243,9 @@
         "discordo": "discordo",
         "filmvisarna": "filmvisarna",
         "home-manager": "home-manager",
+        "https-server-proxy": "https-server-proxy",
         "nixos-2211": "nixos-2211",
-        "nixpkgs": "nixpkgs_2",
+        "nixpkgs": "nixpkgs_3",
         "papes": "papes",
         "porkbun-ddns": "porkbun-ddns",
         "sops-nix": "sops-nix"

@@ -29,6 +29,8 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
 
+  inputs.https-server-proxy.url = "path:/home/ejg/https-server-proxy";
+
   
   outputs = { self, nixpkgs, ... }@attrs: {
 
@@ -43,7 +45,7 @@
         nodeSpecialArgs = {
           "crown" = { inherit (attrs) filmvisarna porkbun-ddns sops-nix; };
           "void" = { inherit (attrs) papes discordo sops-nix; };
-          "seneca" = { inherit (attrs) papes; };
+          "seneca" = { inherit (attrs) papes node-http2-proxy; };
         };
 
       };
@@ -88,18 +90,18 @@
     nixosConfigurations."loki" = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = attrs;
-        modules = import ./hosts/loki;
+      modules = import ./hosts/loki;
     };
     nixosConfigurations."void" = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = attrs;
-        modules = import ./hosts/void;
+      modules = import ./hosts/void;
     };
 
     nixosConfigurations."crown" = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = attrs;
-        modules = import ./hosts/crown;
+      modules = import ./hosts/crown;
     };
         
     nixosConfigurations.seneca = nixpkgs.lib.nixosSystem {
