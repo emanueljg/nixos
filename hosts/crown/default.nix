@@ -1,28 +1,11 @@
-[
-  ./configuration.nix
+with (import ../../lib/funcs.nix); mkhost "crown" {
+  blueprints = [ "core.nix" ];
+  modules = [
+    "hardware/efi-grub.nix"
+    "programs/langs/python.nix"
 
-  ../../colmena.nix
-
-  ../../sekrit.nix
-
-  ../../enable-flakes.nix
-  ../../allow-unfree.nix
-  ../../hm.nix
-  ../../git.nix
-  ../../ssh/fleet-relay.nix
-
-  ../../aliases.nix
-  ../../user.nix
-  ../../neovim.nix
-  ../../zsh.nix
-  ../../pfetch.nix
-
-  ../../langs/python.nix
-
-  ../../efi-grub.nix 
-  ../../locale.nix
-
-  ../../porkbun-ddns.nix
-  ../../invidious.nix
-  ../../filmvisarna.nix
-]
+    "services/porkbun-ddns.nix"
+    "services/invidious.nix"
+    "services/filmvisarna.nix"
+  ];
+}

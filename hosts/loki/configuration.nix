@@ -15,14 +15,6 @@
   # even though we are on bios and not on efi.
   boot.loader.grub.device = "nodev"; 
 
-
-  environment.systemPackages = with pkgs; [
-    vim 
-    wget
-    git
-    neofetch
-  ];
-
   system.stateVersion = "23.05"; # Did you read the comment?
   my.home.stateVersion = "23.05"; # Did you read the comment?
 }

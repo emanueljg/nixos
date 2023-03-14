@@ -6,7 +6,7 @@
   ];
 
   sops.secrets."porkbun-ddns.json" = {
-    sopsFile = ./secrets/crown/porkbun-ddns.json;
+    sopsFile = ../../secrets/crown/porkbun-ddns.json;
     format = "binary";
     mode = "0440";
     owner = config.services.porkbun-ddns.user;

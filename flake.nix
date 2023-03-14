@@ -40,12 +40,12 @@
 
         nixpkgs = import nixpkgs { system = "x86_64-linux"; };
 
-        specialArgs = { inherit (attrs) home-manager; };
+        specialArgs = { inherit (attrs) home-manager sops-nix; };
 
         nodeSpecialArgs = {
-          "crown" = { inherit (attrs) filmvisarna porkbun-ddns sops-nix; };
-          "void" = { inherit (attrs) papes discordo sops-nix; };
-          "seneca" = { inherit (attrs) papes node-http2-proxy; };
+          "crown" = { inherit (attrs) filmvisarna porkbun-ddns; };
+          "void" = { inherit (attrs) papes discordo; };
+          "seneca" = { inherit (attrs) papes https-server-proxy discordo; };
         };
 
       };
