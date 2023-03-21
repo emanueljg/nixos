@@ -29,7 +29,9 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  inputs.https-server-proxy.url = "path:/home/ejg/https-server-proxy";
+  inputs.devop22 = {
+    url = "path:/home/ejg/devop22";
+  };
 
   
   outputs = { self, nixpkgs, ... }@attrs: {
@@ -45,7 +47,8 @@
         nodeSpecialArgs = {
           "crown" = { inherit (attrs) filmvisarna porkbun-ddns; };
           "void" = { inherit (attrs) papes discordo; };
-          "seneca" = { inherit (attrs) papes https-server-proxy discordo; };
+          "seneca" = { inherit (attrs) papes discordo; };
+          "loki" = { inherit (attrs) devop22; };
         };
 
       };

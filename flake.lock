@@ -1,5 +1,38 @@
 {
   "nodes": {
+    "app1-infrastruktur": {
+      "inputs": {
+        "flake-utils": "flake-utils",
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1679146172,
+        "narHash": "sha256-hcfMlcKo5UYOk2fUEAl9ejxhx4qzJeaXxTtEYUlrE8A=",
+        "path": "/home/ejg/app1-infrastruktur",
+        "type": "path"
+      },
+      "original": {
+        "path": "/home/ejg/app1-infrastruktur",
+        "type": "path"
+      }
+    },
+    "devop22": {
+      "inputs": {
+        "app1-infrastruktur": "app1-infrastruktur",
+        "https-server-proxy": "https-server-proxy",
+        "nixpkgs": "nixpkgs_3"
+      },
+      "locked": {
+        "lastModified": 1679410560,
+        "narHash": "sha256-07hy9XuPngcjy2x/0f6UELw+jy2NeO4RsXZGkFE+9RY=",
+        "path": "/home/ejg/devop22",
+        "type": "path"
+      },
+      "original": {
+        "path": "/home/ejg/devop22",
+        "type": "path"
+      }
+    },
     "discordo": {
       "inputs": {
         "nixpkgs": [
@@ -22,7 +55,7 @@
     },
     "filmvisarna": {
       "inputs": {
-        "flake-utils": "flake-utils",
+        "flake-utils": "flake-utils_3",
         "nixpkgs": [
           "nixpkgs"
         ]
@@ -43,11 +76,11 @@
     },
     "flake-utils": {
       "locked": {
-        "lastModified": 1676283394,
-        "narHash": "sha256-XX2f9c3iySLCw54rJ/CZs+ZK6IQy7GXNY4nSOyu2QG4=",
+        "lastModified": 1678901627,
+        "narHash": "sha256-U02riOqrKKzwjsxc/400XnElV+UtPUQWpANPlyazjH0=",
         "owner": "numtide",
         "repo": "flake-utils",
-        "rev": "3db36a8b464d0c4532ba1c7dda728f4576d6d073",
+        "rev": "93a2b84fc4b70d9e089d029deacc3583435c2ed6",
         "type": "github"
       },
       "original": {
@@ -58,11 +91,11 @@
     },
     "flake-utils_2": {
       "locked": {
-        "lastModified": 1676283394,
-        "narHash": "sha256-XX2f9c3iySLCw54rJ/CZs+ZK6IQy7GXNY4nSOyu2QG4=",
+        "lastModified": 1678901627,
+        "narHash": "sha256-U02riOqrKKzwjsxc/400XnElV+UtPUQWpANPlyazjH0=",
         "owner": "numtide",
         "repo": "flake-utils",
-        "rev": "3db36a8b464d0c4532ba1c7dda728f4576d6d073",
+        "rev": "93a2b84fc4b70d9e089d029deacc3583435c2ed6",
         "type": "github"
       },
       "original": {
@@ -86,9 +119,24 @@
         "type": "github"
       }
     },
+    "flake-utils_4": {
+      "locked": {
+        "lastModified": 1676283394,
+        "narHash": "sha256-XX2f9c3iySLCw54rJ/CZs+ZK6IQy7GXNY4nSOyu2QG4=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "3db36a8b464d0c4532ba1c7dda728f4576d6d073",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
-        "nixpkgs": "nixpkgs",
+        "nixpkgs": "nixpkgs_4",
         "utils": "utils"
       },
       "locked": {
@@ -111,8 +159,8 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1678783889,
-        "narHash": "sha256-NbRQD5fYQZS7yQoczfA9kyXQdZuNeizEvD/vpofLMLg=",
+        "lastModified": 1679329350,
+        "narHash": "sha256-TkjIuVG8uI3CSlMdnb3JPAqYAZ3stoAKzR/5RzX6Bp8=",
         "path": "/home/ejg/https-server-proxy",
         "type": "path"
       },
@@ -139,16 +187,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1675115703,
-        "narHash": "sha256-4zetAPSyY0D77x+Ww9QBe8RHn1akvIvHJ/kgg8kGDbk=",
-        "owner": "nixos",
+        "lastModified": 1679224734,
+        "narHash": "sha256-1Ab3xY7Wgo1h1TNwRt6fp2XjV+KUo+hP1Bolh0KiDJs=",
+        "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "2caf4ef5005ecc68141ecb4aac271079f7371c44",
+        "rev": "eac7da7b519a5aefe92c33c90b4450a24ebe0ab3",
         "type": "github"
       },
       "original": {
-        "owner": "nixos",
-        "ref": "nixos-unstable",
+        "owner": "NixOS",
+        "ref": "nixos-22.11",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -171,11 +219,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1678703398,
-        "narHash": "sha256-Y1mW3dBsoWLHpYm+UIHb5VZ7rx024NNHaF16oZBx++o=",
+        "lastModified": 1678872516,
+        "narHash": "sha256-/E1YwtMtFAu2KUQKV/1+KFuReYPANM2Rzehk84VxVoc=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "67f26c1cfc5d5783628231e776a81c1ade623e0b",
+        "rev": "9b8e5abb18324c7fe9f07cb100c3cd4a29cda8b8",
         "type": "github"
       },
       "original": {
@@ -186,6 +234,38 @@
       }
     },
     "nixpkgs_3": {
+      "locked": {
+        "lastModified": 1679224734,
+        "narHash": "sha256-1Ab3xY7Wgo1h1TNwRt6fp2XjV+KUo+hP1Bolh0KiDJs=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "eac7da7b519a5aefe92c33c90b4450a24ebe0ab3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-22.11",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_4": {
+      "locked": {
+        "lastModified": 1675115703,
+        "narHash": "sha256-4zetAPSyY0D77x+Ww9QBe8RHn1akvIvHJ/kgg8kGDbk=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "2caf4ef5005ecc68141ecb4aac271079f7371c44",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_5": {
       "locked": {
         "lastModified": 1677342105,
         "narHash": "sha256-kv1fpkfCJGb0M+LZaCHFUuIS9kRIwyVgupHu86Y28nc=",
@@ -219,7 +299,7 @@
     },
     "porkbun-ddns": {
       "inputs": {
-        "flake-utils": "flake-utils_3",
+        "flake-utils": "flake-utils_4",
         "nixpkgs": [
           "nixpkgs"
         ]
@@ -240,12 +320,12 @@
     },
     "root": {
       "inputs": {
+        "devop22": "devop22",
         "discordo": "discordo",
         "filmvisarna": "filmvisarna",
         "home-manager": "home-manager",
-        "https-server-proxy": "https-server-proxy",
         "nixos-2211": "nixos-2211",
-        "nixpkgs": "nixpkgs_3",
+        "nixpkgs": "nixpkgs_5",
         "papes": "papes",
         "porkbun-ddns": "porkbun-ddns",
         "sops-nix": "sops-nix"

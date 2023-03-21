@@ -13,6 +13,8 @@
     unzip
     efibootmgr
     parted
+    pm2
+    nodejs
   ];
 
   

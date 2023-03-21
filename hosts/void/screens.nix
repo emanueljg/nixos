@@ -21,6 +21,7 @@ in {
       config = {
         ${leftScreen} = {
           position = "0x0";
+          rotate = "right";
           mode = "1920x1080";
         };
         ${frontScreen} = {

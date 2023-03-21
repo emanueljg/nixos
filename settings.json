@@ -1,0 +1,13 @@
+{
+  "serverPort": 4000,
+  "passwordSalt": "someHardToGuessStringYouNeverChange",
+  "sessionSalt": "someHardToGuessStringYouSeldomChange",
+
+  "database": "cinema",
+  "mySqlUser": "app1-infrastruktur",
+  "mysqlPassword": null,
+
+  "mySqlSocketPath": "/var/run/mysqld/mysqld.sock",
+  "mySqlHost": null,
+  "mySqlPort": null
+}
