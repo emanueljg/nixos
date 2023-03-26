@@ -29,8 +29,16 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
 
+  inputs.app1-infrastruktur.url = "github:emanueljg/app1-infrastruktur";
+  inputs.https-server-proxy.url = "github:emanueljg/https-server-proxy";
+  inputs.nodehill-home-page.url = "github:emanueljg/nodehill-home-page/php-and-mongodb";
   inputs.devop22 = {
     url = "github:emanueljg/devop22-infra";
+    inputs = {
+      app1-infrastruktur.follows = "app1-infrastruktur";
+      https-server-proxy.follows = "https-server-proxy";
+      nodehill-home-page.follows = "nodehill-home-page";
+    };
   };
 
   
