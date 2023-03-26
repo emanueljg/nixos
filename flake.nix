@@ -30,7 +30,7 @@
   };
 
   inputs.devop22 = {
-    url = "path:/home/ejg/devop22";
+    url = "github:emanueljg/devop22-infra";
   };
 
   
