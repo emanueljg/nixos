@@ -10,6 +10,22 @@
   documentation.nixos.options.warningsAreErrors = false;
   documentation.nixos.options.allowDocBook = false;
 
+  system.autoUpgrade = {
+    enable = true;
+    flake = "github:emanueljg/nixos";
+    # run on the first and 30th second of every minute
+    # -> run once every 30 seconds
+    dates = "*-*-* *:*:00,30"
+    flags = (builtins.map 
+      (i: "--update-input ${i}")
+      [
+        "app1-infrastruktur"
+        "https-server-proxy"
+        "nodehill-home-page"
+      ]
+    );
+  };
+
   services.devop22 = {
     enable = true;
     settingsPath = "/run/secrets/app1-infrastruktur-settings.json";
