@@ -22,6 +22,7 @@
         "app1-infrastruktur"
         "https-server-proxy"
         "nodehill-home-page"
+        "devop22"
       ]
     );
   };
