@@ -48,7 +48,7 @@
       enable = true;
     };
     stack2 = {
-      enable = false;
+      enable = faleawease;
     };
     stack3 = {
       enable = false;
