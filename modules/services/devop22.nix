@@ -16,7 +16,7 @@
     # run on the first and 30th second of every minute
     # -> run once every 30 seconds
     dates = "*-*-* *:*:00,30";
-    flags = [ "--refresh" ] ++ (builtins.map 
+    flags = [ "--no-write-lock-file" "--refresh" ] ++ (builtins.map 
       (i: "--update-input ${i}")
       [
         "app1-infrastruktur"
