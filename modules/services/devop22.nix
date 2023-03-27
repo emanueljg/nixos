@@ -16,7 +16,15 @@
     # run on the first and 30th second of every minute
     # -> run once every 30 seconds
     dates = "*-*-* *:*:00,30";
-    flags = [ " --no-write-lock-file --recreate-lock-file" ];
+    flags = [ "--refresh" ] ++ (builtins.map 
+      (i: "--update-input ${i}")
+      [
+        "app1-infrastruktur"
+        "https-server-proxy"
+        "nodehill-home-page"
+        "devop22"
+      ]
+    );
   };
 
   services.devop22 = {
