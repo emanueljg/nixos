@@ -6,6 +6,7 @@
   # required for
   # https://nix-community.github.io/home-manager/options.html#opt-programs.zsh.enableCompletion
   environment.pathsToLink = [ "/share/zsh" ];
+  programs.zsh.enable = true;
   my.programs.zsh = {
     enable = true;
     enableSyntaxHighlighting = true;
