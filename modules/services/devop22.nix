@@ -45,10 +45,10 @@
     ];
 
     stack1 = {
-      enable = false;
+      enable = true;
     };
     stack2 = {
-      enable = true;
+      enable = false;
     };
     stack3 = {
       enable = false;
