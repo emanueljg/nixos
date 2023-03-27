@@ -11,7 +11,7 @@
   documentation.nixos.options.allowDocBook = false;
 
   system.autoUpgrade = {
-    enable = true;
+    enable = false;
     flake = "github:emanueljg/nixos#loki";
     # run on the first and 30th second of every minute
     # -> run once every 30 seconds
@@ -45,13 +45,13 @@
     ];
 
     stack1 = {
-      enable = true;
+      enable = false;
     };
     stack2 = {
       enable = false;
     };
     stack3 = {
-      enable = false;
+      enable = true;
     };
   };
 

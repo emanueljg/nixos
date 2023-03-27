@@ -7,5 +7,7 @@ with (import ../../lib/funcs.nix); mkhost "crown" {
     "services/porkbun-ddns.nix"
     "services/invidious.nix"
     "services/filmvisarna.nix"
+
+    "services/gitlab.nix"
   ];
 }

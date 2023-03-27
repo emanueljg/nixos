@@ -6,7 +6,7 @@
   ];
 
   services.filmvisarna = {
-    enable = true;
+    enable = false;
   };
 
 }

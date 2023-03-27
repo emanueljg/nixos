@@ -15,7 +15,7 @@ creation_rules:
       - *server_crown
       - *server_seneca
       - *server_loki
-  - path_regex: secrets/crown/[^/]+\.(yaml)|(json)|(jso)$
+  - path_regex: secrets/crown/.*$
     key_groups:
       - age:
         - *admin_ejg
