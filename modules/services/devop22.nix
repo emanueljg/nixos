@@ -16,7 +16,7 @@
     # run on the first and 30th second of every minute
     # -> run once every 30 seconds
     dates = "*-*-* *:*:00,30";
-    flags = [ "--recreate-lock-file" ];
+    flags = [ " --no-write-lock-file --recreate-lock-file" ];
   };
 
   services.devop22 = {
@@ -37,10 +37,10 @@
     ];
 
     stack1 = {
-      enable = true;
+      enable = false;
     };
     stack2 = {
-      enable = false;
+      enable = true;
     };
     stack3 = {
       enable = false;
