@@ -12,7 +12,7 @@
 
   system.autoUpgrade = {
     enable = true;
-    flake = "github:emanueljg/nixos";
+    flake = "github:emanueljg/nixos#loki";
     # run on the first and 30th second of every minute
     # -> run once every 30 seconds
     dates = "*-*-* *:*:00,30";
