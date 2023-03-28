@@ -8,7 +8,7 @@
       timerConfig = {
         OnCalendar="*-*-* *:*:00";
         Unit = "${name}.service";
-      }
+      };
     };
 
     services.${name} = with pkgs; {
