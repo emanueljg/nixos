@@ -48,10 +48,10 @@
       enable = false;
     };
     stack2 = {
-      enable = true;
+      enable = false;
     };
     stack3 = {
-      enable = false;
+      enable = true;
     };
   };
 
