@@ -1,6 +1,6 @@
 { 
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-  inputs.nixos-2211.url = "github:NixOS/nixpkgs/nixos-22.11";
+  inputs.nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-22.11";
 
   inputs.home-manager.url = "github:nix-community/home-manager";
 
@@ -29,15 +29,28 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  inputs.app1-infrastruktur.url = "github:emanueljg/app1-infrastruktur";
-  inputs.https-server-proxy.url = "github:emanueljg/https-server-proxy";
-  inputs.nodehill-home-page.url = "github:emanueljg/nodehill-home-page/php-and-mongodb";
+  inputs.app1-infrastruktur = {
+    url = "github:emanueljg/app1-infrastruktur";
+    inputs.nixpkgs.follows = "nixpkgs-stable";
+  };
+
+  inputs.https-server-proxy = {
+    url = "github:emanueljg/https-server-proxy";
+    inputs.nixpkgs.follows = "nixpkgs-stable";
+  };
+
+  inputs.nodehill-home-page = {
+    url = "github:emanueljg/nodehill-home-page/php-and-mongodb";
+    inputs.nixpkgs.follows = "nixpkgs-stable";
+  };
+
   inputs.devop22 = {
     url = "github:emanueljg/devop22-infra";
     inputs = {
       app1-infrastruktur.follows = "app1-infrastruktur";
       https-server-proxy.follows = "https-server-proxy";
       nodehill-home-page.follows = "nodehill-home-page";
+      nixpkgs.follows = "nixpkgs-stable";
     };
   };
 
