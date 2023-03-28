@@ -11,5 +11,6 @@ with (import ../../lib/funcs.nix); mkhost "void" {
     "programs/x/eosd.nix"
 
     "lab.nix"
+    "services/loki-autobuilder.nix"
   ];
 }
