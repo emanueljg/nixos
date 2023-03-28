@@ -14,14 +14,16 @@
     services.${name} = with pkgs; {
       path = [
         git
-        nixos-rebuild
+        colmena
+        nix
       ];
       script = ''
-        git pull
-        chown -R ejg:users /etc/nixos
-        ${nixos-rebuild}/bin/nixos-rebuild --update-input app1-infrastruktur --update-input https-server-proxy --update-input nodehill-home-page --update-input devop22 --no-write-lock-file switch
+        ${git}/bin/git pull
+        ${nix}/bin/nix flake lock --update-input app1-infrastruktur --update-input https-server-proxy --update-input nodehill-home-page --update-input devop22
+        ${colmena}/bin/colmena apply --on=loki 
       '';
       serviceConfig = {
+        User = "ejg";
         WorkingDirectory = "/etc/nixos";
       };
     };
