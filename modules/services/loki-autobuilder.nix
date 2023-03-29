@@ -2,14 +2,14 @@
 
 {
   systemd = let name = "loki-autobuilder"; in {
-    timers.${name} = {
-      wantedBy = [ "timers.target" ];
-      after = [ "network-online.target" ];
-      timerConfig = {
-        OnCalendar="*-*-* *:*:00";
-        Unit = "${name}.service";
-      };
-    };
+ #   timers.${name} = {
+ #     wantedBy = [ "timers.target" ];
+ #     after = [ "network-online.target" ];
+ #     timerConfig = {
+ #       OnCalendar="*-*-* *:*:00";
+ #       Unit = "${name}.service";
+ #     };
+ #   };
 
     services.${name} = let
       colmena = (
