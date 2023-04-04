@@ -8,6 +8,8 @@ with (import ../../lib/funcs.nix); mkhost "crown" {
     "services/invidious.nix"
     "services/filmvisarna.nix"
 
-    "services/gitea.nix"
+    #"services/gitea.nix"
+    "services/cgit.nix"
+
   ];
 }
