@@ -13,7 +13,8 @@ with (import ../lib/funcs.nix); mkbp {
       "programs/x/x.nix"
       "programs/x/i3.nix"
       "programs/x/pywal"
-      "programs/x/st"
+      #"programs/x/st"
+      "programs/x/kitty.nix"
       "programs/x/qutebrowser"
 
     "pkglists/misc-pkgs.nix"

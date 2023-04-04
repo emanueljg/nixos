@@ -10,7 +10,8 @@ with (import ../lib/funcs.nix); mkbp {
 
     "services/ssh/fleet-relay.nix"
     
-    "programs/neovim.nix"
+   # "programs/neovim"
+    "programs/helix.nix"
     "programs/zsh.nix"
     "programs/git.nix"   
   ];

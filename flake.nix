@@ -29,6 +29,10 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
 
+  inputs.nil.url = "github:oxalica/nil";
+
+ # inputs.nix-doom-emacs.url = "github:nix-community/nix-doom-emacs";
+
   inputs.app1-infrastruktur = {
     url = "github:emanueljg/app1-infrastruktur";
     inputs.nixpkgs.follows = "nixpkgs-stable";
@@ -68,7 +72,7 @@
         nodeSpecialArgs = {
           "crown" = { inherit (attrs) filmvisarna porkbun-ddns; };
           "void" = { inherit (attrs) papes discordo; };
-          "seneca" = { inherit (attrs) papes discordo; };
+          "seneca" = { inherit (attrs) papes discordo nil; };
           "loki" = { inherit (attrs) devop22; };
         };
 

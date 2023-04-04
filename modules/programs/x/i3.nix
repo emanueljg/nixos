@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ lib, ... }:
 
 {
   services.xserver.displayManager = {
@@ -28,7 +28,7 @@
           notification = false;
         }
       ];
-      terminal = "st";
+      terminal = "kitty";
       modifier = "Mod1";
       keybindings = lib.mkOptionDefault {
         "${modifier}+BackSpace" = "exec qutebrowser";

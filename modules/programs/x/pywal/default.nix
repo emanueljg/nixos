@@ -18,7 +18,7 @@ in {
     });
   })];
 
-  my.programs.pywal.enable = true;
+ # my.programs.pywal.enable = true;
 
  # my.home.packages = with pkgs; [ pywal ];
 
@@ -42,11 +42,11 @@ in {
       always = true;
       notification = false; 
      })
-    ({
-      command = config.my.home.shellAliases.mkpape;
-      always = true;
-      notification = false;
-    })
+  #  ({
+  #    command = config.my.home.shellAliases.mkpape;
+  #    always = true;
+  #    notification = false;
+  #  })
   ];
 
   warnings =
