@@ -26,6 +26,7 @@
     };
     settings = {
       "auto_save.session" = false;
+      colors.webpage.darkmode.enabled = true;
     };
   };
   # required for qutebrowser to work iirc
