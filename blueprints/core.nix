@@ -9,11 +9,14 @@ with (import ../lib/funcs.nix); mkbp {
     "meta/sops.nix"
 
     "services/ssh/fleet-relay.nix"
+
+    "programs/langs/python.nix"
     
    # "programs/neovim"
     "programs/helix.nix"
     "programs/zsh.nix"
     "programs/git.nix"   
+    "programs/ssh.nix"
   ];
 }
 
