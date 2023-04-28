@@ -4,7 +4,7 @@
 
 {
 
-  imports = [ ./simple_ssh.nix ];
+  imports = [ ./simple-ssh.nix ];
 
   services.openssh.settings.PermitRootLogin = "yes";
 

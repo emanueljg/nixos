@@ -9,6 +9,8 @@
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
+  boot.kernelParams = [ "ipv6.disable=1" ];
+  networking.enableIPv6 = false;
 
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/cfa3834a-c6ec-0c85-1b68-6345a69f3759";

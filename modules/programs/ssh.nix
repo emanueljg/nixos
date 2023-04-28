@@ -2,7 +2,7 @@
 
 {
   programs.ssh.extraConfig = let
-    user = "ejg";
+    user = "User ejg";
     id = "IdentityFile /home/ejg/.ssh/id_rsa_mothership";
     boiler = ''
       ${user}
