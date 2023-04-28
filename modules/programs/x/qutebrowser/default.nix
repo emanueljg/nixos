@@ -4,6 +4,7 @@
   imports = [
     ./quickmarks.nix
     ./translate.nix
+    ./qute-pass.nix
   ];
 
   my.programs.qutebrowser = {
