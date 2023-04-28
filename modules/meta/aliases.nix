@@ -50,5 +50,7 @@
     "sdj" = "sudo journalctl";
     "sdju" = "sdj -u";
     "sdjuf" = "sdj -fu";
+
+    "rune" = "grep -rwne";
   };
 }
