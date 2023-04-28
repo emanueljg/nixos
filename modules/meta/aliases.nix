@@ -41,14 +41,14 @@
     "gl" = "g log";
     "gd" = "g diff";
 
-    "skk" = "kitty +kitten ssh";
-    "aur" = "skk ejg@192.168.1.2 -p 34022";
-
-    "aurt" = "deluge-console -d 192.168.1.2 -p 58846 -U ejg -P password";
-    "aurti" = "aurt info";
-    "aurta" = "aurt add";
-    "aurtax" = "aurta $(xp)"; 
-  
     "pling" = ''while :; do sleep 0.75 && echo -e "\a"; done''; 
+
+    "sd" = "sudo systemctl";
+    "sds" = "sd start";
+    "sdr" = "sd restart";
+    "sds" = "sd status";
+    "sdj" = "sudo journalctl";
+    "sdju" = "sdj -u";
+    "sdjuf" = "sdj -fu";
   };
 }
