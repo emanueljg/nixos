@@ -35,5 +35,6 @@ in {
     "psim" = "psi -m";
     "pss" = "pass show";
     "psp" = "pass -c";
+    "pse" = "pass edit";
   };
 }
