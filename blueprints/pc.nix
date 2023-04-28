@@ -5,6 +5,8 @@ with (import ../lib/funcs.nix); mkbp {
 
     "hardware/sound.nix"
 
+    "programs/langs/python.nix"
+
     "programs/networkmanager.nix"
     "programs/pass.nix"
     "programs/jq.nix"
