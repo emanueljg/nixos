@@ -46,7 +46,7 @@
     "sd" = "sudo systemctl";
     "sds" = "sd start";
     "sdr" = "sd restart";
-    "sds" = "sd status";
+    "sdst" = "sd status";
     "sdj" = "sudo journalctl";
     "sdju" = "sdj -u";
     "sdjuf" = "sdj -fu";
