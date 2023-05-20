@@ -17,14 +17,12 @@ in {
   in [ 
     openKeyChainGnuPG
     openKeyChainPass
-    pinentry
-    pinentry-curses
   ];
 
   programs.gnupg.package = openKeyChainGnuPG;
   programs.gnupg.agent = {
     enable = true;
-    pinentryFlavor = "curses";
+    pinentryFlavor = "qt";
   };
 
   my.home.shellAliases = {
