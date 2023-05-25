@@ -9,7 +9,9 @@
     vegur
     material-design-icons
     feh
-    mpv
+    (mpv.override {
+      scripts = [ mpvScripts.webtorrent-mpv-hook ];
+    })
     pv
     jetbrains-mono
     appimage-run

@@ -19,6 +19,8 @@ with (import ../lib/funcs.nix); mkbp {
       "programs/x/kitty.nix"
       "programs/x/qutebrowser"
 
+      "programs/x/tauon.nix"
+
     "pkglists/misc-pkgs.nix"
     "pkglists/kitchensink.nix"
   ];
