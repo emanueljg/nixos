@@ -18,5 +18,6 @@
     mupdf
     jq
     openssl
+    tldr
   ];
 }
