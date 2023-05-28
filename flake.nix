@@ -73,7 +73,6 @@
           "crown" = { inherit (attrs) filmvisarna porkbun-ddns; };
           "void" = { inherit (attrs) papes discordo; };
           "seneca" = { inherit (attrs) papes discordo nil; };
-          "loki" = { inherit (attrs) devop22; };
         };
 
       };
@@ -84,15 +83,6 @@
           allowLocalDeployment = true;
           targetUser = "ejg";
           targetHost = "192.168.0.4";
-        };
-      };
-
-      "loki" = {
-        imports = import ./hosts/loki;
-        deployment = {
-          allowLocalDeployment = true;
-          targetUser = "ejg";
-          targetHost = "139.144.74.51";
         };
       };
 
@@ -115,11 +105,6 @@
       };
     };
 
-    nixosConfigurations."loki" = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      specialArgs = attrs;
-      modules = import ./hosts/loki;
-    };
     nixosConfigurations."void" = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = attrs;
