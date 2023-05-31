@@ -11,7 +11,7 @@
     ];
 
   # Use the GRUB 2 boot loader.
-  boot.loader.grub.device = lib.mkFoce "/dev/sda"; 
+  boot.loader.grub.device = lib.mkForce"/dev/sda"; 
 
   networking.hostName = "fenix"; # Define your hostname.
 
@@ -22,6 +22,7 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   system.stateVersion = "22.11"; # Did you read the comment?
+  my.home.stateVersion = "22.11"; # Did you read the comment?
 
 }
 
