@@ -16,7 +16,10 @@
     '';
   };
 
-  security.acme.acceptTerms = true;
+  security.acme = {
+    defaults.email = "emanueljohnsongodin@gmail.com";
+    acceptTerms = true;
+  };
 
   services.nginx = {
     enable = true;
