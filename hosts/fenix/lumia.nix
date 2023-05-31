@@ -16,6 +16,8 @@
     '';
   };
 
+  security.acme.acceptTerms = true;
+
   services.nginx = {
     enable = true;
     virtualHosts."boxedfenix.xyz" = {
