@@ -103,6 +103,16 @@
           targetHost = "127.0.0.1";
         };
       };
+
+      "fenix" = {
+        imports = import ./hosts/fenix;
+        deployment = {
+          allowLocalDeployment = true;
+          targetUser = "ejg";
+          targetHost = "95.217.219.33";
+        };
+      };
+
     };
 
     nixosConfigurations."void" = nixpkgs.lib.nixosSystem {
