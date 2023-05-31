@@ -1,6 +1,7 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
+  programs.ssh.package = pkgs.openssh;
   programs.ssh.extraConfig = let
     user = "User ejg";
     id = "IdentityFile /home/ejg/.ssh/id_rsa_mothership";

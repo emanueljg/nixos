@@ -10,7 +10,6 @@ with (import ../lib/funcs.nix); mkbp {
     "programs/networkmanager.nix"
     "programs/pass.nix"
     "programs/jq.nix"
-    "programs/discordo.nix"
 
       "programs/x/x.nix"
       "programs/x/i3.nix"
