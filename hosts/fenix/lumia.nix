@@ -1,5 +1,6 @@
 { pkgs, ... }: {
   systemd.services."lumia" = {
+    wantedBy = [ "multi-user.target" ];  # start on boot
     serviceConfig = { User = "ejg"; Group = "users"; };
     path = with pkgs; [ 
       git 
@@ -16,11 +17,10 @@
     '';
   };
 
-  security.acme = {
-    defaults.email = "emanueljohnsongodin@gmail.com";
-    acceptTerms = true;
-  };
+  # open ports
+  networking.firewall.allowedTCPPorts = [ 80 443  ];
 
+  # setup reverse proxy
   services.nginx = {
     enable = true;
     virtualHosts."boxedfenix.xyz" = {
@@ -29,4 +29,11 @@
       locations."/".proxyPass = "http://localhost:3000";
     };
   };
+
+  # formalities
+  security.acme = {
+    defaults.email = "emanueljohnsongodin@gmail.com";
+    acceptTerms = true;
+  };
+
 }
