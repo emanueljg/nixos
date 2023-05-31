@@ -1,6 +1,7 @@
 { pkgs, ... }: {
   systemd.services."lumia" = {
     wantedBy = [ "multi-user.target" ];  # start on boot
+    after = [ "network.target" ];
     serviceConfig = { User = "ejg"; Group = "users"; };
     path = with pkgs; [ 
       git 
@@ -17,7 +18,6 @@
     '';
   };
 
-  # open ports
   networking.firewall.allowedTCPPorts = [ 80 443  ];
 
   # setup reverse proxy
