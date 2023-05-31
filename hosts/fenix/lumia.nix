@@ -18,9 +18,9 @@
 
   services.nginx = {
     enable = true;
-    virtualHosts."95.217.219.33" = {
-      enableACME = false;
-      forceSSL = false;
+    virtualHosts."boxedfenix.xyz" = {
+      enableACME = true;
+      forceSSL = true;
       locations."/".proxyPass = "http://localhost:3000";
     };
   };
