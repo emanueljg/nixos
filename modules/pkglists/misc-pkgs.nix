@@ -6,15 +6,12 @@
     wget
     acpi
     htop
-    xclip
     scrot
     nixos-option
     zip
     unzip
     efibootmgr
     parted
-    pm2
-    nodejs
   ];
 
   
