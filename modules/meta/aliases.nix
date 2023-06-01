@@ -18,6 +18,9 @@
     "xc" = "xclip -sel clip";
     "xp" = "xc -o";
 
+    # pipe into this to save stdin as a paste. The sed remove a trailing null char. 
+    "tb" = "nc termbin.com 9999 | sed 's/\\x0//' | tee >(xc -rmlastnl)";
+
     "g" = "git";
 
     "gs" = "g status";
