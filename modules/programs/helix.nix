@@ -14,22 +14,21 @@
     export EDITOR="${config.my.home.sessionVariables.EDITOR}"
   '';
  my.programs.helix = with pkgs; let
-    py-lsp = "${python311Packages.python-lsp-server.overrideAttrs(old: rec {
+    py-lsp = "${python311Packages.python-lsp-server.overrideAttrs(old: {
       buildInputs = (
         # enable stuff like flake8 etc
         old.buildInputs ++ old.passthru.optional-dependencies.all
       );
     })}/bin/pylsp";
     nix-lsp = "${nil}/bin/nil";
+    go-lsp = "${gopls}/bin/gopls";
   in {
     enable = true;
     languages = {
       language = [
         ({
           name = "python";
-          language-server = {
-            command = py-lsp;
-          };
+          language-server.command = py-lsp;
           config = {
             pylsp = {
               configurationSources = [ "flake8" ];
@@ -45,9 +44,11 @@
         })
         ({
           name = "nix";
-          language-server = {
-            command = nix-lsp;          
-          };
+          language-server.command = nix-lsp;          
+        })
+        ({
+          name = "go";
+          language-server.command = go-lsp;
         })
       ];
     };
