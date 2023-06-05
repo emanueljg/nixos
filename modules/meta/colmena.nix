@@ -1,8 +1,10 @@
 { config, pkgs, lib, ... }:
 
 {
-  my.home.shellAliases = {
-    "col" = "colmena --config=/etc/nixos/flake.nix";
+  my.home.shellAliases = let 
+    origin = "github:emanueljg/nixos";
+  in {
+    "col" = "colmena --config=${origin}";
     "cola" = "col apply";
     "coll" = "col apply-local --sudo";
   };
