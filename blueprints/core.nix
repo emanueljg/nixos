@@ -17,6 +17,7 @@ with (import ../lib/funcs.nix); mkbp {
     "programs/zsh.nix"
     "programs/git.nix"   
     "programs/ssh.nix"
+    "programs/starship.nix"
 
     "programs/direnv.nix"
   ];
