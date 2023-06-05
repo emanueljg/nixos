@@ -7,11 +7,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1677011611,
-        "narHash": "sha256-KChDOhnH6GVQmEfIcdXL/DTx5QyZp1LSzTwdbo+8Auo=",
+        "lastModified": 1685987369,
+        "narHash": "sha256-ckoFx+qeGxDCF/XbKBU1mJukpOaaaID2+/DneiFfKy0=",
         "owner": "emanueljg",
         "repo": "discordo",
-        "rev": "852eb8ee5d8742052f017edc2a8d7acc458a51b2",
+        "rev": "f13cc869d37baddedae343d9d065e18b2dca5b3a",
         "type": "github"
       },
       "original": {
