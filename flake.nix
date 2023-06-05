@@ -7,19 +7,14 @@
     inputs.nixpkgs.follows = "nixpkgs-stable";
   };
 
-  inputs.filmvisarna = {
-    url = "github:emanueljg/filmvisarna-backend";
-    inputs.nixpkgs.follows = "nixpkgs";
-  };
-
-  inputs.porkbun-ddns = {
-    url = "github:emanueljg/porkbun-dynamic-dns-python";
-    inputs.nixpkgs.follows = "nixpkgs";
-  };
-
   inputs.papes = {
     url = "github:emanueljg/papes";
     flake = false;
+  };
+
+  inputs.discordo = {
+    url = "github:emanueljg/discordo";
+    inputs.nixpkgs.follows = "nixpkgs";
   };
 
   inputs.sops-nix = {
@@ -40,9 +35,8 @@
         specialArgs = { inherit (attrs) home-manager sops-nix; };
 
         nodeSpecialArgs = {
-          "crown" = { inherit (attrs) filmvisarna porkbun-ddns; };
-          "void" = { inherit (attrs) papes; };
-          "seneca" = { inherit (attrs) papes; };
+          "void" = { inherit (attrs) papes discordo; };
+          "seneca" = { inherit (attrs) papes discordo; };
         };
 
       };

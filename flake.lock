@@ -1,53 +1,22 @@
 {
   "nodes": {
-    "filmvisarna": {
+    "discordo": {
       "inputs": {
-        "flake-utils": "flake-utils",
         "nixpkgs": [
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1677451337,
-        "narHash": "sha256-w+isFaldD4aHthACpquVNHmnRNu2tUHYklXxnIAxlbs=",
+        "lastModified": 1677011611,
+        "narHash": "sha256-KChDOhnH6GVQmEfIcdXL/DTx5QyZp1LSzTwdbo+8Auo=",
         "owner": "emanueljg",
-        "repo": "filmvisarna-backend",
-        "rev": "657513c74d2031a6ee93ff78b599faf2d6dbc615",
+        "repo": "discordo",
+        "rev": "852eb8ee5d8742052f017edc2a8d7acc458a51b2",
         "type": "github"
       },
       "original": {
         "owner": "emanueljg",
-        "repo": "filmvisarna-backend",
-        "type": "github"
-      }
-    },
-    "flake-utils": {
-      "locked": {
-        "lastModified": 1676283394,
-        "narHash": "sha256-XX2f9c3iySLCw54rJ/CZs+ZK6IQy7GXNY4nSOyu2QG4=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "3db36a8b464d0c4532ba1c7dda728f4576d6d073",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "type": "github"
-      }
-    },
-    "flake-utils_2": {
-      "locked": {
-        "lastModified": 1676283394,
-        "narHash": "sha256-XX2f9c3iySLCw54rJ/CZs+ZK6IQy7GXNY4nSOyu2QG4=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "3db36a8b464d0c4532ba1c7dda728f4576d6d073",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
+        "repo": "discordo",
         "type": "github"
       }
     },
@@ -135,35 +104,13 @@
         "type": "github"
       }
     },
-    "porkbun-ddns": {
-      "inputs": {
-        "flake-utils": "flake-utils_2",
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1677862748,
-        "narHash": "sha256-8KG27/iQIRMV60/+xiSCR3VRiqFO0jpG9IPgV0s3V10=",
-        "owner": "emanueljg",
-        "repo": "porkbun-dynamic-dns-python",
-        "rev": "929d6833923a54e87920bbfcc15163fa4e5955c2",
-        "type": "github"
-      },
-      "original": {
-        "owner": "emanueljg",
-        "repo": "porkbun-dynamic-dns-python",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
-        "filmvisarna": "filmvisarna",
+        "discordo": "discordo",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
         "nixpkgs-stable": "nixpkgs-stable",
         "papes": "papes",
-        "porkbun-ddns": "porkbun-ddns",
         "sops-nix": "sops-nix"
       }
     },

@@ -10,8 +10,5 @@ with (import ../../lib/funcs.nix); mkhost "void" {
 
     # vidya 
     "programs/x/nvidia.nix"
-    "programs/x/eosd.nix"
-
-    "services/loki-autobuilder.nix"
   ];
 }
