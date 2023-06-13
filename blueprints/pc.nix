@@ -12,6 +12,8 @@ with (import ../lib/funcs.nix); mkbp {
     "programs/pass.nix"
     "programs/jq.nix"
     "programs/discordo.nix"
+    "programs/ytfzf.nix"
+    "programs/ani-cli.nix"
 
       "programs/x/x.nix"
       "programs/x/i3.nix"
