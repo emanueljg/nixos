@@ -9,11 +9,16 @@ let secret = "discordo-token"; in {
     group = "wheel";
   };
 
-  my.home.packages = [(
-    pkgs.writeShellScriptBin "discordo" ''
-      ${discordo.defaultPackage.${pkgs.system}}/bin/discordo \
-        --token $(cat ${config.sops.secrets.${secret}.path})
-    ''
-  )];
+  my.home.packages = let
+    pkg = discordo.defaultPackage.${pkgs.system};
+  in [
+    pkg 
+    (
+      pkgs.writeShellScriptBin "dc" ''
+        ${pkg}/bin/discordo \
+          --token $(cat ${config.sops.secrets.${secret}.path})
+      ''
+    )
+  ];
 
 }
