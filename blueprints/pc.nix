@@ -4,6 +4,7 @@ with (import ../lib/funcs.nix); mkbp {
     "meta/colmena.nix"
 
     "hardware/sound.nix"
+    "hardware/bluetooth.nix"
 
     "programs/langs/python.nix"
     "programs/langs/go.nix"
