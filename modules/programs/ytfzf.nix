@@ -1,8 +1,5 @@
 { pkgs, ... }: { 
-  my.home.packages = with pkgs; [
-    ytfzf
+  my.home.packages = with pkgs; [ 
+    (writeShellScriptBin "yt" "${ytfzf}/bin/ytfzf -D")
   ];
-  my.home.shellAliases = {
-    "yt" = "ytfzf -D";
-  };
 }
