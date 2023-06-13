@@ -13,6 +13,8 @@
   my.programs.zsh.initExtra = ''
     export EDITOR="${config.my.home.sessionVariables.EDITOR}"
   '';
+  
+
  my.programs.helix = with pkgs; let
     py-lsp = "${python311Packages.python-lsp-server.overrideAttrs(old: {
       buildInputs = (
@@ -24,6 +26,7 @@
     go-lsp = "${gopls}/bin/gopls";
   in {
     enable = true;
+    settings.editor.auto-pairs = false;
     languages = {
       language = [
         ({
