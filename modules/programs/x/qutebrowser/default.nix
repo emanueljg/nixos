@@ -5,6 +5,7 @@
     ./quickmarks.nix
     ./translate.nix
     ./qute-pass.nix
+    ./rice.nix
   ];
 
   my.programs.qutebrowser = {
