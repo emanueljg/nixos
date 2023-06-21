@@ -172,6 +172,7 @@
 
       odd = even;
       selected.odd = selected.even;
+
     };
 
     tooltip = { 
