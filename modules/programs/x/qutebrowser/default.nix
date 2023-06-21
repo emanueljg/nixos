@@ -1,4 +1,4 @@
-{ config, pgks, ... }:
+{ config, pkgs, ... }:
 
 {
   imports = [
@@ -7,6 +7,8 @@
     ./qute-pass.nix
     ./rice.nix
   ];
+
+  my.home.packages = with pkgs; [ rmapi ];
 
   my.programs.qutebrowser = {
     enable = true;
@@ -29,6 +31,7 @@
     settings = {
       "auto_save.session" = false;
 #      colors.webpage.darkmode.enabled = true;
+      "downloads.prevent_mixed_content" = false;
     };
   };
   # required for qutebrowser to work iirc
