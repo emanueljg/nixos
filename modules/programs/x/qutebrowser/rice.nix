@@ -175,10 +175,11 @@
 
     };
 
-    tooltip = { 
-      bg = bg.bg_visual;
-      fg = fg.fg;
-    };
+    # TODO In later QB, need to update nixpkgs
+    # tooltip = { 
+    #   bg = bg.bg_visual;
+    #   fg = fg.fg;
+    # };
 
     webpage.bg = bg.bg0;
 
