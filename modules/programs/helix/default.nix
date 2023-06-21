@@ -2,6 +2,10 @@
 
 {
 
+  imports = [
+    ./rice.nix
+  ];
+
   my.home.sessionVariables = rec {
     EDITOR = "hx"; 
     SUDO_EDITOR = EDITOR;
@@ -26,7 +30,9 @@
     go-lsp = "${gopls}/bin/gopls";
   in {
     enable = true;
-    settings.editor.auto-pairs = false;
+    settings = {
+      editor.auto-pairs = false;
+    };
     languages = {
       language = [
         ({

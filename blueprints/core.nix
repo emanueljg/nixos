@@ -13,7 +13,7 @@ with (import ../lib/funcs.nix); mkbp {
     "programs/langs/python.nix"
     
    # "programs/neovim"
-    "programs/helix.nix"
+    "programs/helix"
     "programs/zsh.nix"
     "programs/git.nix"   
     "programs/ssh.nix"
