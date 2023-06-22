@@ -7,6 +7,7 @@
     "col" = "colmena --config=${origin}";
     "cola" = "col apply";
     "coll" = "col apply-local --sudo";
+    "colx" = "colmena apply-local --sudo"; 
   };
 
   environment.systemPackages = with pkgs; [

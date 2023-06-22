@@ -1,5 +1,6 @@
 { 
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.05";
+  inputs.nixos-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
   inputs.nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-22.11";
 
   inputs.home-manager = {
@@ -32,7 +33,10 @@
 
         nixpkgs = import nixpkgs { system = "x86_64-linux"; };
 
-        specialArgs = { inherit (attrs) home-manager sops-nix; };
+        specialArgs = { 
+          inherit (attrs) home-manager sops-nix; 
+          nixos-unstable = import attrs.nixos-unstable { system = "x86_64-linux"; };
+        };
 
         nodeSpecialArgs = {
           "void" = { inherit (attrs) papes discordo; };
@@ -93,7 +97,9 @@
         
     nixosConfigurations.seneca = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
-      specialArgs = attrs;
+      specialArgs = attrs // {
+        nixos-unstable = import attrs.nixos-unstable { system = "x86_64-linux"; };
+      };
       modules = import ./hosts/seneca;
     };
   };
