@@ -15,7 +15,6 @@
       ${boiler}
       
     Host seneca
-      HostName 192.168.0.4
       ${boiler}
 
     Host fenix

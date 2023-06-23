@@ -7,6 +7,7 @@ with (import ../lib/funcs.nix); mkbp {
     "meta/aliases.nix"
     "meta/swedish-locale.nix"
     "meta/sops.nix"
+    "meta/deploy-rs.nix"
 
     "services/ssh/fleet-relay.nix"
 

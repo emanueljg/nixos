@@ -22,79 +22,16 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
 
- # inputs.nix-doom-emacs.url = "github:nix-community/nix-doom-emacs";
- 
-  outputs = { self, nixpkgs, ... }@attrs: {
+  inputs.deploy-rs = {
+    url = "github:serokell/deploy-rs";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
 
-    colmena = {
+  outputs = { self, ... }@inputs: let
+    hosts = import ./hosts.nix; 
+  in inputs.nixpkgs.lib.attrsets.recursiveUpdate (hosts.mkHostOutputs inputs) {
 
-      meta = {
+    checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) inputs.deploy-rs.lib;
 
-        nixpkgs = import nixpkgs { system = "x86_64-linux"; };
-
-        specialArgs = { inherit (attrs) home-manager sops-nix; };
-
-        nodeSpecialArgs = {
-          "void" = { inherit (attrs) papes discordo; };
-          "seneca" = { inherit (attrs) papes discordo; };
-        };
-
-      };
-
-      "seneca" = {
-        imports = import ./hosts/seneca;
-        deployment = {
-          allowLocalDeployment = true;
-          targetUser = "ejg";
-          targetHost = "192.168.0.4";
-        };
-      };
-
-      "crown" = {
-        imports = import ./hosts/crown;
-        deployment = {
-          allowLocalDeployment = true;
-          targetUser = "ejg";
-          targetHost = "192.168.0.2";
-        };
-      };
-
-      "void" = {
-        imports = import ./hosts/void;
-        deployment = {
-          allowLocalDeployment = true;
-          targetUser = "ejg";
-          targetHost = "127.0.0.1";
-        };
-      };
-
-      "fenix" = {
-        imports = import ./hosts/fenix;
-        deployment = {
-          allowLocalDeployment = true;
-          targetUser = "ejg";
-          targetHost = "95.217.219.33";
-        };
-      };
-
-    };
-
-    nixosConfigurations."void" = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      specialArgs = attrs;
-      modules = import ./hosts/void;
-    };
-
-    nixosConfigurations."crown" = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      specialArgs = attrs;
-      modules = import ./hosts/crown;
-    };
-        
-    nixosConfigurations.seneca = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      specialArgs = attrs;
-      modules = import ./hosts/seneca;
-    };
   };
 }
