@@ -6,7 +6,6 @@
     path = with pkgs; [ 
       git 
       bash 
-      nodejs-18_x
     ];
     script = ''
       export ROOT_DIR=$(mktemp -d)
