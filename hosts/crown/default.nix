@@ -4,5 +4,6 @@ with (import ../../lib/funcs.nix); mkhost "crown" {
     "hardware/efi-grub.nix"
     "services/invidious.nix"
     "services/gitea.nix"
+    "meta/wireguard/server.nix"
   ];
 }
