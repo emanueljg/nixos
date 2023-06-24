@@ -34,13 +34,9 @@
         # List of allowed peers.
         { # Feel free to give a meaning full name
           # Public key of the peer (not a file path).
-          publicKey = "{client public key}";
+          publicKey = "<fill in>";
           # List of IPs assigned to this peer within the tunnel subnet. Used to configure routing.
           allowedIPs = [ "10.100.0.2/32" ];
-        }
-        { # John Doe
-          publicKey = "{john doe's public key}";
-          allowedIPs = [ "10.100.0.3/32" ];
         }
       ];
     };
