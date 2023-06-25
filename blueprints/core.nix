@@ -7,6 +7,7 @@ with (import ../lib/funcs.nix); mkbp {
     "meta/aliases.nix"
     "meta/swedish-locale.nix"
     "meta/sops.nix"
+    "meta/porkbun.nix"
 
     "meta/wireguard/peer.nix"
 

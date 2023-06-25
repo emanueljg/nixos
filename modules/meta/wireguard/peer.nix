@@ -5,10 +5,10 @@ let
   listenPort = 51820;
   wg-network = "wg0";
   privateKeyFile = "/root/wireguard-keys/private";
-  endpoint = "emanueljg.com:${listenPort}";
 
   hosts = import ../../../hosts.nix;
-  host = hosts.${config.networking.hostName};
+  hostName = config.networking.hostName;
+  host = hosts.${hostName};
 
 in {
   networking.firewall.allowedUDPPorts = [ listenPort ];
@@ -21,12 +21,12 @@ in {
       inherit (value) publicKey;
       allowedIPs = [ "${value.ip}/32" ];
 
-      endpoint = lib.mkIf 
-        (value.endpoint != null) 
-        "${value.endpoint}:${listenPort}";
+      # endpoint = lib.mkIf 
+      #   (value.endpoint != null) 
+      #   "${value.endpoint}:${toString listenPort}";
 
       persistentKeepalive = 25;
-    }) hosts;
+    }) (builtins.removeAttrs hosts [ hostName ]);
   };
 }
 
