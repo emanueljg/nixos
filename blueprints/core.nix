@@ -8,6 +8,8 @@ with (import ../lib/funcs.nix); mkbp {
     "meta/swedish-locale.nix"
     "meta/sops.nix"
 
+    "meta/wireguard/peer.nix"
+
     "services/ssh/fleet-relay.nix"
 
     "programs/langs/python.nix"
