@@ -20,7 +20,7 @@ in {
       # after = [ "network-online.target" ];
       timerConfig = {
         AccuracySec = "1sec";
-        OnCalendar = ":*:0/10";
+        OnCalendar = "*:*:0/10";
         Unit = "${service}.service";
       };
     };
