@@ -2,7 +2,7 @@
 
 hosts = import ../../hosts.nix;
 hostname = config.networking.hostName;
-inherit (import ../../_commmon.nix) domain;
+inherit (import ../../_common.nix) domain;
 apikey = "pk1_78185aaeb4231ae38f608c4d8c2eceeb7219c79bfff11727b1e32701915f8944";
 service = "porkbun-ddns";
 secret = service;
