@@ -11,13 +11,15 @@ in {
   sops.secrets.${secret} = {
     sopsFile = ../../secrets/${secret}.yaml;
     mode = "0440";
+    owner = "root";
+    group = "root";
   };
 
   systemd = {
 
     timers.${service} = {
-      # wantedBy = [ "timers.target" ];
-      # after = [ "network-online.target" ];
+      wantedBy = [ "timers.target" ];
+      after = [ "network-online.target" ];
       timerConfig = {
         AccuracySec = "1sec";
         OnCalendar = "*:*:0/10";
@@ -25,27 +27,32 @@ in {
       };
     };
 
-    services.${service} = {
-      path = [ pkgs.curl pkgs.jq ];
-      serviceConfig = {
-        Type = "oneshot";
-        ExecStart = let
-          pkeyPath = config.sops.secrets.${secret}.path;
-          target = hosts.${hostname}.endpoint;
-          endpoint = "https://porkbun.com/api/json/v3/dns/editByNameType/" + 
-            builtins.concatStringsSep "/" [ domain "a" hostname ]; 
-        in ''
-          set -e
-          
-          CURRENT_IP=$(curl ifconfig.me)
-          PORKBUN_IP=$(dig +short ${target})
-          if [ $CURRENT_IP != $PORKBUN_IP ]; then
+    services.${service} = let
+      pkeyPath = config.sops.secrets.${secret}.path;
+      target = hosts.${hostname}.endpoint;
+      endpoint = "https://porkbun.com/api/json/v3/dns/editByNameType/" + 
+        builtins.concatStringsSep "/" [ domain "a" hostname ]; 
+      cmd = pkgs.writeShellScriptBin "porkbun-ddns" ''
+        set -e
+        
+        CURRENT_IP="$(curl -s ifconfig.me)"
+        PORKBUN_IP="$(dig +short ${target})"
+        if [ "$CURRENT_IP" != "$PORKBUN_IP" ]; then
           curl -X POST ${endpoint} \
             -H 'Content-Type: application/json' \
-            -d '{"secretapikey": "$(cat ${pkeyPath})",'`
+            -d '{"secretapikey": '"\"$(cat ${pkeyPath})\""','`
                `'"apikey": "${apikey}",'`
-               `'"content": "$CURRENT_IP"}' 
+               `'"content": '"\"$CURRENT_IP\""'}' 
+        fi
         '';
+    in {
+      path = with pkgs; [ curl dig coreutils ];
+      serviceConfig = {
+        LogLevelMax = "alert";
+        Type = "oneshot";
+        ExecStart = "${cmd}/bin/porkbun-ddns";
+        User = "root";
+        Group = "root";
       };
     };
   };
