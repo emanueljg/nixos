@@ -21,8 +21,8 @@ in {
 
   "epictetus" = {
     ip = "10.100.0.4";
-    endpoint = "epictetus.${domain}";
     isNixOS = false;
+    endpoint = "84.216.154.84";
     publicKey = "eVsJNs3dUIN4Lpc4Fk/NgUNh8tZc5WM5GwbtG/f+kmc=";
   };
 

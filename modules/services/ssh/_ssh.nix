@@ -7,6 +7,11 @@ with lib; {
 
   services.openssh = {
     enable = true;
+    listenAddresses = [{
+      addr = "0.0.0.0";
+      port = 22;
+    }];
+      
     settings = {
       PasswordAuthentication = mkDefault false;
       KbdInteractiveAuthentication = mkDefault false;

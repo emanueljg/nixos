@@ -21,9 +21,9 @@ in {
       inherit (value) publicKey;
       allowedIPs = [ "${value.ip}/32" ];
 
-      # endpoint = lib.mkIf 
-      #   (value.endpoint != null) 
-      #   "${value.endpoint}:${toString listenPort}";
+      endpoint = lib.mkIf 
+        (value.endpoint != null) 
+        "${value.endpoint}:${toString listenPort}";
 
       persistentKeepalive = 25;
     }) (builtins.removeAttrs hosts [ hostName ]);
