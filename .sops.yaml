@@ -6,6 +6,7 @@ keys:
   - &server_crown age1zhz42cv54wteed53463nt9d4e2awxrecs2km38c3j33fjrca8ftq0nx4fm
   - &server_seneca age175fqcu2n47asd79r9jr9u4nn859vfp4q9jvzxknkgl6gkcn3udssauq5ew
   - &server_loki age1pztrh4nrkxsqd88ylhkkuaf4ewlf2f4p9ad0h4ah3fhzyqrazemqq4k8cl
+  - &server_fenix age1ukzg09ck8t7ndkyhfw6vpt99k0qwpq9s7tsymsgdzyzpuck9napq6uenxh
 creation_rules:
   - path_regex: secrets/[^/]+\.(yaml)|(json)$
     key_groups:
@@ -15,6 +16,7 @@ creation_rules:
       - *server_crown
       - *server_seneca
       - *server_loki
+      - *server_fenix
   - path_regex: secrets/crown/.*$
     key_groups:
       - age:

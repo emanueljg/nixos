@@ -1,0 +1,3 @@
+{
+  domain = "emanueljg.com";
+}
