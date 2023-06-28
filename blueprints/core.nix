@@ -13,6 +13,7 @@ with (import ../lib/funcs.nix); mkbp {
 
     "services/ssh/fleet-relay.nix"
 
+    "programs/comma.nix"
     "programs/langs/python.nix"
     
    # "programs/neovim"
