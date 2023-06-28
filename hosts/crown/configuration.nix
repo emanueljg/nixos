@@ -3,6 +3,7 @@
 {
   imports = [
     ./hardware_configuration.nix
+    ./porkbun.nix
   ];
 
   networking.hostName = "crown";
