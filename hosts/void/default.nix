@@ -6,6 +6,9 @@ with (import ../../lib/funcs.nix); mkhost "void" {
 
     "services/ssh/mothership.nix"
 
+    "services/mpd.nix"
+    "programs/ncmpcpp"
+
     "programs/x/firefox.nix"
 
     # vidya 
