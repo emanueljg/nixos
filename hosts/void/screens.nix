@@ -10,6 +10,9 @@ let
   frontScreen = mkOutput "DP-";
   rightScreen = mkOutput "HDMI-";
 in {
+
+  hardware.nvidia.forceFullCompositionPipeline = true;
+  
   my.programs.autorandr = {
     enable = true;
     profiles."default" = {
