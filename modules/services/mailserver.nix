@@ -11,7 +11,7 @@ in {
   ];
 
   sops.secrets.${secret} = {
-    sopsFile = ../../secrets/crown/${secret}.yaml;
+    sopsFile = ../../secrets/${secret}.yaml;
     mode = "0440";
     owner = "ejg";
     group = "wheel";
@@ -26,7 +26,13 @@ in {
          hashedPasswordFile = config.sops.secrets.${secret}.path;
        };
     };
+    certificateScheme = "acme-nginx";
+    maxConnectionsPerUser = 150;  # :^)
   };
+
+  services.dovecot2.extraConfig = ''
+    mail_max_userip_connections = ${toString config.mailserver.maxConnectionsPerUser}
+  '';
 
   
 }
