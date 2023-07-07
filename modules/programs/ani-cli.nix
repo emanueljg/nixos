@@ -6,8 +6,8 @@
       src = fetchFromGitHub {
         owner = "pystardust";
         repo = "ani-cli";
-        rev = "v${version}";
-        sha256 = "sha256-eY5FXwNRSt4ZFnvMyPLEFnTazwsXOkuQ6zivCHD70YY=";
+        rev = "hex_decryption";
+        sha256 = "sha256-HDpspU9OZxDET7/1rnKdGgaVEBt0gpzGtd3DuNIj7FY=";
       };
     });
   in [ pkg ];
