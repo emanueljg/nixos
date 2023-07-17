@@ -27,11 +27,10 @@ in {
        };
     };
     certificateScheme = "acme-nginx";
-    maxConnectionsPerUser = 150;  # :^)
   };
 
   services.dovecot2.extraConfig = ''
-    mail_max_userip_connections = ${toString config.mailserver.maxConnectionsPerUser}
+    imap_idle_notify_interval = 5 secs
   '';
 
   
