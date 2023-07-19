@@ -4,7 +4,6 @@
   imports = [
     ./hardware_configuration.nix
     ./screens.nix
-    ./vidya.nix
   ];
 
   networking.hostName = "void";
