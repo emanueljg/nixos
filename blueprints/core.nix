@@ -21,6 +21,8 @@ with (import ../lib/funcs.nix); mkbp {
     "programs/starship.nix"
 
     "programs/direnv.nix"
+
+    "services/mailserver/client.nix"
   ];
 }
 
