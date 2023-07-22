@@ -1,6 +1,10 @@
 { config, pkgs, ... }: let 
   release = "nixos-23.05";
-  secret = "mailserver-ejg-password";
+  inherit (import ./secrets.nix)
+    baseSecretName
+    serverSecret
+    sopsCfg
+  ;
 in {
   imports = [
     (builtins.fetchTarball {
@@ -10,11 +14,8 @@ in {
     })
   ];
 
-  sops.secrets.${secret} = {
-    sopsFile = ../../secrets/${secret}.yaml;
-    mode = "0440";
-    owner = "ejg";
-    group = "wheel";
+  sops.secrets.${serverSecret} = {
+    inherit (sopsCfg) sopsFile mode;
   };
 
   mailserver = {
@@ -23,7 +24,7 @@ in {
     domains = [ "emanueljg.com" ];
     loginAccounts = {
       "ejg@emanueljg.com" = {
-         hashedPasswordFile = config.sops.secrets.${secret}.path;
+         hashedPasswordFile = config.sops.secrets.${serverSecret}.path;
        };
     };
     certificateScheme = "acme-nginx";
