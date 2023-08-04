@@ -3,10 +3,9 @@
     wantedBy = [ "multi-user.target" ];  # start on boot
     after = [ "network.target" ];
     # serviceConfig = { User = "ejg"; Group = "users"; };
-    path = with pkgs; [ 
-      nix
-    ];
-    script = "${pkgs.nix}/bin/nix run github:emanueljg/dometodik";
+    script = let 
+      nix = "${pkgs.nixVersions.nix_2_14}/bin/nix";
+    in "${nix} run github:emanueljg/dometodik/nix-python-package";
   };
 
   networking.firewall.allowedTCPPorts = [ 80 443  ];
@@ -17,7 +16,7 @@
     virtualHosts."boxedfenix.xyz" = {
       enableACME = true;
       forceSSL = true;
-      locations."/".proxyPass = "http://localhost:8000";
+      locations."/".proxyPass = "http://127.0.0.1:8000";
     };
   };
 
