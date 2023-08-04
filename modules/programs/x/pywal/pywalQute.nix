@@ -36,13 +36,13 @@
 
 
   my.programs.qutebrowser.extraConfig = ''
-    import pywalQute
-
-    pywalQute.color(c, {
-        'spacing': {
-            'vertical': 6,
-            'horizontal': 8
-        }
-    })
+    # import pywalQute
+    # 
+    # pywalQute.color(c, {
+    #     'spacing': {
+    #         'vertical': 6,
+    #         'horizontal': 8
+    #     }
+    # })
   '';
 }

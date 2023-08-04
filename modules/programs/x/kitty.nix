@@ -10,7 +10,7 @@
       #package = pkgs.ibm-plex;
       size = 18;
     };
-    theme = "Tokyo Night Storm";
+    theme = "Everforest Light Soft";
     settings = {
       confirm_os_window_close = "0";
     };
