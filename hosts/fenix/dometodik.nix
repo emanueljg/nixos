@@ -6,7 +6,7 @@
     path = with pkgs; [ 
       nix
     ];
-    script = "nix run github:emanueljg/dometodik";
+    script = "${pkgs.nix}/bin/nix run github:emanueljg/dometodik";
   };
 
   networking.firewall.allowedTCPPorts = [ 80 443  ];
