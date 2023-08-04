@@ -4,7 +4,7 @@
     after = [ "network.target" ];
     # serviceConfig = { User = "ejg"; Group = "users"; };
     path = with pkgs; [ 
-      #nix
+      nix
     ];
     script = "nix run github:emanueljg/dometodik";
   };
