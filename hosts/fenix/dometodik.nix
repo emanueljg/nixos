@@ -3,10 +3,9 @@
     wantedBy = [ "multi-user.target" ];  # start on boot
     after = [ "network.target" ];
     # serviceConfig = { User = "ejg"; Group = "users"; };
-    path = with pkgs; [ 
-      nixVersions.nix_2_14
-    ];
-    script = "${pkgs.nixVersions.nix_2_14}/bin/nix run github:emanueljg/dometodik";
+    script = let 
+      nix = "${pkgs.nixVersions.nix_2_14}/bin/nix";
+    in "${nix} run github:emanueljg/dometodik/nix-python-package";
   };
 
   networking.firewall.allowedTCPPorts = [ 80 443  ];
