@@ -16,7 +16,7 @@
     virtualHosts."boxedfenix.xyz" = {
       enableACME = true;
       forceSSL = true;
-      locations."/".proxyPass = "http://localhost:8000";
+      locations."/".proxyPass = "http://127.0.0.1:8000";
     };
   };
 
