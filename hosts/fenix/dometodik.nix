@@ -4,9 +4,9 @@
     after = [ "network.target" ];
     # serviceConfig = { User = "ejg"; Group = "users"; };
     path = with pkgs; [ 
-      nix
+      nixVersions.nix_2_14
     ];
-    script = "${pkgs.nix}/bin/nix run github:emanueljg/dometodik";
+    script = "${pkgs.nixVersions.nix_2_14}/bin/nix run github:emanueljg/dometodik";
   };
 
   networking.firewall.allowedTCPPorts = [ 80 443  ];
