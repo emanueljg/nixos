@@ -1,5 +1,23 @@
 {
   "nodes": {
+    "bandcamp-artist-dl": {
+      "inputs": {
+        "nix2jobs": "nix2jobs",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1690997212,
+        "narHash": "sha256-wEB01Dvwn0Al4iDdSv2ozNz9V6b08imqCXh+q5R5yAw=",
+        "path": "/home/ejg/hfm",
+        "type": "path"
+      },
+      "original": {
+        "path": "/home/ejg/hfm",
+        "type": "path"
+      }
+    },
     "discordo": {
       "inputs": {
         "nixpkgs": [
@@ -40,13 +58,28 @@
         "type": "github"
       }
     },
+    "nix2jobs": {
+      "inputs": {
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1690995777,
+        "narHash": "sha256-RQb5zn8zsktvezoIhaqQHx3tQJeR8r36Q1Ru8IEOZSw=",
+        "path": "/home/ejg/nix2jobs",
+        "type": "path"
+      },
+      "original": {
+        "path": "/home/ejg/nix2jobs",
+        "type": "path"
+      }
+    },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1685356226,
-        "narHash": "sha256-f2clSOdqi0SvY1WSgbnl2YgCZmoCXOxeUjYeXp8p2zI=",
+        "lastModified": 1690835256,
+        "narHash": "sha256-SZy/Nvwbf6CorhEsvmjqgjoYNLnRfaKVZMfSnpUDPnc=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "0f7f5ca1cdec8dea85bb4fa60378258171d019ad",
+        "rev": "b7cde1c47b7316f6138a2b36ef6627f3d16d645c",
         "type": "github"
       },
       "original": {
@@ -88,6 +121,22 @@
         "type": "github"
       }
     },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1685356226,
+        "narHash": "sha256-f2clSOdqi0SvY1WSgbnl2YgCZmoCXOxeUjYeXp8p2zI=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "0f7f5ca1cdec8dea85bb4fa60378258171d019ad",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-23.05",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "papes": {
       "flake": false,
       "locked": {
@@ -106,9 +155,10 @@
     },
     "root": {
       "inputs": {
+        "bandcamp-artist-dl": "bandcamp-artist-dl",
         "discordo": "discordo",
         "home-manager": "home-manager",
-        "nixpkgs": "nixpkgs",
+        "nixpkgs": "nixpkgs_2",
         "nixpkgs-stable": "nixpkgs-stable",
         "papes": "papes",
         "sops-nix": "sops-nix"
