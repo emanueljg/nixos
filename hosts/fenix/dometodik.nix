@@ -1,20 +1,12 @@
 { pkgs, ... }: {
-  systemd.services."lumia" = {
+  systemd.services."dometodik" = {
     wantedBy = [ "multi-user.target" ];  # start on boot
     after = [ "network.target" ];
-    serviceConfig = { User = "ejg"; Group = "users"; };
+    # serviceConfig = { User = "ejg"; Group = "users"; };
     path = with pkgs; [ 
-      git 
-      bash 
+      #nix
     ];
-    script = ''
-      export ROOT_DIR=$(mktemp -d)
-
-      git clone https://github.com/emanueljg/demo-deploy-action $ROOT_DIR
-      cd $ROOT_DIR
-      npm install
-      node server.js
-    '';
+    script = "nix run github:emanueljg/dometodik";
   };
 
   networking.firewall.allowedTCPPorts = [ 80 443  ];
@@ -25,7 +17,7 @@
     virtualHosts."boxedfenix.xyz" = {
       enableACME = true;
       forceSSL = true;
-      locations."/".proxyPass = "http://localhost:3000";
+      locations."/".proxyPass = "http://localhost:8000";
     };
   };
 
