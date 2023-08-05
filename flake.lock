@@ -20,6 +20,23 @@
         "type": "github"
       }
     },
+    "dometodik": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1691251353,
+        "narHash": "sha256-Qq+nKuMZDfA2vqHy5x7dDmLo+XbyXcgG9IgRxijoNWw=",
+        "path": "/home/ejg/dometodik",
+        "type": "path"
+      },
+      "original": {
+        "path": "/home/ejg/dometodik",
+        "type": "path"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -107,6 +124,7 @@
     "root": {
       "inputs": {
         "discordo": "discordo",
+        "dometodik": "dometodik",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
         "nixpkgs-stable": "nixpkgs-stable",
