@@ -27,14 +27,18 @@
         ]
       },
       "locked": {
-        "lastModified": 1691251353,
-        "narHash": "sha256-Qq+nKuMZDfA2vqHy5x7dDmLo+XbyXcgG9IgRxijoNWw=",
-        "path": "/home/ejg/dometodik",
-        "type": "path"
+        "lastModified": 1691251537,
+        "narHash": "sha256-DkUz712zsGsYIJo6uD9YV16nfZ3o7TZncJmgpoxrid0=",
+        "owner": "emanueljg",
+        "repo": "dometodik",
+        "rev": "01d7a37d59559df5377e30eb88d9151fe19c8c84",
+        "type": "github"
       },
       "original": {
-        "path": "/home/ejg/dometodik",
-        "type": "path"
+        "owner": "emanueljg",
+        "ref": "nix-python-package",
+        "repo": "dometodik",
+        "type": "github"
       }
     },
     "home-manager": {
