@@ -20,6 +20,27 @@
         "type": "github"
       }
     },
+    "dometodik": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1691251537,
+        "narHash": "sha256-DkUz712zsGsYIJo6uD9YV16nfZ3o7TZncJmgpoxrid0=",
+        "owner": "emanueljg",
+        "repo": "dometodik",
+        "rev": "01d7a37d59559df5377e30eb88d9151fe19c8c84",
+        "type": "github"
+      },
+      "original": {
+        "owner": "emanueljg",
+        "ref": "nix-python-package",
+        "repo": "dometodik",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -107,6 +128,7 @@
     "root": {
       "inputs": {
         "discordo": "discordo",
+        "dometodik": "dometodik",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
         "nixpkgs-stable": "nixpkgs-stable",

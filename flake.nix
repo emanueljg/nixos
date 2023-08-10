@@ -22,6 +22,11 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
 
+  inputs.dometodik = {
+    url = "github:emanueljg/dometodik/nix-python-package";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
+
  # inputs.nix-doom-emacs.url = "github:nix-community/nix-doom-emacs";
  
   outputs = { self, nixpkgs, ... }@attrs: {
@@ -37,6 +42,7 @@
         nodeSpecialArgs = {
           "void" = { inherit (attrs) papes discordo; };
           "seneca" = { inherit (attrs) papes discordo; };
+          "fenix" = { inherit (attrs) dometodik; };
         };
 
       };

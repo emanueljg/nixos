@@ -9,7 +9,7 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./dometodik.nix
-    ];
+   ];
 
   # Use the GRUB 2 boot loader.
   boot.loader.grub.device = lib.mkForce"/dev/sda"; 

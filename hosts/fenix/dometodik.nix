@@ -1,14 +1,10 @@
-{ pkgs, ... }: {
-  systemd.services."dometodik" = {
-    wantedBy = [ "multi-user.target" ];  # start on boot
-    after = [ "network.target" ];
-    # serviceConfig = { User = "ejg"; Group = "users"; };
-    script = let 
-      nix = "${pkgs.nixVersions.nix_2_14}/bin/nix";
-    in "${nix} run github:emanueljg/dometodik/nix-python-package";
-  };
+{ dometodik, ... }: {
+  imports = [ dometodik.nixosModules.default ];
 
-  networking.firewall.allowedTCPPorts = [ 80 443  ];
+  services.dometodik = {
+    enable = true;
+    openFirewall = true;
+  };
 
   # setup reverse proxy
   services.nginx = {
