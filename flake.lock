@@ -27,16 +27,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1691251537,
-        "narHash": "sha256-DkUz712zsGsYIJo6uD9YV16nfZ3o7TZncJmgpoxrid0=",
+        "lastModified": 1691687417,
+        "narHash": "sha256-+pVTsEdw13yT7U+aU+f3HF+2pTkXBRiLZIDViKS5TAU=",
         "owner": "emanueljg",
         "repo": "dometodik",
-        "rev": "01d7a37d59559df5377e30eb88d9151fe19c8c84",
+        "rev": "16830631002c55d46612bfdf623f9e4f5a80eaf2",
         "type": "github"
       },
       "original": {
         "owner": "emanueljg",
-        "ref": "nix-python-package",
         "repo": "dometodik",
         "type": "github"
       }

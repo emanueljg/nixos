@@ -23,7 +23,7 @@
   };
 
   inputs.dometodik = {
-    url = "github:emanueljg/dometodik/nix-python-package";
+    url = "github:emanueljg/dometodik";
     inputs.nixpkgs.follows = "nixpkgs";
   };
 
