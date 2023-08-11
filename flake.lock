@@ -27,11 +27,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1691687417,
-        "narHash": "sha256-+pVTsEdw13yT7U+aU+f3HF+2pTkXBRiLZIDViKS5TAU=",
+        "lastModified": 1691742678,
+        "narHash": "sha256-mNDNmhaasNgkRy5ettP4C+3p6xEqK/AjO6uxPDYhJtA=",
         "owner": "emanueljg",
         "repo": "dometodik",
-        "rev": "16830631002c55d46612bfdf623f9e4f5a80eaf2",
+        "rev": "9630d9afbb009f61454cf9d3cdc2e81772e0793d",
         "type": "github"
       },
       "original": {
