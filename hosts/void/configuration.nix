@@ -4,6 +4,7 @@
   imports = [
     ./hardware_configuration.nix
     ./screens.nix
+    ./podgrab.nix
   ];
 
   networking.hostName = "void";
