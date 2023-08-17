@@ -2,19 +2,20 @@
   "nodes": {
     "bandcamp-artist-dl": {
       "inputs": {
+        "flake-parts": "flake-parts",
         "nix2jobs": "nix2jobs",
         "nixpkgs": [
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1690997212,
-        "narHash": "sha256-wEB01Dvwn0Al4iDdSv2ozNz9V6b08imqCXh+q5R5yAw=",
-        "path": "/home/ejg/hfm",
+        "lastModified": 1692289256,
+        "narHash": "sha256-Dp66FvB4W6je00gWdYMW3Fkgtq6kP+wadcoCa7ZCpfo=",
+        "path": "/home/ejg/bandcamp-artist-dl",
         "type": "path"
       },
       "original": {
-        "path": "/home/ejg/hfm",
+        "path": "/home/ejg/bandcamp-artist-dl",
         "type": "path"
       }
     },
@@ -35,6 +36,42 @@
       "original": {
         "owner": "emanueljg",
         "repo": "discordo",
+        "type": "github"
+      }
+    },
+    "flake-parts": {
+      "inputs": {
+        "nixpkgs-lib": "nixpkgs-lib"
+      },
+      "locked": {
+        "lastModified": 1690933134,
+        "narHash": "sha256-ab989mN63fQZBFrkk4Q8bYxQCktuHmBIBqUG1jl6/FQ=",
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "rev": "59cf3f1447cfc75087e7273b04b31e689a8599fb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "type": "github"
+      }
+    },
+    "flake-parts_2": {
+      "inputs": {
+        "nixpkgs-lib": "nixpkgs-lib_2"
+      },
+      "locked": {
+        "lastModified": 1690933134,
+        "narHash": "sha256-ab989mN63fQZBFrkk4Q8bYxQCktuHmBIBqUG1jl6/FQ=",
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "rev": "59cf3f1447cfc75087e7273b04b31e689a8599fb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
         "type": "github"
       }
     },
@@ -60,11 +97,13 @@
     },
     "nix2jobs": {
       "inputs": {
-        "nixpkgs": "nixpkgs"
+        "flake-parts": "flake-parts_2",
+        "nixpkgs": "nixpkgs",
+        "nixpkgs-lib": "nixpkgs-lib_3"
       },
       "locked": {
-        "lastModified": 1690995777,
-        "narHash": "sha256-RQb5zn8zsktvezoIhaqQHx3tQJeR8r36Q1Ru8IEOZSw=",
+        "lastModified": 1692279886,
+        "narHash": "sha256-Nk+la6mUMzGwBPSZCNk4oiSxogMP4Xra80HM1AT4esY=",
         "path": "/home/ejg/nix2jobs",
         "type": "path"
       },
@@ -85,6 +124,60 @@
       "original": {
         "owner": "NixOS",
         "ref": "nixos-23.05",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs-lib": {
+      "locked": {
+        "dir": "lib",
+        "lastModified": 1690881714,
+        "narHash": "sha256-h/nXluEqdiQHs1oSgkOOWF+j8gcJMWhwnZ9PFabN6q0=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "9e1960bc196baf6881340d53dccb203a951745a2",
+        "type": "github"
+      },
+      "original": {
+        "dir": "lib",
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs-lib_2": {
+      "locked": {
+        "dir": "lib",
+        "lastModified": 1690881714,
+        "narHash": "sha256-h/nXluEqdiQHs1oSgkOOWF+j8gcJMWhwnZ9PFabN6q0=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "9e1960bc196baf6881340d53dccb203a951745a2",
+        "type": "github"
+      },
+      "original": {
+        "dir": "lib",
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs-lib_3": {
+      "locked": {
+        "dir": "lib",
+        "lastModified": 1692174805,
+        "narHash": "sha256-xmNPFDi/AUMIxwgOH/IVom55Dks34u1g7sFKKebxUm0=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "caac0eb6bdcad0b32cb2522e03e4002c8975c62e",
+        "type": "github"
+      },
+      "original": {
+        "dir": "lib",
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
         "repo": "nixpkgs",
         "type": "github"
       }

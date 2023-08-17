@@ -23,7 +23,7 @@
   };
 
   inputs.bandcamp-artist-dl = {
-    url = "path:/home/ejg/hfm";
+    url = "path:/home/ejg/bandcamp-artist-dl";
     inputs.nixpkgs.follows = "nixpkgs";
   };
 

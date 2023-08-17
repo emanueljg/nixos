@@ -5,22 +5,16 @@
   services.bandcamp-artist-dl = {
     enable = true;
 
-    jobDefaults = {
+    jobDefaults = let
+      inherit (import ./mailserver/secrets.nix) clientSecret;
+    in {
+      emailAddress = "emanueljohnsongodin@gmail.com";
+      passwordFile = config.sops.secrets.${clientSecret}.path;
 
-      email = let
-        inherit (import ./mailserver/secrets.nix) clientSecret;
-      in {
-        address = "emanueljohnsongodin@gmail.com";
-        passwordFile = config.sops.secrets.${clientSecret}.path;
-      };
-
-      dirs = {
-        download = "/mnt/data/bandcamp";
-        unzip = "/mnt/data/audio/Music";
-      };
+      downloadDir = "/mnt/data/bandcamp";
+      unzipDir = "/mnt/data/audio/Music";
 
       verbosity = "-vv";
-
     };
 
     jobs = [
