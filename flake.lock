@@ -111,11 +111,11 @@
     "papes": {
       "flake": false,
       "locked": {
-        "lastModified": 1674127756,
-        "narHash": "sha256-l1udx3XiBEczhAs+ACQXV6Wf/jWsZ8JuSd29a3FcvvM=",
+        "lastModified": 1695467487,
+        "narHash": "sha256-V5GTRA0jugFBEefilib2rnwazSeJ5kmY8+NbGB0Rv/s=",
         "owner": "emanueljg",
         "repo": "papes",
-        "rev": "e65ed11b0f1799f652694a4abad55d6d1bc5a38a",
+        "rev": "710834a21089a1dfea2ff86d12484c0c718802d8",
         "type": "github"
       },
       "original": {

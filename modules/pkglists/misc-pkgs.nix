@@ -12,6 +12,7 @@
     unzip
     efibootmgr
     parted
+    tree
   ];
 
   

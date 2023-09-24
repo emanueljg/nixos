@@ -2,9 +2,9 @@
 
 {
   my.services.picom = {
-    enable = false;
+    enable = true;
     activeOpacity = 0.95;
-    inactiveOpacity = 0.70;
+    inactiveOpacity = 0.88;
     fade = true;
     fadeDelta = 4;
   };
