@@ -3,7 +3,7 @@
 
 
 let 
-  pape = "daytona-highway.jpg";
+  pape = "painters_view.jpg";
   papePath = "${papes}/${pape}"; 
 in {
   imports = [
