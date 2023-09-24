@@ -24,9 +24,12 @@ with (import ../lib/funcs.nix); mkbp {
       "programs/x/qutebrowser"
 
       "programs/x/tauon.nix"
+      "programs/x/minecraft.nix"
 
     "pkglists/misc-pkgs.nix"
     "pkglists/kitchensink.nix"
+
+    "services/docker.nix"
   ];
 }
 
