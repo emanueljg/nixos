@@ -18,6 +18,9 @@ in {
     inherit (sopsCfg) sopsFile mode;
   };
 
+  security.acme.acceptTerms = true;
+  security.acme.defaults.email = "emanueljohnsongodin@gmail.com";
+
   mailserver = {
     enable = true;
     fqdn = "emanueljg.com";

@@ -12,5 +12,7 @@ with (import ../../lib/funcs.nix); mkhost "void" {
 
     # vidya 
     "programs/x/nvidia.nix"
+
+    "services/bandcamp-artist-dl.nix"
   ];
 }

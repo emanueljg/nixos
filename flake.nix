@@ -27,6 +27,17 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
 
+  inputs.bandcamp-artist-dl = {
+    url = "path:/home/ejg/bandcamp-artist-dl";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
+
+  inputs.pollymc = {
+    # url = "github:fn2006/PollyMC";
+    url = "path:/home/ejg/pollymc-fork";
+  };
+
+>>>>>>> add-bandcamp-artist-dl
  # inputs.nix-doom-emacs.url = "github:nix-community/nix-doom-emacs";
  
   outputs = { self, nixpkgs, ... }@attrs: {
@@ -40,7 +51,7 @@
         specialArgs = { inherit (attrs) home-manager sops-nix; };
 
         nodeSpecialArgs = {
-          "void" = { inherit (attrs) papes discordo; };
+          "void" = { inherit (attrs) papes discordo bandcamp-artist-dl pollymc; };
           "seneca" = { inherit (attrs) papes discordo; };
           "fenix" = { inherit (attrs) dometodik; };
         };
