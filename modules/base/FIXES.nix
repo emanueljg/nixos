@@ -1,0 +1,3 @@
+{ ... }: {
+  my.home.enableNixpkgsReleaseCheck = false;
+}
