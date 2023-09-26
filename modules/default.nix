@@ -40,6 +40,15 @@ rec {
       ip = "95.217.219.33";
       extraModuleDirs = [ base ];
     };
+
+    "oakleaf" = {
+      ip = "127.0.0.1";
+      extraModuleDirs = [ pc ];
+      extraModules = [ 
+        ./uses-efi-grub.nix
+        ./can-hibernate.nix
+      ];
+    };
   };
 
 }
