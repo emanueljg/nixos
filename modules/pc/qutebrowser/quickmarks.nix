@@ -2,6 +2,10 @@
 
 {
   my.programs.qutebrowser.quickmarks = {
+    # volvo
+    v-c = "https://confluence.volvocars.biz";
+    v-m = "https://outlook.office365.com";
+    v-t = "https://teams.microsoft.com";
     # yh 
     yh-1 = "https://jenseneducation.learnpoint.se";
     yh-pj = "https://devop22.lms.nodehill.se";

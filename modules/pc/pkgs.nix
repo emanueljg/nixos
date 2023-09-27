@@ -17,6 +17,8 @@
     (mpv.override {
       scripts = [ mpvScripts.webtorrent-mpv-hook ];
     })
+    jmtpfs
+    teams
   ];
 }
 
