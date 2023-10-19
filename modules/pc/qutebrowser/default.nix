@@ -12,6 +12,7 @@
 
   my.programs.qutebrowser = {
     enable = true;
+    package = pkgs.qutebrowser-qt6;
     # package = let
     #   qtwebengine = pkgs.qt6.qtwebengine.overrideAttrs (final: prev: { 
     #     version = "6.6.0";
