@@ -30,10 +30,10 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  inputs.bandcamp-artist-dl = {
-    url = "path:/home/ejg/bandcamp-artist-dl";
-    inputs.nixpkgs.follows = "nixpkgs";
-  };
+  # inputs.bandcamp-artist-dl = {
+  #   url = "path:/home/ejg/bandcamp-artist-dl";
+  #   inputs.nixpkgs.follows = "nixpkgs";
+  # };
 
   outputs = { self, nixpkgs, ... }@attrs: let
     inherit (import ./modules)
