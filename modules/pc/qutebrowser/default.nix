@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, nixpkgs-unstable, lib, ... }:
 
 {
   imports = [
@@ -12,6 +12,29 @@
 
   my.programs.qutebrowser = {
     enable = true;
+    # package = let
+    #   qtwebengine = pkgs.qt6.qtwebengine.overrideAttrs (final: prev: { 
+    #     version = "6.6.0";
+    #     src = pkgs.fetchFromGitHub {
+    #       owner = "qt";
+    #       repo = "qtwebengine";
+    #       rev = final.version;
+    #       sha256 = "sha256-8nHj3SZ/PE9ayzwERHyiFwavApZRmLYMMinWwYN8168=";
+    #     };
+    #     patches = [ ];
+    #     postPatch = "";
+    #   }); 
+    # in nixpkgs-unstable.qutebrowser.overridePythonAttrs(old: {
+    #   propagatedBuildInputs = with nixpkgs-unstable.python3Packages; [
+    #     pyyaml qtwebengine jinja2 pygments
+    #     # scripts and userscripts libs
+    #     tldextract beautifulsoup4
+    #     readability-lxml pykeepass stem
+    #     pynacl
+    #     # extensive ad blocking
+    #     adblock
+    #   ];
+    # });
     searchEngines = {
       DEFAULT = "https://www.google.com/search?q={}";
       yt = "http://192.168.0.2:34030/search?q={}";
