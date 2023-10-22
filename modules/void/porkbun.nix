@@ -21,7 +21,7 @@ in {
    };
 
   sops.secrets.${secret} = {
-    sopsFile = ../../secrets/crown/${secret}.yml;
+    sopsFile = ../../secrets/${secret}.yaml;
     mode = "0440";
     inherit owner group;
   };
@@ -39,10 +39,10 @@ in {
     };
 
     services.${service} = let
-      inherit (import ../../_common.nix) domain;
+      domain = "emanueljg.com";
       skPath = config.sops.secrets.${secret}.path;
       pk = "pk1_78185aaeb4231ae38f608c4d8c2eceeb7219c79bfff11727b1e32701915f8944";
-      endpoint = "https://porkbun.com/api/json/v3/dns/editByNameType/${domain}/a"; 
+      endpoint = "https://porkbun.com/api/json/v3/dns/editByNameType/${domain}/a/*"; 
       cmd = pkgs.writeShellScriptBin service ''
         set -e
         
