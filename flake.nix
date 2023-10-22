@@ -35,6 +35,10 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
 
+  inputs.pollymc = {
+    url = "github:fn2006/PollyMC";
+  };
+
   outputs = { self, nixpkgs, ... }@attrs: let
     inherit (import ./modules)
       utils
