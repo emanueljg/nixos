@@ -8,8 +8,6 @@
     ./rice.nix
   ];
 
-  my.home.packages = with pkgs; [ rmapi ];
-
   my.programs.qutebrowser = {
     enable = true;
     package = pkgs.qutebrowser-qt6;
