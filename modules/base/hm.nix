@@ -6,4 +6,5 @@
     (lib.mkAliasOptionModule ["my"] ["home-manager" "users" "ejg"])
   ];
   my.manual.manpages.enable = false;
+  my.xdg.mimeApps.enable = true;
 }

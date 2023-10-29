@@ -18,10 +18,6 @@
       scripts = [ mpvScripts.webtorrent-mpv-hook ];
     })
     jmtpfs
-    teams
-  ];
-  nixpkgs.config.permittedInsecurePackages = [
-    "teams-1.5.00.23861"
   ];
 }
 
