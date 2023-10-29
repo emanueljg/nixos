@@ -58,6 +58,7 @@
           };
         })
       ];
+      floating.criteria = [ { title = "YubiKey Onboarding"; } ];
     };
     extraConfig = ''font pango:monospace 16'';
   };

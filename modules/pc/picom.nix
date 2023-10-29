@@ -11,7 +11,5 @@
       "1:class_g = 'slock'"
       "1:name *?= 'slock'"
     ];
-
-
   };
 }
