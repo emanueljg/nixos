@@ -1,5 +1,5 @@
-{ pkgs, f5fpc, ... }: let _pkgs = f5fpc.packages.${pkgs.system}; in {
+{ pkgs, f5fpc, ... }: {
 
-  my.home.packages = builtins.attrValues f5fpc.packages.${pkgs.sytem};
+  my.home.packages = builtins.attrValues f5fpc.packages.${pkgs.system};
 
 }
