@@ -39,6 +39,11 @@
     url = "github:fn2006/PollyMC";
   };
 
+  inputs.f5fpc = {
+    url = "github:emanueljg/f5fpc-nix";
+    # inputs.nixpkgs.follows = "nixpkgs";
+  };
+
   outputs = { self, nixpkgs, ... }@attrs: let
     inherit (import ./modules)
       utils
