@@ -5,5 +5,6 @@
 
   my.xsession.windowManager.i3.config.floating.criteria = [
     { title = "YubiKey Onboarding"; }
+    { title = "CSID"; }
   ];
 }
