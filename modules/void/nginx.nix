@@ -30,7 +30,7 @@
         locations = let
           installers = "/mnt/data/Vidya/_installers";
         in {
-          "/factorio" = defaults // {
+          "/factorio" = {
             root = "/mnt/data/Vidya/_installers";
             extraConfig = ''
               autoindex on;
