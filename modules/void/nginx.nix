@@ -2,7 +2,7 @@
 
   security.acme = {
     acceptTerms = true;
-    email = "emanueljohnsongodin@gmail.com";
+    defaults.email = "emanueljohnsongodin@gmail.com";
   };
 
   networking.firewall.allowedTCPPorts = [ 80 443 ];
@@ -26,6 +26,18 @@
     enable = true;
     virtualHosts = {
       ${mkFQDN "lib"} = mkAllDefaults "8096"; 
+      ${mkFQDN "dir"} = defaults // {
+        locations = let
+          installers = "/mnt/data/Vidya/_installers";
+        in {
+          "/factorio" = defaults // {
+            root = "/mnt/data/Vidya/_installers";
+            extraConfig = ''
+              autoindex on;
+            '';
+          };
+        };
+      };
     };        
   };
 }
