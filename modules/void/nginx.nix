@@ -6,6 +6,8 @@
   };
 
   networking.firewall.allowedTCPPorts = [ 80 443 ];
+  # factorio
+  networking.firewall.allowedUDPPorts = [ 34197 ];
 
   services.nginx = let
     domain = "emanueljg.com";
