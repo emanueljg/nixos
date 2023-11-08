@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, nixos-unstable, ... }:
 
 {
   my.programs = {
@@ -15,6 +15,9 @@
         };
       };
       
-      gh.enable = true;
+      gh = {
+        enable = true;
+        package = nixos-unstable.gh;
+      };
     };
 }
