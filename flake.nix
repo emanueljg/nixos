@@ -58,6 +58,7 @@
     system = "x86_64-linux";
     appliedAttrs = attrs // { 
       nixpkgs-unstable = import attrs.nixpkgs-unstable { inherit system; };
+      nixos-unstable = import attrs.nixos-unstable { inherit system; };
     };
   in {
 
