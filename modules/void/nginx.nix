@@ -30,10 +30,10 @@
       ${mkFQDN "lib"} = mkAllDefaults "8096"; 
       ${mkFQDN "dir"} = defaults // {
         locations = let
-          installers = "/mnt/data/Vidya/_installers";
+          installers = "/mnt/data/vidya/_installers";
         in {
           "/factorio" = {
-            root = "/mnt/data/Vidya/_installers";
+            root = "/mnt/data/vidya/_installers";
             extraConfig = ''
               autoindex on;
             '';

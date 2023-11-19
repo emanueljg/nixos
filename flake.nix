@@ -44,6 +44,12 @@
     # inputs.nixpkgs.follows = "nixpkgs";
   };
 
+  inputs.factorio-server =  {
+    # url = "path:/home/ejg/factorio-server-nix";
+    url = "github:emanueljg/factorio-server-nix";
+    inputs.nixpkgs.follows = "nixpkgs-unstable";
+  };
+
   outputs = { self, nixpkgs, ... }@attrs: let
     inherit (import ./modules)
       utils
