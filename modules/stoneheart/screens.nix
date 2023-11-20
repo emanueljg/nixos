@@ -39,6 +39,8 @@ in {
         ${computerScreen} = {
           position = "3840x0";
           mode = "3840x2160";
+          # mode = "1920x1080";
+          scale = { x = 1920; y = 1080; method="pixel"; }; 
         };
       };
     };
