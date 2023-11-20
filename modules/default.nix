@@ -24,6 +24,7 @@ rec {
         ./uses-efi-grub.nix
         ./can-hibernate.nix
         ./mailserver/client.nix
+        ./uses-nvidia.nix
       ];
     };
 
@@ -54,6 +55,7 @@ rec {
       extraModuleDirs = [ pc ];
       extraModules = [ 
         ./uses-efi-grub.nix
+        ./uses-nvidia.nix
       ];
     };
   };
