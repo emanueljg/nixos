@@ -38,7 +38,7 @@ in {
         };
         ${computerScreen} = {
           position = "3840x0";
-          mode = "1920x1080";
+          mode = "3840x2160";
         };
       };
     };
