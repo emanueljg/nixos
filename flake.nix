@@ -50,6 +50,11 @@
     inputs.nixpkgs.follows = "nixpkgs-unstable";
   };
 
+  inputs.disko = {
+    url = "github:nix-community/disko";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
+
   outputs = { self, nixpkgs, ... }@attrs: let
     inherit (import ./modules)
       utils

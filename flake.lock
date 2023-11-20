@@ -20,6 +20,26 @@
         "type": "github"
       }
     },
+    "disko": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1699781810,
+        "narHash": "sha256-LD+PIUbm1yQmQmGIbSsc/PB1dtJtGqXFgxRc1C7LlfQ=",
+        "owner": "nix-community",
+        "repo": "disko",
+        "rev": "2d7d77878c5d70f66f3d676ff66708d8d4f9d7df",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "disko",
+        "type": "github"
+      }
+    },
     "dometodik": {
       "inputs": {
         "nixpkgs": [
@@ -446,6 +466,7 @@
     "root": {
       "inputs": {
         "discordo": "discordo",
+        "disko": "disko",
         "dometodik": "dometodik",
         "f5fpc": "f5fpc",
         "factorio-server": "factorio-server",
