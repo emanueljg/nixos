@@ -1,8 +1,9 @@
-{
+{ disko, ... }: {
+  imports = [ disko.nixosModules.disko ];
   disko.devices = {
     disk = {
       vdb = {
-        device = "DEVICE";  # TODO
+        device = "/dev/nvme0n1";  # TODO
         type = "disk";
         content = {
           type = "gpt";

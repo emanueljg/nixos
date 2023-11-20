@@ -49,6 +49,13 @@ rec {
         ./can-hibernate.nix
       ];
     };
+    "stoneheart" = {
+      ip = "127.0.0.1";
+      extraModuleDirs = [ pc ];
+      extraModules = [ 
+        ./uses-efi-grub.nix
+      ];
+    };
   };
 
 }
