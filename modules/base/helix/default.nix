@@ -36,6 +36,10 @@
     languages = {
       language = [
         ({
+          name = "rust";
+          language-server.command = lib.getExe pkgs.rust-analyzer;          
+        })
+        ({
           name = "python";
           language-server.command = py-lsp;
           config = {
