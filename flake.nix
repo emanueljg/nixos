@@ -25,11 +25,6 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  inputs.dometodik = {
-    url = "github:emanueljg/dometodik";
-    inputs.nixpkgs.follows = "nixpkgs";
-  };
-
   # inputs.bandcamp-artist-dl = {
   #   url = "path:/home/ejg/bandcamp-artist-dl";
   #   inputs.nixpkgs.follows = "nixpkgs";
@@ -49,27 +44,29 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, ... }@attrs: let
+  outputs = { self,  ... }@inputs: let
+
     inherit (import ./modules)
       utils
       hosts
     ;
-    system = "x86_64-linux";
-    appliedAttrs = attrs // { 
-      nixpkgs-unstable = import attrs.nixpkgs-unstable { inherit system; };
-      nixos-unstable = import attrs.nixos-unstable { inherit system; };
+
+    rawInputs = {
+      inherit (inputs) nixpkgs nixpkgs-unstable nixos-unstable;
     };
+
   in {
 
     colmena = {
       meta = {
-        nixpkgs = import nixpkgs { system = "x86_64-linux"; };
-        specialArgs = appliedAttrs;
+        nixpkgs = import rawInputs.nixpkgs { system = "x86_64-linux"; };
+        specialArgs = inputs;
+        nodeSpecialArgs = utils.mkColmenaSystemizeInputs hosts rawInputs;
       };
     } // utils.mkColmenaHosts hosts;
 
     nixosConfigurations = utils.mkNixosConfigurations {
-      inherit hosts nixpkgs; attrs = appliedAttrs;
+      inherit hosts inputs rawInputs;
     };
   };
 }

@@ -37,12 +37,26 @@ in rec {
     hosts
   );
 
-  mkNixosConfigurations = { hosts, nixpkgs, attrs }: (
+  systemify = system: rawInputs: (
     mapAttrs
-      (hostName: host: nixpkgs.lib.nixosSystem {
-        system = (host.system or "x86_64-linux");
-        specialArgs = attrs;
-        modules = host.modules;
+      (name: input: import input { inherit system; })
+      rawInputs
+
+  ); 
+
+  defaultSystem = "x86_64-linux";
+
+  hostSystem = host: host.system or defaultSystem;
+
+  mkNixosConfigurations = { hosts, inputs, rawInputs }: (
+    mapAttrs
+      (hostName: host: let
+        system = hostSystem host;
+        systemizedInputs = inputs // (systemify system rawInputs);
+      in rawInputs.nixpkgs.lib.nixosSystem {
+        inherit system;
+        specialArgs = inputs // (systemify system rawInputs);
+        inherit (host) modules;
       })
       hosts
   );
@@ -57,6 +71,12 @@ in rec {
           targetHost = host.ip;
         };
       })
+      hosts
+  );
+
+  mkColmenaSystemizeInputs = hosts: rawInputs: (
+    mapAttrs 
+      (hostName: host: systemify (hostSystem host) rawInputs)
       hosts
   );
 }

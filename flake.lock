@@ -40,26 +40,6 @@
         "type": "github"
       }
     },
-    "dometodik": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1692007699,
-        "narHash": "sha256-3LnjsGORRNAXq+VIYdWEi1mPxSgcf092bHQWN9I5KT4=",
-        "owner": "emanueljg",
-        "repo": "dometodik",
-        "rev": "d3ffb9aeb852a94f9ee676343723e66a4e13442d",
-        "type": "github"
-      },
-      "original": {
-        "owner": "emanueljg",
-        "repo": "dometodik",
-        "type": "github"
-      }
-    },
     "f5fpc": {
       "inputs": {
         "flake-parts": "flake-parts",
@@ -411,7 +391,6 @@
       "inputs": {
         "discordo": "discordo",
         "disko": "disko",
-        "dometodik": "dometodik",
         "f5fpc": "f5fpc",
         "home-manager": "home-manager",
         "nixos-unstable": "nixos-unstable",
