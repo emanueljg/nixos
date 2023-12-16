@@ -44,12 +44,6 @@
     # inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  inputs.factorio-server =  {
-    # url = "path:/home/ejg/factorio-server-nix";
-    url = "github:emanueljg/factorio-server-nix";
-    inputs.nixpkgs.follows = "nixpkgs-unstable";
-  };
-
   inputs.disko = {
     url = "github:nix-community/disko";
     inputs.nixpkgs.follows = "nixpkgs";

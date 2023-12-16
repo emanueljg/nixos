@@ -79,27 +79,6 @@
         "type": "github"
       }
     },
-    "factorio-server": {
-      "inputs": {
-        "flake-parts": "flake-parts_2",
-        "nixpkgs": [
-          "nixpkgs-unstable"
-        ]
-      },
-      "locked": {
-        "lastModified": 1699194367,
-        "narHash": "sha256-BnqhkmiTTTV3v7VEA6J/OJm5d6h2CqiIgZunuT0yw48=",
-        "owner": "emanueljg",
-        "repo": "factorio-server-nix",
-        "rev": "9e73d19eae9e1577c793485f524eced7dcfc6586",
-        "type": "github"
-      },
-      "original": {
-        "owner": "emanueljg",
-        "repo": "factorio-server-nix",
-        "type": "github"
-      }
-    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -136,23 +115,6 @@
     "flake-parts_2": {
       "inputs": {
         "nixpkgs-lib": "nixpkgs-lib_2"
-      },
-      "locked": {
-        "lastModified": 1698882062,
-        "narHash": "sha256-HkhafUayIqxXyHH1X8d9RDl1M2CkFgZLjKD3MzabiEo=",
-        "owner": "hercules-ci",
-        "repo": "flake-parts",
-        "rev": "8c9fa2545007b49a5db5f650ae91f227672c3877",
-        "type": "github"
-      },
-      "original": {
-        "id": "flake-parts",
-        "type": "indirect"
-      }
-    },
-    "flake-parts_3": {
-      "inputs": {
-        "nixpkgs-lib": "nixpkgs-lib_3"
       },
       "locked": {
         "lastModified": 1693611461,
@@ -297,24 +259,6 @@
     "nixpkgs-lib_2": {
       "locked": {
         "dir": "lib",
-        "lastModified": 1698611440,
-        "narHash": "sha256-jPjHjrerhYDy3q9+s5EAsuhyhuknNfowY6yt6pjn9pc=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "0cbe9f69c234a7700596e943bfae7ef27a31b735",
-        "type": "github"
-      },
-      "original": {
-        "dir": "lib",
-        "owner": "NixOS",
-        "ref": "nixos-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs-lib_3": {
-      "locked": {
-        "dir": "lib",
         "lastModified": 1693471703,
         "narHash": "sha256-0l03ZBL8P1P6z8MaSDS/MvuU8E75rVxe5eE1N6gxeTo=",
         "owner": "NixOS",
@@ -413,7 +357,7 @@
     "pollymc": {
       "inputs": {
         "flake-compat": "flake-compat",
-        "flake-parts": "flake-parts_3",
+        "flake-parts": "flake-parts_2",
         "libnbtplusplus": "libnbtplusplus",
         "nixpkgs": "nixpkgs_3",
         "pre-commit-hooks": "pre-commit-hooks"
@@ -469,7 +413,6 @@
         "disko": "disko",
         "dometodik": "dometodik",
         "f5fpc": "f5fpc",
-        "factorio-server": "factorio-server",
         "home-manager": "home-manager",
         "nixos-unstable": "nixos-unstable",
         "nixpkgs": "nixpkgs_2",

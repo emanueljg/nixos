@@ -5,7 +5,7 @@
     defaults.email = "emanueljohnsongodin@gmail.com";
   };
 
-  networking.firewall.allowedTCPPorts = [ 80 443 ];
+  networking.firewall.allowedTCPPorts = [ 80 81 443 ];
   # factorio
   networking.firewall.allowedUDPPorts = [ 34197 ];
 
@@ -29,12 +29,12 @@
     virtualHosts = {
       ${mkFQDN "lib"} = mkAllDefaults "8096"; 
       ${mkFQDN "dir"} = defaults // {
-        locations = let
-          installers = "/mnt/data/vidya/_installers";
-        in {
-          "/factorio" = {
-            root = "/mnt/data/vidya/_installers";
+        locations = {
+          "/shared" = {
+            root = "/var/lib";
             extraConfig = ''
+              allow 192.168.0.0/24;
+              deny all;
               autoindex on;
             '';
           };
