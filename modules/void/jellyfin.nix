@@ -24,6 +24,7 @@
           "/dev/nvidia0:/dev/nvidia0"
           "/dev/nvidiactl:/dev/nvidiactl"
           "/dev/nvidia-modeset:/dev/nvidia-modeset"
+          "/dev/nvidia-caps:/dev/nvidia-caps"
           "/dev/nvidia-uvm:/dev/nvidia-uvm"
           "/dev/nvidia-uvm-tools:/dev/nvidia-uvm-tools"
         ];
