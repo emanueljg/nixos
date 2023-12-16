@@ -8,7 +8,7 @@
     assigns."10" = [{ class = "qBittorrent"; }];
     startup = [
       {
-        command = lib.getExe qbit;
+        command = "${qbit}/bin/qbittorrent";
         always = false;
         notification = true;
       }
