@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
 
@@ -19,51 +19,39 @@
   '';
   
 
- my.programs.helix = with pkgs; let
-    py-lsp = "${python311Packages.python-lsp-server.overrideAttrs(old: {
+ my.programs.helix = let
+    pylsp = pkgs.python311Packages.python-lsp-server.overrideAttrs(old: {
       buildInputs = (
         # enable stuff like flake8 etc
         old.buildInputs ++ old.passthru.optional-dependencies.all
       );
-    })}/bin/pylsp";
-    nix-lsp = "${nil}/bin/nil";
-    go-lsp = "${gopls}/bin/gopls";
+    });
   in {
     enable = true;
     settings = {
       editor.auto-pairs = false;
     };
     languages = {
-      language = [
-        ({
-          name = "rust";
-          language-server.command = lib.getExe pkgs.rust-analyzer;          
-        })
-        ({
-          name = "python";
-          language-server.command = py-lsp;
+      language-server = {
+        rust-analyzer.command = lib.getExe pkgs.rust-analyzer;
+        nil.command = lib.getExe pkgs.nil;
+        gopls.command = lib.getExe pkgs.gopls;
+        pylsp = {
+          command = lib.getExe pylsp;
           config = {
             pylsp = {
               configurationSources = [ "flake8" ];
               plugins = {
                 flake8 = {
-                  executable = "${python311Packages.flake8}/bin/flake8";
+                  executable = lib.getExe pkgs.python311Packages.flake8;
                   enabled = true;
                   maxLineLength = 88;
                 };
               };
             };
           };
-        })
-        ({
-          name = "nix";
-          language-server.command = nix-lsp;          
-        })
-        ({
-          name = "go";
-          language-server.command = go-lsp;
-        })
-      ];
+        };
+      };
     };
   };
 }
