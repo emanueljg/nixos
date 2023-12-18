@@ -13,7 +13,7 @@ in {
   ];
 
   nixpkgs.overlays = [
-    (self: super: {
+    (_self: super: {
       pywal = super.pywal.overrideAttrs (oldAttrs: {
         propagatedBuildInputs =
           oldAttrs.propagatedBuildInputs

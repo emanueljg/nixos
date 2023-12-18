@@ -1,18 +1,7 @@
 {config, ...}: let
-  gfx = builtins.head config.services.xserver.videoDrivers;
-  isNvidia = gfx == "nvidia";
-  mkOutput = output:
-    output
-    + (
-      if isNvidia
-      then "0"
-      else "1"
-    );
-
   leftScreen = "DP-2-1";
   rightScreen = "DP-2-2";
   computerScreen = "eDP-1";
-  unknownHdmi = "HTMI-1";
 in {
   hardware.nvidia.forceFullCompositionPipeline = true;
 

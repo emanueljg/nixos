@@ -1,9 +1,4 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}: {
+{lib, ...}: {
   my.nixpkgs.overlays = let
     # custom variables
     activeDownloadFormat = "({index}) {name} | {total} | {perc:<2}% | {speed:<10}";
@@ -47,7 +42,7 @@
     ];
   in [
     (
-      self: super: {
+      _self: super: {
         qutebrowser = super.qutebrowser.overrideAttrs (oldAttrs: rec {
           postInstall =
             oldAttrs.postInstall

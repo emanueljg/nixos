@@ -1,8 +1,4 @@
-{
-  config,
-  lib,
-  ...
-}: {
+{lib, ...}: {
   time.timeZone = "Europe/Stockholm";
   console.keyMap = "sv-latin1";
 

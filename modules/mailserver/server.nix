@@ -1,12 +1,7 @@
-{
-  config,
-  pkgs,
-  ...
-}: let
+{config, ...}: let
   release = "nixos-23.05";
   inherit
     (import ./secrets.nix)
-    baseSecretName
     serverSecret
     sopsCfg
     ;

@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   # default shell
   users.users."ejg".shell = pkgs.zsh;
   # required for

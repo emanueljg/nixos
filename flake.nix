@@ -55,10 +55,8 @@
         "x86_64-linux"
       ];
 
-      perSystem = args @ {
-        config,
+      perSystem = {
         self',
-        inputs',
         system,
         pkgs,
         ...
@@ -72,7 +70,9 @@
             hooks = {
               ${formatter} = {
                 enable = true;
-                always_run = true;
+              };
+              deadnix = {
+                enable = true;
               };
             };
           };

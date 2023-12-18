@@ -43,7 +43,7 @@ in rec {
 
   systemify = system: rawInputs: (
     mapAttrs
-    (name: input: import input {inherit system;})
+    (_name: input: import input {inherit system;})
     rawInputs
   );
 
@@ -57,9 +57,8 @@ in rec {
     rawInputs,
   }: (
     mapAttrs
-    (hostName: host: let
+    (_hostName: host: let
       system = hostSystem host;
-      systemizedInputs = inputs // (systemify system rawInputs);
     in
       rawInputs.nixpkgs.lib.nixosSystem {
         inherit system;
@@ -71,7 +70,7 @@ in rec {
 
   mkColmenaHosts = hosts: (
     mapAttrs
-    (hostName: host: {
+    (_hostName: host: {
       imports = host.modules;
       deployment = {
         allowLocalDeployment = true;
@@ -84,7 +83,7 @@ in rec {
 
   mkColmenaSystemizeInputs = hosts: rawInputs: (
     mapAttrs
-    (hostName: host: systemify (hostSystem host) rawInputs)
+    (_hostName: host: systemify (hostSystem host) rawInputs)
     hosts
   );
 }

@@ -1,4 +1,4 @@
-{config, ...}: {
+{...}: {
   networking.hostName = "seneca";
 
   system.stateVersion = "22.05";

@@ -1,11 +1,7 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   my.nixpkgs.overlays = [
     (
-      self: super: {
+      _self: super: {
         qutebrowser = let
           pywalQute = pkgs.callPackage (
             {pkgs}:

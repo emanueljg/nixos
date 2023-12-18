@@ -1,18 +1,7 @@
 {config, ...}: let
-  gfx = builtins.head config.services.xserver.videoDrivers;
-  isNvidia = gfx == "nvidia";
-  mkOutput = output:
-    output
-    + (
-      if isNvidia
-      then "0"
-      else "1"
-    );
-
   leftScreen = "DP-0.1";
   rightScreen = "DP-0.2";
   computerScreen = "DP-6";
-  unknownHdmi = "HTMI-1";
 in {
   hardware.nvidia.forceFullCompositionPipeline = true;
 
@@ -54,9 +43,7 @@ in {
       fingerprint = {
         ${computerScreen} = "00ffffffffffff0030e49d0600000000001d0104b5221378eb0f95ae5243b0260f50540000000101010101010101010101010101010150d000a0f0703e803020350058c21000001ae08a00a0f0703e803020350058c21000001a00000000000000000000000000000000000000000003000c19ff1e3c2c26176e2c010100014102030f00e3058000e6060501737321000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000008b";
       };
-      config = let
-        inherit (builtins) toString;
-      in {
+      config = {
         ${computerScreen} = {
           position = "0x0";
           mode = "3840x2160";

@@ -1,9 +1,4 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}: {
+{pkgs, ...}: {
   my.home.shellAliases = let
     origin = "github:emanueljg/nixos";
   in {

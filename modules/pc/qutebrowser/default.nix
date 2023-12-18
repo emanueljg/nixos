@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+{...}: {
   imports = [
     ./quickmarks.nix
     ./translate.nix

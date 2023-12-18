@@ -1,8 +1,4 @@
-{
-  pkgs,
-  lib,
-  ...
-}: let
+{pkgs, ...}: let
   qbit = pkgs.qbittorrent;
 in {
   my.home.packages = [

@@ -1,16 +1,9 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   my = with pkgs; (
     let
       qute-translate = (
         callPackage
-        ({
-          lib,
-          pkgs,
-        }:
+        ({pkgs}:
           stdenv.mkDerivation rec {
             name = "qute-translate";
 
