@@ -1,15 +1,22 @@
-{ config, lib, pkgs, ... }: with lib; {
-
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+with lib; {
   # allow ejg to remote build
-  nix.settings.trusted-users = [ "ejg" ];
+  nix.settings.trusted-users = ["ejg"];
 
   # service
   services.openssh = {
     enable = true;
-    listenAddresses = [{
-      addr = "0.0.0.0";
-      port = 22;
-    }];
+    listenAddresses = [
+      {
+        addr = "0.0.0.0";
+        port = 22;
+      }
+    ];
     settings = {
       PasswordAuthentication = false;
       KbdInteractiveAuthentication = false;
@@ -21,30 +28,28 @@
     ./_pubkeys/id_rsa_mothership.pub
   ];
   # let colmena know about the identity file
-  my.home.sessionVariables."SSH_CONFIG_FILE" = 
-    pkgs.writeText "colmena-ssh-config" ''
-      Host *
-        IdentityFile ~/.ssh/id_rsa_mothership
-    '';
+  my.home.sessionVariables."SSH_CONFIG_FILE" = pkgs.writeText "colmena-ssh-config" ''
+    Host *
+      IdentityFile ~/.ssh/id_rsa_mothership
+  '';
 
   # client
   programs.ssh = {
     package = pkgs.openssh;
     extraConfig = let
       hosts = (import ../.).hosts;
-      hostStrings = lib.mapAttrsToList
-        (hostName: host:
-          ''
+      hostStrings =
+        lib.mapAttrsToList
+        (
+          hostName: host: ''
             Host ${hostName}
               HostName ${host.ip}
               User ejg
               IdentityFile /home/ejg/.ssh/id_rsa_mothership
-          '' 
+          ''
         )
         hosts;
-    in lib.concatStringsSep "\n\n" hostStrings;
+    in
+      lib.concatStringsSep "\n\n" hostStrings;
   };
-
-
 }
-  

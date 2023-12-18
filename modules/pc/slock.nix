@@ -1,3 +1,3 @@
-{ ... }: {
+{...}: {
   programs.slock.enable = true;
 }

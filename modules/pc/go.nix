@@ -1,6 +1,6 @@
-{ ... }: { 
+{...}: {
   my.programs.go = {
-    enable = true; 
+    enable = true;
     goPath = ".local/share/go";
   };
 }

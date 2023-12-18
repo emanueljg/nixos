@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   my.home.packages = with pkgs; [
     dmenu
     i3status
@@ -15,9 +13,8 @@
     openssl
     scrot
     (mpv.override {
-      scripts = [ mpvScripts.webtorrent-mpv-hook ];
+      scripts = [mpvScripts.webtorrent-mpv-hook];
     })
     jmtpfs
   ];
 }
-

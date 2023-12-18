@@ -1,11 +1,14 @@
-{ config, pkgs, ... }: {
-
-  my.home.packages = with pkgs; [ jmtpfs ];
+{
+  config,
+  pkgs,
+  ...
+}: {
+  my.home.packages = with pkgs; [jmtpfs];
   my.programs.bashmount = {
     enable = true;
   };
 
-  my.home.shellAliases = let 
+  my.home.shellAliases = let
     realTgt = "/home/ejg/.phone";
     innerRealTgt = "'${realTgt}/Internal shared storage'";
     symlinkTgt = "/home/ejg/phone";
@@ -15,4 +18,3 @@
     "phum" = "sudo fusermount -u ${realTgt} && rmdir ${realTgt} && rm ${symlinkTgt}";
   };
 }
-    

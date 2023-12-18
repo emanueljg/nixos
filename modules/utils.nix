@@ -1,5 +1,6 @@
 let
-  inherit (builtins)
+  inherit
+    (builtins)
     attrNames
     readDir
     mapAttrs
@@ -8,77 +9,82 @@ let
     filter
     split
     elemAt
-  ;
+    ;
 
   flatten = x:
     if isList x
     then concatMap (y: flatten y) x
     else [x];
-
 in rec {
   dirFiles = path: (
-    map 
-      (f: path + ("/" + f)) 
-      (filter 
-        (fn: (elemAt (split "_" fn) 0) != "")
-        (attrNames (readDir path))
-      )
-  );  
+    map
+    (f: path + ("/" + f))
+    (
+      filter
+      (fn: (elemAt (split "_" fn) 0) != "")
+      (attrNames (readDir path))
+    )
+  );
 
-  mkModules = hosts: ( 
-    mapAttrs 
-      (hostName: host: 
-        host // { 
-          modules = (host.extraModules or [])
-            ++ (flatten (host.extraModuleDirs or [])) 
+  mkModules = hosts: (
+    mapAttrs
+    (
+      hostName: host:
+        host
+        // {
+          modules =
+            (host.extraModules or [])
+            ++ (flatten (host.extraModuleDirs or []))
             ++ (dirFiles (./. + ("/" + hostName)));
         }
-      )
+    )
     hosts
   );
 
   systemify = system: rawInputs: (
     mapAttrs
-      (name: input: import input { inherit system; })
-      rawInputs
-
-  ); 
+    (name: input: import input {inherit system;})
+    rawInputs
+  );
 
   defaultSystem = "x86_64-linux";
 
   hostSystem = host: host.system or defaultSystem;
 
-  mkNixosConfigurations = { hosts, inputs, rawInputs }: (
+  mkNixosConfigurations = {
+    hosts,
+    inputs,
+    rawInputs,
+  }: (
     mapAttrs
-      (hostName: host: let
-        system = hostSystem host;
-        systemizedInputs = inputs // (systemify system rawInputs);
-      in rawInputs.nixpkgs.lib.nixosSystem {
+    (hostName: host: let
+      system = hostSystem host;
+      systemizedInputs = inputs // (systemify system rawInputs);
+    in
+      rawInputs.nixpkgs.lib.nixosSystem {
         inherit system;
         specialArgs = inputs // (systemify system rawInputs);
         inherit (host) modules;
       })
-      hosts
+    hosts
   );
 
   mkColmenaHosts = hosts: (
     mapAttrs
-      (hostName: host: {
-        imports = host.modules;
-        deployment = {
-          allowLocalDeployment = true;
-          targetUser = "ejg";
-          targetHost = host.ip;
-        };
-      })
-      hosts
+    (hostName: host: {
+      imports = host.modules;
+      deployment = {
+        allowLocalDeployment = true;
+        targetUser = "ejg";
+        targetHost = host.ip;
+      };
+    })
+    hosts
   );
 
   mkColmenaSystemizeInputs = hosts: rawInputs: (
-    mapAttrs 
-      (hostName: host: systemify (hostSystem host) rawInputs)
-      hosts
+    mapAttrs
+    (hostName: host: systemify (hostSystem host) rawInputs)
+    hosts
   );
 }
-
-

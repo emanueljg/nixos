@@ -1,11 +1,14 @@
-{ config, pkgs, ... }: {
-
+{
+  config,
+  pkgs,
+  ...
+}: {
   hardware.opengl = {
     enable = true;
     driSupport32Bit = true;
   };
 
-  services.xserver.videoDrivers =  [ "nvidia" ];
+  services.xserver.videoDrivers = ["nvidia"];
 
   virtualisation = {
     docker.enableNvidia = true;
@@ -28,8 +31,8 @@
           "/dev/nvidia-uvm:/dev/nvidia-uvm"
           "/dev/nvidia-uvm-tools:/dev/nvidia-uvm-tools"
         ];
-        ports = [ "8096:8096" ];
-        extraOptions = [ "--runtime=nvidia"];
+        ports = ["8096:8096"];
+        extraOptions = ["--runtime=nvidia"];
         environment = {
           JELLYFIN_LOG_DIR = "/log";
           NVIDIA_DRIVER_CAPABILITIES = "all";
@@ -38,5 +41,4 @@
       };
     };
   };
-
 }

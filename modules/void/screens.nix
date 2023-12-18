@@ -1,18 +1,20 @@
-{ config, ... }:
-
-let
+{config, ...}: let
   gfx = builtins.head config.services.xserver.videoDrivers;
   isNvidia = gfx == "nvidia";
-  mkOutput = output: 
-    output + (if isNvidia then "0" else "1");
+  mkOutput = output:
+    output
+    + (
+      if isNvidia
+      then "0"
+      else "1"
+    );
 
   leftScreen = mkOutput "DVI-D-";
   frontScreen = mkOutput "DP-";
   rightScreen = mkOutput "HDMI-";
 in {
-
   hardware.nvidia.forceFullCompositionPipeline = true;
-  
+
   my.programs.autorandr = {
     enable = true;
     profiles."default" = {
@@ -42,19 +44,48 @@ in {
 
   my.xsession.windowManager.i3.config = {
     workspaceOutputAssign = [
-      { output = leftScreen; workspace = "4"; }
-      { output = leftScreen; workspace = "5"; }
-      { output = leftScreen; workspace = "6"; }
+      {
+        output = leftScreen;
+        workspace = "4";
+      }
+      {
+        output = leftScreen;
+        workspace = "5";
+      }
+      {
+        output = leftScreen;
+        workspace = "6";
+      }
 
-      { output = frontScreen; workspace = "1"; }
-      { output = frontScreen; workspace = "2"; }
-      { output = frontScreen; workspace = "3"; }
+      {
+        output = frontScreen;
+        workspace = "1";
+      }
+      {
+        output = frontScreen;
+        workspace = "2";
+      }
+      {
+        output = frontScreen;
+        workspace = "3";
+      }
 
-      { output = rightScreen; workspace = "7"; }
-      { output = rightScreen; workspace = "8"; }
-      { output = rightScreen; workspace = "9"; }
-      { output = rightScreen; workspace = "10"; }
+      {
+        output = rightScreen;
+        workspace = "7";
+      }
+      {
+        output = rightScreen;
+        workspace = "8";
+      }
+      {
+        output = rightScreen;
+        workspace = "9";
+      }
+      {
+        output = rightScreen;
+        workspace = "10";
+      }
     ];
   };
 }
-

@@ -1,4 +1,8 @@
-{ config, pkgs, ... }: {
+{
+  config,
+  pkgs,
+  ...
+}: {
   services.rtorrent = {
     enable = true;
     dataDir = "/mnt/data/rtorrent";
@@ -35,5 +39,5 @@
   #     '';
   #   };
   # };
-  my.home.packages = with pkgs; [ rtorrent ];
+  my.home.packages = with pkgs; [rtorrent];
 }

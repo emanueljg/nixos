@@ -1,6 +1,4 @@
-{ config, ... }:
-
-{
+{config, ...}: {
   networking.hostName = "crown";
 
   networking = {

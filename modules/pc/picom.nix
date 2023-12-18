@@ -1,6 +1,8 @@
-{ config, pkgs, ... }:
-
 {
+  config,
+  pkgs,
+  ...
+}: {
   my.services.picom = {
     enable = false;
     activeOpacity = 0.95;

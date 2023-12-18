@@ -1,4 +1,8 @@
-{ config, lib, ... }: {
+{
+  config,
+  lib,
+  ...
+}: {
   services.podgrab = {
     enable = true;
     port = 8001;

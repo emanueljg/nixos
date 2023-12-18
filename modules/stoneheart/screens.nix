@@ -1,21 +1,21 @@
-{ config, ... }:
-
-let
+{config, ...}: let
   gfx = builtins.head config.services.xserver.videoDrivers;
   isNvidia = gfx == "nvidia";
-  mkOutput = output: 
-    output + (if isNvidia then "0" else "1");
+  mkOutput = output:
+    output
+    + (
+      if isNvidia
+      then "0"
+      else "1"
+    );
 
   leftScreen = "DP-0.1";
   rightScreen = "DP-0.2";
   computerScreen = "DP-6";
   unknownHdmi = "HTMI-1";
-
-
 in {
-
   hardware.nvidia.forceFullCompositionPipeline = true;
-  
+
   my.programs.autorandr = {
     enable = true;
     profiles."disable" = {
@@ -25,7 +25,9 @@ in {
         ${computerScreen} = "00ffffffffffff0030e49d0600000000001d0104b5221378eb0f95ae5243b0260f50540000000101010101010101010101010101010150d000a0f0703e803020350058c21000001ae08a00a0f0703e803020350058c21000001a00000000000000000000000000000000000000000003000c19ff1e3c2c26176e2c010100014102030f00e3058000e6060501737321000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000008b";
         # ${unknownHdmi} = "00ffffffffffff0022f06f3201010101191b0103803420782a0285a556549d250e5054210800b30095008100d1c0a9c081c0a9408180283c80a070b023403020360006442100001a000000fd00323c1e5011000a202020202020000000fc00485020453234320a2020202020000000ff00434e34373235313633370a202001c1020318b148101f04130302121167030c0010000022e2002b023a801871382d40582c450006442100001e023a80d072382d40102c458006442100001e011d007251d01e206e28550006442100001e011d00bc52d01e20b828554006442100001e8c0ad08a20e02d10103e9600064421000018000000000000000000000000002f";
       };
-      config = let inherit (builtins) toString; in {
+      config = let
+        inherit (builtins) toString;
+      in {
         ${leftScreen} = {
           position = "${toString (1920 * 2)}x0";
           # rotate = "right";
@@ -40,7 +42,11 @@ in {
           position = "0x0";
           mode = "3840x2160";
           # mode = "1920x1080";
-          scale = { x = 1920; y = 1080; method="pixel"; }; 
+          scale = {
+            x = 1920;
+            y = 1080;
+            method = "pixel";
+          };
         };
       };
     };
@@ -48,12 +54,18 @@ in {
       fingerprint = {
         ${computerScreen} = "00ffffffffffff0030e49d0600000000001d0104b5221378eb0f95ae5243b0260f50540000000101010101010101010101010101010150d000a0f0703e803020350058c21000001ae08a00a0f0703e803020350058c21000001a00000000000000000000000000000000000000000003000c19ff1e3c2c26176e2c010100014102030f00e3058000e6060501737321000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000008b";
       };
-      config = let inherit (builtins) toString; in {
+      config = let
+        inherit (builtins) toString;
+      in {
         ${computerScreen} = {
           position = "0x0";
           mode = "3840x2160";
           # mode = "1920x1080";
-          scale = { x = 1920; y = 1080; method="pixel"; }; 
+          scale = {
+            x = 1920;
+            y = 1080;
+            method = "pixel";
+          };
         };
       };
     };
@@ -78,7 +90,7 @@ in {
         };
       };
     };
-      
+
     profiles."heart" = {
       fingerprint = {
         "DP-2-8" = "00ffffffffffff00220eca3600000000121f0104a53420783a0c2da954459d2316545ea10800d1c0a9c08100d100b3009500a9408180283c80a070b023403020360006442100001a000000fd00323c1e5011010a202020202020000000fc004850205a3234752047330a2020000000ff00434e343131383156424a0a2020007c";
@@ -100,34 +112,62 @@ in {
         };
       };
     };
-
   };
 
   my.xsession.windowManager.i3.config = {
     workspaceOutputAssign = [
-      { output = leftScreen; workspace = "1"; }
-      { output = leftScreen; workspace = "2"; }
-      { output = leftScreen; workspace = "3"; }
-      { output = leftScreen; workspace = "4"; }
+      {
+        output = leftScreen;
+        workspace = "1";
+      }
+      {
+        output = leftScreen;
+        workspace = "2";
+      }
+      {
+        output = leftScreen;
+        workspace = "3";
+      }
+      {
+        output = leftScreen;
+        workspace = "4";
+      }
 
-      { output = rightScreen; workspace = "5"; }
-      { output = rightScreen; workspace = "6"; }
-      { output = rightScreen; workspace = "7"; }
-      { output = rightScreen; workspace = "8"; }
+      {
+        output = rightScreen;
+        workspace = "5";
+      }
+      {
+        output = rightScreen;
+        workspace = "6";
+      }
+      {
+        output = rightScreen;
+        workspace = "7";
+      }
+      {
+        output = rightScreen;
+        workspace = "8";
+      }
 
-      { output = computerScreen; workspace = "9"; }
-      { output = computerScreen; workspace = "10"; }
+      {
+        output = computerScreen;
+        workspace = "9";
+      }
+      {
+        output = computerScreen;
+        workspace = "10";
+      }
 
-    #   { output = "DP-2-1"; workspace = "5"; }
-    #   { output = "DP-2-1"; workspace = "6"; }
-    #   { output = "DP-2-1"; workspace = "7"; }
-    #   { output = "DP-2-1"; workspace = "8"; }
-      
-    #   { output = "DP-2-8"; workspace = "1"; }
-    #   { output = "DP-2-8"; workspace = "2"; }
-    #   { output = "DP-2-8"; workspace = "3"; }
-    #   { output = "DP-2-8"; workspace = "4"; }
+      #   { output = "DP-2-1"; workspace = "5"; }
+      #   { output = "DP-2-1"; workspace = "6"; }
+      #   { output = "DP-2-1"; workspace = "7"; }
+      #   { output = "DP-2-1"; workspace = "8"; }
+
+      #   { output = "DP-2-8"; workspace = "1"; }
+      #   { output = "DP-2-8"; workspace = "2"; }
+      #   { output = "DP-2-8"; workspace = "3"; }
+      #   { output = "DP-2-8"; workspace = "4"; }
     ];
   };
 }
-

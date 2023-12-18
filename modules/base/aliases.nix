@@ -1,6 +1,4 @@
-{ config, ... }:
-
-{
+{config, ...}: {
   my.home.shellAliases = {
     "c" = "cd /etc/nixos";
     "..." = "cd ../..";
@@ -18,7 +16,7 @@
     "xc" = "xclip -sel clip";
     "xp" = "xc -o";
 
-    # pipe into this to save stdin as a paste. The sed remove a trailing null char. 
+    # pipe into this to save stdin as a paste. The sed remove a trailing null char.
     "tb" = "nc termbin.com 9999 | sed 's/\\x0//' | tee >(xc -rmlastnl)";
 
     "g" = "git";
@@ -31,7 +29,7 @@
     "gch" = "g checkout";
     "gchb" = "g checkout -b";
 
-    "gm" = "g merge"; 
+    "gm" = "g merge";
 
     "ga" = "g add";
 
@@ -44,7 +42,7 @@
     "gl" = "g log";
     "gd" = "g diff";
 
-    "pling" = ''while :; do sleep 0.75 && echo -e "\a"; done''; 
+    "pling" = ''while :; do sleep 0.75 && echo -e "\a"; done'';
 
     "sd" = "sudo systemctl";
     "sds" = "sd start";

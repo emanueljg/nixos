@@ -1,21 +1,21 @@
-{ config, ... }:
-
-let
+{config, ...}: let
   gfx = builtins.head config.services.xserver.videoDrivers;
   isNvidia = gfx == "nvidia";
-  mkOutput = output: 
-    output + (if isNvidia then "0" else "1");
+  mkOutput = output:
+    output
+    + (
+      if isNvidia
+      then "0"
+      else "1"
+    );
 
   leftScreen = "DP-2-1";
   rightScreen = "DP-2-2";
   computerScreen = "eDP-1";
   unknownHdmi = "HTMI-1";
-
-
 in {
-
   hardware.nvidia.forceFullCompositionPipeline = true;
-  
+
   my.programs.autorandr = {
     enable = true;
     profiles."default" = {
@@ -63,7 +63,7 @@ in {
         };
       };
     };
-      
+
     profiles."heart" = {
       fingerprint = {
         "DP-2-8" = "00ffffffffffff00220eca3600000000121f0104a53420783a0c2da954459d2316545ea10800d1c0a9c08100d100b3009500a9408180283c80a070b023403020360006442100001a000000fd00323c1e5011010a202020202020000000fc004850205a3234752047330a2020000000ff00434e343131383156424a0a2020007c";
@@ -85,34 +85,62 @@ in {
         };
       };
     };
-
   };
 
   my.xsession.windowManager.i3.config = {
     workspaceOutputAssign = [
-      { output = leftScreen; workspace = "1"; }
-      { output = leftScreen; workspace = "2"; }
-      { output = leftScreen; workspace = "3"; }
-      { output = leftScreen; workspace = "4"; }
+      {
+        output = leftScreen;
+        workspace = "1";
+      }
+      {
+        output = leftScreen;
+        workspace = "2";
+      }
+      {
+        output = leftScreen;
+        workspace = "3";
+      }
+      {
+        output = leftScreen;
+        workspace = "4";
+      }
 
-      { output = rightScreen; workspace = "5"; }
-      { output = rightScreen; workspace = "6"; }
-      { output = rightScreen; workspace = "7"; }
-      { output = rightScreen; workspace = "8"; }
+      {
+        output = rightScreen;
+        workspace = "5";
+      }
+      {
+        output = rightScreen;
+        workspace = "6";
+      }
+      {
+        output = rightScreen;
+        workspace = "7";
+      }
+      {
+        output = rightScreen;
+        workspace = "8";
+      }
 
-      { output = computerScreen; workspace = "9"; }
-      { output = computerScreen; workspace = "10"; }
+      {
+        output = computerScreen;
+        workspace = "9";
+      }
+      {
+        output = computerScreen;
+        workspace = "10";
+      }
 
-    #   { output = "DP-2-1"; workspace = "5"; }
-    #   { output = "DP-2-1"; workspace = "6"; }
-    #   { output = "DP-2-1"; workspace = "7"; }
-    #   { output = "DP-2-1"; workspace = "8"; }
-      
-    #   { output = "DP-2-8"; workspace = "1"; }
-    #   { output = "DP-2-8"; workspace = "2"; }
-    #   { output = "DP-2-8"; workspace = "3"; }
-    #   { output = "DP-2-8"; workspace = "4"; }
+      #   { output = "DP-2-1"; workspace = "5"; }
+      #   { output = "DP-2-1"; workspace = "6"; }
+      #   { output = "DP-2-1"; workspace = "7"; }
+      #   { output = "DP-2-1"; workspace = "8"; }
+
+      #   { output = "DP-2-8"; workspace = "1"; }
+      #   { output = "DP-2-8"; workspace = "2"; }
+      #   { output = "DP-2-8"; workspace = "3"; }
+      #   { output = "DP-2-8"; workspace = "4"; }
     ];
   };
 }
-

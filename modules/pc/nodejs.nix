@@ -1,5 +1,7 @@
-{ config, pkgs, ... }:
-
 {
-  my.home.packages = with pkgs; [ nodejs ];
+  config,
+  pkgs,
+  ...
+}: {
+  my.home.packages = with pkgs; [nodejs];
 }

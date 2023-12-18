@@ -46,50 +46,68 @@
 
   inputs.pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
 
+  outputs = inputs @ {flake-parts, ...}:
+    flake-parts.lib.mkFlake {inherit inputs;} {
+      imports = [
+      ];
 
-  outputs = { self, ... }@inputs:
-    let
+      systems = [
+        "x86_64-linux"
+      ];
 
-      inherit (import ./modules)
-        utils
-        hosts
-        ;
-
-      rawInputs = {
-        inherit (inputs) nixpkgs nixpkgs-unstable nixos-unstable;
-      };
-
-      system' = "x86_64-linux";
-
-      pkgs = import rawInputs.nixpkgs { system = system'; };
-
-    in
-    {
-
-      colmena = {
-        meta = {
-          nixpkgs = pkgs;
-          specialArgs = inputs;
-          nodeSpecialArgs = utils.mkColmenaSystemizeInputs hosts rawInputs;
-        };
-      } // utils.mkColmenaHosts hosts;
-
-      nixosConfigurations = utils.mkNixosConfigurations {
-        inherit hosts inputs rawInputs;
-      };
-
-      checks.${system'} = {
-        pre-commit-check = inputs.pre-commit-hooks.lib.${system'}.run {
-          src = ./.;
-          hooks = {
-            nixpkgs-fmt.enable = true;
+      perSystem = args @ {
+        config,
+        self',
+        inputs',
+        system,
+        pkgs,
+        ...
+      }: let
+        formatter = "alejandra";
+      in {
+        formatter = pkgs.${formatter};
+        checks = {
+          pre-commit-check = inputs.pre-commit-hooks.lib.${system}.run {
+            src = ./.;
+            hooks = {
+              ${formatter}.enable = true;
+            };
           };
         };
+
+        devShells.default = pkgs.mkShell {
+          inherit (self'.checks.pre-commit-check) shellHook;
+        };
       };
 
-      devShells.${system'}.default = pkgs.mkShell {
-        inherit (self.checks.${system'}.pre-commit-check) shellHook;
-      };
+      flake = let
+        inherit
+          (import ./modules)
+          utils
+          hosts
+          ;
 
+        rawInputs = {
+          inherit (inputs) nixpkgs nixpkgs-unstable nixos-unstable;
+        };
+
+        system' = "x86_64-linux";
+
+        pkgs = import rawInputs.nixpkgs {system = system';};
+      in {
+        colmena =
+          {
+            meta = {
+              nixpkgs = pkgs;
+              specialArgs = inputs;
+              nodeSpecialArgs = utils.mkColmenaSystemizeInputs hosts rawInputs;
+            };
+          }
+          // utils.mkColmenaHosts hosts;
+
+        nixosConfigurations = utils.mkNixosConfigurations {
+          inherit hosts inputs rawInputs;
+        };
+      };
     };
 }

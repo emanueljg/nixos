@@ -1,10 +1,15 @@
-{ config, pkgs, ... }: let 
+{
+  config,
+  pkgs,
+  ...
+}: let
   release = "nixos-23.05";
-  inherit (import ./secrets.nix)
+  inherit
+    (import ./secrets.nix)
     baseSecretName
     serverSecret
     sopsCfg
-  ;
+    ;
 in {
   imports = [
     (builtins.fetchTarball {
@@ -24,11 +29,11 @@ in {
   mailserver = {
     enable = true;
     fqdn = "emanueljg.com";
-    domains = [ "emanueljg.com" ];
+    domains = ["emanueljg.com"];
     loginAccounts = {
       "ejg@emanueljg.com" = {
-         hashedPasswordFile = config.sops.secrets.${serverSecret}.path;
-       };
+        hashedPasswordFile = config.sops.secrets.${serverSecret}.path;
+      };
     };
     certificateScheme = "acme-nginx";
   };
@@ -36,7 +41,4 @@ in {
   services.dovecot2.extraConfig = ''
     imap_idle_notify_interval = 5 secs
   '';
-
-  
 }
-

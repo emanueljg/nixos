@@ -1,9 +1,9 @@
-{ disko, ... }: {
-  imports = [ disko.nixosModules.disko ];
+{disko, ...}: {
+  imports = [disko.nixosModules.disko];
   disko.devices = {
     disk = {
       vdb = {
-        device = "/dev/nvme0n1";  # TODO
+        device = "/dev/nvme0n1"; # TODO
         type = "disk";
         content = {
           type = "gpt";
@@ -39,4 +39,3 @@
     };
   };
 }
-

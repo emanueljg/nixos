@@ -1,9 +1,7 @@
-{ config, ... }:
-
-{
+{config, ...}: {
   users.users.ejg = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ];
+    extraGroups = ["wheel"];
   };
 
   my.xdg.userDirs = {

@@ -1,6 +1,8 @@
-{ config, lib, ... }:
-
 {
+  config,
+  lib,
+  ...
+}: {
   time.timeZone = "Europe/Stockholm";
   console.keyMap = "sv-latin1";
 
@@ -9,12 +11,12 @@
     sv = "sv_SE.UTF-8";
   in {
     defaultLocale = en;
-    extraLocaleSettings = (lib.attrsets.genAttrs [ 
+    extraLocaleSettings = lib.attrsets.genAttrs [
       "LC_TIME"
       "LC_MONETARY"
       "LC_PAPER"
       "LC_NAME"
       "LC_TELEPHONE"
-    ] (lib.trivial.const sv));
+    ] (lib.trivial.const sv);
   };
 }

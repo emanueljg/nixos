@@ -1,21 +1,17 @@
-{ lib, ... }:
-
-{
+{lib, ...}: {
   services.xserver.displayManager = {
-
     lightdm.greeter.enable = false;
 
-    session = [{
+    session = [
+      {
         manage = "window";
         name = "fake";
         start = "";
-    }];
+      }
+    ];
 
     defaultSession = "none+fake";
-
   };
-
-
 
   my.xsession.enable = true;
   my.xsession.windowManager.i3 = {
@@ -50,15 +46,15 @@
         "${modifier}+Down" = "exec pactl set-sink-volume @DEFAULT_SINK@ -5%";
       };
       bars = [
-        ({
+        {
           fonts = {
-            names = [ "pango" ];
+            names = ["pango"];
             style = "monospace";
             size = 19.0;
           };
-        })
+        }
       ];
-      floating.criteria = [ { title = "YubiKey Onboarding"; } ];
+      floating.criteria = [{title = "YubiKey Onboarding";}];
     };
     extraConfig = ''font pango:monospace 16'';
   };

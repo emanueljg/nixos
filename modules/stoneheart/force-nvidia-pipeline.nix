@@ -1,4 +1,3 @@
-{ ... }: {
+{...}: {
   hardware.nvidia.forceFullCompositionPipeline = true;
 }
-

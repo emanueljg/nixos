@@ -1,13 +1,15 @@
-{ config, pkgs, lib, ... }:
-
 {
-
+  config,
+  pkgs,
+  lib,
+  ...
+}: {
   imports = [
     ./rice.nix
   ];
 
   my.home.sessionVariables = rec {
-    EDITOR = "hx"; 
+    EDITOR = "hx";
     SUDO_EDITOR = EDITOR;
     VISUAL = EDITOR;
   };
@@ -17,10 +19,9 @@
   my.programs.zsh.initExtra = ''
     export EDITOR="${config.my.home.sessionVariables.EDITOR}"
   '';
-  
 
- my.programs.helix = let
-    pylsp = pkgs.python311Packages.python-lsp-server.overrideAttrs(old: {
+  my.programs.helix = let
+    pylsp = pkgs.python311Packages.python-lsp-server.overrideAttrs (old: {
       buildInputs = (
         # enable stuff like flake8 etc
         old.buildInputs ++ old.passthru.optional-dependencies.all
@@ -40,7 +41,7 @@
           command = lib.getExe pylsp;
           config = {
             pylsp = {
-              configurationSources = [ "flake8" ];
+              configurationSources = ["flake8"];
               plugins = {
                 flake8 = {
                   executable = lib.getExe pkgs.python311Packages.flake8;

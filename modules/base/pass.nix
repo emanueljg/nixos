@@ -1,7 +1,10 @@
-{ pkgs, lib, ... }:
-
-with pkgs; let 
-  openKeyChainGnuPG = gnupg.overrideAttrs(old: rec {
+{
+  pkgs,
+  lib,
+  ...
+}:
+with pkgs; let
+  openKeyChainGnuPG = gnupg.overrideAttrs (old: rec {
     version = "2.2.28";
     src = fetchurl {
       url = "mirror://gnupg/gnupg/${old.pname}-${version}.tar.bz2";
@@ -10,14 +13,15 @@ with pkgs; let
     patches = let
       badPatch = "24-allow-import-of-previously-known-keys-even-without-UI.patch";
       notBadPatch = e: !lib.strings.hasSuffix badPatch e;
-    in builtins.filter notBadPatch old.patches; 
+    in
+      builtins.filter notBadPatch old.patches;
   });
 
   openKeyChainPass = pass.override {
     gnupg = openKeyChainGnuPG;
   };
 in {
-  my.home.packages = [ 
+  my.home.packages = [
     openKeyChainGnuPG
     openKeyChainPass
   ];

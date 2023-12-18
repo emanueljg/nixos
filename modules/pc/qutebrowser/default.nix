@@ -1,6 +1,8 @@
-{ config, pkgs, ... }:
-
 {
+  config,
+  pkgs,
+  ...
+}: {
   imports = [
     ./quickmarks.nix
     ./translate.nix
@@ -21,14 +23,14 @@
         "gJ" = "tab-move -";
         "gK" = "tab-move +";
         "ew" = "jseval -q document.activeElement.blur()";
-        "eb" = "spawn --userscript /config/parts/home/programs/qutebrowser/edit-quickmarks.sh";  # doesn't work as of yet
-        ",d" = ''hint links spawn zsh -lic "aurta {hint-url}"''; 
+        "eb" = "spawn --userscript /config/parts/home/programs/qutebrowser/edit-quickmarks.sh"; # doesn't work as of yet
+        ",d" = ''hint links spawn zsh -lic "aurta {hint-url}"'';
         ",yy" = ''yank inline https://youtube.com/watch?{url:query}'';
       };
     };
     settings = {
       "auto_save.session" = false;
-#      colors.webpage.darkmode.enabled = true;
+      #      colors.webpage.darkmode.enabled = true;
       "downloads.prevent_mixed_content" = false;
     };
   };
@@ -43,5 +45,4 @@
     "x-scheme-handler/about" = "org.qutebrowser.qutebrowser.desktop";
     "x-scheme-handler/unknown" = "org.qutebrowser.qutebrowser.desktop";
   };
- 
 }

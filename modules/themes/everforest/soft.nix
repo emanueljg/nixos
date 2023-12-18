@@ -1,12 +1,12 @@
 rec {
   bg = {
-    "bg_dim" = "#E5DFC5";  # same as 2
+    "bg_dim" = "#E5DFC5"; # same as 2
     "bg0" = "#F3EAD3";
     "bg1" = "#EAE4CA";
     "bg2" = "#E5DFC5";
     "bg3" = "#DDD8BE";
     "bg4" = "#D8D3BA";
-    "bg5" = "#B9C0AB";  # not used
+    "bg5" = "#B9C0AB"; # not used
     "bg_visual" = "#E1E4BD";
     "bg_red" = "#F4DBD0";
     "bg_green" = "#E5E6C5";
@@ -31,5 +31,3 @@ rec {
     "statusline3" = "#E66868";
   };
 }
-
-  

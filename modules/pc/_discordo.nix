@@ -1,7 +1,11 @@
-{ config, pkgs, discordo, ... }:
-
-let secret = "discordo-token"; in {
-
+{
+  config,
+  pkgs,
+  discordo,
+  ...
+}: let
+  secret = "discordo-token";
+in {
   sops.secrets.${secret} = {
     sopsFile = ../../secrets/${secret}.yaml;
     mode = "0440";
@@ -12,7 +16,7 @@ let secret = "discordo-token"; in {
   my.home.packages = let
     pkg = discordo.defaultPackage.${pkgs.system};
   in [
-    pkg 
+    pkg
     (
       pkgs.writeShellScriptBin "dc" ''
         ${pkg}/bin/discordo \
@@ -20,5 +24,4 @@ let secret = "discordo-token"; in {
       ''
     )
   ];
-
 }

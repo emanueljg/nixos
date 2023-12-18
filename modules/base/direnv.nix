@@ -1,5 +1,4 @@
-{ pkgs, ... }: {
-
+{pkgs, ...}: {
   my.programs.direnv = {
     enable = true;
     nix-direnv.enable = true;
@@ -13,5 +12,4 @@
   my.home.sessionVariables = {
     DIRENV_LOG_FORMAT = "";
   };
-
 }

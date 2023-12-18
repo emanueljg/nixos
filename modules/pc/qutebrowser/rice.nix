@@ -1,16 +1,13 @@
-{ ... }: {
-
+{...}: {
   my.programs.qutebrowser.settings.colors = with (import ../../themes); {
-
     completion = {
-
       category = {
         bg = bg.bg3;
         fg = fg.grey2;
         border.bottom = bg.bg3;
         border.top = bg.bg3;
       };
-      
+
       odd.bg = bg.bg0;
       even.bg = bg.bg1;
       fg = fg.fg;
@@ -28,15 +25,13 @@
         bg = bg.bg5;
         fg = fg.green;
       };
-
     };
 
     contextmenu = {
-    
       disabled = {
         bg = bg.bg2;
         fg = fg.fg;
-      }; 
+      };
 
       menu = {
         bg = bg.bg0;
@@ -47,19 +42,17 @@
         bg = bg.bg_visual;
         fg = fg.fg;
       };
-    
     };
 
-    downloads = { 
-
+    downloads = {
       bar.bg = bg.bg5;
 
       error = {
         bg = fg.red;
         fg = fg.fg;
       };
-      
-      start = { 
+
+      start = {
         bg = fg.blue;
         fg = WHITE;
       };
@@ -68,8 +61,7 @@
         bg = fg.green;
         fg = WHITE;
       };
-      
-    }; 
+    };
 
     hints = {
       bg = bg.bg_yellow;
@@ -83,42 +75,38 @@
       suffix.fg = fg.purple;
     };
 
-    messages = { 
-
+    messages = {
       error = {
         bg = fg.purple;
         border = fg.purple;
         fg = fg.fg;
       };
 
-      info = { 
+      info = {
         bg = fg.red;
         border = fg.red;
         fg = fg.fg;
       };
 
-      warning = { 
+      warning = {
         bg = fg.orange;
         border = fg.orange;
         fg = fg.fg;
       };
-        
     };
 
-    prompts = { 
+    prompts = {
       bg = bg.bg0;
       border = bg.bg0;
       fg = fg.fg;
 
-      selected = { 
+      selected = {
         bg = bg.bg_visual;
         fg = fg.fg;
       };
-      
     };
 
-    statusbar = rec { 
-
+    statusbar = rec {
       caret = {
         bg = fg.yellow;
         fg = WHITE;
@@ -126,26 +114,26 @@
         selection.fg = caret.fg;
       };
 
-      normal = { 
+      normal = {
         bg = bg.bg0;
         fg = fg.fg;
       };
-      
+
       command = normal;
-      
+
       insert = {
         bg = fg.green;
         fg = WHITE;
       };
 
-      passthrough = { 
+      passthrough = {
         bg = fg.purple;
-        fg = WHITE; 
+        fg = WHITE;
       };
 
       progress.bg = fg.green;
 
-      url = { 
+      url = {
         fg = fg.fg;
         hover.fg = fg.aqua;
         success.http.fg = fg.green;
@@ -153,11 +141,9 @@
         warn.fg = fg.orange;
         error.fg = fg.red;
       };
-
     };
 
-    tabs = rec { 
-
+    tabs = rec {
       bar.bg = bg.bg_green;
 
       even = {
@@ -172,16 +158,14 @@
 
       odd = even;
       selected.odd = selected.even;
-
     };
 
     # TODO In later QB, need to update nixpkgs
-    # tooltip = { 
+    # tooltip = {
     #   bg = bg.bg_visual;
     #   fg = fg.fg;
     # };
 
     webpage.bg = bg.bg0;
-
   };
 }

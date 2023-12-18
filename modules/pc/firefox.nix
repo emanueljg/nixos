@@ -1,5 +1,3 @@
-{ pkgs, ...}:
-
-{
-  my.home.packages = with pkgs; [ firefox ];
+{pkgs, ...}: {
+  my.home.packages = with pkgs; [firefox];
 }

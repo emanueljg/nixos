@@ -1,13 +1,12 @@
-{ config, ... }: {
-
+{config, ...}: {
   security.acme = {
     acceptTerms = true;
     defaults.email = "emanueljohnsongodin@gmail.com";
   };
 
-  networking.firewall.allowedTCPPorts = [ 80 81 443 ];
+  networking.firewall.allowedTCPPorts = [80 81 443];
   # factorio
-  networking.firewall.allowedUDPPorts = [ 34197 ];
+  networking.firewall.allowedUDPPorts = [34197];
 
   services.nginx = let
     domain = "emanueljg.com";
@@ -23,23 +22,24 @@
     };
 
     mkAllDefaults = port: defaults // (mkDefaultsLocation port);
-      
   in {
     enable = true;
     virtualHosts = {
-      ${mkFQDN "lib"} = mkAllDefaults "8096"; 
-      ${mkFQDN "dir"} = defaults // {
-        locations = {
-          "/shared" = {
-            root = "/var/lib";
-            extraConfig = ''
-              allow 192.168.0.0/24;
-              deny all;
-              autoindex on;
-            '';
+      ${mkFQDN "lib"} = mkAllDefaults "8096";
+      ${mkFQDN "dir"} =
+        defaults
+        // {
+          locations = {
+            "/shared" = {
+              root = "/var/lib";
+              extraConfig = ''
+                allow 192.168.0.0/24;
+                deny all;
+                autoindex on;
+              '';
+            };
           };
         };
-      };
-    };        
+    };
   };
 }
