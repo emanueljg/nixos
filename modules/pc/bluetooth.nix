@@ -1,1 +1,1 @@
-{...}: {hardware.bluetooth.enable = true;}
+_: {hardware.bluetooth.enable = true;}

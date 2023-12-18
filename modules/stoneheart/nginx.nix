@@ -1,4 +1,4 @@
-{...}: {
+_: {
   security.acme = {
     acceptTerms = true;
     defaults.email = "emanueljohnsongodin@gmail.com";

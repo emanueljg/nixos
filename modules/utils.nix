@@ -13,7 +13,7 @@ let
 
   flatten = x:
     if isList x
-    then concatMap (y: flatten y) x
+    then concatMap flatten x
     else [x];
 in rec {
   dirFiles = path: (

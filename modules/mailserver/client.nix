@@ -1,4 +1,4 @@
-{...}: let
+_: let
   inherit (import ./secrets.nix) clientSecret sopsCfg;
 in {
   sops.secrets.${clientSecret} = {

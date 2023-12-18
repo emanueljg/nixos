@@ -1,4 +1,4 @@
-{...}: {
+_: {
   my.programs.qutebrowser.keyBindings.normal = {
     # try to fill username / password
     "zl" = "spawn --userscript qute-pass -U secret -u \"user: (.+)\" -d dmenu";

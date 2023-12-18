@@ -1,4 +1,4 @@
-{...}: {
+_: {
   my.programs.qutebrowser.settings.colors = with (import ../../themes); {
     completion = {
       category = {
@@ -10,11 +10,11 @@
 
       odd.bg = bg.bg0;
       even.bg = bg.bg1;
-      fg = fg.fg;
+      inherit (fg) fg;
 
       item.selected = {
         bg = bg.bg_visual;
-        fg = fg.fg;
+        inherit (fg) fg;
         border.bottom = bg.bg_visual;
         border.top = bg.bg_visual;
       };
@@ -30,17 +30,17 @@
     contextmenu = {
       disabled = {
         bg = bg.bg2;
-        fg = fg.fg;
+        inherit (fg) fg;
       };
 
       menu = {
         bg = bg.bg0;
-        fg = fg.fg;
+        inherit (fg) fg;
       };
 
       selected = {
         bg = bg.bg_visual;
-        fg = fg.fg;
+        inherit (fg) fg;
       };
     };
 
@@ -49,7 +49,7 @@
 
       error = {
         bg = fg.red;
-        fg = fg.fg;
+        inherit (fg) fg;
       };
 
       start = {
@@ -71,7 +71,7 @@
 
     keyhint = {
       bg = bg.bg0;
-      fg = fg.fg;
+      inherit (fg) fg;
       suffix.fg = fg.purple;
     };
 
@@ -79,30 +79,30 @@
       error = {
         bg = fg.purple;
         border = fg.purple;
-        fg = fg.fg;
+        inherit (fg) fg;
       };
 
       info = {
         bg = fg.red;
         border = fg.red;
-        fg = fg.fg;
+        inherit (fg) fg;
       };
 
       warning = {
         bg = fg.orange;
         border = fg.orange;
-        fg = fg.fg;
+        inherit (fg) fg;
       };
     };
 
     prompts = {
       bg = bg.bg0;
       border = bg.bg0;
-      fg = fg.fg;
+      inherit (fg) fg;
 
       selected = {
         bg = bg.bg_visual;
-        fg = fg.fg;
+        inherit (fg) fg;
       };
     };
 
@@ -116,7 +116,7 @@
 
       normal = {
         bg = bg.bg0;
-        fg = fg.fg;
+        inherit (fg) fg;
       };
 
       command = normal;
@@ -134,7 +134,7 @@
       progress.bg = fg.green;
 
       url = {
-        fg = fg.fg;
+        inherit (fg) fg;
         hover.fg = fg.aqua;
         success.http.fg = fg.green;
         success.https.fg = url.success.http.fg;
@@ -148,12 +148,12 @@
 
       even = {
         bg = bg.bg_blue;
-        fg = fg.fg;
+        inherit (fg) fg;
       };
 
       selected.even = {
         bg = bg.bg_green;
-        fg = fg.fg;
+        inherit (fg) fg;
       };
 
       odd = even;

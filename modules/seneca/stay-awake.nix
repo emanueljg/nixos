@@ -1,4 +1,4 @@
-{...}: {
+_: {
   services.logind.lidSwitch = "ignore";
 
   systemd.targets = {

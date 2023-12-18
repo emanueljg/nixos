@@ -1,4 +1,4 @@
-{...}: {
+_: {
   my.programs.qutebrowser.quickmarks = {
     # volvo
     v-c = "https://confluence.volvocars.biz";

@@ -36,7 +36,7 @@ with lib; {
   programs.ssh = {
     package = pkgs.openssh;
     extraConfig = let
-      hosts = (import ../.).hosts;
+      inherit ((import ../.)) hosts;
       hostStrings =
         lib.mapAttrsToList
         (

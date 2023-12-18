@@ -1,53 +1,55 @@
 {
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
-  inputs.nixos-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-  inputs.nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
+    nixos-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
-  inputs.home-manager = {
-    url = "github:nix-community/home-manager";
-    # don't follow; currently bugged and shows 23.05 instead of 23.11
-    inputs.nixpkgs.follows = "nixpkgs-unstable";
-    # inputs.nixpkgs.follows = "nixos-unstable";
-  };
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      # don't follow; currently bugged and shows 23.05 instead of 23.11
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      # inputs.nixpkgs.follows = "nixos-unstable";
+    };
 
-  inputs.papes = {
-    url = "github:emanueljg/papes";
-    flake = false;
-  };
+    papes = {
+      url = "github:emanueljg/papes";
+      flake = false;
+    };
 
-  inputs.discordo = {
-    url = "github:emanueljg/discordo";
-    inputs.nixpkgs.follows = "nixpkgs";
-  };
+    discordo = {
+      url = "github:emanueljg/discordo";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-  inputs.sops-nix = {
-    url = "github:Mic92/sops-nix";
-    inputs.nixpkgs.follows = "nixpkgs";
-  };
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-  # inputs.bandcamp-artist-dl = {
-  #   url = "path:/home/ejg/bandcamp-artist-dl";
-  #   inputs.nixpkgs.follows = "nixpkgs";
-  # };
+    # inputs.bandcamp-artist-dl = {
+    #   url = "path:/home/ejg/bandcamp-artist-dl";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
 
-  inputs.pollymc = {
-    url = "github:fn2006/PollyMC";
-    inputs.nixpkgs.follows = "nixpkgs";
-  };
+    pollymc = {
+      url = "github:fn2006/PollyMC";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-  inputs.f5fpc = {
-    url = "github:emanueljg/f5fpc-nix";
-    inputs.nixpkgs.follows = "nixpkgs";
-  };
+    f5fpc = {
+      url = "github:emanueljg/f5fpc-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-  inputs.disko = {
-    url = "github:nix-community/disko";
-    inputs.nixpkgs.follows = "nixpkgs";
-  };
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-  inputs.pre-commit-hooks = {
-    url = "github:cachix/pre-commit-hooks.nix";
-    inputs.nixpkgs.follows = "nixpkgs";
+    pre-commit-hooks = {
+      url = "github:cachix/pre-commit-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs @ {flake-parts, ...}:
@@ -78,11 +80,18 @@
               deadnix = {
                 enable = true;
               };
+              statix = {
+                enable = true;
+              };
+            };
+            settings = {
+              statix.ignore = ["*hardware{_,-}configuration.nix"];
             };
           };
         };
 
         devShells.default = pkgs.mkShell {
+          packages = with pkgs; [statix];
           inherit (self'.checks.pre-commit-check) shellHook;
         };
       };

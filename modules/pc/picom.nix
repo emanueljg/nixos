@@ -1,4 +1,4 @@
-{...}: {
+_: {
   my.services.picom = {
     enable = false;
     activeOpacity = 0.95;

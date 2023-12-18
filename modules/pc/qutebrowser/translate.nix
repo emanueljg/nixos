@@ -1,7 +1,7 @@
 {pkgs, ...}: {
   my = with pkgs; (
     let
-      qute-translate = (
+      qute-translate =
         callPackage
         ({pkgs}:
           stdenv.mkDerivation rec {
@@ -16,8 +16,7 @@
 
             installPhase = "install -Dm555 translate $out/translate";
           })
-        {}
-      );
+        {};
     in {
       home.packages = [qute-translate];
       programs.qutebrowser.keyBindings.normal.",t" = "spawn --userscript ${qute-translate}/translate";

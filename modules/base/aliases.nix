@@ -1,4 +1,4 @@
-{...}: {
+_: {
   my.home.shellAliases = {
     "c" = "cd /etc/nixos";
     "..." = "cd ../..";
