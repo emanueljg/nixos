@@ -1,4 +1,4 @@
-{ 
+{
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
   inputs.nixos-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
   inputs.nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
@@ -47,47 +47,49 @@
   inputs.pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
 
 
-  outputs = { self,  ... }@inputs: let
+  outputs = { self, ... }@inputs:
+    let
 
-    inherit (import ./modules)
-      utils
-      hosts
-    ;
+      inherit (import ./modules)
+        utils
+        hosts
+        ;
 
-    rawInputs = {
-      inherit (inputs) nixpkgs nixpkgs-unstable nixos-unstable;
-    };
-
-    system' = "x84_64-linux";
-
-    pkgs = import rawInputs.nixpkgs { system = system'; };
-
-  in {
-
-    colmena = {
-      meta = {
-        nixpkgs = pkgs;
-        specialArgs = inputs;
-        nodeSpecialArgs = utils.mkColmenaSystemizeInputs hosts rawInputs;
+      rawInputs = {
+        inherit (inputs) nixpkgs nixpkgs-unstable nixos-unstable;
       };
-    } // utils.mkColmenaHosts hosts;
 
-    nixosConfigurations = utils.mkNixosConfigurations {
-      inherit hosts inputs rawInputs;
-    };
+      system' = "x86_64-linux";
 
-    checks = {
-      pre-commit-check = inputs.pre-commit-hooks.lib.${system'}.run {
-        src = ./.;
-        hooks = {
-          nixpkgs-fmt.enable = true;
+      pkgs = import rawInputs.nixpkgs { system = system'; };
+
+    in
+    {
+
+      colmena = {
+        meta = {
+          nixpkgs = pkgs;
+          specialArgs = inputs;
+          nodeSpecialArgs = utils.mkColmenaSystemizeInputs hosts rawInputs;
+        };
+      } // utils.mkColmenaHosts hosts;
+
+      nixosConfigurations = utils.mkNixosConfigurations {
+        inherit hosts inputs rawInputs;
+      };
+
+      checks.${system'} = {
+        pre-commit-check = inputs.pre-commit-hooks.lib.${system'}.run {
+          src = ./.;
+          hooks = {
+            nixpkgs-fmt.enable = true;
+          };
         };
       };
-    };
 
-    devShell = pkgs.mkShell {
-      inherit (self.checks.${system'}.pre-commit-check) shellHook;
+      devShells.${system'}.default = pkgs.mkShell {
+        inherit (self.checks.${system'}.pre-commit-check) shellHook;
+      };
+
     };
-    
-  };
 }
