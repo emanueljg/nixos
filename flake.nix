@@ -32,11 +32,12 @@
 
   inputs.pollymc = {
     url = "github:fn2006/PollyMC";
+    inputs.nixpkgs.follows = "nixpkgs";
   };
 
   inputs.f5fpc = {
     url = "github:emanueljg/f5fpc-nix";
-    # inputs.nixpkgs.follows = "nixpkgs";
+    inputs.nixpkgs.follows = "nixpkgs";
   };
 
   inputs.disko = {
@@ -44,7 +45,10 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  inputs.pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
+  inputs.pre-commit-hooks = {
+    url = "github:cachix/pre-commit-hooks.nix";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
 
   outputs = inputs @ {flake-parts, ...}:
     flake-parts.lib.mkFlake {inherit inputs;} {
