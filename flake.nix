@@ -44,6 +44,9 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
 
+  inputs.pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
+
+
   outputs = { self,  ... }@inputs: let
 
     inherit (import ./modules)
@@ -55,11 +58,15 @@
       inherit (inputs) nixpkgs nixpkgs-unstable nixos-unstable;
     };
 
+    system' = "x84_64-linux";
+
+    pkgs = import rawInputs.nixpkgs { system = system'; };
+
   in {
 
     colmena = {
       meta = {
-        nixpkgs = import rawInputs.nixpkgs { system = "x86_64-linux"; };
+        nixpkgs = pkgs;
         specialArgs = inputs;
         nodeSpecialArgs = utils.mkColmenaSystemizeInputs hosts rawInputs;
       };
@@ -68,5 +75,19 @@
     nixosConfigurations = utils.mkNixosConfigurations {
       inherit hosts inputs rawInputs;
     };
+
+    checks = {
+      pre-commit-check = inputs.pre-commit-hooks.lib.${system'}.run {
+        src = ./.;
+        hooks = {
+          nixpkgs-fmt.enable = true;
+        };
+      };
+    };
+
+    devShell = pkgs.mkShell {
+      inherit (self.checks.${system'}.pre-commit-check) shellHook;
+    };
+    
   };
 }
