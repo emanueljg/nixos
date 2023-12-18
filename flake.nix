@@ -70,7 +70,10 @@
           pre-commit-check = inputs.pre-commit-hooks.lib.${system}.run {
             src = ./.;
             hooks = {
-              ${formatter}.enable = true;
+              ${formatter} = {
+                enable = true;
+                always_run = true;
+              };
             };
           };
         };
