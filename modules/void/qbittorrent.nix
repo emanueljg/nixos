@@ -1,12 +1,14 @@
-{pkgs, ...}: let
+{ pkgs, ... }:
+let
   qbit = pkgs.qbittorrent;
-in {
+in
+{
   my.home.packages = [
     qbit
   ];
 
   my.xsession.windowManager.i3.config = {
-    assigns."10" = [{class = "qBittorrent";}];
+    assigns."10" = [{ class = "qBittorrent"; }];
     startup = [
       {
         command = "${qbit}/bin/qbittorrent";

@@ -1,6 +1,8 @@
-_: let
+_:
+let
   inherit (import ./secrets.nix) clientSecret sopsCfg;
-in {
+in
+{
   sops.secrets.${clientSecret} = {
     inherit (sopsCfg) sopsFile mode;
     owner = "ejg";

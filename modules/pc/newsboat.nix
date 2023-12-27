@@ -1,4 +1,4 @@
-{config, ...}: {
+{ config, ... }: {
   my.programs.newsboat = {
     enable = true;
     extraConfig = ''

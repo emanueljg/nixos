@@ -1,8 +1,10 @@
-{config, ...}: let
+{ config, ... }:
+let
   leftScreen = "DP-2-1";
   rightScreen = "DP-2-2";
   computerScreen = "eDP-1";
-in {
+in
+{
   hardware.nvidia.forceFullCompositionPipeline = true;
 
   my.programs.autorandr = {

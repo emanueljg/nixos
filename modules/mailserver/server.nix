@@ -1,11 +1,13 @@
-{config, ...}: let
+{ config, ... }:
+let
   release = "nixos-23.05";
   inherit
     (import ./secrets.nix)
     serverSecret
     sopsCfg
     ;
-in {
+in
+{
   imports = [
     (builtins.fetchTarball {
       url = "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/archive/${release}/nixos-mailserver-${release}.tar.gz";
@@ -24,7 +26,7 @@ in {
   mailserver = {
     enable = true;
     fqdn = "emanueljg.com";
-    domains = ["emanueljg.com"];
+    domains = [ "emanueljg.com" ];
     loginAccounts = {
       "ejg@emanueljg.com" = {
         hashedPasswordFile = config.sops.secrets.${serverSecret}.path;

@@ -1,4 +1,5 @@
-{config, ...}: let
+{ config, ... }:
+let
   gfx = builtins.head config.services.xserver.videoDrivers;
   isNvidia = gfx == "nvidia";
   mkOutput = output:
@@ -12,7 +13,8 @@
   leftScreen = mkOutput "DVI-D-";
   frontScreen = mkOutput "DP-";
   rightScreen = mkOutput "HDMI-";
-in {
+in
+{
   hardware.nvidia.forceFullCompositionPipeline = true;
 
   my.programs.autorandr = {

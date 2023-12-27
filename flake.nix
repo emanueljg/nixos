@@ -52,78 +52,69 @@
     };
   };
 
-  outputs = inputs @ {flake-parts, ...}:
-    flake-parts.lib.mkFlake {inherit inputs;} {
-      imports = [
-      ];
+  outputs = inputs @ { flake-parts, ... }:
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      imports = [ ];
 
-      systems = [
-        "x86_64-linux"
-      ];
+      systems = [ "x86_64-linux" ];
 
-      perSystem = {
-        self',
-        system,
-        pkgs,
-        ...
-      }: let
-        formatter = "alejandra";
-      in {
-        formatter = pkgs.${formatter};
-        checks = {
-          pre-commit-check = inputs.pre-commit-hooks.lib.${system}.run {
-            src = ./.;
-            hooks = {
-              ${formatter} = {
-                enable = true;
+      perSystem =
+        { self'
+        , system
+        , pkgs
+        , ...
+        }:
+        let
+          formatter = "nixpkgs-fmt";
+        in
+        {
+          formatter = pkgs.${formatter};
+          checks = {
+            pre-commit-check = inputs.pre-commit-hooks.lib.${system}.run {
+              src = ./.;
+              hooks = {
+                ${formatter} = { enable = true; };
+                deadnix = { enable = true; };
+                statix = { enable = true; };
               };
-              deadnix = {
-                enable = true;
-              };
-              statix = {
-                enable = true;
+              settings = {
+                statix.ignore = [ "*hardware{_,-}configuration.nix" ];
               };
             };
-            settings = {
-              statix.ignore = ["*hardware{_,-}configuration.nix"];
-            };
+          };
+
+          devShells.default = pkgs.mkShell {
+            packages = with pkgs; [ statix ];
+            inherit (self'.checks.pre-commit-check) shellHook;
           };
         };
 
-        devShells.default = pkgs.mkShell {
-          packages = with pkgs; [statix];
-          inherit (self'.checks.pre-commit-check) shellHook;
+      flake =
+        let
+          inherit (import ./modules) utils hosts;
+
+          rawInputs = {
+            inherit (inputs) nixpkgs nixpkgs-unstable nixos-unstable;
+          };
+
+          system' = "x86_64-linux";
+
+          pkgs = import rawInputs.nixpkgs { system = system'; };
+        in
+        {
+          inherit pkgs;
+          colmena =
+            {
+              meta = {
+                nixpkgs = pkgs;
+                specialArgs = inputs;
+                nodeSpecialArgs = utils.mkColmenaSystemizeInputs hosts rawInputs;
+              };
+            }
+            // utils.mkColmenaHosts hosts;
+
+          nixosConfigurations =
+            utils.mkNixosConfigurations { inherit hosts inputs rawInputs; };
         };
-      };
-
-      flake = let
-        inherit
-          (import ./modules)
-          utils
-          hosts
-          ;
-
-        rawInputs = {
-          inherit (inputs) nixpkgs nixpkgs-unstable nixos-unstable;
-        };
-
-        system' = "x86_64-linux";
-
-        pkgs = import rawInputs.nixpkgs {system = system';};
-      in {
-        colmena =
-          {
-            meta = {
-              nixpkgs = pkgs;
-              specialArgs = inputs;
-              nodeSpecialArgs = utils.mkColmenaSystemizeInputs hosts rawInputs;
-            };
-          }
-          // utils.mkColmenaHosts hosts;
-
-        nixosConfigurations = utils.mkNixosConfigurations {
-          inherit hosts inputs rawInputs;
-        };
-      };
     };
 }

@@ -1,1 +1,1 @@
-{pkgs, ...}: with pkgs; {my.home.packages = [tauon];}
+{ pkgs, ... }: with pkgs; { my.home.packages = [ tauon ]; }

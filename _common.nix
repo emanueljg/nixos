@@ -1,3 +1,1 @@
-{
-  domain = "emanueljg.com";
-}
+{ domain = "emanueljg.com"; }

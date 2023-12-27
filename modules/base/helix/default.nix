@@ -1,8 +1,7 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
+{ config
+, pkgs
+, lib
+, ...
 }: {
   imports = [
     ./rice.nix
@@ -21,30 +20,43 @@
       export EDITOR="${config.my.home.sessionVariables.EDITOR}"
     '';
 
-    programs.helix = let
-      pylsp = pkgs.python311Packages.python-lsp-server.overrideAttrs (old: {
-        buildInputs = old.buildInputs ++ old.passthru.optional-dependencies.all;
-      });
-    in {
-      enable = true;
-      settings = {
-        editor.auto-pairs = false;
-      };
-      languages = {
-        language-server = {
-          rust-analyzer.command = lib.getExe pkgs.rust-analyzer;
-          nil.command = lib.getExe pkgs.nil;
-          gopls.command = lib.getExe pkgs.gopls;
-          pylsp = {
-            command = lib.getExe pylsp;
-            config = {
-              pylsp = {
-                configurationSources = ["flake8"];
-                plugins = {
-                  flake8 = {
-                    executable = lib.getExe pkgs.python311Packages.flake8;
-                    enabled = true;
-                    maxLineLength = 88;
+    programs.helix =
+      let
+        pylsp = pkgs.python311Packages.python-lsp-server.overrideAttrs (old: {
+          buildInputs = old.buildInputs ++ old.passthru.optional-dependencies.all;
+        });
+      in
+      {
+        enable = true;
+        settings = {
+          editor.auto-pairs = false;
+        };
+        languages = {
+          language = [
+            {
+              name = "nix";
+              auto-format = true;
+              formatter = {
+                command = lib.getExe pkgs.nixpkgs-fmt;
+              };
+            }
+          ];
+
+          language-server = {
+            rust-analyzer.command = lib.getExe pkgs.rust-analyzer;
+            nil.command = lib.getExe pkgs.nil;
+            gopls.command = lib.getExe pkgs.gopls;
+            pylsp = {
+              command = lib.getExe pylsp;
+              config = {
+                pylsp = {
+                  configurationSources = [ "flake8" ];
+                  plugins = {
+                    flake8 = {
+                      executable = lib.getExe pkgs.python311Packages.flake8;
+                      enabled = true;
+                      maxLineLength = 88;
+                    };
                   };
                 };
               };
@@ -52,6 +64,5 @@
           };
         };
       };
-    };
   };
 }

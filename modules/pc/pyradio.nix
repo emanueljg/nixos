@@ -1,3 +1,3 @@
-{pkgs, ...}: {
-  my.home.packages = [pkgs.pyradio];
+{ pkgs, ... }: {
+  my.home.packages = [ pkgs.pyradio ];
 }

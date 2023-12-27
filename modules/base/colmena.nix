@@ -1,11 +1,13 @@
-{pkgs, ...}: {
-  my.home.shellAliases = let
-    origin = "github:emanueljg/nixos";
-  in {
-    "col" = "colmena --config=${origin}";
-    "cola" = "col apply";
-    "coll" = "col apply-local --sudo";
-  };
+{ pkgs, ... }: {
+  my.home.shellAliases =
+    let
+      origin = "github:emanueljg/nixos";
+    in
+    {
+      "col" = "colmena --config=${origin}";
+      "cola" = "col apply";
+      "coll" = "col apply-local --sudo";
+    };
 
   environment.systemPackages = with pkgs; [
     colmena

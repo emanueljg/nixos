@@ -1,9 +1,9 @@
-{config, ...}: {
+{ config, ... }: {
   services.pcscd = {
     enable = true;
   };
 
   my.xsession.windowManager.i3.config.floating.criteria = [
-    {title = "YubiKey Onboarding";}
+    { title = "YubiKey Onboarding"; }
   ];
 }

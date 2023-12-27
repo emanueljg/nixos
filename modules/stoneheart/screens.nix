@@ -1,8 +1,10 @@
-{config, ...}: let
+{ config, ... }:
+let
   leftScreen = "DP-0.1";
   rightScreen = "DP-0.2";
   computerScreen = "DP-6";
-in {
+in
+{
   hardware.nvidia.forceFullCompositionPipeline = true;
 
   my.programs.autorandr = {
@@ -15,30 +17,32 @@ in {
           ${computerScreen} = "00ffffffffffff0030e49d0600000000001d0104b5221378eb0f95ae5243b0260f50540000000101010101010101010101010101010150d000a0f0703e803020350058c21000001ae08a00a0f0703e803020350058c21000001a00000000000000000000000000000000000000000003000c19ff1e3c2c26176e2c010100014102030f00e3058000e6060501737321000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000008b";
           # ${unknownHdmi} = "00ffffffffffff0022f06f3201010101191b0103803420782a0285a556549d250e5054210800b30095008100d1c0a9c081c0a9408180283c80a070b023403020360006442100001a000000fd00323c1e5011000a202020202020000000fc00485020453234320a2020202020000000ff00434e34373235313633370a202001c1020318b148101f04130302121167030c0010000022e2002b023a801871382d40582c450006442100001e023a80d072382d40102c458006442100001e011d007251d01e206e28550006442100001e011d00bc52d01e20b828554006442100001e8c0ad08a20e02d10103e9600064421000018000000000000000000000000002f";
         };
-        config = let
-          inherit (builtins) toString;
-        in {
-          ${leftScreen} = {
-            position = "${toString (1920 * 2)}x0";
-            # rotate = "right";
-            mode = "1920x1200";
-          };
-          ${rightScreen} = {
-            position = "${toString (1920 * 3)}x0";
-            mode = "1920x1200";
-            primary = true;
-          };
-          ${computerScreen} = {
-            position = "0x0";
-            mode = "3840x2160";
-            # mode = "1920x1080";
-            scale = {
-              x = 1920;
-              y = 1080;
-              method = "pixel";
+        config =
+          let
+            inherit (builtins) toString;
+          in
+          {
+            ${leftScreen} = {
+              position = "${toString (1920 * 2)}x0";
+              # rotate = "right";
+              mode = "1920x1200";
+            };
+            ${rightScreen} = {
+              position = "${toString (1920 * 3)}x0";
+              mode = "1920x1200";
+              primary = true;
+            };
+            ${computerScreen} = {
+              position = "0x0";
+              mode = "3840x2160";
+              # mode = "1920x1080";
+              scale = {
+                x = 1920;
+                y = 1080;
+                method = "pixel";
+              };
             };
           };
-        };
       };
 
       "default" = {

@@ -1,4 +1,4 @@
-{...}: {
+{ ... }: {
   imports = [
     ./quickmarks.nix
     ./translate.nix

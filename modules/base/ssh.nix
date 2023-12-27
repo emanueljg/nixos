@@ -1,11 +1,10 @@
-{
-  lib,
-  pkgs,
-  ...
+{ lib
+, pkgs
+, ...
 }:
 with lib; {
   # allow ejg to remote build
-  nix.settings.trusted-users = ["ejg"];
+  nix.settings.trusted-users = [ "ejg" ];
 
   # service
   services.openssh = {
@@ -35,20 +34,21 @@ with lib; {
   # client
   programs.ssh = {
     package = pkgs.openssh;
-    extraConfig = let
-      inherit ((import ../.)) hosts;
-      hostStrings =
-        lib.mapAttrsToList
-        (
-          hostName: host: ''
-            Host ${hostName}
-              HostName ${host.ip}
-              User ejg
-              IdentityFile /home/ejg/.ssh/id_rsa_mothership
-          ''
-        )
-        hosts;
-    in
+    extraConfig =
+      let
+        inherit ((import ../.)) hosts;
+        hostStrings =
+          lib.mapAttrsToList
+            (
+              hostName: host: ''
+                Host ${hostName}
+                  HostName ${host.ip}
+                  User ejg
+                  IdentityFile /home/ejg/.ssh/id_rsa_mothership
+              ''
+            )
+            hosts;
+      in
       lib.concatStringsSep "\n\n" hostStrings;
   };
 }

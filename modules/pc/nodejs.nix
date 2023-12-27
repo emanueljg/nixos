@@ -1,3 +1,3 @@
-{pkgs, ...}: {
-  my.home.packages = with pkgs; [nodejs];
+{ pkgs, ... }: {
+  my.home.packages = with pkgs; [ nodejs ];
 }

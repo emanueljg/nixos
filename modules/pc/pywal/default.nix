@@ -1,13 +1,14 @@
-{
-  config,
-  pkgs,
-  lib,
-  papes,
-  ...
-}: let
+{ config
+, pkgs
+, lib
+, papes
+, ...
+}:
+let
   pape = "painters_view.jpg";
   papePath = "${papes}/${pape}";
-in {
+in
+{
   imports = [
     ./pywalQute.nix
   ];
@@ -32,9 +33,11 @@ in {
 
   my = {
     home = {
-      shellAliases."mkpape" = let
-        wal = "${pkgs.pywal}/bin/wal";
-      in "${wal} -c && ${wal} --backend colorz -i /home/ejg/.pape";
+      shellAliases."mkpape" =
+        let
+          wal = "${pkgs.pywal}/bin/wal";
+        in
+        "${wal} -c && ${wal} --backend colorz -i /home/ejg/.pape";
       file.".pape" = {
         source =
           if builtins.pathExists papePath
@@ -60,7 +63,7 @@ in {
 
   warnings =
     lib.lists.optional
-    (!builtins.pathExists papePath)
-    ("Wallpaper '${pape}' does not exist. "
-      + "Defaulting to stock wallpaper...");
+      (!builtins.pathExists papePath)
+      ("Wallpaper '${pape}' does not exist. "
+        + "Defaulting to stock wallpaper...");
 }

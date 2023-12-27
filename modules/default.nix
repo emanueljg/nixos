@@ -20,7 +20,7 @@ rec {
 
       "void" = {
         ip = "192.168.0.3";
-        extraModuleDirs = [pc];
+        extraModuleDirs = [ pc ];
         extraModules = [
           ./uses-efi-grub.nix
           ./can-hibernate.nix
@@ -31,7 +31,7 @@ rec {
 
       "seneca" = {
         ip = "192.168.0.4";
-        extraModuleDirs = [pc];
+        extraModuleDirs = [ pc ];
         extraModules = [
           ./uses-efi-grub.nix
           ./can-hibernate.nix
@@ -40,12 +40,12 @@ rec {
 
       "fenix" = {
         ip = "95.217.219.33";
-        extraModuleDirs = [base];
+        extraModuleDirs = [ base ];
       };
 
       "oakleaf" = {
         ip = "127.0.0.1";
-        extraModuleDirs = [pc];
+        extraModuleDirs = [ pc ];
         extraModules = [
           ./uses-efi-grub.nix
           ./can-hibernate.nix
@@ -53,7 +53,7 @@ rec {
       };
       "stoneheart" = {
         ip = "127.0.0.1";
-        extraModuleDirs = [pc];
+        extraModuleDirs = [ pc ];
         extraModules = [
           ./uses-efi-grub.nix
           ./uses-nvidia.nix

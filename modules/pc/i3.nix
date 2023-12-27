@@ -1,4 +1,4 @@
-{lib, ...}: {
+{ lib, ... }: {
   services.xserver.displayManager = {
     lightdm.greeter.enable = false;
 
@@ -48,13 +48,13 @@
       bars = [
         {
           fonts = {
-            names = ["pango"];
+            names = [ "pango" ];
             style = "monospace";
             size = 19.0;
           };
         }
       ];
-      floating.criteria = [{title = "YubiKey Onboarding";}];
+      floating.criteria = [{ title = "YubiKey Onboarding"; }];
     };
     extraConfig = ''font pango:monospace 16'';
   };

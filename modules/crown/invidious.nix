@@ -1,4 +1,4 @@
-{config, ...}: {
+{ config, ... }: {
   services.invidious.enable = true;
 
   # setup ports

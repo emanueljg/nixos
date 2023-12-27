@@ -1,7 +1,6 @@
-{
-  config,
-  pkgs,
-  ...
+{ config
+, pkgs
+, ...
 }: {
   services.rtorrent = {
     enable = true;
@@ -39,5 +38,5 @@
   #     '';
   #   };
   # };
-  my.home.packages = with pkgs; [rtorrent];
+  my.home.packages = with pkgs; [ rtorrent ];
 }

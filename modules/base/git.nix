@@ -1,4 +1,4 @@
-{nixos-unstable, ...}: {
+{ nixos-unstable, ... }: {
   my.programs = {
     git = {
       enable = true;
