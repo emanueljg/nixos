@@ -59,5 +59,10 @@ rec {
           ./uses-nvidia.nix
         ];
       };
+      "wsl" = {
+        ip = "127.0.0.1";
+        extraModuleDirs = [ base ];
+        extraModules = [ ];
+      };
     };
 }
