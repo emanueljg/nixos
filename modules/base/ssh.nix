@@ -36,7 +36,8 @@ with lib; {
     package = pkgs.openssh;
     extraConfig =
       let
-        inherit ((import ../.)) hosts;
+        inherit ((import ../.)) mkHosts;
+        hosts = mkHosts { };
         hostStrings =
           lib.mapAttrsToList
             (
