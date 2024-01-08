@@ -56,5 +56,6 @@ _: {
 
     "nix flake lock --update-input" = "nflu";
     "nix flake update" = "nfu";
+    "nix flake check" = "nfc";
   };
 }
