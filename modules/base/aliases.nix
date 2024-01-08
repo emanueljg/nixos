@@ -54,8 +54,8 @@ _: {
 
     "rune" = "grep -rwne";
 
-    "nix flake lock --update-input" = "nflu";
-    "nix flake update" = "nfu";
-    "nix flake check" = "nfc";
+    "nflu" = "nix flake lock --update-input";
+    "nfu" = "nix flake update";
+    "nfc" = "nix flake check";
   };
 }
