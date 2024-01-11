@@ -53,5 +53,9 @@ _: {
     "sdjuf" = "sdj -fu";
 
     "rune" = "grep -rwne";
+
+    "nflu" = "nix flake lock --update-input";
+    "nfu" = "nix flake update";
+    "nfc" = "nix flake check";
   };
 }

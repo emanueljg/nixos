@@ -12,6 +12,7 @@
     openssl
     tldr
     jq
+    yq
     comma
   ];
 }
