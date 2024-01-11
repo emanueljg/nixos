@@ -6,7 +6,7 @@ rec {
     pc = base ++ utils.dirFiles ./pc;
   };
 
-  hosts = with abstract;
+  mkHosts = { inputs ? { } }: with abstract;
     utils.mkModules {
       # disable for now
       # "crown" = {
@@ -57,6 +57,13 @@ rec {
         extraModules = [
           ./uses-efi-grub.nix
           ./uses-nvidia.nix
+        ];
+      };
+      "weasel" = {
+        ip = "127.0.0.1";
+        extraModuleDirs = [ base ];
+        extraModules = [
+          inputs.wsl.nixosModules.default
         ];
       };
     };
