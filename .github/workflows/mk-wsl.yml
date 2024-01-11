@@ -10,3 +10,9 @@ jobs:
       - uses: DeterminateSystems/flake-checker-action@main
       - name: Build WSL
         run: nix run .#mk-weasel-tarball
+      - name: Save to release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            nixos-wsl.tar.gz
+
