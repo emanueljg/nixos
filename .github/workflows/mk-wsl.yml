@@ -1,0 +1,22 @@
+name: "Make WSL"
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: DeterminateSystems/nix-installer-action@main
+      - uses: DeterminateSystems/magic-nix-cache-action@main
+      - uses: DeterminateSystems/flake-checker-action@main
+      - name: Build WSL
+        run: sudo "PATH=$PATH" env nix run .#mk-weasel-tarball
+      - name: Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete latest --cleanup-tag -y || true
+          gh release create "latest" \
+            --title="latest" \
+            --notes="" \
+            nixos-wsl.tar.gz

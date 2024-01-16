@@ -50,9 +50,14 @@
       url = "github:cachix/pre-commit-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    wsl = {
+      url = "github:nix-community/NixOS-WSL";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = inputs @ { flake-parts, ... }:
+  outputs = inputs @ { self, flake-parts, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [ ];
 
@@ -87,11 +92,16 @@
             packages = with pkgs; [ statix ];
             inherit (self'.checks.pre-commit-check) shellHook;
           };
+
+          # creates a wsl tarball
+          apps.mk-weasel-tarball.program = self.nixosConfigurations.weasel.config.system.build.tarballBuilder;
         };
 
       flake =
         let
-          inherit (import ./modules) utils hosts;
+          inherit (import ./modules) utils mkHosts;
+
+          hosts = mkHosts { inherit inputs; };
 
           rawInputs = {
             inherit (inputs) nixpkgs nixpkgs-unstable nixos-unstable;
