@@ -4,4 +4,8 @@
     pavucontrol
   ];
 
+  my.home.shellAliases = {
+    "pavu" = "pavucontrol";
+  };
+
 }
