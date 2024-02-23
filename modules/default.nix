@@ -20,7 +20,7 @@ rec {
 
       "void" = {
         ip = "192.168.0.3";
-        extraModuleDirs = [ pc ];
+        extraModuleDirs = [ base ];
         extraModules = [
           ./uses-efi-grub.nix
           ./can-hibernate.nix
