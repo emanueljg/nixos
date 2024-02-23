@@ -16,5 +16,6 @@
       scripts = [ mpvScripts.webtorrent-mpv-hook ];
     })
     jmtpfs
+    arandr
   ];
 }

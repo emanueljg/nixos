@@ -34,6 +34,7 @@ with lib; {
   # client
   programs.ssh = {
     package = pkgs.openssh;
+    startAgent = true;
     extraConfig =
       let
         inherit ((import ../.)) mkHosts;

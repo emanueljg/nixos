@@ -14,5 +14,6 @@
     jq
     yq
     comma
+    btop
   ];
 }

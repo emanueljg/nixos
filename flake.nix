@@ -55,6 +55,17 @@
       url = "github:nix-community/NixOS-WSL";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    tf-vault-backend = {
+      # url = "github:volvo-cars/terraform-vault-bridge";
+      url = "git+ssh://git@github.com/volvo-cars/terraform-vault-bridge.git?ref=14-explore-state-chunking";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # "displaylink-508.zip" = {
+    #   url = "https://www.synaptics.com/products/displaylink-graphics/downloads/ubuntu-5.8?filetype=exe";
+    #   flake = false;
+    # };
   };
 
   outputs = inputs @ { self, flake-parts, ... }:
