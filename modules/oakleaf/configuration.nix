@@ -6,4 +6,5 @@ _: {
   system.stateVersion = "23.05"; # Did you read the comment?
   my.home.stateVersion = "23.05";
   # nix.settings.ssl-cert-file = "/var/lib/cert.crt";
+  hardware.opengl.enable = true;
 }

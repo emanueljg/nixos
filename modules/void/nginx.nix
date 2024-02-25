@@ -29,6 +29,7 @@ _: {
       virtualHosts = {
         ${mkFQDN "lib"} = mkAllDefaults "8096";
         ${mkFQDN "yt"} = mkAllDefaults "3000";
+        ${mkFQDN "navi"} = mkAllDefaults "4533";
         ${mkFQDN "dir"} =
           defaults
           // {
