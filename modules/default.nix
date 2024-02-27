@@ -7,16 +7,7 @@ rec {
   };
 
   mkHosts = { inputs ? { } }: with abstract;
-    utils.mkModules {
-      # disable for now
-      # "crown" = {
-      #   # ip = "192.168.0.2";
-      #   extraModuleDirs = [ pc ];
-      #   extraModules = [
-      #     ./uses-efi-grub.nix
-      #     ./mailserver/server.nix
-      #   ];
-      # };
+    utils.mkModules rec {
 
       "void" = {
         ip = "192.168.0.3";
@@ -43,7 +34,7 @@ rec {
         extraModuleDirs = [ base ];
       };
 
-      "oakleaf" = {
+      "_oakleaf" = {
         ip = "127.0.0.1";
         extraModuleDirs = [ pc ];
         extraModules = [
@@ -51,6 +42,25 @@ rec {
           ./can-hibernate.nix
         ];
       };
+
+      "oakleaf-home" = _oakleaf // {
+        extraModuleDirs = _oakleaf.extraModuleDirs ++ [
+          (utils.dirFiles ./oakleaf)
+        ];
+        extraModules = _oakleaf.extraModules ++ [
+          ./oakleaf/_spec-home.nix
+        ];
+      };
+
+      "oakleaf-laptop" = _oakleaf // {
+        extraModuleDirs = _oakleaf.extraModuleDirs ++ [
+          (utils.dirFiles ./oakleaf)
+        ];
+        extraModules = _oakleaf.extraModules ++ [
+          ./oakleaf/_laptop-pape.nix
+        ];
+      };
+
       "stoneheart" = {
         ip = "127.0.0.1";
         extraModuleDirs = [ pc ];

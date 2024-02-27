@@ -1,4 +1,4 @@
-{ ... }: {
+{ nixpkgs-unstable, ... }: {
   imports = [
     ./quickmarks.nix
     ./translate.nix
@@ -8,6 +8,7 @@
 
   my.programs.qutebrowser = {
     enable = true;
+    package = nixpkgs-unstable.qutebrowser;
     searchEngines = {
       DEFAULT = "https://www.google.com/search?q={}";
       yt = "http://192.168.0.2:34030/search?q={}";
