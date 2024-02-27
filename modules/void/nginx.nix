@@ -30,6 +30,8 @@ _: {
         ${mkFQDN "lib"} = mkAllDefaults "8096";
         ${mkFQDN "yt"} = mkAllDefaults "3000";
         ${mkFQDN "navi"} = mkAllDefaults "4533";
+        ${mkFQDN "t"} = mkAllDefaults "8112";
+        ${mkFQDN "sonarr"} = mkAllDefaults "8989";
         ${mkFQDN "dir"} =
           defaults
           // {

@@ -17,5 +17,6 @@
     })
     jmtpfs
     arandr
+    deluge
   ];
 }
