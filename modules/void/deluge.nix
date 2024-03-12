@@ -1,6 +1,6 @@
 { config, ... }: {
   services.deluge = {
-    enable = true;
+    enable = false;
 
     web = {
       enable = true;

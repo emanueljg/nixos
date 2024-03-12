@@ -62,7 +62,7 @@
   my.xsession.windowManager.i3.config = {
     startup =
       let
-        images = lib.concatMapStringsSep " " (_: "~/papes/") [
+        images = lib.concatMapStringsSep " " (pape: "~/papes/${pape}") [
           "tavern.jpg"
           "rocknroll-futon-day.jpg"
           "girl-beach.jpg"

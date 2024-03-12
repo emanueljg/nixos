@@ -26,6 +26,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    my-web-app = {
+      url = "path:/home/ejg/getting-started-app";
+    };
+
     # inputs.bandcamp-artist-dl = {
     #   url = "path:/home/ejg/bandcamp-artist-dl";
     #   inputs.nixpkgs.follows = "nixpkgs";
