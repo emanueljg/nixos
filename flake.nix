@@ -9,6 +9,7 @@
       # don't follow; currently bugged and shows 23.05 instead of 23.11
       inputs.nixpkgs.follows = "nixpkgs-unstable";
       # inputs.nixpkgs.follows = "nixos-unstable";
+      # test
     };
 
     papes = {
