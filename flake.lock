@@ -449,6 +449,26 @@
         "type": "path"
       }
     },
+    "nh": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1710352788,
+        "narHash": "sha256-gpvOzL+7PP22juK6yI01EiGUEVVo4lHGXCs5OmCAX+s=",
+        "owner": "viperML",
+        "repo": "nh",
+        "rev": "393cffa098ab7aa8887134c9faa1bc98251cbfc7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "viperML",
+        "repo": "nh",
+        "type": "github"
+      }
+    },
     "nix-filter": {
       "locked": {
         "lastModified": 1694857738,
@@ -842,6 +862,7 @@
         "flake-parts": "flake-parts_2",
         "home-manager": "home-manager",
         "my-web-app": "my-web-app",
+        "nh": "nh",
         "nixos-unstable": "nixos-unstable",
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-unstable": "nixpkgs-unstable",

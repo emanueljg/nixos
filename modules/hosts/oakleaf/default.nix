@@ -4,6 +4,7 @@ _: {
     ../../pc
 
     ./configuration.nix
+    ./specs
   ];
 
 }

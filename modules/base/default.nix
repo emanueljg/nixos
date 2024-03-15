@@ -20,8 +20,11 @@
     ./user.nix
     ./zsh.nix
     ./opengl.nix
+    ./nh.nix
   ];
 
-  custom.efi-grub.enable = lib.mkDefault true;
+  custom = {
+    efi-grub.enable = lib.mkDefault true;
+  };
 
 }

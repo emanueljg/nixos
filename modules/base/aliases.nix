@@ -9,7 +9,6 @@ _: {
     "se" = "sudoedit";
     "si" = "s -i";
 
-    "nrs" = "sudo nixos-rebuild switch";
     "nrt" = "sudo nixos-rebuild test";
     "lnk" = ''basename "$(readlink /etc/nixos/configuration.nix)" | sed 's/\(.*\).nix/\1/g' '';
 
