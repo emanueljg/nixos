@@ -9,6 +9,7 @@ let
     filter
     split
     elemAt
+    map
     ;
 
   flatten = x:
