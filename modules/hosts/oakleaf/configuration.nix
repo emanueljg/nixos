@@ -4,7 +4,7 @@
 _: {
 
   imports = [
-    ./hardware-configuration.nix
+    ./hardware_configuration.nix
   ];
 
   networking.hostName = "oakleaf";
