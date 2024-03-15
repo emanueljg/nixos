@@ -4,11 +4,17 @@ let
     attrNames
     readDir
     mapAttrs
+    concatMap
+    isList
     filter
     split
     elemAt
     ;
 
+  flatten = x:
+    if isList x
+    then concatMap flatten x
+    else [ x ];
 in
 rec {
   dirFiles = path: (
@@ -19,6 +25,21 @@ rec {
           (fn: (elemAt (split "_" fn) 0) != "")
           (attrNames (readDir path))
       )
+  );
+
+  mkModules = hosts: (
+    mapAttrs
+      (
+        hostName: host:
+          host
+          // {
+            modules =
+              (host.extraModules or [ ])
+              ++ (flatten (host.extraModuleDirs or [ ]))
+              ++ (dirFiles (./. + ("/" + hostName)));
+          }
+      )
+      hosts
   );
 
   systemify = system: rawInputs: (

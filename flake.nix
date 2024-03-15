@@ -98,7 +98,7 @@
                 statix = { enable = true; };
               };
               settings = {
-                statix.ignore = [ "*hardware{_,-}configuration.nix" ];
+                statix.ignore = [ "*hardware_configuration.nix" ];
               };
             };
           };
@@ -114,9 +114,8 @@
 
       flake =
         let
-          inherit (import ./modules) utils mkHosts;
-
-          hosts = mkHosts { inherit inputs; };
+          hosts = import ./modules/hosts;
+          utils = import ./utils.nix;
 
           rawInputs = {
             inherit (inputs) nixpkgs nixpkgs-unstable nixos-unstable;

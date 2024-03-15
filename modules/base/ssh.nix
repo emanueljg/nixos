@@ -23,7 +23,7 @@ with lib; {
   };
   # allow these clients to connect
   users.users."ejg".openssh.authorizedKeys.keyFiles = [
-    ./_pubkeys/id_rsa_mothership.pub
+    ./pubkeys/id_rsa_mothership.pub
   ];
   # let colmena know about the identity file
   my.home.sessionVariables."SSH_CONFIG_FILE" = pkgs.writeText "colmena-ssh-config" ''
@@ -37,8 +37,7 @@ with lib; {
     startAgent = true;
     extraConfig =
       let
-        inherit ((import ../.)) mkHosts;
-        hosts = mkHosts { };
+        hosts = import ../hosts;
         hostStrings =
           lib.mapAttrsToList
             (
