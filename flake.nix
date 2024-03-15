@@ -66,6 +66,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nh = {
+      url = "github:viperML/nh";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # "displaylink-508.zip" = {
     #   url = "https://www.synaptics.com/products/displaylink-graphics/downloads/ubuntu-5.8?filetype=exe";
     #   flake = false;

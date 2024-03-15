@@ -1,7 +1,8 @@
 { config, lib, pkgs, ... }:
+
 {
 
-  imports = [ ./. ];
+  nh.specialisation = "home";
 
   services.xserver.videoDrivers = [ "displaylink" "modesetting" ];
   services.xserver.displayManager.sessionCommands = ''
