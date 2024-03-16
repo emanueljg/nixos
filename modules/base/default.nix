@@ -21,6 +21,7 @@
     ./zsh.nix
     ./opengl.nix
     ./nh.nix
+    ./garnix.nix
   ];
 
   custom = {
