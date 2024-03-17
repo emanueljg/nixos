@@ -6,9 +6,7 @@
 
     home-manager = {
       url = "github:nix-community/home-manager";
-      # don't follow; currently bugged and shows 23.05 instead of 23.11
       inputs.nixpkgs.follows = "nixpkgs-unstable";
-      # inputs.nixpkgs.follows = "nixos-unstable";
     };
 
     papes = {
@@ -25,15 +23,6 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    my-web-app = {
-      url = "path:/home/ejg/getting-started-app";
-    };
-
-    # inputs.bandcamp-artist-dl = {
-    #   url = "path:/home/ejg/bandcamp-artist-dl";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
 
     pollymc = {
       url = "github:fn2006/PollyMC";
@@ -71,10 +60,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # "displaylink-508.zip" = {
-    #   url = "https://www.synaptics.com/products/displaylink-graphics/downloads/ubuntu-5.8?filetype=exe";
-    #   flake = false;
-    # };
   };
 
   outputs = inputs @ { self, flake-parts, ... }:
@@ -114,7 +99,7 @@
           };
 
           # creates a wsl tarball
-          apps.mk-weasel-tarball.program = self.nixosConfigurations.weasel.config.system.build.tarballBuilder;
+          packages.default = self.nixosConfigurations.weasel.config.system.build.tarballBuilder;
         };
 
       flake =
