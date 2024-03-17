@@ -60,6 +60,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    hyprland.url = "github:hyprwm/Hyprland"; # where {version} is the hyprland release version
+    # or "github:hyprwm/Hyprland" to follow the development branch
+
+    hy3 = {
+      url = "github:outfoxxed/hy3";
+      inputs.hyprland.follows = "hyprland";
+    };
+
   };
 
   outputs = inputs @ { self, flake-parts, ... }:

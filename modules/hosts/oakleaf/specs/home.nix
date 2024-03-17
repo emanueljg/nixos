@@ -21,7 +21,7 @@
   ];
 
   my.programs.autorandr = {
-    enable = true;
+    enable = false;
     profiles = rec {
       default = {
         fingerprint = {
