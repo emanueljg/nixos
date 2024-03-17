@@ -15,6 +15,7 @@
       "$menu" = "${lib.getExe config.my.programs.wofi.package} --show run";
       "$terminal" = lib.getExe config.my.programs.kitty.package;
       "$browser" = lib.getExe config.my.programs.qutebrowser.package;
+      "$screenlock" = lib.getExe config.my.programs.swaylock.package;
       "$mod" = "ALT";
 
       general = {
@@ -122,6 +123,7 @@
           exec = [
             "$mod, Return, exec, $terminal"
             "$mod, BackSpace, exec, $browser"
+            "$mod SHIFT, aring, exec, $screenlock"
             "$mod, d, exec, $menu"
             "$mod SHIFT, Q, killactive"
           ];

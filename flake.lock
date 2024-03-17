@@ -577,21 +577,6 @@
         "type": "github"
       }
     },
-    "my-web-app": {
-      "inputs": {
-        "nixpkgs": "nixpkgs_2"
-      },
-      "locked": {
-        "lastModified": 1709661722,
-        "narHash": "sha256-5NFyK6MNBs8BvBdctU7VQmAMjpANxdZ0Z1mUKjOcUsM=",
-        "path": "/home/ejg/getting-started-app",
-        "type": "path"
-      },
-      "original": {
-        "path": "/home/ejg/getting-started-app",
-        "type": "path"
-      }
-    },
     "nh": {
       "inputs": {
         "nixpkgs": [
@@ -837,22 +822,6 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1709479366,
-        "narHash": "sha256-n6F0n8UV6lnTZbYPl1A9q1BS0p4hduAv1mGAP17CVd0=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "b8697e57f10292a6165a20f03d2f42920dfaf973",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_3": {
-      "locked": {
         "lastModified": 1710162809,
         "narHash": "sha256-i2R2bcnQp+85de67yjgZVvJhd6rRnJbSYNpGmB6Leb8=",
         "owner": "NixOS",
@@ -1022,10 +991,9 @@
         "home-manager": "home-manager",
         "hy3": "hy3",
         "hyprland": "hyprland",
-        "my-web-app": "my-web-app",
         "nh": "nh",
         "nixos-unstable": "nixos-unstable",
-        "nixpkgs": "nixpkgs_3",
+        "nixpkgs": "nixpkgs_2",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "papes": "papes",
         "pollymc": "pollymc",
