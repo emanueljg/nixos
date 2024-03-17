@@ -6,9 +6,7 @@
 
     home-manager = {
       url = "github:nix-community/home-manager";
-      # don't follow; currently bugged and shows 23.05 instead of 23.11
       inputs.nixpkgs.follows = "nixpkgs-unstable";
-      # inputs.nixpkgs.follows = "nixos-unstable";
     };
 
     papes = {
@@ -24,10 +22,6 @@
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    my-web-app = {
-      url = "path:/home/ejg/getting-started-app";
     };
 
     pollymc = {
@@ -73,6 +67,7 @@
       url = "github:outfoxxed/hy3";
       inputs.hyprland.follows = "hyprland";
     };
+
   };
 
   outputs = inputs @ { self, flake-parts, ... }:
@@ -112,7 +107,7 @@
           };
 
           # creates a wsl tarball
-          apps.mk-weasel-tarball.program = self.nixosConfigurations.weasel.config.system.build.tarballBuilder;
+          packages.default = self.nixosConfigurations.weasel.config.system.build.tarballBuilder;
         };
 
       flake =
