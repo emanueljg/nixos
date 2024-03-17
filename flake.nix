@@ -30,11 +30,6 @@
       url = "path:/home/ejg/getting-started-app";
     };
 
-    # inputs.bandcamp-artist-dl = {
-    #   url = "path:/home/ejg/bandcamp-artist-dl";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
-
     pollymc = {
       url = "github:fn2006/PollyMC";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -71,10 +66,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # "displaylink-508.zip" = {
-    #   url = "https://www.synaptics.com/products/displaylink-graphics/downloads/ubuntu-5.8?filetype=exe";
-    #   flake = false;
-    # };
+    hyprland.url = "github:hyprwm/Hyprland"; # where {version} is the hyprland release version
+    # or "github:hyprwm/Hyprland" to follow the development branch
+
+    hy3 = {
+      url = "github:outfoxxed/hy3";
+      inputs.hyprland.follows = "hyprland";
+    };
   };
 
   outputs = inputs @ { self, flake-parts, ... }:
