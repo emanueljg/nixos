@@ -36,6 +36,7 @@
     ./yubikey.nix
     ./hyprland.nix
     ./wofi.nix
+    ./swaylock.nix
   ];
 
   custom = {
