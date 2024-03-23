@@ -68,10 +68,6 @@
       inputs.hyprland.follows = "hyprland";
     };
 
-    nixvim = {
-      url = "github:nix-community/nixvim";
-    };
-
   };
 
   outputs = inputs @ { self, flake-parts, ... }:
