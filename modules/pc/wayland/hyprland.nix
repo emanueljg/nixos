@@ -1,4 +1,4 @@
-{ config, hyprland, pkgs, hy3, lib, ... }: {
+{ config, hyprland, pkgs, nixpkgs-unstable, hy3, lib, ... }: {
   # environment.systemPackages = with pkgs; [ foot ];
   programs.hyprland = {
     enable = true;
@@ -66,20 +66,22 @@
       };
       monitor = [
         "eDP-1,preferred,auto,1"
-        "DVI-I-2-2,preferred,auto,1"
-        "DVI-I-1-1,preferred,auto,1"
-        "DP-2,preferred,auto,1"
+        "HDMI-A-1,preferred,auto,1"
+        # "DVI-I-2-2,preferred,auto,1"
+        # "DVI-I-1-1,preferred,auto,1"
+        # "DP-2,preferred,auto,1"
       ];
       workspace = [
-        "1,monitor:DVI-I-1-1"
-        "2,monitor:DVI-I-1-1"
-        "3,monitor:DVI-I-1-1"
-        "4,monitor:DVI-2-1-1"
-        "5,monitor:DVI-2-1-1"
-        "6,monitor:DVI-2-1-1"
-        "7,monitor:DP-2"
-        "8,monitor:DP-2"
-        "9,monitor:DP-2"
+
+        "1,monitor:HDMI-A-1"
+        "2,monitor:HDMI-A-1"
+        "3,monitor:HDMI-A-1"
+        "4,monitor:HDMI-A-1"
+        "5,monitor:HDMI-A-1"
+        "6,monitor:HDMI-A-1"
+        "7,monitor:HDMI-A-1"
+        "8,monitor:HDMI-A-1"
+        "9,monitor:HDMI-A-1"
         "10,monitor:eDP-1"
       ];
       misc.force_default_wallpaper = 0;
@@ -132,6 +134,52 @@
         in
         window ++ workspace ++ exec;
     };
+    extraConfig =
+      let
+        mkCommand =
+          { package
+          , options
+          , arg ? null
+          }:
+          builtins.concatStringsSep " " ([
+            (lib.getExe package)
+            (pkgs.lib.concatMapStringsSep
+              " "
+              (str: ''"${str}"'')
+              (lib.cli.toGNUCommandLine { } options)
+            )
+          ] ++ (lib.optional (arg != null) ''${arg}''));
+
+        defaultOpts = {
+          output-folder = "${config.my.home.homeDirectory}/shots";
+          filename = "$(date -u '+%Y-%m-%dT%H-%M-%S').png";
+        };
+
+        mkModeInvoc = mode: mkCommand {
+          package = nixpkgs-unstable.hyprshot;
+          options = defaultOpts // { inherit mode; };
+        };
+      in
+      ''
+        bind = $mod, Print, submap, screenshot
+
+        submap = screenshot
+
+        bind = , o, execr, ${mkModeInvoc "output"}
+        bind = , o, submap, reset
+        bind = , w, execr, ${mkModeInvoc "window"}
+        bind = , w, submap, reset
+        bind = , r, execr, ${mkModeInvoc "region"}
+        bind = , r, submap, reset
+
+        bind = , escape, submap, reset
+
+        submap = reset
+      '';
   };
+
+  my.home.packages = with pkgs; [
+    wl-clipboard
+  ];
 
 }

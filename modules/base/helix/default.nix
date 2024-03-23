@@ -29,7 +29,24 @@
       {
         enable = true;
         settings = {
-          editor.auto-pairs = false;
+          keys.normal = {
+
+            J = "goto_previous_buffer";
+            K = "goto_next_buffer";
+
+            C-h = "jump_view_left";
+            C-j = "jump_view_down";
+            C-k = "jump_view_up";
+            C-l = "jump_view_right";
+
+            C-L = "hsplit";
+            C-J = "vsplit";
+          };
+          editor = {
+            auto-pairs = false;
+            line-number = "relative";
+            bufferline = "always";
+          };
         };
         languages = {
           language = [
