@@ -5,6 +5,8 @@ _: {
     ./configuration.nix
 
     ./drive.nix
+
+    ../../pc/x11
   ];
 }
 

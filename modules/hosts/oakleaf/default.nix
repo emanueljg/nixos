@@ -5,6 +5,8 @@ _: {
 
     ./configuration.nix
     ./specs
+
+    ../../pc/wayland
   ];
 
 }
