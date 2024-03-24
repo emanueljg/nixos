@@ -5,6 +5,7 @@ _: {
 
     ./configuration.nix
     ./specs
+    ./dev-vault.nix
 
     ../../pc/wayland
   ];
