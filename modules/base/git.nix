@@ -42,6 +42,9 @@
     "ghpc" = "ghp create";
 
     "ghr" = "gh repo";
+
+    "gf" = "git fetch";
+    "gme" = "git merge";
   };
 }
 
