@@ -3,6 +3,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
     nixos-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    prismlauncher.url = "github:PrismLauncher/PrismLauncher";
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -49,11 +50,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    tf-vault-backend = {
-      # url = "github:volvo-cars/terraform-vault-bridge";
-      url = "git+ssh://git@github.com/volvo-cars/terraform-vault-bridge.git?ref=14-explore-state-chunking";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # tf-vault-backend = {
+    #   # url = "github:volvo-cars/terraform-vault-bridge";
+    #   url = "git+ssh://git@github.com/volvo-cars/terraform-vault-bridge.git?ref=14-explore-state-chunking";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
 
     nh = {
       url = "github:viperML/nh";
@@ -68,75 +69,37 @@
       inputs.hyprland.follows = "hyprland";
     };
 
+    haumea = {
+      url = "github:nix-community/haumea";
+    };
+
+    nixGL = {
+      url = "github:nix-community/nixGL";
+    };
+
   };
 
   outputs = inputs @ { self, flake-parts, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
-      imports = [ ];
+      imports = [
+        ./flake-module.nix
+      ];
 
       systems = [ "x86_64-linux" ];
 
-      perSystem =
-        { self'
-        , system
-        , pkgs
-        , ...
-        }:
-        let
-          formatter = "nixpkgs-fmt";
-        in
-        {
-          formatter = pkgs.${formatter};
-          checks = {
-            pre-commit-check = inputs.pre-commit-hooks.lib.${system}.run {
-              src = ./.;
-              hooks = {
-                ${formatter} = { enable = true; };
-                deadnix = { enable = true; };
-                statix = { enable = true; };
-              };
-              settings = {
-                statix.ignore = [ "*hardware_configuration.nix" ];
-              };
-            };
-          };
-
-          devShells.default = pkgs.mkShell {
-            packages = with pkgs; [ statix ];
-            inherit (self'.checks.pre-commit-check) shellHook;
-          };
-
-          # creates a wsl tarball
-          packages.default = self.nixosConfigurations.weasel.config.system.build.tarballBuilder;
+      nixcfg = {
+        enable = true;
+        specialArgs = {
+          inherit inputs self;
         };
-
-      flake =
-        let
-          hosts = import ./modules/hosts;
-          utils = import ./utils.nix;
-
-          rawInputs = {
-            inherit (inputs) nixpkgs nixpkgs-unstable nixos-unstable;
-          };
-
-          system' = "x86_64-linux";
-
-          pkgs = import rawInputs.nixpkgs { system = system'; };
-        in
-        {
-          inherit pkgs;
-          colmena =
-            {
-              meta = {
-                nixpkgs = pkgs;
-                specialArgs = inputs;
-                nodeSpecialArgs = utils.mkColmenaSystemizeInputs hosts rawInputs;
-              };
-            }
-            // utils.mkColmenaHosts hosts;
-
-          nixosConfigurations =
-            utils.mkNixosConfigurations { inherit hosts inputs rawInputs; };
+        blueprints."pc" = {
+          path = ./blueprints/pc.nix;
         };
+        blueprints."base" = {
+          path = ./blueprints/base.nix;
+        };
+        hosts."oakleaf" = { };
+      };
+
     };
 }
