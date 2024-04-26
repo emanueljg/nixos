@@ -83,8 +83,12 @@
             };
             path = lib.mkOption {
               type = lib.types.nullOr lib.types.path;
-              #(/etc/nixos)/(blueprints)/(pc.nix)
-              default = "${self}/${category}/${name}";
+              default =
+                let
+                  noSuffixPath = "${self}/${category}/${name}";
+                  suffix = if builtins.pathExists noSuffixPath then "" else ".nix";
+                in
+                noSuffixPath + suffix;
             };
             _args = lib.mkOption {
               readOnly = true;
@@ -164,7 +168,7 @@
       mkCfgOutputs = output: builtins.mapAttrs (hostname: host: config.nixcfg.${output}._cfgFunction hostname host) config.nixcfg.hosts;
     in
     lib.mkIf config.nixcfg.enable {
-      # nixosConfigurations = mkCfgOutputs "nixos";
+      nixosConfigurations = mkCfgOutputs "nixos";
       homeConfigurations = mkCfgOutputs "home";
     };
 }

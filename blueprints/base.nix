@@ -1,11 +1,9 @@
 { hosts, blueprints, nixos, home, ... }: {
-  parents = [ ];
+  parents = [ blueprints.opts ];
   nixos = with nixos; [
     hw
-    efi-grub
     enable-flakes
     garnix
-    nvidia
     opengl
     pkgs
     ssh

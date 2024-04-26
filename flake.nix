@@ -92,12 +92,9 @@
         specialArgs = {
           inherit inputs self;
         };
-        blueprints."pc" = {
-          path = ./blueprints/pc.nix;
-        };
-        blueprints."base" = {
-          path = ./blueprints/base.nix;
-        };
+        blueprints."pc" = { };
+        blueprints."base" = { };
+        blueprints."opts" = { };
         hosts."oakleaf" = { };
       };
 

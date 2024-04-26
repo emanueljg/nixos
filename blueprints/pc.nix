@@ -12,5 +12,6 @@
     term.default
     wayland.default
     pkgs
+    pavucontrol
   ];
 }
