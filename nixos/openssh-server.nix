@@ -26,8 +26,8 @@ with lib; {
     ./pubkeys/id_rsa_mothership.pub
   ];
   # let colmena know about the identity file
-  my.home.sessionVariables."SSH_CONFIG_FILE" = pkgs.writeText "colmena-ssh-config" ''
-    Host *
-      IdentityFile ~/.ssh/id_rsa_mothership
-  '';
+  # my.home.sessionVariables."SSH_CONFIG_FILE" = pkgs.writeText "colmena-ssh-config" ''
+  #   Host *
+  #     IdentityFile ~/.ssh/id_rsa_mothership
+  # '';
 }

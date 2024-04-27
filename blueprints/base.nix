@@ -1,14 +1,14 @@
 { hosts, blueprints, nixos, home, ... }: {
   parents = [ blueprints.opts ];
   nixos = with nixos; [
-    hw
     enable-flakes
     garnix
-    opengl
     pkgs
-    ssh
+    openssh-server
     swedish-locale
     user
+    sops
+    { custom.efi-grub.enable = true; }
   ];
   home = with home; [
     term.default

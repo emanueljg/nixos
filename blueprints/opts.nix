@@ -1,10 +1,10 @@
 { hosts, blueprints, nixos, home, ... }: {
   parents = [ ];
   nixos = with nixos; [
-    efi-grub-opt
-    nvidia-opt
-    hibernation-opt
-    stay-awake-opt
+    hw.efi-grub-opt
+    hw.nvidia-opt
+    hw.hibernation-opt
+    hw.stay-awake-opt
   ];
   home = with home; [
   ];

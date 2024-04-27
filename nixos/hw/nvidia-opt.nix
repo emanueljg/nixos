@@ -1,13 +1,24 @@
 { config, lib, ... }: {
 
   options.custom.nvidia = {
-    enable = mkEnableOption "nvidia";
+    enable = lib.mkEnableOption "nvidia";
+    whitelistUnfree = lib.mkOption {
+      type = lib.types.bool;
+      description = ''
+        Whether to whitelist nvidia unfree packages or not.
+      '';
+      default = false;
+    };
+
   };
 
-  config = mkIf config.custom.nvidia.enable {
+  config = lib.mkIf config.custom.nvidia.enable {
     services.xserver.videoDrivers = [ "nvidia" ];
     nixpkgs.config.allowUnfree = true;
-    hardware.opengl.enable = true;
+    hardware.opengl = {
+      enable = true;
+      driSupport32Bit = true;
+    };
   };
 
 }

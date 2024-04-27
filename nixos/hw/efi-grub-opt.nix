@@ -1,8 +1,7 @@
-{ config, lib, ... }:
-let cfg = config.custom.efi-grub; in with lib; {
-  options.custom.efi-grub.enable = mkEnableOption "efi-grub";
+{ config, lib, ... }: {
+  options.custom.efi-grub.enable = lib.mkEnableOption "efi-grub";
 
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf config.custom.efi-grub.enable {
     boot = {
       #kernelParams = [ "quiet" "splash" ];
       loader = {

@@ -6,7 +6,7 @@ let cfg = config.custom.hibernation; in with lib; {
   config = mkIf cfg.enable {
 
     environment.systemPackages = [ pkgs.pmutils ];
-    my.home.shellAliases."hib" = "sudo pm-hibernate";
+    # my.home.shellAliases."hib" = "sudo pm-hibernate";
 
     boot.resumeDevice = (builtins.head config.swapDevices)."device";
   };

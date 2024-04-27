@@ -12,6 +12,11 @@
   home.packages = with pkgs; [
     colmena
   ];
+
+  home.sessionVariables."SSH_CONFIG_FILE" = pkgs.writeText "colmena-ssh-config" ''
+    Host *
+      IdentityFile ~/.ssh/id_rsa_mothership
+  '';
   # (colmena.overrideAttrs (oldAttrs: rec {
   #   version = "0.4.0pre";
   #   src = fetchFromGitHub {

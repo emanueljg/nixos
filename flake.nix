@@ -45,10 +45,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    wsl = {
-      url = "github:nix-community/NixOS-WSL";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # wsl = {
+    #   url = "github:nix-community/NixOS-WSL";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
 
     # tf-vault-backend = {
     #   # url = "github:volvo-cars/terraform-vault-bridge";
@@ -90,12 +90,22 @@
       nixcfg = {
         enable = true;
         specialArgs = {
-          inherit inputs self;
+          inherit self;
         };
         blueprints."pc" = { };
-        blueprints."base" = { };
+        blueprints."base" = {
+          specialArgs = {
+            inherit (inputs) sops-nix;
+          };
+        };
         blueprints."opts" = { };
-        hosts."oakleaf" = { };
+        hosts."oakleaf" = rec { };
+        hosts."void" = rec {
+          system = "x86_64-linux";
+          specialArgs = {
+            nixpkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${system};
+          };
+        };
       };
 
     };

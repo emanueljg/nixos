@@ -1,8 +1,9 @@
-_: {
-  imports = [
-    ../../base
-
-    ../../uses-nvidia.nix
+{ blueprints, hosts, home, nixos, ... }: {
+  parents = with blueprints; [
+    base
+  ];
+  nixos = with nixos; [
+    hw.nvidia
 
     ./configuration.nix
 
@@ -11,4 +12,5 @@ _: {
     ./nginx.nix
     ./porkbun.nix
   ];
+  home = with home; [ ];
 }

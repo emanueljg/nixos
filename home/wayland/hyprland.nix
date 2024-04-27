@@ -1,4 +1,4 @@
-{ config, inputs, pkgs, nixpkgs-unstable, lib, ... }: {
+{ config, inputs, pkgs, lib, ... }: {
   wayland.windowManager.hyprland = {
     enable = true;
     package = inputs.hyprland.packages.${pkgs.system}.hyprland;

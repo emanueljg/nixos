@@ -1,4 +1,4 @@
-{ nixpkgs-unstable, ... }: {
+{ ... }: {
   imports = [
     ./quickmarks.nix
     ./translate.nix

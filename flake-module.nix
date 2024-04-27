@@ -33,18 +33,23 @@
               _cfgFunction = lib.mkOption {
                 readOnly = true;
                 internal = true;
-                type = lib.types.anything;
+                type = lib.types.unspecified;
                 default = cfgFunction;
               };
 
               _haumeaModules = lib.mkOption {
                 readOnly = true;
                 internal = true;
-                default = inputs.haumea.lib.load {
-                  src = submod.config.path;
-                  loader = inputs.haumea.lib.loaders.verbatim;
-                  # transformer = inputs.haumea.lib.transformers.liftDefault;
-                };
+                type = with lib.types; lazyAttrsOf unspecified;
+                default =
+                  let
+                    mods = inputs.haumea.lib.load {
+                      src = submod.config.path;
+                      loader = inputs.haumea.lib.loaders.verbatim;
+                      # transformer = inputs.haumea.lib.transformers.liftDefault;
+                    };
+                  in
+                  mods;
               };
             };
           });
@@ -54,88 +59,113 @@
       mkCfgType =
         { category
         , extraOptions ? { }
-        }: lib.types.attrsOf (lib.types.submodule ({ name, ... }@submod:
-        let
-          mkModOption = output: lib.mkOption {
-            readOnly = true;
-            internal = true;
-            default =
-              let
-                parentModules = builtins.map (par: par."_${output}Modules") submod.config._args.parents;
-              in
-              lib.flatten [ parentModules submod.config._args.${output} ];
-          };
-
-        in
-        {
-          options = {
-            system = lib.mkOption {
-              type = lib.types.str;
-              default = "x86_64-linux";
-            };
-            specialArgs = lib.mkOption {
-              type = lib.types.attrsOf lib.types.anything;
-              default = { };
-            };
-            skippedImports = lib.mkOption {
-              type = lib.types.listOf lib.types.str;
-              default = [ ];
-            };
-            path = lib.mkOption {
-              type = lib.types.nullOr lib.types.path;
-              default =
-                let
-                  noSuffixPath = "${self}/${category}/${name}";
-                  suffix = if builtins.pathExists noSuffixPath then "" else ".nix";
-                in
-                noSuffixPath + suffix;
-            };
-            _args = lib.mkOption {
+        }: lib.types.attrsOf (lib.types.submodule
+          ({ name, ... }@submod:
+          let
+            mkModOption = output: lib.mkOption {
               readOnly = true;
               internal = true;
-              default = import submod.config.path {
-                inherit (config.nixcfg) hosts blueprints;
-                nixos = config.nixcfg.nixos._haumeaModules;
-                home = config.nixcfg.home._haumeaModules;
-              };
-              type = lib.types.submodule {
-                options = {
-                  parents = lib.mkOption {
-                    type = lib.types.listOf lib.types.unspecified;
-                  };
-                  nixos = lib.mkOption {
-                    type = lib.types.listOf lib.types.unspecified;
-                  };
-                  home = lib.mkOption {
-                    type = lib.types.listOf lib.types.unspecified;
-                  };
-
-                };
-              };
+              default =
+                let
+                  parentModules = builtins.map (par: par."_${output}Modules") submod.config._args.parents;
+                in
+                lib.flatten [ parentModules submod.config._args.${output} ];
             };
 
-            _nixosModules = mkModOption "nixos";
-            _homeModules = mkModOption "home";
+          in
+          {
+            options = {
+              system = lib.mkOption {
+                type = lib.types.str;
+                default = "x86_64-linux";
+              };
+              specialArgs = lib.mkOption {
+                type = lib.types.attrsOf lib.types.unspecified;
+                default = { };
+              };
+              skippedImports = lib.mkOption {
+                type = lib.types.listOf lib.types.str;
+                default = [ ];
+              };
+              path = lib.mkOption {
+                type = lib.types.nullOr lib.types.path;
+                default =
+                  let
+                    noSuffixPath = "${self}/${category}/${name}";
+                    suffix = if builtins.pathExists noSuffixPath then "" else ".nix";
+                  in
+                  noSuffixPath + suffix;
+              };
+              _args = lib.mkOption {
+                readOnly = true;
+                internal = true;
+                default = import submod.config.path {
+                  inherit (config.nixcfg) hosts blueprints;
+                  nixos = config.nixcfg.nixos._haumeaModules;
+                  home = config.nixcfg.home._haumeaModules;
+                };
+                type = lib.types.submodule {
+                  options = {
+                    parents = lib.mkOption {
+                      type = lib.types.listOf lib.types.unspecified;
+                    };
+                    nixos = lib.mkOption {
+                      type = lib.types.listOf lib.types.unspecified;
+                    };
+                    home = lib.mkOption {
+                      type = lib.types.listOf lib.types.unspecified;
+                    };
 
-          };
-        }));
+                  };
+                };
+              };
+
+              _familySpecialArgs = lib.mkOption {
+                readOnly = true;
+                internal = true;
+                type = with lib.types; attrsOf unspecified;
+                default = (lib.foldr
+                  (x: y:
+                    x._familySpecialArgs
+                    //
+                    y
+                  )
+                  submod.config.specialArgs
+                  submod.config._args.parents
+                );
+              };
+
+              _nixosModules =
+                mkModOption "nixos";
+              _homeModules = mkModOption "home";
+
+
+            };
+          }));
     in
     {
       enable = lib.mkEnableOption "nixcfg";
       specialArgs = lib.mkOption {
-        type = lib.types.attrsOf lib.types.anything;
+        type = lib.types.attrsOf lib.types.unspecified;
         default = { };
       };
 
       nixos = mkModuleSetOption {
         output = "nixos";
         nixpkgsDefault = inputs.nixpkgs;
-        cfgFunction = hostname: configuration: configuration.nixos.nixpkgs.lib.nixosSystem {
+        cfgFunction = hostname: configuration: inputs.nixpkgs.lib.nixosSystem {
           inherit (configuration) system;
-          specialArgs = configuration.nixos.specialArgs // {
-            nixos = configuration.nixos._moduleAttrset;
-          };
-          modules = configuration.nixos._modules;
+          specialArgs =
+            let
+              debug =
+                config.nixcfg.specialArgs //
+                config.nixcfg.nixos.specialArgs //
+                (configuration._familySpecialArgs) // {
+                  nixos = configuration.nixos._moduleAttrset;
+                };
+            in
+            builtins.trace debug debug;
+          modules = configuration._nixosModules;
         };
       };
 
@@ -148,7 +178,7 @@
           extraSpecialArgs =
             config.nixcfg.specialArgs //
             config.nixcfg.home.specialArgs //
-            configuration.specialArgs // {
+            configuration.familySpecialArgs // {
               home = configuration.home._moduleAttrset;
             };
         };

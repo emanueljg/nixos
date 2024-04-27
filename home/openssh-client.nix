@@ -11,7 +11,7 @@
           host = hostName;
           hostname = host.ip;
           user = "ejg";
-          identityFile = "/home/ejg/.ssh/id_rsa_mothership";
+          identityFile = "~/.ssh/id_rsa_mothership";
         })
         hosts;
   };
