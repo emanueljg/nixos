@@ -1,9 +1,9 @@
-{ config, inputs, pkgs, lib, ... }: {
+{ config, hyprland, hy3, pkgs, lib, ... }: {
   wayland.windowManager.hyprland = {
     enable = true;
-    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+    package = hyprland.packages.${pkgs.system}.hyprland;
     xwayland.enable = true;
-    plugins = [ inputs.hy3.packages.${pkgs.system}.hy3 ];
+    plugins = [ hy3.packages.${pkgs.system}.hy3 ];
     settings = {
       "$menu" = "${lib.getExe config.programs.wofi.package} --show run";
       "$terminal" = lib.getExe config.programs.kitty.package;

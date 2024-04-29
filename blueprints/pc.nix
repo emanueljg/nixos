@@ -13,5 +13,6 @@
     wayland.default
     pkgs
     pavucontrol
+    discordo
   ];
 }

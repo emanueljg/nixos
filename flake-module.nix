@@ -178,7 +178,7 @@
           extraSpecialArgs =
             config.nixcfg.specialArgs //
             config.nixcfg.home.specialArgs //
-            configuration.familySpecialArgs // {
+            configuration._familySpecialArgs // {
               home = configuration.home._moduleAttrset;
             };
         };

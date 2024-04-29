@@ -9,7 +9,6 @@
     ./hm.nix
     ./vccvpn.nix
     ./nixGL.nix
-    mc
   ];
 
   nixos = [ ];

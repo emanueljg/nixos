@@ -3,7 +3,6 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
     nixos-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    prismlauncher.url = "github:PrismLauncher/PrismLauncher";
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -15,18 +14,16 @@
       flake = false;
     };
 
+    # discordo = {
+    #   url = "path:emanueljg/discordo";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
     discordo = {
-      url = "github:emanueljg/discordo";
-      inputs.nixpkgs.follows = "nixpkgs";
+      url = "path:/home/ejohnso3/discordo";
     };
 
     sops-nix = {
       url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    pollymc = {
-      url = "github:fn2006/PollyMC";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -61,12 +58,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    hyprland.url = "github:hyprwm/Hyprland"; # where {version} is the hyprland release version
+    hyprland.url = "github:hyprwm/Hyprland?ref=v0.39.1"; # where {version} is the hyprland release version
     # or "github:hyprwm/Hyprland" to follow the development branch
 
     hy3 = {
-      url = "github:outfoxxed/hy3";
+      url = "github:tuxx/hy3?ref=patch-1";
       inputs.hyprland.follows = "hyprland";
+      # url = "github:outfoxxed/hy3?ref=hl0.39.1";
     };
 
     haumea = {
@@ -92,7 +90,11 @@
         specialArgs = {
           inherit self;
         };
-        blueprints."pc" = { };
+        blueprints."pc" = {
+          specialArgs = {
+            inherit (inputs) discordo;
+          };
+        };
         blueprints."base" = {
           specialArgs = {
             inherit (inputs) sops-nix;
@@ -104,6 +106,12 @@
           system = "x86_64-linux";
           specialArgs = {
             nixpkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${system};
+          };
+        };
+        hosts."oakleaf" = rec {
+          system = "x86_64-linux";
+          specialArgs = {
+            inherit (inputs) hy3 hyprland nixGL;
           };
         };
       };
