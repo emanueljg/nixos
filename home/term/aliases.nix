@@ -33,5 +33,8 @@ _: {
     "nflu" = "nix flake lock --update-input";
     "nfu" = "nix flake update";
     "nfc" = "nix flake check";
+
+    "bt-hp" = "bluetoothctl connect 5C:EB:68:79:BA:6F";
+    "bt-dc" = "bluetoothctl disconnect";
   };
 }
