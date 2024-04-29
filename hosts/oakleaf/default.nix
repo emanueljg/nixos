@@ -2,6 +2,7 @@
 
   parents = [
     blueprints.pc
+    { boot.isContainer = true; }
   ];
 
   home = with home; [
