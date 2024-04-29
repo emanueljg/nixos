@@ -12,5 +12,7 @@
     ./nginx.nix
     ./porkbun.nix
   ];
-  home = with home; [ ];
+  home = with home; [
+    ./hm.nix
+  ];
 }
