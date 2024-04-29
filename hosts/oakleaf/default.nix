@@ -2,7 +2,6 @@
 
   parents = [
     blueprints.pc
-    { boot.isContainer = true; }
   ];
 
   home = with home; [
@@ -12,6 +11,8 @@
     ./nixGL.nix
   ];
 
-  nixos = [ ];
+  nixos = [
+    { boot.isContainer = true; }
+  ];
 
 }
