@@ -15,11 +15,10 @@
     };
 
     # discordo = {
-    #   url = "path:emanueljg/discordo";
-    #   inputs.nixpkgs.follows = "nixpkgs";
+    #   url = "path:/home/ejohnso3/discordo";
     # };
     discordo = {
-      url = "path:/home/ejohnso3/discordo";
+      url = "github:emanueljg/discordo?ref=add-flake";
     };
 
     sops-nix = {
