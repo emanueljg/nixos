@@ -1,9 +1,9 @@
-{ config, hyprland, hy3, pkgs, lib, ... }: {
+{ config, packages, pkgs, lib, ... }: {
   wayland.windowManager.hyprland = {
     enable = true;
-    package = hyprland.packages.${pkgs.system}.hyprland;
+    package = packages.hyprland;
     xwayland.enable = true;
-    plugins = [ hy3.packages.${pkgs.system}.hy3 ];
+    plugins = [ packages.hy3 ];
     settings = {
       "$menu" = "${lib.getExe config.programs.wofi.package} --show run";
       "$terminal" = lib.getExe config.programs.kitty.package;
@@ -66,14 +66,14 @@
       ];
       workspace = [
 
-        "1,monitor:DP-4"
-        "2,monitor:DP-4"
-        "3,monitor:DP-4"
-        "4,monitor:DP-4"
-        "5,monitor:DP-5"
-        "6,monitor:DP-5"
-        "7,monitor:DP-5"
-        "8,monitor:DP-5"
+        "1,monitor:DP-5"
+        "2,monitor:DP-5"
+        "3,monitor:DP-5"
+        "4,monitor:DP-5"
+        "5,monitor:DP-4"
+        "6,monitor:DP-4"
+        "7,monitor:DP-4"
+        "8,monitor:DP-4"
         "9,monitor:eDP-1"
         "10,monitor:eDP-1"
       ];

@@ -7,5 +7,6 @@
     hw.stay-awake-opt
   ];
   home = with home; [
+    pyradio-opt
   ];
 }  

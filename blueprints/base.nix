@@ -1,4 +1,7 @@
-{ hosts, blueprints, nixos, home, ... }: {
+{ inputs, hosts, blueprints, nixos, home, ... }: {
+  specialArgs.nixosModules = {
+    inherit (inputs.sops-nix.nixosModules) sops;
+  };
   parents = [ blueprints.opts ];
   nixos = with nixos; [
     enable-flakes

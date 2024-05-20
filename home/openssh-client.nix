@@ -4,7 +4,7 @@
     package = pkgs.openssh; # how on earth is this not default
     matchBlocks =
       let
-        hosts = import ../hosts;
+        hosts = import ../_hosts_default.nix;
       in
       lib.mapAttrs
         (hostName: host: {

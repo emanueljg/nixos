@@ -1,8 +1,17 @@
-{ home, blueprints, ... }: {
+{ inputs, home, blueprints, ... }: {
+  specialArgs.packages = inputs': with inputs'; {
+    inherit (discordo.packages) default;
+  };
+  specialArgs.homeModules = {
+    discordo = inputs.discordo.homeManagerModules.default;
+  };
+
   parents = [
     blueprints.base
   ];
+
   nixos = [ ];
+
   home = with home; [
     firefox
     media.default

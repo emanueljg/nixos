@@ -1,9 +1,9 @@
 { pkgs
-, sops-nix
+, nixosModules
 , ...
 }: {
   imports = [
-    sops-nix.nixosModules.sops
+    nixosModules.sops
   ];
 
   sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];

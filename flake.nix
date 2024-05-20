@@ -86,33 +86,30 @@
 
       nixcfg = {
         enable = true;
-        specialArgs = {
-          inherit self;
-        };
-        blueprints."pc" = {
-          specialArgs = {
-            inherit (inputs) discordo;
-          };
-        };
-        blueprints."base" = {
-          specialArgs = {
-            inherit (inputs) sops-nix;
-          };
-        };
-        blueprints."opts" = { };
-        hosts."oakleaf" = rec { };
-        hosts."void" = rec {
-          system = "x86_64-linux";
-          specialArgs = {
-            nixpkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${system};
-          };
-        };
-        hosts."oakleaf" = rec {
-          system = "x86_64-linux";
-          specialArgs = {
-            inherit (inputs) hy3 hyprland nixGL;
-          };
-        };
+        # blueprints."pc" = {
+        #   specialArgs = {
+        #     inherit (inputs) discordo;
+        #   };
+        # };
+        # blueprints."base" = {
+        #   specialArgs = {
+        #     inherit (inputs) sops-nix;
+        #   };
+        # };
+        # blueprints."opts" = { };
+        # hosts."oakleaf" = rec { };
+        # hosts."void" = rec {
+        #   system = "x86_64-linux";
+        #   specialArgs = {
+        #     nixpkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${system};
+        #   };
+        # };
+        # hosts."oakleaf" = rec {
+        #   system = "x86_64-linux";
+        #   specialArgs = {
+        #     inherit (inputs) hy3 hyprland nixGL;
+        #   };
+        # };
       };
 
     };

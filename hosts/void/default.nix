@@ -1,4 +1,4 @@
-{ blueprints, hosts, home, nixos, ... }: {
+{ config, inputs, blueprints, hosts, home, nixos, ... }: {
   parents = with blueprints; [
     base
   ];
