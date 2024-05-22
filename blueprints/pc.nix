@@ -13,6 +13,7 @@
   nixos = with nixos; [
     networkmanager
     hw.bluetooth
+    hw.displaylink
   ];
 
   home = with home; [
