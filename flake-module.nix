@@ -232,8 +232,7 @@
                 (configuration.specialArgs._nixosFamily) // {
                   inherit self;
                 };
-            in
-            builtins.trace debug debug;
+                in builtins.trace (builtins.attrNames debug.nixosModules) debug;
           modules = configuration._nixosModules;
         };
       };
