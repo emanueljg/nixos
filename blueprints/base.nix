@@ -11,6 +11,7 @@
     swedish-locale
     user
     sops
+    hw.libinput
     { custom.efi-grub.enable = true; }
   ];
   home = with home; [

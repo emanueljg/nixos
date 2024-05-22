@@ -1,4 +1,4 @@
-{ inputs, home, blueprints, ... }: {
+{ inputs, home, nixos, blueprints, ... }: {
   specialArgs.packages = inputs': with inputs'; {
     inherit (discordo.packages) default;
   };
@@ -10,7 +10,11 @@
     blueprints.base
   ];
 
-  nixos = [ ];
+  nixos = with nixos; [
+    networkmanager
+    hw.bluetooth
+    hw.displaylink
+  ];
 
   home = with home; [
     firefox

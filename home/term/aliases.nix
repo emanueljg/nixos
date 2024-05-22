@@ -1,4 +1,4 @@
-_: {
+{ config, ... }: {
   home.shellAliases = {
     "c" = "cd /etc/nixos";
     "..." = "cd ../..";
@@ -9,7 +9,9 @@ _: {
     "se" = "sudoedit";
     "si" = "s -i";
 
+    "nrs" = "sudo nixos-rebuild switch --flake path:${config.home.homeDirectory}/nixos#";
     "nrt" = "sudo nixos-rebuild test";
+    "bld" = "nrs && hm";
     "lnk" = ''basename "$(readlink /etc/nixos/configuration.nix)" | sed 's/\(.*\).nix/\1/g' '';
 
     "xc" = "xclip -sel clip";

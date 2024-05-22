@@ -28,10 +28,6 @@
         render_text = false;
       };
 
-      input = {
-        kb_layout = "se";
-      };
-
       animations = {
         enabled = true;
         bezier = [

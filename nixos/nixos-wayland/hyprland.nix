@@ -1,8 +1,7 @@
-{ hyprland, pkgs, config, lib, ... }: {
+{ pkgs, config, packages, lib, ... }: {
 
   programs.hyprland = {
     enable = true;
-    xwayland.enable = true;
-    package = hyprland.packages.${pkgs.system}.hyprland;
+    package = packages.hyprland;
   };
 }

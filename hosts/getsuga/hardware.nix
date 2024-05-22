@@ -1,0 +1,3 @@
+{ nixosModules, ... }: {
+  imports = [ nixosModules.hardware ];
+}
