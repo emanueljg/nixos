@@ -17,6 +17,11 @@
       external_port = 80;
       https_only = true;
 
+      db = let name = "invidious"; in {
+        user = name;
+        dbname = name;
+      };
+
       # db = {
       #   user = "ejg";
       # };

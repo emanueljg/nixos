@@ -1,6 +1,6 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
     nixos-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
@@ -70,12 +70,12 @@
       # url = "github:outfoxxed/hy3?ref=hl0.39.1";
     };
 
-    haumea = {
-      url = "github:nix-community/haumea";
-    };
-
     nixGL = {
       url = "github:nix-community/nixGL";
+    };
+
+    configuranix = {
+      url = "path:/home/ejg/configuranix";
     };
 
   };
@@ -83,37 +83,19 @@
   outputs = inputs @ { self, flake-parts, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
-        ./flake-module.nix
+        inputs.configuranix.flakeModules.default
       ];
 
-      systems = [ "x86_64-linux" ];
+      systems = [ ];
 
-      nixcfg = {
+      configuranix = {
         enable = true;
-        # blueprints."pc" = {
-        #   specialArgs = {
-        #     inherit (inputs) discordo;
-        #   };
-        # };
-        # blueprints."base" = {
-        #   specialArgs = {
-        #     inherit (inputs) sops-nix;
-        #   };
-        # };
-        # blueprints."opts" = { };
-        # hosts."oakleaf" = rec { };
-        # hosts."void" = rec {
-        #   system = "x86_64-linux";
-        #   specialArgs = {
-        #     nixpkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${system};
-        #   };
-        # };
-        # hosts."oakleaf" = rec {
-        #   system = "x86_64-linux";
-        #   specialArgs = {
-        #     inherit (inputs) hy3 hyprland nixGL;
-        #   };
-        # };
+        nixos.inputs = {
+          inherit (inputs) nixpkgs;
+        };
+        home.inputs = {
+          inherit (inputs) home-manager nixos-unstable;
+        };
       };
 
     };

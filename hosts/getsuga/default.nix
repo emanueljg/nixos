@@ -24,6 +24,7 @@
 
   nixos = with nixos; [
     ./configuration.nix
+    gaming
     hw.nvidia
     nixos-wayland.default
     ./hardware.nix

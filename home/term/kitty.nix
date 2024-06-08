@@ -3,8 +3,7 @@
     enable = true;
     font = {
       name = "JetBrains Mono Regular Nerd Font Complete Mono";
-      package = pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; };
-      #package = pkgs.jetbrains-mono;
+      package = null; #package = pkgs.jetbrains-mono;
       #name = "IBM Plex Mono";
       #package = pkgs.ibm-plex;
       size = 18;

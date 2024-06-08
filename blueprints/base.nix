@@ -2,6 +2,9 @@
   specialArgs.nixosModules = {
     inherit (inputs.sops-nix.nixosModules) sops;
   };
+  specialArgs.homeModules = {
+    inherit (inputs.sops-nix.homeManagerModules) sops;
+  };
   parents = [ blueprints.opts ];
   nixos = with nixos; [
     enable-flakes
@@ -18,5 +21,7 @@
     term.default
     colmena
     openssh-client
+    sops
+    nix-gh-pat
   ];
 }  
