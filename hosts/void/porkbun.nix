@@ -28,7 +28,7 @@ in
   };
 
   sops.secrets.${secret} = {
-    sopsFile = "${self}/secrets/${secret}.yaml";
+    sopsFile = "${self}/secrets/${config.networking.hostName}/${secret}.yml";
     mode = "0440";
     inherit owner group;
   };

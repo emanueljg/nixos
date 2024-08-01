@@ -4,4 +4,5 @@
     wineWowPackages.waylandFull
     lutris
   ];
+  virtualisation.waydroid.enable = true;
 }

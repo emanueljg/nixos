@@ -21,13 +21,12 @@ with lib; {
       PermitRootLogin = "no";
     };
   };
-  # allow these clients to connect
-  users.users."ejg".openssh.authorizedKeys.keyFiles = [
-    ./pubkeys/id_rsa_mothership.pub
-  ];
-  # let colmena know about the identity file
-  # my.home.sessionVariables."SSH_CONFIG_FILE" = pkgs.writeText "colmena-ssh-config" ''
-  #   Host *
-  #     IdentityFile ~/.ssh/id_rsa_mothership
-  # '';
+  # path literals are constructed this way to escape the @-sign.
+  users.users."ejg".openssh.authorizedKeys.keyFiles =
+    let
+      keys = [
+        "ejg@getsuga.pub"
+      ];
+    in
+    map (key: ./. + "/pubkeys/${key}") keys;
 }

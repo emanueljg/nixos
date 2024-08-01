@@ -1,10 +1,21 @@
-{ inputs, hosts, blueprints, nixos, home, ... }: {
+{ inputs, blueprints, nixos, home, ... }: {
   specialArgs.nixosModules = {
     inherit (inputs.sops-nix.nixosModules) sops;
   };
   specialArgs.homeModules = {
     inherit (inputs.sops-nix.homeManagerModules) sops;
   };
+  specialArgs.packages = inputs': with inputs'; {
+    inherit (configuranix.packages) deploy-rs;
+  };
+  deploy = rec {
+    sshUser = "ejg";
+    profiles = {
+      system.user = "root";
+      home-manager.user = sshUser;
+    };
+  };
+
   parents = [ blueprints.opts ];
   nixos = with nixos; [
     enable-flakes
@@ -19,9 +30,9 @@
   ];
   home = with home; [
     term.default
-    colmena
     openssh-client
     sops
     nix-gh-pat
+    deploy-rs
   ];
 }  

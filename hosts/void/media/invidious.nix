@@ -1,9 +1,9 @@
-{ nixpkgs-unstable, ... }: {
+{ nixpkgs, ... }: {
   services.invidious = {
     enable = true;
-    package = nixpkgs-unstable.invidious.overrideAttrs (final: old: {
+    package = let pkgs' = nixpkgs.nixpkgs-unstable; in pkgs'.invidious.overrideAttrs (final: old: {
       version = "0.20.1-unstable-2024-04-27";
-      src = nixpkgs-unstable.fetchFromGitea {
+      src = pkgs'.fetchFromGitea {
         domain = "gitea.invidious.io";
         owner = "iv-org";
         repo = final.pname;

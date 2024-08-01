@@ -74,8 +74,11 @@
       url = "github:nix-community/nixGL";
     };
 
+    deploy-rs.url = "github:emanueljg/deploy-rs?ref=add-meta-mainprogram";
+
     configuranix = {
       url = "path:/home/ejg/configuranix";
+      inputs.deploy-rs.follows = "deploy-rs";
     };
 
   };
@@ -96,7 +99,15 @@
         home.inputs = {
           inherit (inputs) home-manager nixos-unstable;
         };
-      };
+        # deploy = rec {
+        #   user = "ejg";
+        #   sshUser = "ejg";
+        #   sshOpts = [
+        #     "-i"
+        #     "/home/${sshUser}/.ssh/id_rsa_mothership"
+        #   ];
+        # };
 
+      };
     };
 }

@@ -15,18 +15,14 @@
   config = lib.mkIf config.custom.nvidia.enable {
     services.xserver.videoDrivers = [ "nvidia" ];
     nixpkgs.config.allowUnfree = true;
-    hardware.nvidia = {
-      open = true;
-      modesetting.enable = true;
-    };
-
-    # modesetting.enable = true;
+    hardware.nvidia.modesetting.enable = true;
     # powerManagement = {
     #   enable = true;
     #   finegrained = true;
     # };
     hardware.opengl = {
       enable = true;
+      driSupport = true;
       driSupport32Bit = true;
     };
   };

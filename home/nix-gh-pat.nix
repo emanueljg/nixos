@@ -1,7 +1,8 @@
 { config, self, ... }: {
   sops = {
     secrets.nix-gh-pat = {
-      sopsFile = "${self}/secrets/nix-gh-pat.yaml";
+      mode = "0440";
+      sopsFile = "${self}/secrets/nix-gh-pat.yml";
     };
   };
 

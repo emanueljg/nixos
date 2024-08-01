@@ -1,28 +1,31 @@
 # Also see https://github.com/Mic92/dotfiles/blob/master/nixos/.sops.yaml
 # for a more complex example.
 keys:
-  - &admin_ejg age1ley3ejf6c2m702wuqhnyzs26km3wm3l5ld6kzkpaqwqdccup9yysnv0d9u
+  - &ejg_getsuga A2A3CA505C4E424A8616DB04E5F750C199A99023
+  - &ejg_void 35D469C06B616D2BCF1980A33B8BFDA530FDAE77
   - &server_void age1ws2gphsp0qwzpw24j3wkmtgfz7e2cfhmkzpu8xkruyzrxjd334yshj2843
-  - &server_crown age1zhz42cv54wteed53463nt9d4e2awxrecs2km38c3j33fjrca8ftq0nx4fm
-  - &server_seneca age175fqcu2n47asd79r9jr9u4nn859vfp4q9jvzxknkgl6gkcn3udssauq5ew
-  - &server_loki age1pztrh4nrkxsqd88ylhkkuaf4ewlf2f4p9ad0h4ah3fhzyqrazemqq4k8cl
-  - &server_fenix age1ukzg09ck8t7ndkyhfw6vpt99k0qwpq9s7tsymsgdzyzpuck9napq6uenxh
-  - &admin_me "FE9E70DB52690E0D4D5DD17CB7894700CE81CD97"
+  - &server_getsuga age148zsrhvarvtzlyhlt4yayrf9705jvpsntgjk6r5cvvg0c0qeu9rqf20wpd
+
 creation_rules:
-  - path_regex: secrets/[^/]+\.(yaml)|(json)$
+  - path_regex: secrets/getsuga/.*
     key_groups:
     - age:
-      - *admin_ejg
-      - *server_void
-      - *server_crown
-      - *server_seneca
-      - *server_loki
-      - *server_fenix
+      - *server_getsuga
       pgp:
-      - *admin_me
-  - path_regex: secrets/crown/.*$
+      - *ejg_getsuga
+      - *ejg_void
+  - path_regex: secrets/void/.*
     key_groups:
-      - age:
-        - *admin_ejg
-        - *server_crown
-
+    - age:
+      - *server_void
+      pgp:
+      - *ejg_getsuga
+      - *ejg_void
+  - path_regex: secrets/.*
+    key_groups:
+    - age:
+      - *server_void
+      - *server_getsuga
+      pgp:
+      - *ejg_getsuga
+      - *ejg_void
