@@ -8,5 +8,7 @@ _: {
     ./direnv.nix
     ./helix
     ./starship.nix
+    ./bat.nix
+    ./nnn
   ];
 }

@@ -1,15 +1,17 @@
 { self, ... }: {
+
   services.hyprpaper = {
     enable = true;
     settings =
       let
-        wallpaper = "${self}/wallpapers/pixel-grass.png";
+        wallpaper = "lwa0.png";
+        path = "${self}/wallpapers/${wallpaper}";
       in
       {
         splash = false;
-        preload = wallpaper;
+        preload = path;
         wallpaper = [
-          ",${wallpaper}"
+          ",${path}"
         ];
       };
   };
