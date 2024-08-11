@@ -1,4 +1,5 @@
-rec {
+{
+  name = "Everforest Light Soft";
   bg = {
     "bg_dim" = "#E5DFC5"; # same as 2
     "bg0" = "#F3EAD3";
@@ -30,4 +31,7 @@ rec {
     "statusline2" = "#708089";
     "statusline3" = "#E66868";
   };
+
+  BLACK = "#000000";
+  WHITE = "#ffffff";
 }

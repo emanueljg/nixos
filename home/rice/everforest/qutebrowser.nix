@@ -1,5 +1,5 @@
 { self, ... }: {
-  programs.qutebrowser.settings.colors = with (import "${self}/themes"); {
+  programs.qutebrowser.settings.colors = with (import ./theme.nix); {
     completion = {
       category = {
         bg = bg.bg3;

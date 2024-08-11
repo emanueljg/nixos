@@ -16,6 +16,7 @@
   ];
 
   home = with home; [
+    rice.everforest.default
     firefox
     media.default
     langs.default
@@ -24,7 +25,7 @@
     term.default
     wayland.default
     pkgs
-    fonts
+    fontconfig
     pavucontrol
     discordo
   ];

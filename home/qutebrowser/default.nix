@@ -3,7 +3,6 @@
     ./quickmarks.nix
     ./translate.nix
     ./qute-pass.nix
-    ./rice.nix
   ];
 
   programs.qutebrowser = {
