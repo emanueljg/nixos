@@ -2,41 +2,41 @@
   "nodes": {
     "configuranix": {
       "inputs": {
-        "deploy-rs": [
-          "deploy-rs"
-        ],
+        "deploy-rs": "deploy-rs",
         "flake-parts": "flake-parts",
         "haumea": "haumea",
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1718107106,
-        "narHash": "sha256-I5UpulOCPQnsTijMerC+J0hYqz1MtK9S6r8pNbkHCa8=",
-        "path": "/home/ejg/configuranix",
-        "type": "path"
+        "lastModified": 1723384160,
+        "narHash": "sha256-o/2DB84cQk5axNRyRRgjRSO/0xruoInoBmKqRkalS2E=",
+        "owner": "emanueljg",
+        "repo": "configuranix",
+        "rev": "3d4fe486dcac4bc1947fd6843216574e9611c316",
+        "type": "github"
       },
       "original": {
-        "path": "/home/ejg/configuranix",
-        "type": "path"
+        "owner": "emanueljg",
+        "repo": "configuranix",
+        "type": "github"
       }
     },
     "deploy-rs": {
       "inputs": {
         "flake-compat": "flake-compat",
-        "nixpkgs": "nixpkgs_3",
+        "nixpkgs": "nixpkgs",
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1718112107,
-        "narHash": "sha256-kVQJSjvbCdXoRpsP9kixdR0wferRQQ0wOlZOa9BLkkY=",
-        "owner": "emanueljg",
+        "lastModified": 1718194053,
+        "narHash": "sha256-FaGrf7qwZ99ehPJCAwgvNY5sLCqQ3GDiE/6uLhxxwSY=",
+        "owner": "serokell",
         "repo": "deploy-rs",
-        "rev": "c92c07eb2e210a140cc798b27a223cf8ed95628d",
+        "rev": "3867348fa92bc892eba5d9ddb2d7a97b9e127a8a",
         "type": "github"
       },
       "original": {
-        "owner": "emanueljg",
-        "ref": "add-meta-mainprogram",
+        "owner": "serokell",
         "repo": "deploy-rs",
         "type": "github"
       }
@@ -223,7 +223,7 @@
     },
     "haumea": {
       "inputs": {
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs_2"
       },
       "locked": {
         "lastModified": 1708375098,
@@ -456,16 +456,17 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1681001314,
-        "narHash": "sha256-5sDnCLdrKZqxLPK4KA8+f4A3YKO/u6ElpMILvX0g72c=",
-        "owner": "nix-community",
-        "repo": "nixpkgs.lib",
-        "rev": "367c0e1086a4eb4502b24d872cea2c7acdd557f4",
+        "lastModified": 1702272962,
+        "narHash": "sha256-D+zHwkwPc6oYQ4G3A1HuadopqRwUY/JkMwHz1YF7j4Q=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "e97b3e4186bcadf0ef1b6be22b8558eab1cdeb5d",
         "type": "github"
       },
       "original": {
-        "owner": "nix-community",
-        "repo": "nixpkgs.lib",
+        "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
         "type": "github"
       }
     },
@@ -561,6 +562,21 @@
     },
     "nixpkgs_2": {
       "locked": {
+        "lastModified": 1681001314,
+        "narHash": "sha256-5sDnCLdrKZqxLPK4KA8+f4A3YKO/u6ElpMILvX0g72c=",
+        "owner": "nix-community",
+        "repo": "nixpkgs.lib",
+        "rev": "367c0e1086a4eb4502b24d872cea2c7acdd557f4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "nixpkgs.lib",
+        "type": "github"
+      }
+    },
+    "nixpkgs_3": {
+      "locked": {
         "lastModified": 1717602782,
         "narHash": "sha256-pL9jeus5QpX5R+9rsp3hhZ+uplVHscNJh8n8VpqscM0=",
         "owner": "NixOS",
@@ -571,22 +587,6 @@
       "original": {
         "owner": "NixOS",
         "ref": "nixos-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_3": {
-      "locked": {
-        "lastModified": 1702272962,
-        "narHash": "sha256-D+zHwkwPc6oYQ4G3A1HuadopqRwUY/JkMwHz1YF7j4Q=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "e97b3e4186bcadf0ef1b6be22b8558eab1cdeb5d",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixpkgs-unstable",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -696,7 +696,6 @@
     "root": {
       "inputs": {
         "configuranix": "configuranix",
-        "deploy-rs": "deploy-rs",
         "discordo": "discordo",
         "disko": "disko",
         "f5fpc": "f5fpc",

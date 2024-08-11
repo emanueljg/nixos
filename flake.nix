@@ -50,12 +50,6 @@
     #   inputs.nixpkgs.follows = "nixpkgs";
     # };
 
-    # tf-vault-backend = {
-    #   # url = "github:volvo-cars/terraform-vault-bridge";
-    #   url = "git+ssh://git@github.com/volvo-cars/terraform-vault-bridge.git?ref=14-explore-state-chunking";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
-
     nh = {
       url = "github:viperML/nh";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -74,11 +68,8 @@
       url = "github:nix-community/nixGL";
     };
 
-    deploy-rs.url = "github:emanueljg/deploy-rs?ref=add-meta-mainprogram";
-
     configuranix = {
-      url = "path:/home/ejg/configuranix";
-      inputs.deploy-rs.follows = "deploy-rs";
+      url = "github:emanueljg/configuranix";
     };
 
   };
