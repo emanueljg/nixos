@@ -80,7 +80,7 @@
         inputs.configuranix.flakeModules.default
       ];
 
-      systems = [ ];
+      systems = [ "x86_64-linux" ];
 
       configuranix = {
         enable = true;
