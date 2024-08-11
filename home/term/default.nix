@@ -6,7 +6,7 @@ _: {
     ./pass.nix
     ./zsh.nix
     ./direnv.nix
-    ./helix
+    ./helix.nix
     ./starship.nix
     ./bat.nix
     ./nnn

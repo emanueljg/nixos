@@ -3,10 +3,6 @@
 , lib
 , ...
 }: {
-  imports = [
-    ./rice.nix
-  ];
-
   home.sessionVariables = rec {
     EDITOR = "hx";
     SUDO_EDITOR = EDITOR;
