@@ -1,7 +1,7 @@
 {
   programs.pyradio =
     let
-      theme = import ./theme.nix;
+      theme = import ./_theme.nix;
     in
     {
       settings.ui.theme = theme.name;

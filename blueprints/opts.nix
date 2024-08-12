@@ -8,5 +8,6 @@
   ];
   home = with home; [
     pyradio-opt
+    qutebrowser.stylesheets-opt
   ];
 }  

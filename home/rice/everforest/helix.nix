@@ -1,7 +1,7 @@
 {
   programs.helix =
     let
-      theme = import ./theme.nix;
+      theme = import ./_theme.nix;
     in
     {
       settings.theme = theme.name;
