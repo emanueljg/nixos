@@ -1,7 +1,7 @@
 {
   programs.kitty =
     let
-      theme = import ./theme.nix;
+      theme = import ./_theme.nix;
     in
     {
       theme = theme.name;

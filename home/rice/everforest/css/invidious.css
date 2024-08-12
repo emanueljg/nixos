@@ -1,0 +1,49 @@
+body {
+  background-color: #93B259;
+}
+
+.h-box {
+  background-color: #F3EAD3;
+  margin: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.h-box .video-card-row:nth-child(4) {
+  display: none;
+}
+
+.h-box .icon-buttons {
+  display: none;
+}
+
+.h-box .ion-md-checkmark-circle {
+  display: none;
+  }
+
+.light-theme a:link,
+.light-theme a:visited,
+.light-theme a:hover,
+.light-theme a:active,
+.light-theme summary:hover,
+.light-theme a:focus,
+.light-theme summary:focus {
+  color: black !important;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.channel-name ~ p {
+  display: none;
+}
+
+.h-box .channel-name:nth-child(3) {
+  display: none;
+}
+
+h5 {
+  font-weight: unset;
+  font-style: italic;
+}

@@ -2,7 +2,7 @@
   programs.waybar = {
     style =
       let
-        theme = import ./theme.nix;
+        theme = import ./_theme.nix;
       in
       ''
         * {

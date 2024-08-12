@@ -10,5 +10,6 @@
     ./helix.nix
     ./kitty.nix
     ./qb-help.nix
+    ./css/qutebrowser.nix
   ];
 }  
