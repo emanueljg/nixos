@@ -7,5 +7,6 @@
   home = with home; [
     langs.default
     term.default
+    ./static.nix
   ];
 }
