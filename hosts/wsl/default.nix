@@ -5,6 +5,7 @@
   ];
 
   nixos = with nixos; [
+    { boot.isContainer = true; }
   ];
 
   home = with home; [
