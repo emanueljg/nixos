@@ -4,6 +4,9 @@
     blueprints.base
   ];
 
+  nixos = with nixos; [
+  ];
+
   home = with home; [
     langs.default
     term.default
