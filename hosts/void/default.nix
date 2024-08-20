@@ -2,7 +2,11 @@
   system = "x86_64-linux";
 
   specialArgs.nixpkgs = {
-    inherit (inputs) nixpkgs-unstable;
+    inherit (inputs) nixos-unstable;
+  };
+
+  specialArgs.nixosModules = {
+    yt-dlp-web-ui = inputs.yt-dlp-web-ui.nixosModules.default;
   };
 
   parents = with blueprints; [
@@ -19,6 +23,7 @@
 
     ./nginx.nix
     ./porkbun.nix
+    ./yt-dlp-web-ui.nix
 
   ];
   home = with home; [

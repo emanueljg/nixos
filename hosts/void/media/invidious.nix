@@ -1,17 +1,7 @@
 { nixpkgs, ... }: {
   services.invidious = {
     enable = true;
-    package = let pkgs' = nixpkgs.nixpkgs-unstable; in pkgs'.invidious.overrideAttrs (final: old: {
-      version = "0.20.1-unstable-2024-04-27";
-      src = pkgs'.fetchFromGitea {
-        domain = "gitea.invidious.io";
-        owner = "iv-org";
-        repo = final.pname;
-        fetchSubmodules = true;
-        rev = "v2.20240427";
-        hash = "sha256-YZ+uhn1ESuRTZxAMoxKCpxEaUfeCUqOrSr3LkdbrTkU=";
-      };
-    });
+    package = nixpkgs.nixos-unstable.invidious;
     domain = "yt.emanueljg.com";
     settings = {
       external_port = 80;

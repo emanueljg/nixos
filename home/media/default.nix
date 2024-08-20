@@ -3,6 +3,5 @@ _: {
     ./ani-cli.nix
     ./newsboat.nix
     ./pyradio.nix
-    ./ytfzf.nix
   ];
 }

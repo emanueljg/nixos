@@ -14,9 +14,6 @@
       flake = false;
     };
 
-    # discordo = {
-    #   url = "path:/home/ejohnso3/discordo";
-    # };
     discordo = {
       url = "github:emanueljg/discordo?ref=add-flake";
     };
@@ -72,6 +69,9 @@
       url = "github:emanueljg/configuranix";
     };
 
+    yt-dlp-web-ui = {
+      url = "github:emanueljg/yt-dlp-web-ui?ref=add-nix";
+    };
   };
 
   outputs = inputs @ { self, flake-parts, ... }:
@@ -90,15 +90,10 @@
         home.inputs = {
           inherit (inputs) home-manager nixos-unstable;
         };
-        # deploy = rec {
-        #   user = "ejg";
-        #   sshUser = "ejg";
-        #   sshOpts = [
-        #     "-i"
-        #     "/home/${sshUser}/.ssh/id_rsa_mothership"
-        #   ];
-        # };
+      };
 
+      perSystem = { config, self', inputs', pkgs, system, ... }: {
+        formatter = pkgs.nixpkgs-fmt;
       };
     };
 }
