@@ -1,4 +1,7 @@
 { inputs, home, nixos, blueprints, ... }: {
+  specialArgs.nixpkgs = {
+    inherit (inputs) nixos-unstable;
+  };
   specialArgs.packages = inputs': with inputs'; {
     inherit (discordo.packages) default;
   };
@@ -28,5 +31,6 @@
     fontconfig
     pavucontrol
     discordo
+    yt-dlp
   ];
 }
