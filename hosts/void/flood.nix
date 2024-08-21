@@ -1,11 +1,4 @@
 { pkgs, ... }: {
-  imports = [ ./flood.nix ];
-
-  services.rtorrent = {
-    enable = true;
-    downloadDir = "/mnt/data/dl";
-    openFirewall = true;
-  };
 
   services.flood = {
     enable = true;
