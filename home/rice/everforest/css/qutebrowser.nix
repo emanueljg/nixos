@@ -1,7 +1,7 @@
 {
   programs.qutebrowser.stylesheets = {
     "invidious" = {
-      includes = [ "yt.emanueljg.com*" ];
+      includes = [ "https://yt.emanueljg.com*" ];
       css = builtins.readFile ./invidious.css;
     };
   };
