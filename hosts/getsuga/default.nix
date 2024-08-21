@@ -20,6 +20,7 @@
     wayland.default
     ./hm.nix
     ./vccvpn.nix
+    ./artix-games-launcher.nix
   ];
 
   nixos = with nixos; [
