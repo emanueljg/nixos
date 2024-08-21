@@ -1,0 +1,5 @@
+dht.mode.set = on
+dht.port.set = 62882
+protocol.pex.set = yes
+trackers.use_udp.set = yes
+

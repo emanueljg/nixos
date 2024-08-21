@@ -19,7 +19,13 @@
 
     ./configuration.nix
 
-    ./media
+    ./sonarr.nix
+    ./invidious.nix
+    ./jellyfin.nix
+    ./navidrome.nix
+    ./flood.nix
+    ./rtorrent
+
 
     ./nginx.nix
     ./porkbun.nix
