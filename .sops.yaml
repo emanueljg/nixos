@@ -3,16 +3,24 @@
 keys:
   - &host_void age1ws2gphsp0qwzpw24j3wkmtgfz7e2cfhmkzpu8xkruyzrxjd334yshj2843
   - &host_getsuga age148zsrhvarvtzlyhlt4yayrf9705jvpsntgjk6r5cvvg0c0qeu9rqf20wpd
+  - &host_seneca age175fqcu2n47asd79r9jr9u4nn859vfp4q9jvzxknkgl6gkcn3udssauq5ew
   - &ejg_void age1ley3ejf6c2m702wuqhnyzs26km3wm3l5ld6kzkpaqwqdccup9yysnv0d9u
   - &ejg_getsuga age1t3rzvqumnm5mhgkp0qqgvcryxlcqs7h5337pnnfvemlljf0z5avqfzlnr5
+  - &ejg_seneca age1c8ah9uqdpm9qvape5urn2mwn7fqms7fk4dl9pu6wns9j44rgccrsth88y5
 
 creation_rules:
   - path_regex: secrets/getsuga/.*
     key_groups:
     - age:
+      - *ejg_void
       - *host_getsuga
       - *ejg_getsuga
+  - path_regex: secrets/seneca/.*
+    key_groups:
+    - age:
       - *ejg_void
+      - *host_seneca
+      - *ejg_seneca
   - path_regex: secrets/void/.*
     key_groups:
     - age:
@@ -24,5 +32,7 @@ creation_rules:
     - age:
       - *host_void
       - *host_getsuga
+      - *host_seneca
       - *ejg_getsuga
       - *ejg_void
+      - *ejg_seneca
