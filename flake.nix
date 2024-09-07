@@ -72,6 +72,10 @@
     yt-dlp-web-ui = {
       url = "github:emanueljg/yt-dlp-web-ui?ref=add-nix";
     };
+
+    archiver = {
+      url = "path:/home/ejg/archiver";
+    };
   };
 
   outputs = inputs @ { self, flake-parts, ... }:

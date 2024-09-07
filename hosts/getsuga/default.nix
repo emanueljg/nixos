@@ -21,6 +21,10 @@
     ./hm.nix
     ./vccvpn.nix
     ./artix-games-launcher.nix
+    ./qbittorrent.nix
+    ./tor-browser.nix
+    ./tauon.nix
+    ./ffmpeg.nix
   ];
 
   nixos = with nixos; [
