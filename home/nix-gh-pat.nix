@@ -6,8 +6,8 @@
     };
   };
 
-  nix.extraOptions = ''
-    !include ${config.sops.secrets.nix-gh-pat.path}
-  '';
+  # nix.extraOptions = ''
+  #   !include ${config.sops.secrets.nix-gh-pat.path}
+  # '';
 }
 

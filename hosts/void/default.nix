@@ -1,5 +1,9 @@
-{ config, inputs, blueprints, hosts, home, nixos, ... }: {
+{ config, inputs, blueprints, hosts, home, nixos, ... }:
+let
   system = "x86_64-linux";
+in
+{
+  inherit system;
 
   specialArgs.nixpkgs = {
     inherit (inputs) nixos-unstable;
@@ -7,6 +11,11 @@
 
   specialArgs.nixosModules = {
     yt-dlp-web-ui = inputs.yt-dlp-web-ui.nixosModules.default;
+    archiver = inputs.archiver.nixosModules.default;
+  };
+
+  specialArgs.other = {
+    archiver-lib = inputs.archiver.lib.${system};
   };
 
   parents = with blueprints; [
@@ -26,6 +35,7 @@
     ./flood.nix
     ./rtorrent
 
+    ./archiver
 
     ./nginx.nix
     ./porkbun.nix

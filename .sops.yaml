@@ -1,31 +1,28 @@
 # Also see https://github.com/Mic92/dotfiles/blob/master/nixos/.sops.yaml
 # for a more complex example.
 keys:
-  - &ejg_getsuga A2A3CA505C4E424A8616DB04E5F750C199A99023
-  - &ejg_void 35D469C06B616D2BCF1980A33B8BFDA530FDAE77
-  - &server_void age1ws2gphsp0qwzpw24j3wkmtgfz7e2cfhmkzpu8xkruyzrxjd334yshj2843
-  - &server_getsuga age148zsrhvarvtzlyhlt4yayrf9705jvpsntgjk6r5cvvg0c0qeu9rqf20wpd
+  - &host_void age1ws2gphsp0qwzpw24j3wkmtgfz7e2cfhmkzpu8xkruyzrxjd334yshj2843
+  - &host_getsuga age148zsrhvarvtzlyhlt4yayrf9705jvpsntgjk6r5cvvg0c0qeu9rqf20wpd
+  - &ejg_void age1ley3ejf6c2m702wuqhnyzs26km3wm3l5ld6kzkpaqwqdccup9yysnv0d9u
+  - &ejg_getsuga age1t3rzvqumnm5mhgkp0qqgvcryxlcqs7h5337pnnfvemlljf0z5avqfzlnr5
 
 creation_rules:
   - path_regex: secrets/getsuga/.*
     key_groups:
     - age:
-      - *server_getsuga
-      pgp:
+      - *host_getsuga
       - *ejg_getsuga
       - *ejg_void
   - path_regex: secrets/void/.*
     key_groups:
     - age:
-      - *server_void
-      pgp:
+      - *host_void
       - *ejg_getsuga
       - *ejg_void
   - path_regex: secrets/.*
     key_groups:
     - age:
-      - *server_void
-      - *server_getsuga
-      pgp:
+      - *host_void
+      - *host_getsuga
       - *ejg_getsuga
       - *ejg_void

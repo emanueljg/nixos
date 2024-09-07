@@ -22,8 +22,9 @@
     settings = {
       Address = "0.0.0.0";
       Port = 4533;
-      MusicFolder = "/mnt/data/audio/Music";
+      MusicFolder = "/mnt/data/audio";
       BaseUrl = "https://navi.emanueljg.com";
+      "Scanner.Extractor" = "ffmpeg";
     };
     openFirewall = true;
   };
@@ -43,6 +44,7 @@
       config.sops.secrets."last_fm/shared_secret".path
       config.sops.secrets."spotify/id".path
       config.sops.secrets."spotify/secret".path
+      "/mnt/data/dl"
     ];
     User = "navidrome";
     Group = "navidrome";
