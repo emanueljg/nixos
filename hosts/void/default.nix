@@ -32,7 +32,8 @@ in
     ./invidious.nix
     ./jellyfin.nix
     ./navidrome.nix
-    ./flood.nix
+    # ./flood.nix
+    ./rutorrent.nix
     ./rtorrent
 
     ./archiver

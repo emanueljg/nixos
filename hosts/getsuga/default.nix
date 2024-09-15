@@ -35,6 +35,7 @@
     ./hardware.nix
     { custom.efi-grub.enable = true; }
     hw.bluetooth
+    extra-hosts
     # wg-client
   ];
 

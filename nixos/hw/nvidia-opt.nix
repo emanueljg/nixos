@@ -16,13 +16,13 @@
     services.xserver.videoDrivers = [ "nvidia" ];
     nixpkgs.config.allowUnfree = true;
     hardware.nvidia.modesetting.enable = true;
+    hardware.nvidia.open = true;
     # powerManagement = {
     #   enable = true;
     #   finegrained = true;
     # };
     hardware.opengl = {
       enable = true;
-      driSupport = true;
       driSupport32Bit = true;
     };
   };

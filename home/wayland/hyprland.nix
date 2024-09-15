@@ -26,6 +26,8 @@
           allow_tearing = false;
         };
 
+        debug.disable_logs = false;
+
         input = {
           kb_layout = "us";
           kb_options = "caps:swapescape";
@@ -40,7 +42,8 @@
           # main screen
           "DP-2,preferred,auto,1"
           # right screen
-          "HDMI-A-1,preferred,auto,1,transform,1"
+          # "HDMI-A-1,preferred,auto,1,transform,1"
+          "HDMI-A-1,preferred,auto,1"
         ];
         workspace = [
           "1,monitor:DP-2"

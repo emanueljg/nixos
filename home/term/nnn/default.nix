@@ -25,9 +25,9 @@
       });
       pkg = pkgs.nnn.overrideAttrs
         (old: {
-          preBuild = (old.preBuild or "") + ''
-            cp ${./nnn.h} src/nnn.h
-          '';
+          # preBuild = (old.preBuild or "") + ''
+          #   cp ${./nnn.h} src/nnn.h
+          # '';
           postInstall = (old.postInstall or "") + ''
             wrapProgram $out/share/plugins/preview-tui \
               --prefix PATH : ${lib.makeBinPath [ poppler_utils' ]}

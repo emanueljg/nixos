@@ -23,11 +23,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    f5fpc = {
-      url = "github:emanueljg/f5fpc-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -42,23 +37,19 @@
       url = "github:NixOS/nixos-hardware";
     };
 
-    # wsl = {
-    #   url = "github:nix-community/NixOS-WSL";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
+    hyprlandNixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
-    nh = {
-      url = "github:viperML/nh";
-      inputs.nixpkgs.follows = "nixpkgs";
+    hyprland = {
+      type = "git";
+      url = "https://github.com/hyprwm/Hyprland";
+      ref = "refs/tags/v0.43.0";
+      submodules = true;
+      inputs.nixpkgs.follows = "hyprlandNixpkgs";
     };
 
-    hyprland.url = "github:hyprwm/Hyprland?ref=v0.39.1"; # where {version} is the hyprland release version
-    # or "github:hyprwm/Hyprland" to follow the development branch
-
     hy3 = {
-      url = "github:tuxx/hy3?ref=patch-1";
+      url = "github:outfoxxed/hy3?ref=hl0.43.0";
       inputs.hyprland.follows = "hyprland";
-      # url = "github:outfoxxed/hy3?ref=hl0.39.1";
     };
 
     nixGL = {
@@ -89,7 +80,7 @@
       configuranix = {
         enable = true;
         nixos.inputs = {
-          inherit (inputs) nixpkgs;
+          nixpkgs = inputs.nixos-unstable;
         };
         home.inputs = {
           inherit (inputs) home-manager nixos-unstable;
