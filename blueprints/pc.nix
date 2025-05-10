@@ -31,7 +31,6 @@
     gamescope
     cursor
     gtk
-    media.default
     langs.default
     mime
     term.default
