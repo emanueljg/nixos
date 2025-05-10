@@ -3,15 +3,15 @@
 , lib
 , ...
 }: {
-  home.sessionVariables = rec {
+  home.sessionVariables = {
     EDITOR = "hx";
-    SUDO_EDITOR = EDITOR;
-    VISUAL = EDITOR;
+    SUDO_EDITOR = config.home.sessionVariables.EDITOR;
+    VISUAL = config.home.sessionVariables.EDITOR;
   };
 
   # hack for setting editor as the EDITOR for login shells
   # due to upstream bug
-  programs.zsh.initExtra = ''
+  programs.zsh.initContent = ''
     export EDITOR="${config.home.sessionVariables.EDITOR}"
   '';
 
