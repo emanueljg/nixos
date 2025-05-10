@@ -25,14 +25,15 @@
   ];
 
   home = with home; [
+    firefox
+    qutebrowser.default
     rice.darker.default
+    gamescope
     cursor
     gtk
-    firefox
     media.default
     langs.default
     mime
-    qutebrowser.default
     term.default
     wayland.default
     pkgs
@@ -40,5 +41,8 @@
     pavucontrol
     discordo
     yt-dlp
+    newsboat
+    pyradio
+
   ];
 }
