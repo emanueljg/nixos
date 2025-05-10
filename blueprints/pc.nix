@@ -1,17 +1,23 @@
-{ inputs, home, nixos, blueprints, ... }: {
-  specialArgs.nixpkgs = {
-    inherit (inputs) nixos-unstable;
-  };
-  specialArgs.packages = inputs': with inputs'; {
-    inherit (discordo.packages) default;
-  };
-  specialArgs.homeModules = {
-    discordo = inputs.discordo.homeManagerModules.default;
-  };
+{ inputs, home, nixos, blueprints, inputs', ... }: {
 
-  parents = [
+  imports = [
     blueprints.base
   ];
+
+  specialArgs = {
+    nixpkgs = {
+      inherit (inputs) nixos-unstable;
+    };
+
+    packages = {
+      discordo = inputs'.discordo.packages;
+    };
+
+    homeModules = {
+      discordo = inputs.discordo.homeManagerModules.default;
+    };
+  };
+
 
   nixos = with nixos; [
     networkmanager
@@ -19,7 +25,9 @@
   ];
 
   home = with home; [
-    rice.everforest.default
+    rice.darker.default
+    cursor
+    gtk
     firefox
     media.default
     langs.default

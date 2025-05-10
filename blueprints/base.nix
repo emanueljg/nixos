@@ -1,12 +1,17 @@
-{ inputs, blueprints, nixos, home, ... }: {
+{ inputs, blueprints, nixos, home, inputs', ... }: {
+
+  imports = [
+    blueprints.opts
+  ];
+
   specialArgs.nixosModules = {
     inherit (inputs.sops-nix.nixosModules) sops;
   };
   specialArgs.homeModules = {
     inherit (inputs.sops-nix.homeManagerModules) sops;
   };
-  specialArgs.packages = inputs': with inputs'; {
-    inherit (configuranix.packages) deploy-rs;
+  specialArgs.packages = {
+    inherit (inputs'.configuranix.packages) deploy-rs;
   };
   deploy = rec {
     sshUser = "ejg";
@@ -16,8 +21,8 @@
     };
   };
 
-  parents = [ blueprints.opts ];
   nixos = with nixos; [
+    keyboard
     enable-flakes
     garnix
     pkgs
@@ -26,7 +31,7 @@
     user
     sops
     hw.libinput
-    { custom.efi-grub.enable = true; }
+    hw.efi-grub
   ];
   home = with home; [
     term.default

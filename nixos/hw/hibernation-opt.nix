@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, lib, pkgs, ... }:
 let cfg = config.custom.hibernation; in with lib; {
 
   options.custom.hibernation.enable = mkEnableOption "hibernation";

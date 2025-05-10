@@ -58,6 +58,7 @@
           rust-analyzer.command = lib.getExe pkgs.rust-analyzer;
           nil.command = lib.getExe pkgs.nil;
           gopls.command = lib.getExe pkgs.gopls;
+          dart.command = lib.getExe pkgs.dart;
           pylsp = {
             command = lib.getExe pylsp;
             config = {

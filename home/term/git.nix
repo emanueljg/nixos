@@ -2,6 +2,7 @@ _: {
   programs = {
     git = {
       enable = true;
+      lfs.enable = true;
       userEmail = "emanueljohnsongodin@gmail.com";
       userName = "emanueljg";
       signing = {

@@ -1,0 +1,8 @@
+dht.mode.set = on
+dht.port.set = 62882
+protocol.pex.set = yes
+trackers.use_udp.set = yes
+
+schedule2 = load_with_category, 27, 10, \
+    ((load.verbose, "/mnt/data/watch/*.torrent", "d.custom1.set=hgames"))
+

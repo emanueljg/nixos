@@ -23,7 +23,7 @@
 
         general = {
           layout = "hy3";
-          allow_tearing = false;
+          allow_tearing = true;
         };
 
         debug.disable_logs = false;
@@ -32,18 +32,25 @@
           kb_layout = "us";
           kb_options = "caps:swapescape";
           kb_variant = "altgr-intl";
+          touchpad = {
+            disable_while_typing = false;
+          };
+        };
+
+        cursor = {
+          no_hardware_cursors = true;
         };
 
         monitor = [
           # computer mon
-          "eDP-1,preferred,auto,1"
+          "eDP-1,highres@highr,auto,1"
           # left screen
-          "DP-1,preferred,auto,1,transform,3"
+          "DP-1,highres@highr,auto,1,transform,3"
           # main screen
-          "DP-2,preferred,auto,1"
+          "DP-2,highres@highr,auto,1"
           # right screen
-          # "HDMI-A-1,preferred,auto,1,transform,1"
-          "HDMI-A-1,preferred,auto,1"
+          "HDMI-A-1,highres@highr,auto,1,transform,1"
+          # "HDMI-A-1,highres@highr,highr,auto,1"
         ];
         workspace = [
           "1,monitor:DP-2"
@@ -63,13 +70,15 @@
           force_default_wallpaper = 0;
         };
 
+        bindm = [
+          "$mod, mouse:272, movewindow"
+        ];
         bind =
           let
             window =
               let
                 fullscreen = [
-                  "$mod, f, fullscreen, 0" # bars&gaps visible
-                  "$mod SHIFT, f, fullscreen, 1" # entire screen
+                  "$mod, f, fullscreen, 0" # entire screen
                 ];
                 goto = [
                   "$mod, h, hy3:movefocus, l"
@@ -85,17 +94,22 @@
                   "$mod SHIFT, j, hy3:movewindow, d"
                 ];
                 bind = [
-                  "$mod, v, hy3:makegroup, v"
-                  "$mod, b, hy3:makegroup, h"
+                  "$mod, v, hy3:makegroup, opposite"
                 ];
+                floating = [
+                  "$mod SHIFT, f, togglefloating" # bars&gaps visible
+                ];
+
               in
-              fullscreen ++ goto ++ move ++ bind;
+              fullscreen ++ goto ++ move ++ bind ++ floating;
 
             workspace =
               let
                 workspaces = builtins.map builtins.toString (lib.range 1 9);
                 goto = builtins.map (ws: "$mod, ${ws}, workspace, ${ws}") workspaces;
-                move = builtins.map (ws: "$mod SHIFT, ${ws}, movetoworkspace, ${ws}") workspaces;
+                move = builtins.map
+                  (ws: "$mod SHIFT, ${ws}, movetoworkspace, ${ws}")
+                  workspaces;
               in
               goto ++ move;
 
@@ -117,3 +131,4 @@
   ];
 
 }
+

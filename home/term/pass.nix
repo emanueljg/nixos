@@ -31,10 +31,8 @@
 
   services.gpg-agent = {
     enable = true;
-    pinentryPackage = pkgs.pinentry-qt;
+    pinentry.package = pkgs.pinentry-qt;
   };
-
-  # home.
 
   home.shellAliases = {
     "psl" = "pass list";

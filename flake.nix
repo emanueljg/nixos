@@ -1,12 +1,13 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
     nixos-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    # nixos-unstable.url = "github:NixOS/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
     home-manager = {
       url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixos-unstable";
     };
 
     papes = {
@@ -37,18 +38,18 @@
       url = "github:NixOS/nixos-hardware";
     };
 
-    hyprlandNixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    # hyprlandNixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     hyprland = {
       type = "git";
       url = "https://github.com/hyprwm/Hyprland";
-      ref = "refs/tags/v0.43.0";
+      ref = "refs/tags/v0.48.0";
       submodules = true;
-      inputs.nixpkgs.follows = "hyprlandNixpkgs";
+      inputs.nixpkgs.follows = "nixos-unstable";
     };
 
     hy3 = {
-      url = "github:outfoxxed/hy3?ref=hl0.43.0";
+      url = "github:outfoxxed/hy3?ref=hl0.48.0";
       inputs.hyprland.follows = "hyprland";
     };
 
@@ -57,7 +58,7 @@
     };
 
     configuranix = {
-      url = "github:emanueljg/configuranix";
+      url = "path:/home/ejg/configuranix";
     };
 
     yt-dlp-web-ui = {
@@ -66,6 +67,10 @@
 
     archiver = {
       url = "path:/home/ejg/archiver";
+    };
+
+    succubus = {
+      url = "path:/home/ejg/succubus";
     };
   };
 
@@ -79,11 +84,17 @@
 
       configuranix = {
         enable = true;
-        nixos.inputs = {
-          nixpkgs = inputs.nixos-unstable;
-        };
-        home.inputs = {
-          inherit (inputs) home-manager nixos-unstable;
+        hostsPath = ./hosts;
+        blueprintsPath = ./blueprints;
+
+        moduleSets = {
+          nixos.inputs = {
+            nixpkgs = inputs.nixos-unstable;
+          };
+          home.inputs = {
+            nixpkgs = inputs.nixos-unstable;
+            inherit (inputs) home-manager;
+          };
         };
       };
 
