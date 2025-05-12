@@ -31,9 +31,13 @@
     gamescope
     cursor
     gtk
-    langs.default
+
+    go
+    nodejs
+    python
+    rust
+
     mime
-    term.default
     wayland.default
     pkgs
     fontconfig
@@ -42,6 +46,7 @@
     yt-dlp
     newsboat
     pyradio
+    ani-cli
 
   ];
 }

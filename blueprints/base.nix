@@ -34,7 +34,16 @@
     hw.efi-grub
   ];
   home = with home; [
-    term.default
+    aliases
+    bat
+    direnv
+    git
+    helix
+    nnn.default
+    pass
+    starship
+    zsh
+    kitty
     openssh-client
     sops
     nix-gh-pat
