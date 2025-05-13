@@ -2,6 +2,7 @@
   programs.qutebrowser.settings = {
     hints.border = "none";
     hints.radius = 0;
+
     colors = with (import ./_theme.nix); {
       completion = {
         category = {
@@ -163,13 +164,14 @@
         selected.odd = selected.even;
       };
 
+      webpage.darkmode.enabled = true;
+
       # TODO In later QB, need to update nixpkgs
       # tooltip = {
       #   bg = bg.bg_visual;
       #   fg = fg.fg;
       # };
 
-      webpage.bg = bg.bg0;
     };
   };
 }
