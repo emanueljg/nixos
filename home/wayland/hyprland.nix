@@ -1,5 +1,10 @@
 { config, packages, pkgs, lib, self, ... }: {
 
+  nix.settings = {
+    substituters = [ "https://hyprland.cachix.org" ];
+    trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
+  };
+
   wayland.windowManager.hyprland =
     {
       enable = true;
@@ -49,8 +54,8 @@
           # main screen
           "DP-2,highres@highr,auto,1"
           # right screen
-          "HDMI-A-1,highres@highr,auto,1,transform,1"
-          # "HDMI-A-1,highres@highr,highr,auto,1"
+          # "HDMI-A-1,highres@highr,auto,1,transform,1"
+          "HDMI-A-1,highres@highr,auto,1"
         ];
         workspace = [
           "1,monitor:DP-2"

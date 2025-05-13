@@ -1,6 +1,4 @@
 { lib, ... }: {
-  custom.nvidia.enable = true;
-
   hardware.nvidia.open = lib.mkForce false;
 
   services.jellyfin = {

@@ -34,6 +34,7 @@
     hw.efi-grub
   ];
   home = with home; [
+    default-cache
     aliases
     bat
     direnv

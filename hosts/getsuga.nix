@@ -29,7 +29,9 @@
     hw.nvidia
     hw.bluetooth
 
-    # tauon
+    wg-client
+
+    tauon
     ffmpeg
     artix-games-launcher
     tor-browser
@@ -38,7 +40,6 @@
     nixos-wayland.default
     extra-hosts
     stateversions."23-11"
-    # wg-client
   ];
 
 }

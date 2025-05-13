@@ -36,6 +36,7 @@ in
   systemd = {
     timers.${service} = {
       wantedBy = [ "timers.target" ];
+      wants = [ "network-online.target" ];
       after = [ "network-online.target" ];
       timerConfig = {
         OnBootSec = "10";

@@ -1,17 +1,7 @@
-{ nixpkgs, pkgs, lib, ... }: {
+{ nixpkgs', pkgs, lib, ... }: {
   services.invidious = {
     enable = true;
-    package = nixpkgs.master.invidious.overrideAttrs (_: {
-      doCheck = false;
-      version = "master";
-      src = pkgs.fetchFromGitHub {
-        owner = "iv-org";
-        repo = "invidious";
-        rev = "master";
-        hash = "sha256-z+v0i32jpglu0ntKf2hJAPdwZp8nK9q8vZft0g4ozjc=";
-      };
-    });
-    # package = nixpkgs.master.invidious;
+    package = nixpkgs'.nixos-unstable.invidious;
     domain = "yt.emanueljg.com";
     settings = {
       external_port = 80;
