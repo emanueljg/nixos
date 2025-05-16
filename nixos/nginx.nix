@@ -1,4 +1,4 @@
-_: {
+{ config, ... }: {
   security.acme = {
     acceptTerms = true;
     defaults.email = "emanueljohnsongodin@gmail.com";
@@ -30,6 +30,12 @@ _: {
         ${mkFQDN "lib"} = mkAllDefaults "8096";
         ${mkFQDN "yt"} = mkAllDefaults "3000";
         ${mkFQDN "navi"} = mkAllDefaults "4533";
+        ${mkFQDN "kavita"} = mkAllDefaults config.services.kavita.settings.Port;
+        ${mkFQDN "live"} = defaults // {
+          locations = {
+            "/".proxyPass = "http://192.168.0.219:80";
+          };
+        };
         # ${mkFQDN "sonarr"} = mkAllDefaults "8989";
         "dir.void" = {
           locations = {
