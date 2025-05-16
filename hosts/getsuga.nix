@@ -31,6 +31,9 @@
 
     wg-client
 
+    gpu-screen-recorder
+    nginx-localhost
+
     tauon
     ffmpeg
     artix-games-launcher
