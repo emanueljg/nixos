@@ -18,7 +18,7 @@
       };
       mkDefaultsLocation = port: {
         locations = {
-          "/".proxyPass = "http://127.0.0.1:${port}";
+          "/".proxyPass = "http://127.0.0.1:${builtins.toString port}";
         };
       };
 
