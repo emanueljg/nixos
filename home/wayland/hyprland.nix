@@ -1,12 +1,15 @@
-{ config, packages, pkgs, lib, self, ... }: {
+{ config, packages, pkgs, lib, self, ... }:
 
-  nix.settings = {
-    substituters = [ "https://hyprland.cachix.org" ];
-    trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
-  };
+# merge like this for readability reasons so we can have monitor let-bindings in a narrower scope
+lib.mkMerge [
 
-  wayland.windowManager.hyprland =
-    {
+  {
+    nix.settings = {
+      substituters = [ "https://hyprland.cachix.org" ];
+      trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
+    };
+
+    wayland.windowManager.hyprland = {
       enable = true;
       package = packages.hyprland;
       xwayland.enable = true;
@@ -46,17 +49,6 @@
           no_hardware_cursors = true;
         };
 
-        monitor = [
-          # computer mon
-          "eDP-1,highres@highr,auto,1"
-          # left screen
-          "DP-1,highres@highr,auto,1,transform,3"
-          # main screen
-          "DP-2,highres@highr,auto,1"
-          # right screen
-          "HDMI-A-1,highres@highr,auto,1,transform,1"
-          # "HDMI-A-1,highres@highr,auto,1"
-        ];
         workspace = [
           "1,monitor:DP-2"
           "2,monitor:DP-2"
@@ -130,10 +122,32 @@
           window ++ workspace ++ exec;
       };
     };
+    home.packages = [ pkgs.wl-clipboard ];
+  }
 
-  home.packages = with pkgs; [
-    wl-clipboard
-  ];
+  (
+    let
+      projLayout = "HDMI-A-1,highres@highr,auto,1";
+      vertLayout = "${projLayout},transform,1";
+    in
+    {
 
-}
+      wayland.windowManager.hyprland.settings.monitor = [
+        # computer mon
+        "eDP-1,highres@highr,auto,1"
+        # left screen
+        "DP-1,highres@highr,auto,1,transform,3"
+        # main screen
+        "DP-2,highres@highr,auto,1"
+        # right screen
+        vertLayout
+      ];
+      home.packages = [
+        (pkgs.writeShellScriptBin "hyvert" "hyprctl keyword monitor '${vertLayout}'")
+        (pkgs.writeShellScriptBin "hyproj" "hyprctl keyword monitor '${projLayout}'")
+      ];
+    }
+  )
+]
+
 
