@@ -11,6 +11,14 @@
     nixpkgs = {
       inherit (inputs) nixos-unstable;
     };
+
+    nixosModules = {
+      archiver = inputs.archiver.nixosModules.default;
+    };
+
+    other = {
+      archiver-lib = inputs.archiver.lib.${config.system};
+    };
   };
 
 
@@ -24,8 +32,11 @@
     navidrome
     rutorrent
     rtorrent.default
+    archiver
+
     nginx
     porkbun
+
     stateversions."22-11"
 
   ];
