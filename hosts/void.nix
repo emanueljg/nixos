@@ -33,6 +33,7 @@
     rutorrent
     rtorrent.default
     archiver
+    kavita
 
     nginx
     porkbun
