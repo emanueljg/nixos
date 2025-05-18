@@ -27,6 +27,8 @@
       "auto_save.session" = false;
       #      colors.webpage.darkmode.enabled = true;
       "downloads.prevent_mixed_content" = false;
+      "url.default_page" = "http://localhost";
+      "url.start_pages" = "http://localhost";
     };
   };
   # make default browser
