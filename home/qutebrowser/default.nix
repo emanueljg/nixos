@@ -9,7 +9,6 @@
     enable = true;
     searchEngines = {
       DEFAULT = "https://www.google.com/search?q={}";
-      yt = "http://192.168.0.2:34030/search?q={}";
     };
     keyBindings = {
       normal = {
