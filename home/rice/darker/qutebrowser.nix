@@ -164,7 +164,7 @@
         selected.odd = selected.even;
       };
 
-      webpage.darkmode.enabled = true;
+      # webpage.darkmode.enabled = true;
 
       # TODO In later QB, need to update nixpkgs
       # tooltip = {
