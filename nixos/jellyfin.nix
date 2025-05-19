@@ -1,4 +1,4 @@
-{ lib, ... }: {
+{ lib, nixpkgs', ... }: {
   hardware.nvidia.open = lib.mkForce false;
 
   services.jellyfin = {
@@ -7,6 +7,11 @@
     configDir = "/var/cache/jellyfin/config";
     logDir = "/var/log/jellyfin";
   };
+
+  # required for https://github.com/ankenyr/jellyfin-youtube-metadata-plugin
+  systemd.services.jellyfin.path = [
+    nixpkgs'.nixos-unstable.yt-dlp
+  ];
 
 
   # virtualisation = {
