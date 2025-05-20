@@ -2,6 +2,11 @@
   services.invidious = {
     enable = true;
     package = nixpkgs'.nixos-unstable.invidious;
+    # required for invidious to work
+    sig-helper = {
+      enable = true;
+      package = nixpkgs'.nixos-unstable.inv-sig-helper;
+    };
     domain = "yt.emanueljg.com";
     settings = {
       external_port = 80;
