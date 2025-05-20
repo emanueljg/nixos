@@ -30,7 +30,11 @@
         ${mkFQDN "lib"} = mkAllDefaults "8096";
         ${mkFQDN "yt"} = mkAllDefaults "3000";
         ${mkFQDN "navi"} = mkAllDefaults "4533";
-        ${mkFQDN "kavita"} = mkAllDefaults config.services.kavita.settings.Port;
+        ${mkFQDN "kavita"} = (mkAllDefaults config.services.kavita.settings.Port) // {
+          extraConfig = ''
+            proxy_set_header Host $host;
+          '';
+        };
         ${mkFQDN "live"} = defaults // {
           locations = {
             "/".proxyPass = "http://192.168.0.219:80";
