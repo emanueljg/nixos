@@ -21,6 +21,8 @@
   home = with home; [
     wayland.default
     homes.getsuga
+    pipe-viewer.default
+
   ];
 
   nixos = with nixos; [

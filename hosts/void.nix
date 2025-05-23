@@ -18,6 +18,7 @@
 
     other = {
       archiver-lib = inputs.archiver.lib.${config.system};
+      inherit (inputs) nix-deno;
     };
   };
 
@@ -27,7 +28,8 @@
     hw.void
 
     sonarr
-    invidious
+    # fuck this shit
+    # invidious
     jellyfin
     navidrome
     rutorrent

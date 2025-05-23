@@ -69,6 +69,9 @@
     succubus = {
       url = "path:/home/ejg/succubus";
     };
+
+    nix-deno.url = "github:identinet/nix-deno";
+
   };
 
   outputs = inputs @ { self, flake-parts, ... }:

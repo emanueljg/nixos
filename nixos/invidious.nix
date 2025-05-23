@@ -1,4 +1,18 @@
-{ nixpkgs', pkgs, lib, ... }: {
+{ nixpkgs', pkgs, other, lib, ... }:
+let
+
+  # I'm sure this'll become upstreamed in the future,
+  # so I don't expect this clunky let-binding to exist for long
+  invidious-companion = pkgs.callPackage ./invidious-companion.nix { };
+
+in
+{
+  nixpkgs.overlays = [
+    other.nix-deno.overlays.default
+  ];
+  environment.systemPackages = [
+    invidious-companion
+  ];
   services.invidious = {
     enable = true;
     package = nixpkgs'.nixos-unstable.invidious;
