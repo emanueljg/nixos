@@ -1,21 +1,20 @@
-{ config, lib, homeModules, ... }: {
+{ config, lib, homeModules, pkgs, packages, ... }: {
 
   imports = [ homeModules.discordo ];
 
   programs.discordo = {
     enable = true;
-    settings = {
-      timestamps = true;
-      timestamps_before_author = true;
-      timestamps_format = "15:04";
+    package = packages.discordo.overrideAttrs {
+      src = pkgs.fetchFromGitHub {
+        owner = "ayn2op";
+        repo = "discordo";
+        rev = "config-flag";
+        hash = "sha256-zaQDIyCzvW4mdIXck0BH2fBr0WfRHEx8xNOb8OoNWww=";
 
+      };
+    };
+    settings = {
       theme.messages_text.author_color = "red";
     };
-    tokenCommand =
-      let
-        passBin = lib.getExe config.programs.password-store.package;
-        token = "discord-token";
-      in
-      "${passBin} ${token}";
   };
 }  

@@ -10,11 +10,11 @@
     };
 
     packages = {
-      discordo = inputs'.discordo.packages;
+      discordo = inputs'.discordo.packages.discordo;
     };
 
     homeModules = {
-      discordo = inputs.discordo.homeManagerModules.default;
+      inherit (inputs.discordo.homeModules) discordo;
     };
   };
 
@@ -36,6 +36,8 @@
     nodejs
     python
     rust
+
+    add-headphones-script
 
     mime
     wayland.default

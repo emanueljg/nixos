@@ -21,6 +21,6 @@
     in
     {
       "y" = "pipe-viewer --config ${conf}";
-      "y-nl" = "y --author=thelibraryofletourneau 'bits and banter'";
+      "y-nl" = "y --order=upload_date 'the library of letourneau bits and banter'";
     };
 }

@@ -15,7 +15,8 @@
     };
 
     discordo = {
-      url = "github:emanueljg/discordo?ref=add-flake";
+      # url = "github:emanueljg/discordo?ref=add-flake";
+      url = "path:/home/ejg/discordo";
     };
 
     sops-nix = {
