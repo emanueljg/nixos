@@ -1,3 +1,5 @@
 /.direnv/
 /.pre-commit-config.yaml
 *.tar.gz
+result
+result/
