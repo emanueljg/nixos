@@ -72,6 +72,7 @@
     };
 
     nix-deno.url = "github:identinet/nix-deno";
+    nixos-dns.url = "github:Janik-Haag/nixos-dns";
 
   };
 

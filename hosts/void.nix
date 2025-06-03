@@ -24,6 +24,7 @@
 
 
   nixos = with nixos; [
+    # dns.server
     hw.nvidia
     hw.void
 

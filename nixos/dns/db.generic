@@ -1,0 +1,11 @@
+$TTL 86400
+@   IN  SOA ns.@HOSTNAME@. admin.@HOSTNAME@. (
+        @SERIAL@   ; serial
+        3600       ; refresh
+        1800       ; retry
+        1209600    ; expire
+        86400 )    ; minimum
+
+    IN  NS  ns.@HOSTNAME@.
+ns  IN  A   @IP@
+@   IN  A   @IP@
