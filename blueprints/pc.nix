@@ -38,6 +38,7 @@
     rust
 
     add-headphones-script
+    pass-secret-service
 
     mime
     wayland.default
