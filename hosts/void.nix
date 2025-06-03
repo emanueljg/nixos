@@ -36,6 +36,7 @@
     rtorrent.default
     archiver
     kavita
+    wg-server
 
     nginx
     porkbun
