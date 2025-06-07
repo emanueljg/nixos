@@ -1,17 +1,11 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
     nixos-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixos-unstable";
-    };
-
-    papes = {
-      url = "github:emanueljg/papes";
-      flake = false;
     };
 
     discordo = {
@@ -21,17 +15,17 @@
 
     sops-nix = {
       url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixos-unstable";
     };
 
     disko = {
       url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixos-unstable";
     };
 
     pre-commit-hooks = {
       url = "github:cachix/pre-commit-hooks.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixos-unstable";
     };
 
     nixos-hardware = {
@@ -51,28 +45,13 @@
       inputs.hyprland.follows = "hyprland";
     };
 
-    nixGL = {
-      url = "github:nix-community/nixGL";
-    };
-
     configuranix = {
       url = "path:/home/ejg/configuranix";
-    };
-
-    yt-dlp-web-ui = {
-      url = "github:emanueljg/yt-dlp-web-ui?ref=add-nix";
     };
 
     archiver = {
       url = "path:/home/ejg/archiver";
     };
-
-    succubus = {
-      url = "path:/home/ejg/succubus";
-    };
-
-    nix-deno.url = "github:identinet/nix-deno";
-    nixos-dns.url = "github:Janik-Haag/nixos-dns";
 
   };
 
@@ -101,6 +80,8 @@
       };
 
       perSystem = { config, self', inputs', pkgs, system, ... }: {
+        # in lieu of inputs.nixpkgs
+        _module.args.pkgs = inputs'.nixos-unstable.legacyPackages;
         formatter = pkgs.nixpkgs-fmt;
       };
     };

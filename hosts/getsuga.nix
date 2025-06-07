@@ -15,7 +15,6 @@
     nixosModules = {
       disko = inputs.disko.nixosModules.disko;
       nixos-hardware.lenovo-legion-16irx8h = inputs.nixos-hardware.nixosModules.lenovo-legion-16irx8h;
-      nixos-dns = inputs.nixos-dns.nixosModules.dns;
     };
   };
 
