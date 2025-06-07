@@ -6,9 +6,31 @@
 
   programs.qutebrowser = {
     enable = true;
-    searchEngines = {
-      DEFAULT = "https://www.google.com/search?q={}";
-    };
+    searchEngines =
+      let
+        mkNixSearch = chan: type:
+          "https://search.nixos.org/packages?channel=${chan}&type=${type}&query={}";
+        mkGHSearch = type:
+          "https://github.com/NixOS/nixpkgs/issues?q=is%3A${type}%20state%3Aopen%20{}";
+      in
+      {
+        DEFAULT = "https://www.google.com/search?q={}";
+
+        # nyaa
+        nyaa = "https://nyaa.land/?q={}&s=seeders&o=desc";
+        nyaa-manga = "https://nyaa.land/?q={}&c=3_1&s=seeders&o=desc";
+
+        # nix stuff
+        yt = "https://inv.nadeko.net/search?q={}";
+        noog = "https://noogle.dev/q?term={}";
+        nome = "https://home-manager-options.extranix.com/?query={}&release=master";
+        nopt = mkNixSearch "unstable" "options";
+        npkgs = mkNixSearch "unstable" "packages";
+        niss = mkGHSearch "issue";
+        npr = mkGHSearch "pr";
+
+      };
+
     keyBindings = {
       normal = {
         "J" = "tab-prev";
@@ -23,10 +45,10 @@
     };
     settings = {
       "auto_save.session" = false;
-      #      colors.webpage.darkmode.enabled = true;
       "downloads.prevent_mixed_content" = false;
       "url.default_page" = "http://localhost";
       "url.start_pages" = "http://localhost";
+      "url.open_base_url" = true;
     };
   };
   # make default browser
