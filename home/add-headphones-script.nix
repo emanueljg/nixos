@@ -13,6 +13,7 @@
           device="00:25:D1:4A:99:49"
 
           sudo rfkill unblock bluetooth
+          sleep 1
           bluetoothctl power on
           bluetoothctl remove "$device"
 
