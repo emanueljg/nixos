@@ -30,6 +30,7 @@
     swedish-locale
     user
     sops
+    wg.default
     hw.libinput
     hw.efi-grub
   ];

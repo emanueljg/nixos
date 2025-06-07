@@ -34,8 +34,6 @@
     hw.nvidia
     hw.bluetooth
 
-    wg-client
-
     gpu-screen-recorder
     nginx-localhost
 
@@ -46,7 +44,6 @@
     gaming
     qbittorrent
     nixos-wayland.default
-    extra-hosts
     stateversions."23-11"
   ];
 
