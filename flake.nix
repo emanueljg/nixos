@@ -8,11 +8,6 @@
       inputs.nixpkgs.follows = "nixos-unstable";
     };
 
-    discordo = {
-      # url = "github:emanueljg/discordo?ref=add-flake";
-      url = "path:/home/ejg/discordo";
-    };
-
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixos-unstable";

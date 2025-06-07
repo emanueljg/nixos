@@ -8,14 +8,6 @@
     nixpkgs = {
       inherit (inputs) nixos-unstable;
     };
-
-    packages = {
-      discordo = inputs'.discordo.packages.discordo;
-    };
-
-    homeModules = {
-      inherit (inputs.discordo.homeModules) discordo;
-    };
   };
 
 
@@ -45,7 +37,6 @@
     pkgs
     fontconfig
     pavucontrol
-    discordo
     yt-dlp
     newsboat
     pyradio

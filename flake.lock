@@ -87,21 +87,6 @@
         "type": "github"
       }
     },
-    "discordo": {
-      "inputs": {
-        "nixpkgs": "nixpkgs_5"
-      },
-      "locked": {
-        "lastModified": 1748131361,
-        "narHash": "sha256-iWy2fJibaH3gmdIvH4Y4CVR7EmLrfWWT9NMo6bUqzLY=",
-        "path": "/home/ejg/discordo",
-        "type": "path"
-      },
-      "original": {
-        "path": "/home/ejg/discordo",
-        "type": "path"
-      }
-    },
     "disko": {
       "inputs": {
         "nixpkgs": [
@@ -770,22 +755,6 @@
         "type": "github"
       }
     },
-    "nixpkgs_5": {
-      "locked": {
-        "lastModified": 1748026106,
-        "narHash": "sha256-6m1Y3/4pVw1RWTsrkAK2VMYSzG4MMIj7sqUy7o8th1o=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "063f43f2dbdef86376cc29ad646c45c46e93234c",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "pre-commit-hooks": {
       "inputs": {
         "flake-compat": "flake-compat_2",
@@ -836,7 +805,6 @@
       "inputs": {
         "archiver": "archiver",
         "configuranix": "configuranix",
-        "discordo": "discordo",
         "disko": "disko",
         "flake-parts": "flake-parts_3",
         "home-manager": "home-manager",
