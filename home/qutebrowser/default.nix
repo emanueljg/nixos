@@ -9,7 +9,8 @@
     searchEngines =
       let
         mkNixSearch = chan: type:
-          "https://search.nixos.org/packages?channel=${chan}&type=${type}&query={}";
+          # weird that you have to specify "type" two times here
+          "https://search.nixos.org/${type}?channel=${chan}&type=${type}&query={}";
         mkGHSearch = type:
           "https://github.com/NixOS/nixpkgs/issues?q=is%3A${type}%20state%3Aopen%20{}";
       in
