@@ -36,6 +36,8 @@
     gpu-screen-recorder
     nginx-localhost
 
+    vintagestory
+
     tauon
     ffmpeg
     artix-games-launcher
