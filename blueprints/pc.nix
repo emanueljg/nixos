@@ -1,4 +1,4 @@
-{ inputs, home, nixos, blueprints, inputs', ... }: {
+{ config, inputs, home, nixos, blueprints, inputs', ... }: {
 
   imports = [
     blueprints.base
@@ -8,6 +8,13 @@
     nixpkgs = {
       inherit (inputs) nixos-unstable;
     };
+    other = {
+      nixpkgs-unfree = import config.specialArgs.nixpkgs {
+        inherit (config) system;
+        config.allowUnfree = true;
+      };
+    };
+
   };
 
 

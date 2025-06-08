@@ -34,7 +34,11 @@ lib.mkMerge [
           allow_tearing = true;
         };
 
-        debug.disable_logs = false;
+        debug = {
+          disable_logs = false;
+          # https://github.com/ValveSoftware/gamescope/issues/1825#issuecomment-2831929362
+          full_cm_proto = true;
+        };
 
         input = {
           kb_layout = "us";
