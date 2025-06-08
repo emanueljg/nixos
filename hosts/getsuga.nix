@@ -37,6 +37,8 @@
     nginx-localhost
 
     vintagestory
+    balatro.default
+
 
     tauon
     ffmpeg
