@@ -31,12 +31,11 @@
       type = "git";
       url = "https://github.com/hyprwm/Hyprland";
       submodules = true;
-      ref = "refs/tags/v0.48.0";
-      inputs.nixpkgs.follows = "nixos-unstable";
+      ref = "refs/tags/v0.49.0";
     };
 
     hy3 = {
-      url = "github:outfoxxed/hy3?ref=hl0.48.0";
+      url = "github:outfoxxed/hy3?ref=hl0.49.0";
       inputs.hyprland.follows = "hyprland";
     };
 
