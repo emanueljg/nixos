@@ -2,6 +2,7 @@
   imports = [
     ./translate.nix
     ./qute-pass.nix
+    ./qute-nixpkgs-import.nix
   ];
 
   programs.qutebrowser = {
