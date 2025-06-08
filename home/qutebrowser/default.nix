@@ -46,6 +46,9 @@
       };
     };
     settings = {
+      # effectively disable web history popup
+      "completion.web_history.max_items" = 0;
+
       "auto_save.session" = false;
       "downloads.prevent_mixed_content" = false;
       "url.default_page" = "http://localhost";
