@@ -1,4 +1,4 @@
-{ inputs, home, nixos, blueprints, inputs', ... }:
+{ config, inputs, home, nixos, blueprints, inputs', ... }:
 {
 
   system = "x86_64-linux";
@@ -16,6 +16,10 @@
       disko = inputs.disko.nixosModules.disko;
       nixos-hardware.lenovo-legion-16irx8h = inputs.nixos-hardware.nixosModules.lenovo-legion-16irx8h;
     };
+    other = {
+      inherit (inputs.erosanix.lib.${config.system}) mkWindowsApp;
+    };
+
   };
 
   home = with home; [
@@ -38,6 +42,7 @@
 
     vintagestory
     balatro.default
+    zenless-zone-zero.default
 
 
     tauon

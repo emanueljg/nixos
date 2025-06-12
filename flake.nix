@@ -47,6 +47,8 @@
       url = "path:/home/ejg/archiver";
     };
 
+    erosanix.url = "github:emmanuelrosa/erosanix";
+
   };
 
   outputs = inputs @ { self, flake-parts, ... }:
