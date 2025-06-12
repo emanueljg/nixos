@@ -40,11 +40,11 @@
     };
 
     configuranix = {
-      url = "path:/home/ejg/configuranix";
+      url = "github:emanueljg/configuranix";
     };
 
     archiver = {
-      url = "path:/home/ejg/archiver";
+      url = "github:emanueljg/archiver";
     };
 
     erosanix.url = "github:emmanuelrosa/erosanix";
