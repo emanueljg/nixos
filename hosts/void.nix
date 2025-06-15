@@ -23,7 +23,7 @@
 
 
   nixos = with nixos; [
-    # dns.server
+    lan.void
     hw.nvidia
     hw.void
 

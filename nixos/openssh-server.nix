@@ -26,6 +26,10 @@ with lib; {
         addr = "127.0.0.2";
         port = 22;
       }
+      (lib.mkIf (config.local.lan != null) {
+        addr = config.local.lan;
+        port = 22;
+      })
     ];
     settings = {
       # since ssh is now only active in the wireguard subnet, we
