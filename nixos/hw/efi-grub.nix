@@ -8,6 +8,7 @@
         enable = true;
         efiSupport = true;
         device = "nodev";
+        useOSProber = true;
         extraConfig = ''
           GRUB_HIDDEN_TIMEOUT=10
           GRUB_HIDDEN_TIMEOUT_QUIET=false

@@ -22,7 +22,6 @@
   };
 
   nixos = with nixos; [
-    nameservers
     lan.default
     keyboard
     enable-flakes
