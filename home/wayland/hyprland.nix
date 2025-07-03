@@ -29,6 +29,11 @@ lib.mkMerge [
         });
         "$mod" = "ALT";
 
+        env = [
+          "AQ_DRM_DEVICES,/dev/dri/card0:/dev/dri/card1"
+        ];
+
+
         general = {
           layout = "hy3";
           allow_tearing = true;
@@ -126,7 +131,6 @@ lib.mkMerge [
           window ++ workspace ++ exec;
       };
     };
-    home.packages = [ pkgs.wl-clipboard ];
   }
 
   (
@@ -153,5 +157,6 @@ lib.mkMerge [
     }
   )
 ]
+
 
 

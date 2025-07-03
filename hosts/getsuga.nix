@@ -40,16 +40,16 @@
     gpu-screen-recorder
     nginx-localhost
 
-    vintagestory
+    # vintagestory
     balatro.default
-    zenless-zone-zero.default
+    # zenless-zone-zero.default
+    gamescope
 
 
     tauon
     ffmpeg
     artix-games-launcher
     tor-browser
-    gaming
     qbittorrent
     nixos-wayland.default
     stateversions."23-11"

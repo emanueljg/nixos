@@ -14,13 +14,13 @@
   nixos = with nixos; [
     networkmanager
     hw.bluetooth
+    fetch-from-itch
   ];
 
   home = with home; [
     firefox
     qutebrowser.default
     rice.darker.default
-    gamescope
     cursor
     gtk
 
