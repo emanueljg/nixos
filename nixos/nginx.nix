@@ -35,17 +35,14 @@
             proxy_set_header Host $host;
           '';
         };
-        ${mkFQDN "live"} = defaults // {
+        ${mkFQDN "data"} = {
+          enableACME = true;
+          forceSSL = true;
           locations = {
-            "/".proxyPass = "http://192.168.0.219:80";
-          };
-        };
-        # ${mkFQDN "sonarr"} = mkAllDefaults "8989";
-        "dir.void" = {
-          locations = {
-            "/games" = {
+            "/" = {
               root = "/mnt/data";
               extraConfig = ''
+                allow 10.100.0.0/24;
                 allow 192.168.0.0/24;
                 deny all;
                 autoindex on;
