@@ -18,6 +18,7 @@
     };
     other = {
       inherit (inputs.erosanix.lib.${config.system}) mkWindowsApp;
+      vidya = inputs'.vidya.legacyPackages.games;
     };
 
   };
@@ -40,8 +41,9 @@
     gpu-screen-recorder
     nginx-localhost
 
-    # vintagestory
+    # TODO move
     balatro.default
+    vidya
     obs
     # zenless-zone-zero.default
     gamescope

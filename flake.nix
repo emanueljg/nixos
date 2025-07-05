@@ -49,6 +49,10 @@
 
     erosanix.url = "github:emmanuelrosa/erosanix";
 
+    # private
+    # vidya.url = "github:emanueljg/vidya";
+    vidya.url = "path:/home/ejg/vidya";
+
   };
 
   outputs = inputs @ { self, flake-parts, ... }:
