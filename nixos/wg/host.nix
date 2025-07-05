@@ -11,7 +11,10 @@ let
         enable = lib.mkEnableOption "";
         server = {
           enable = lib.mkEnableOption "";
-          externalInterface = lib.mkOption { type = lib.types.str; };
+          externalInterface = lib.mkOption {
+            type = with lib.types; nullOr str;
+            default = null;
+          };
         };
         publicKey = lib.mkOption {
           type = lib.types.str;
