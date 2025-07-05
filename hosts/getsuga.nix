@@ -42,6 +42,7 @@
 
     # vintagestory
     balatro.default
+    obs
     # zenless-zone-zero.default
     gamescope
 
