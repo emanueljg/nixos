@@ -42,7 +42,6 @@
     nginx-localhost
 
     # TODO move
-    balatro.default
     vidya
     obs
     # zenless-zone-zero.default

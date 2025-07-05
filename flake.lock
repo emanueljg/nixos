@@ -1084,8 +1084,8 @@
         "nixpkgs": "nixpkgs_9"
       },
       "locked": {
-        "lastModified": 1751683152,
-        "narHash": "sha256-axejaMhQVdh0wHSWqN+ljwgB/ByIEmm50A+umF1tBLY=",
+        "lastModified": 1751687202,
+        "narHash": "sha256-6kwVVFh3C5iVYEopzPfRCiwgC97MzUeb31MF0p78kSg=",
         "path": "/home/ejg/vidya",
         "type": "path"
       },
