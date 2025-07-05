@@ -32,7 +32,7 @@
 
     "rune" = "grep -rwne";
 
-    "nflu" = "nix flake lock --update-input";
+    "nflu" = "nix flake update";
     "nfu" = "nix flake update";
     "nfc" = "nix flake check";
 
