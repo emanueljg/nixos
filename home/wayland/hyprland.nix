@@ -81,54 +81,45 @@ lib.mkMerge [
         ];
         bind =
           let
-            window =
-              let
-                fullscreen = [
-                  "$mod, f, fullscreen, 0" # entire screen
-                ];
-                goto = [
-                  "$mod, h, hy3:movefocus, l"
-                  "$mod, l, hy3:movefocus, r"
-                  "$mod, k, hy3:movefocus, u"
-                  "$mod, j, hy3:movefocus, d"
-                ];
-
-                move = [
-                  "$mod SHIFT, h, hy3:movewindow, l"
-                  "$mod SHIFT, l, hy3:movewindow, r"
-                  "$mod SHIFT, k, hy3:movewindow, u"
-                  "$mod SHIFT, j, hy3:movewindow, d"
-                ];
-                bind = [
-                  "$mod, v, hy3:makegroup, opposite"
-                ];
-                floating = [
-                  "$mod SHIFT, f, togglefloating" # bars&gaps visible
-                ];
-
-              in
-              fullscreen ++ goto ++ move ++ bind ++ floating;
-
-            workspace =
-              let
-                workspaces = builtins.map builtins.toString (lib.range 1 9);
-                goto = builtins.map (ws: "$mod, ${ws}, workspace, ${ws}") workspaces;
-                move = builtins.map
-                  (ws: "$mod SHIFT, ${ws}, movetoworkspace, ${ws}")
-                  workspaces;
-              in
-              goto ++ move;
-
-            exec = [
-              "$mod, Return, exec, $terminal"
-              "$mod, BackSpace, exec, $browser"
-              "$mod SHIFT, aring, exec, $screenlock"
-              "$mod, d, exec, $menu"
-              "$mod SHIFT, Q, killactive"
-              "$mod, Print, exec, $screenshot"
-            ];
+            workspaces = builtins.map builtins.toString (lib.range 1 9);
+            goto = builtins.map (ws: "$mod, ${ws}, workspace, ${ws}") workspaces;
+            move = builtins.map
+              (ws: "$mod SHIFT, ${ws}, movetoworkspace, ${ws}")
+              workspaces;
           in
-          window ++ workspace ++ exec;
+          goto ++ move ++ [
+            "$mod, f, fullscreen, 0" # entire screen
+
+            # focus
+            "$mod, h, hy3:movefocus, l"
+            "$mod, l, hy3:movefocus, r"
+            "$mod, k, hy3:movefocus, u"
+            "$mod, j, hy3:movefocus, d"
+
+            # move window
+            "$mod SHIFT, h, hy3:movewindow, l"
+            "$mod SHIFT, l, hy3:movewindow, r"
+            "$mod SHIFT, k, hy3:movewindow, u"
+            "$mod SHIFT, j, hy3:movewindow, d"
+
+            # resize window
+            "$mod CTRL, right, resizeactive, 10 0"
+            "$mod CTRL, left, resizeactive, -10 0"
+            "$mod CTRL, up, resizeactive, 0 -10"
+            "$mod CTRL, down, resizeactive, 0 10"
+
+            # vert/hor toggle
+            "$mod, v, hy3:makegroup, opposite"
+
+            "$mod SHIFT, f, togglefloating" # bars&gaps visible
+
+            "$mod, Return, exec, $terminal"
+            "$mod, BackSpace, exec, $browser"
+            "$mod SHIFT, aring, exec, $screenlock"
+            "$mod, d, exec, $menu"
+            "$mod SHIFT, Q, killactive"
+            "$mod, Print, exec, $screenshot"
+          ];
       };
     };
   }
