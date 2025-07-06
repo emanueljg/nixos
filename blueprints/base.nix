@@ -36,10 +36,10 @@
     hw.efi-grub
     bat
     nnn.default
+    aliases
+    nix-gh-pat
   ];
   home = with home; [
-    default-cache
-    aliases
     direnv
     git
     helix
@@ -48,8 +48,6 @@
     zsh
     kitty
     openssh-client
-    sops
-    nix-gh-pat
     deploy-rs
   ];
 }  
