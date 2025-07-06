@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, packages, ... }: {
   environment.systemPackages = with pkgs; [
     xterm
     wget
@@ -17,5 +17,6 @@
     mupdf
     openssl
     nix-output-monitor
+    packages.deploy-rs
   ];
 }

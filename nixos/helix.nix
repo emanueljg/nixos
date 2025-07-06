@@ -6,7 +6,7 @@ in
 {
   options.local.programs.helix = {
     enable = lib.mkEnableOption "helix";
-    package = lib.mkPackageOption pkgs "helix";
+    package = lib.mkPackageOption pkgs "helix" { };
     settings = lib.mkOption {
       inherit (settingsFormat) type;
       default = { };
@@ -104,7 +104,7 @@ in
               pkgs.makeWrapper
             ];
             paths = [
-              pkgs.helix
+              cfg.package
             ];
             postBuild = ''
               wrapProgram $out/bin/hx \

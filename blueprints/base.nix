@@ -46,10 +46,9 @@
     gpg
     helix
     zsh
+    kitty
   ];
   home = with home; [
-    kitty
-    deploy-rs
     default-cache
   ];
 }  

@@ -16,7 +16,7 @@ lib.mkMerge [
       plugins = [ packages.hy3 ];
       settings = {
         "$menu" = "${lib.getExe config.programs.wofi.package} --show run";
-        "$terminal" = lib.getExe config.programs.kitty.package;
+        "$terminal" = "kitty";
         "$browser" = lib.getExe config.programs.qutebrowser.package;
         "$screenlock" = lib.getExe config.programs.swaylock.package;
         "$screenshot" = lib.getExe (pkgs.writeShellApplication {
