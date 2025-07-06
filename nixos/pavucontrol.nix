@@ -1,10 +1,8 @@
 { pkgs, ... }: {
-
-  home = {
-    packages = with pkgs; [ pavucontrol ];
+  environment = {
+    systemPackages = [ pkgs.pavucontrol ];
     shellAliases = {
       "pavu" = "pavucontrol";
     };
   };
-
 }

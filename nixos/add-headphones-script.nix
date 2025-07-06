@@ -1,6 +1,6 @@
 { pkgs, ... }: {
 
-  home.packages = [
+  environment.systemPackages = [
     (
       pkgs.writeShellApplication {
         name = "major";

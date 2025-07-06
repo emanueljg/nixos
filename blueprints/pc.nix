@@ -17,10 +17,14 @@
     fetch-from-itch
     rice.darker.default
     mpv
+    firefox
+    add-headphones-script
+    ani-cli
+    yt-dlp
+    pavucontrol
   ];
 
   home = with home; [
-    firefox
     qutebrowser.default
     rice.darker.default
     cursor
@@ -31,17 +35,11 @@
     python
     rust
 
-    add-headphones-script
-    pass-secret-service
-
     mime
     wayland.default
     fontconfig
-    pavucontrol
-    yt-dlp
     newsboat
     pyradio
-    ani-cli
 
   ];
 }
