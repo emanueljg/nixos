@@ -1,25 +1,23 @@
-_: {
+{ pkgs, ... }: {
   programs = {
     git = {
       enable = true;
       lfs.enable = true;
-      userEmail = "emanueljohnsongodin@gmail.com";
-      userName = "emanueljg";
-      signing = {
-        key = "B7894700CE81CD97";
-        signByDefault = false;
+      config = {
+        init.defaultBranch = "main";
+        user = {
+          email = "emanueljohnsongodin@gmail.com";
+          name = "emanueljg";
+        };
       };
-      extraConfig = {
-        safe.directory = "/etc/nixos";
-      };
-    };
-
-    gh = {
-      enable = true;
     };
   };
 
-  home.shellAliases = {
+  environment.systemPackages = [
+    pkgs.gh
+  ];
+
+  environment.shellAliases = {
     "g" = "git";
     "gs" = "g status";
     "gb" = "g branch";

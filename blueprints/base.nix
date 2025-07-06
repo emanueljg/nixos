@@ -38,16 +38,16 @@
     nnn.default
     aliases
     nix-gh-pat
+    direnv
+    keep-outputs-and-derivations
+    starship
+    git
   ];
   home = with home; [
-    direnv
-    git
     helix
     pass
-    starship
     zsh
     kitty
-    openssh-client
     deploy-rs
   ];
 }  
