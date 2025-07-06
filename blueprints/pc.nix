@@ -16,6 +16,7 @@
     hw.bluetooth
     fetch-from-itch
     rice.darker.default
+    mpv
   ];
 
   home = with home; [
@@ -35,7 +36,6 @@
 
     mime
     wayland.default
-    pkgs
     fontconfig
     pavucontrol
     yt-dlp

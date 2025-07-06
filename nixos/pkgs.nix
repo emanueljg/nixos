@@ -9,11 +9,13 @@
     efibootmgr
     parted
     tree
-    openssl
     tldr
     jq
-    yq
     comma
     btop
+    feh
+    mupdf
+    openssl
+    nix-output-monitor
   ];
 }
