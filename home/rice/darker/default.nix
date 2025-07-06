@@ -7,7 +7,6 @@
     ./fonts.nix
     ./hyprpaper.nix
     ./qutebrowser.nix
-    ./helix.nix
     ./kitty.nix
     ./qb-help.nix
     ./css/qutebrowser.nix

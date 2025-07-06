@@ -42,12 +42,14 @@
     keep-outputs-and-derivations
     starship
     git
+    pass
+    gpg
+    helix
+    zsh
   ];
   home = with home; [
-    helix
-    pass
-    zsh
     kitty
     deploy-rs
+    default-cache
   ];
 }  

@@ -15,6 +15,7 @@
     networkmanager
     hw.bluetooth
     fetch-from-itch
+    rice.darker.default
   ];
 
   home = with home; [

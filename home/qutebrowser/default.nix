@@ -8,15 +8,6 @@
   programs.qutebrowser = {
     enable = true;
     # package = pkgs.qutebrowser-qt5;
-    package = (import
-      (builtins.fetchTarball {
-        url = "https://github.com/js6pak/nixpkgs/archive/81fdc23a6aa910e0ecd3ad33d7cba23f1ddc097f.tar.gz";
-        sha256 = "sha256:1rb77wffwgj05l909dvpm58c4azkcnrdjyr5rdciklilv7kkhcfs";
-        # sha256 = "sha256:1r2mp8yi6dsipyy0ialv89pxq3qv29skjl1ib4abcl7237xqsprk";
-      })
-      {
-        inherit (pkgs) system;
-      }).qutebrowser.override { enableVulkan = false; };
 
     searchEngines =
       let
