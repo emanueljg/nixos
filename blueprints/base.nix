@@ -34,15 +34,15 @@
     wg.default
     hw.libinput
     hw.efi-grub
+    bat
+    nnn.default
   ];
   home = with home; [
     default-cache
     aliases
-    bat
     direnv
     git
     helix
-    nnn.default
     pass
     starship
     zsh
