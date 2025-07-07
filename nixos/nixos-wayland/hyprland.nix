@@ -3,6 +3,7 @@
   programs.hyprland = {
     enable = true;
     package = packages.hyprland;
+    withUWSM = true;
   };
   environment.sessionVariables = {
     LIBVA_DRIVER_NAME = "nvidia";

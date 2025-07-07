@@ -22,6 +22,15 @@
     ani-cli
     yt-dlp
     pavucontrol
+    tor-browser
+    qbittorrent
+    nixos-wayland.default
+
+    swaylock
+    wofi
+    waybar.default
+
+    xdg
   ];
 
   home = with home; [
@@ -30,16 +39,7 @@
     cursor
     gtk
 
-    go
-    nodejs
-    python
-    rust
-
-    mime
-    wayland.default
+    wayland.hyprland
     fontconfig
-    newsboat
-    pyradio
-
   ];
 }

@@ -1,5 +1,5 @@
 { config, pkgs, lib, ... }: {
-  programs.waybar = {
+  local.programs.waybar = {
     style =
       let
         theme = import ./_theme.nix;
@@ -91,7 +91,8 @@
           network = "network";
           audioSymbol = "custom/audio_symbol";
         };
-        margin = config.wayland.windowManager.hyprland.settings.general.gaps_out;
+        margin = 20;
+        # margin = config.wayland.windowManager.hyprland.settings.general.gaps_out;
       in
       {
         mainBar = {
@@ -183,18 +184,6 @@
               high = "";
               full = "";
             };
-
-          };
-
-
-
-          "custom/hello-from-waybar" = {
-            format = " * ";
-            # max-length = 40;
-            # interval = "once";
-            # exec = pkgs.writeShellScript "hello-from-waybar" ''
-            #   echo "from within waybar"
-            # '';
           };
         };
       };

@@ -24,16 +24,13 @@
   };
 
   home = with home; [
-    wayland.default
     homes.getsuga
-    pipe-viewer.default
-
   ];
 
   nixos = with nixos; [
     # dns.peer
-
     disks.getsuga
+
     hw.getsuga
     hw.nvidia
     hw.bluetooth
@@ -43,17 +40,15 @@
 
     # TODO move
     vidya
-    obs
+    artix-games-launcher
+
     # zenless-zone-zero.default
     gamescope
-
-
+    pipe-viewer.default
     tauon
     ffmpeg
-    artix-games-launcher
-    tor-browser
-    qbittorrent
-    nixos-wayland.default
+    obs
+
     stateversions."23-11"
   ];
 
