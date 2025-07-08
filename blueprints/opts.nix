@@ -6,8 +6,7 @@
     hw.stay-awake-opt
   ];
 
-  home = with home; [
-    qutebrowser.stylesheets-opt
+  home = [
   ];
 
 }  

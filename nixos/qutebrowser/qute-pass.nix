@@ -1,5 +1,5 @@
-_: {
-  programs.qutebrowser.keyBindings.normal = {
+{
+  local.programs.qutebrowser.keyBindings.normal = {
     # try to fill username / password
     "zl" = "spawn --userscript qute-pass -U secret -u \"user: (.+)\" -d dmenu --password-store '~/.local/share/password-store'";
     # try to fill password only

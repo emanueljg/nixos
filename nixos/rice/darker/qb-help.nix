@@ -1,5 +1,5 @@
 {
-  programs.qutebrowser.stylesheets."qb-help" = {
+  local.programs.qutebrowser.stylesheets."qb-help" = {
     includes = [ "qute://help*" ];
     css = ''
       html {

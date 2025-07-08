@@ -1,5 +1,5 @@
 { pkgs, lib, ... }: {
-  programs.qutebrowser.keyBindings.normal =
+  local.programs.qutebrowser.keyBindings.normal =
     let
       script = pkgs.writeShellApplication {
         name = "qute-nixpkgs-import";

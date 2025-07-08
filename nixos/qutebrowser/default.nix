@@ -1,13 +1,13 @@
 { lib, pkgs, ... }: {
   imports = [
-    ./translate.nix
+    ./opts.nix
+
     ./qute-pass.nix
     ./qute-nixpkgs-import.nix
   ];
 
-  programs.qutebrowser = {
+  local.programs.qutebrowser = {
     enable = true;
-    # package = pkgs.qutebrowser-qt5;
 
     searchEngines =
       let
@@ -59,7 +59,7 @@
     };
   };
   # make default browser
-  xdg.mimeApps.defaultApplications = {
+  xdg.mime.defaultApplications = {
     "text/html" = "org.qutebrowser.qutebrowser.desktop";
     "x-scheme-handler/http" = "org.qutebrowser.qutebrowser.desktop";
     "x-scheme-handler/https" = "org.qutebrowser.qutebrowser.desktop";

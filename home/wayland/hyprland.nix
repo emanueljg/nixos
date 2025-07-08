@@ -17,7 +17,7 @@ lib.mkMerge [
       settings = {
         "$menu" = "${lib.getExe config.programs.wofi.package} --show run";
         "$terminal" = "kitty";
-        "$browser" = lib.getExe config.programs.qutebrowser.package;
+        "$browser" = "qutebrowser";
         "$screenlock" = lib.getExe config.programs.swaylock.package;
         "$screenshot" = lib.getExe (pkgs.writeShellApplication {
           name = "grim-slurp-screenshot";

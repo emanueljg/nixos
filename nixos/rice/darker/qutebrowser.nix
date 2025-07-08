@@ -1,5 +1,5 @@
 { self, ... }: {
-  programs.qutebrowser.settings = {
+  local.programs.qutebrowser.settings = {
     hints.border = "none";
     hints.radius = 0;
 

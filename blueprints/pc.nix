@@ -24,6 +24,8 @@
     pavucontrol
     tor-browser
     qbittorrent
+    qutebrowser.default
+
     nixos-wayland.default
 
     swaylock
@@ -34,7 +36,6 @@
   ];
 
   home = with home; [
-    qutebrowser.default
     rice.darker.default
     cursor
     gtk
