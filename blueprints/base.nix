@@ -22,6 +22,7 @@
   };
 
   nixos = with nixos; [
+    lib
     lan.default
     keyboard
     enable-flakes

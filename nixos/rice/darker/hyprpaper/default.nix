@@ -1,4 +1,4 @@
-{ self, pkgs, lib, ... }:
+{ pkgs, lib, ... }:
 let
   papes = {
     tank-top = pkgs.fetchurl {
@@ -54,7 +54,8 @@ let
 in
 {
 
-  services.hyprpaper = {
+  imports = [ ./opts.nix ];
+  local.services.hyprpaper = {
     enable = true;
     settings = {
       splash = false;
