@@ -40,6 +40,8 @@
     nginx
     porkbun
 
+    nixos-rebuild.void
+
     stateversions."22-11"
 
   ];

@@ -29,10 +29,12 @@
   ];
 
   nixos = with nixos; [
-    # core
+    # hardware
     disks.getsuga
     hw.getsuga
     hw.nvidia
+
+    nixos-rebuild.getsuga
 
     # core-specfic
     nginx-localhost
