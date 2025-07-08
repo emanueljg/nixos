@@ -23,7 +23,7 @@ symlinkJoin {
   inherit (cfg.package) version;
   postBuild = ''
     wrapProgram $out/bin/Hyprland \
-      --set 'XDG_CONFIG_HOME' ${
+      --add-flags '--config ${
         writeTextDir "hypr/hyprland.conf" (let
           pluginsToHyprconf =
             plugins:
@@ -48,7 +48,7 @@ symlinkJoin {
         )
         + lib.optionalString (cfg.extraConfig != "") cfg.extraConfig
         )
-      }
+      }/hypr/hyprland.conf'
   '';
 }
 
