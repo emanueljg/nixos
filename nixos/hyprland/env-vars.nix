@@ -1,10 +1,4 @@
-{ pkgs, config, packages, lib, ... }: {
-
-  programs.hyprland = {
-    enable = true;
-    package = packages.hyprland;
-    withUWSM = true;
-  };
+{
   environment.sessionVariables = {
     LIBVA_DRIVER_NAME = "nvidia";
     __GLX_VENDOR_LIBRARY_NAME = "nvidia";
@@ -14,5 +8,4 @@
     WLR_NO_HARDWARE_CURSORS = "1";
     MESA_VK_DEVICE_SELECT = "10de:28e0";
   };
-  hardware.graphics.extraPackages = [ pkgs.nvidia-vaapi-driver ];
 }

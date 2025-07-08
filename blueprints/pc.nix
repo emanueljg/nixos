@@ -15,7 +15,6 @@
     networkmanager
     hw.bluetooth
     fetch-from-itch
-    rice.darker.default
     mpv
     firefox
     add-headphones-script
@@ -33,14 +32,19 @@
     waybar.default
 
     xdg
+    ffmpeg
+    pipe-viewer.default
+    rice.darker.default
+
+    xwayland.opts
+    hyprland.default
+
+    gtk.opts
+    fontconfig
+    cursor.default
   ];
 
   home = with home; [
-    rice.darker.default
-    cursor
-    gtk
 
-    wayland.hyprland
-    fontconfig
   ];
 }

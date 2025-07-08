@@ -14,10 +14,11 @@
     };
     nixosModules = {
       disko = inputs.disko.nixosModules.disko;
-      nixos-hardware.lenovo-legion-16irx8h = inputs.nixos-hardware.nixosModules.lenovo-legion-16irx8h;
+      nixos-hardware = {
+        inherit (inputs.nixos-hardware.nixosModules) lenovo-legion-16irx8h;
+      };
     };
     other = {
-      inherit (inputs.erosanix.lib.${config.system}) mkWindowsApp;
       vidya = inputs'.vidya.legacyPackages.games;
     };
 
@@ -28,26 +29,19 @@
   ];
 
   nixos = with nixos; [
-    # dns.peer
+    # core
     disks.getsuga
-
     hw.getsuga
     hw.nvidia
-    hw.bluetooth
 
-    gpu-screen-recorder
+    # core-specfic
     nginx-localhost
 
-    # TODO move
+    # gaming
     vidya
-    artix-games-launcher
-
-    # zenless-zone-zero.default
     gamescope
-    pipe-viewer.default
-    tauon
-    ffmpeg
     obs
+    xwayland.default
 
     stateversions."23-11"
   ];

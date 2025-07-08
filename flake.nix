@@ -3,11 +3,6 @@
     nixos-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixos-unstable";
-    };
-
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixos-unstable";
@@ -15,11 +10,6 @@
 
     disko = {
       url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixos-unstable";
-    };
-
-    pre-commit-hooks = {
-      url = "github:cachix/pre-commit-hooks.nix";
       inputs.nixpkgs.follows = "nixos-unstable";
     };
 
@@ -40,14 +30,12 @@
     };
 
     configuranix = {
-      url = "github:emanueljg/configuranix";
+      url = "path:/home/ejg/dev/configuranix";
     };
 
     archiver = {
       url = "github:emanueljg/archiver";
     };
-
-    erosanix.url = "github:emmanuelrosa/erosanix";
 
     # private
     # vidya.url = "github:emanueljg/vidya";
@@ -72,10 +60,10 @@
           nixos.inputs = {
             nixpkgs = inputs.nixos-unstable;
           };
-          home.inputs = {
-            nixpkgs = inputs.nixos-unstable;
-            inherit (inputs) home-manager;
-          };
+          # home.inputs = {
+          #   nixpkgs = inputs.nixos-unstable;
+          #   inherit (inputs) home-manager;
+          # };
         };
       };
 

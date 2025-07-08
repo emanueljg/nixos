@@ -1,5 +1,5 @@
 { lib, ... }: {
-  wayland.windowManager.hyprland.settings = let theme = import ./_theme.nix; in {
+  local.programs.hyprland.settings = let theme = import ./_theme.nix; in {
     general = {
       gaps_in = 5;
       gaps_out = 20;

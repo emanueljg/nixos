@@ -1,4 +1,4 @@
-{ config, lib, ... }: {
+{ config, pkgs, lib, ... }: {
   services.xserver.videoDrivers = lib.mkForce [ "nvidia" ];
   hardware.nvidia.prime =
     let
@@ -13,5 +13,6 @@
     "nvidia-x11"
     "nvidia-settings"
   ];
+  hardware.graphics.extraPackages = [ pkgs.nvidia-vaapi-driver ];
 }
   

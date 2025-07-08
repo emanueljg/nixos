@@ -1,6 +1,5 @@
 { pkgs, ... }: {
   imports = [
-    ./hyprland.nix
     ./greetd.nix
     ./pipewire.nix
   ];

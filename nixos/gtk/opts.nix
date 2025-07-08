@@ -1,0 +1,320 @@
+{ config, lib, ... }:
+
+let
+  inherit (lib)
+    literalExpression
+    mkOption
+    optionalAttrs
+    types
+    ;
+
+  cfg = config.local.gtk;
+  cfg2 = config.local.gtk.gtk2;
+  cfg3 = config.local.gtk.gtk3;
+  cfg4 = config.local.gtk.gtk4;
+
+  toGtk3Ini = lib.generators.toINI {
+    mkKeyValue =
+      key: value:
+      let
+        value' = if lib.isBool value then lib.boolToString value else toString value;
+      in
+      "${lib.escape [ "=" ] key}=${value'}";
+  };
+
+  formatGtk2Option =
+    n: v:
+    let
+      v' =
+        if lib.isBool v then
+          lib.boolToString lib.value
+        else if lib.isString v then
+          ''"${v}"''
+        else
+          toString v;
+    in
+    "${lib.escape [ "=" ] n} = ${v'}";
+
+  themeType = types.submodule {
+    options = {
+      package = mkOption {
+        type = types.nullOr types.package;
+        default = null;
+        example = literalExpression "pkgs.gnome.gnome-themes-extra";
+        description = ''
+          Package providing the theme. This package will be installed
+          to your profile. If `null` then the theme
+          is assumed to already be available in your profile.
+
+          For the theme to apply to GTK 4, this option is mandatory.
+        '';
+      };
+
+      name = mkOption {
+        type = types.str;
+        example = "Adwaita";
+        description = "The name of the theme within the package.";
+      };
+    };
+  };
+
+  iconThemeType = types.submodule {
+    options = {
+      package = mkOption {
+        type = types.nullOr types.package;
+        default = null;
+        example = literalExpression "pkgs.adwaita-icon-theme";
+        description = ''
+          Package providing the icon theme. This package will be installed
+          to your profile. If `null` then the theme
+          is assumed to already be available in your profile.
+        '';
+      };
+
+      name = mkOption {
+        type = types.str;
+        example = "Adwaita";
+        description = "The name of the icon theme within the package.";
+      };
+    };
+  };
+
+  cursorThemeType = types.submodule {
+    options = {
+      package = mkOption {
+        type = types.nullOr types.package;
+        default = null;
+        example = literalExpression "pkgs.vanilla-dmz";
+        description = ''
+          Package providing the cursor theme. This package will be installed
+          to your profile. If `null` then the theme
+          is assumed to already be available in your profile.
+        '';
+      };
+
+      name = mkOption {
+        type = types.str;
+        example = "Vanilla-DMZ";
+        description = "The name of the cursor theme within the package.";
+      };
+
+      size = mkOption {
+        type = types.nullOr types.int;
+        default = null;
+        example = 16;
+        description = ''
+          The size of the cursor.
+        '';
+      };
+    };
+  };
+
+in
+{
+  options.local.gtk = {
+    enable = lib.mkEnableOption "GTK 2/3 configuration";
+
+    font = mkOption {
+      type = types.nullOr config.local.lib.fontType;
+      default = null;
+      description = ''
+        The font to use in GTK+ 2/3 applications.
+      '';
+    };
+
+    cursorTheme = mkOption {
+      type = types.nullOr cursorThemeType;
+      default = null;
+      description = "The cursor theme to use.";
+    };
+
+    iconTheme = mkOption {
+      type = types.nullOr iconThemeType;
+      default = null;
+      description = "The icon theme to use.";
+    };
+
+    theme = mkOption {
+      type = types.nullOr themeType;
+      default = null;
+      description = "The GTK+2/3 theme to use.";
+    };
+
+    gtk2 = {
+      extraConfig = mkOption {
+        type = types.lines;
+        default = "";
+        example = "gtk-can-change-accels = 1";
+        description = ''
+          Extra configuration lines to add verbatim to
+          {file}`~/.gtkrc-2.0`.
+        '';
+      };
+
+      configLocation = mkOption {
+        type = types.path;
+        default = "${config.home.homeDirectory}/.gtkrc-2.0";
+        defaultText = literalExpression ''"''${config.home.homeDirectory}/.gtkrc-2.0"'';
+        example = literalExpression ''"''${config.xdg.configHome}/gtk-2.0/gtkrc"'';
+        description = ''
+          The location to put the GTK configuration file.
+        '';
+      };
+
+      force = lib.mkEnableOption "GTK 2 config force overwrite without creating a backup";
+    };
+
+    gtk3 = {
+      bookmarks = mkOption {
+        type = types.listOf types.str;
+        default = [ ];
+        example = [ "file:///home/jane/Documents" ];
+        description = "Bookmarks in the sidebar of the GTK file browser";
+      };
+
+      extraConfig = mkOption {
+        type =
+          with types;
+          attrsOf (oneOf [
+            bool
+            int
+            str
+          ]);
+        default = { };
+        example = {
+          gtk-cursor-blink = false;
+          gtk-recent-files-limit = 20;
+        };
+        description = ''
+          Extra configuration options to add to
+          {file}`$XDG_CONFIG_HOME/gtk-3.0/settings.ini`.
+        '';
+      };
+
+      extraCss = mkOption {
+        type = types.lines;
+        default = "";
+        description = ''
+          Extra configuration lines to add verbatim to
+          {file}`$XDG_CONFIG_HOME/gtk-3.0/gtk.css`.
+        '';
+      };
+    };
+
+    gtk4 = {
+      extraConfig = mkOption {
+        type = with types; attrsOf (either bool (either int str));
+        default = { };
+        example = {
+          gtk-cursor-blink = false;
+          gtk-recent-files-limit = 20;
+        };
+        description = ''
+          Extra configuration options to add to
+          {file}`$XDG_CONFIG_HOME/gtk-4.0/settings.ini`.
+        '';
+      };
+
+      extraCss = mkOption {
+        type = types.lines;
+        default = "";
+        description = ''
+          Extra configuration lines to add verbatim to
+          {file}`$XDG_CONFIG_HOME/gtk-4.0/gtk.css`.
+        '';
+      };
+    };
+  };
+
+  config = lib.mkIf cfg.enable (
+    let
+      gtkIni =
+        optionalAttrs (cfg.font != null)
+          {
+            gtk-font-name =
+              let
+                fontSize = if cfg.font.size != null then cfg.font.size else 10;
+              in
+              "${cfg.font.name} ${toString fontSize}";
+          }
+        // optionalAttrs (cfg.theme != null) { gtk-theme-name = cfg.theme.name; }
+        // optionalAttrs (cfg.iconTheme != null) {
+          gtk-icon-theme-name = cfg.iconTheme.name;
+        }
+        // optionalAttrs (cfg.cursorTheme != null) {
+          gtk-cursor-theme-name = cfg.cursorTheme.name;
+        }
+        // optionalAttrs (cfg.cursorTheme != null && cfg.cursorTheme.size != null) {
+          gtk-cursor-theme-size = cfg.cursorTheme.size;
+        };
+
+      gtk4Css =
+        lib.optionalString (cfg.theme != null && cfg.theme.package != null) ''
+          /**
+           * GTK 4 reads the theme configured by gtk-theme-name, but ignores it.
+           * It does however respect user CSS, so import the theme from here.
+          **/
+          @import url("file://${cfg.theme.package}/share/themes/${cfg.theme.name}/gtk-4.0/gtk.css");
+        ''
+        + cfg4.extraCss;
+
+      dconfIni =
+        optionalAttrs (cfg.font != null)
+          {
+            font-name =
+              let
+                fontSize = if cfg.font.size != null then cfg.font.size else 10;
+              in
+              "${cfg.font.name} ${toString fontSize}";
+          }
+        // optionalAttrs (cfg.theme != null) { gtk-theme = cfg.theme.name; }
+        // optionalAttrs (cfg.iconTheme != null) {
+          icon-theme = cfg.iconTheme.name;
+        }
+        // optionalAttrs (cfg.cursorTheme != null) {
+          cursor-theme = cfg.cursorTheme.name;
+        }
+        // optionalAttrs (cfg.cursorTheme != null && cfg.cursorTheme.size != null) {
+          cursor-size = lib.gvariant.mkUint32 cfg.cursorTheme.size;
+        };
+
+      optionalPackage = opt: lib.optional (opt != null && opt.package != null) opt.package;
+    in
+    {
+      environment = {
+        systemPackages = lib.concatMap optionalPackage [
+          cfg.font
+          cfg.theme
+          cfg.iconTheme
+          cfg.cursorTheme
+        ];
+        sessionVariables.GTK2_RC_FILES = "/etc/gtk-2.0/gtkrc";
+        etc = {
+          "gtk-2.0/gtkrc".text =
+            lib.concatMapStrings (l: l + "\n") (lib.mapAttrsToList formatGtk2Option gtkIni)
+            + cfg2.extraConfig
+            + "\n";
+          "gtk-3.0/settings.ini".text =
+            toGtk3Ini { Settings = gtkIni // cfg3.extraConfig; };
+          "gtk-3.0/gtk.css" =
+            lib.mkIf (cfg3.extraCss != "") { text = cfg3.extraCss; };
+          "gtk-3.0/bookmarks" = lib.mkIf (cfg3.bookmarks != [ ]) {
+            text = lib.concatMapStrings (l: l + "\n") cfg3.bookmarks;
+          };
+          "gtk-4.0/settings.ini".text = toGtk3Ini { Settings = gtkIni // cfg4.extraConfig; };
+          "gtk-4.0/gtk.css" = lib.mkIf (gtk4Css != "") { text = gtk4Css; };
+        };
+
+      };
+
+      programs.dconf = {
+        enable = true;
+        profiles.user.databases = [
+          {
+            settings."org/gnome/desktop/interface" = dconfIni;
+          }
+        ];
+      };
+    }
+  );
+}

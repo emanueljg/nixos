@@ -1,6 +1,6 @@
 { pkgs, ... }: {
-
-  home.pointerCursor = {
+  imports = [ ./opts.nix ];
+  local.cursor = {
     enable = true;
     package = pkgs.borealis-cursors;
     name = "Borealis-cursors";

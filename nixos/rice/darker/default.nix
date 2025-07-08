@@ -7,5 +7,9 @@
     ./qb-help.nix
     ./css/qutebrowser.nix
     ./hyprpaper
+    ./hyprland.nix
+    ./bat.nix
+    ./gtk.nix
+    ./fonts.nix
   ];
 }

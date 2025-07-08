@@ -7,9 +7,6 @@
   specialArgs.nixosModules = {
     inherit (inputs.sops-nix.nixosModules) sops;
   };
-  specialArgs.homeModules = {
-    inherit (inputs.sops-nix.homeManagerModules) sops;
-  };
   specialArgs.packages = {
     inherit (inputs'.configuranix.packages) deploy-rs;
   };
@@ -17,7 +14,6 @@
     sshUser = "ejg";
     profiles = {
       system.user = "root";
-      home-manager.user = sshUser;
     };
   };
 
