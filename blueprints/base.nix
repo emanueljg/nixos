@@ -18,6 +18,7 @@
   };
 
   nixos = with nixos; [
+    packages
     lib
     lan.default
     keyboard

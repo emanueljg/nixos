@@ -60,39 +60,38 @@ in
     finalPackage = lib.mkOption {
       type = lib.types.package;
       readOnly = true;
-      default =
-        let
-          conf = (pkgs.writeText "kitty.conf" (lib.concatStringsSep "\n" [
+      default = pkgs.symlinkJoin {
+        name = "kitty-confed";
+        buildInputs = [
+          pkgs.makeWrapper
+        ];
+        paths = [
+          cfg.package
+        ];
+        postBuild = ''
+          for i in $out/bin/*; do
+            wrapProgram $i \
+              --set XDG_CONFIG_HOME '${
+                pkgs.writeTextDir "kitty/kitty.conf" (lib.concatStringsSep "\n" [
 
-            # font
-            (lib.optionalString (cfg.font != null) ''
-              font_family ${cfg.font.name}
-              ${lib.optionalString (cfg.font.size != null) "font_size ${toString cfg.font.size}"}
-            '')
+                  # font
+                  (lib.optionalString (cfg.font != null) ''
+                    font_family ${cfg.font.name}
+                    ${lib.optionalString (cfg.font.size != null) "font_size ${toString cfg.font.size}"}
+                  '')
 
-            # theme
-            (lib.optionalString (cfg.themeFile != null) ''
-              include ${pkgs.kitty-themes}/share/kitty-themes/themes/${cfg.themeFile}.conf
-            '')
+                  # theme
+                  (lib.optionalString (cfg.themeFile != null) ''
+                    include ${pkgs.kitty-themes}/share/kitty-themes/themes/${cfg.themeFile}.conf
+                  '')
 
-            # settings
-            (toKittyConfig cfg.settings)
-          ]));
-
-        in
-        pkgs.symlinkJoin {
-          name = "kitty-confed";
-          buildInputs = [
-            pkgs.makeWrapper
-          ];
-          paths = [
-            cfg.package
-          ];
-          postBuild = ''
-            wrapProgram $out/bin/kitty \
-              --add-flags '--config ${conf}'
-          '';
-        };
+                  # settings
+                  (toKittyConfig cfg.settings)
+                ])
+              }'
+          done
+        '';
+      };
 
     };
     settings = lib.mkOption {
@@ -118,6 +117,7 @@ in
   };
 
   config = {
+    local.packages.kitty = cfg.finalPackage;
     local.programs.kitty = {
       enable = true;
       settings = {

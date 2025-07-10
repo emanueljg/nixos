@@ -67,9 +67,15 @@
         };
       };
 
-      perSystem = { config, self', inputs', pkgs, system, ... }: {
+      perSystem = { config, self', inputs', pkgs, system, lib, ... }: {
         # in lieu of inputs.nixpkgs
         _module.args.pkgs = inputs'.nixos-unstable.legacyPackages;
+        legacyPackages =
+          (builtins.mapAttrs
+            (cfgName: cfg:
+              cfg.config.local.packages
+            )
+            self.nixosConfigurations);
         formatter = pkgs.nixpkgs-fmt;
       };
     };
