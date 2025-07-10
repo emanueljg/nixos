@@ -71,7 +71,7 @@ in
         postBuild = ''
           for i in $out/bin/*; do
             wrapProgram $i \
-              --set XDG_CONFIG_HOME '${
+              --set KITTY_CONFIG_DIRECTORY '${
                 pkgs.writeTextDir "kitty/kitty.conf" (lib.concatStringsSep "\n" [
 
                   # font
@@ -88,7 +88,7 @@ in
                   # settings
                   (toKittyConfig cfg.settings)
                 ])
-              }'
+              }/kitty'
           done
         '';
       };
