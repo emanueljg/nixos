@@ -1,7 +1,7 @@
 {
   inputs = {
     nixos-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    # nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
     sops-nix = {
       url = "github:Mic92/sops-nix";
@@ -30,7 +30,7 @@
     };
 
     configuranix = {
-      url = "path:/home/ejg/dev/configuranix";
+      url = "github:emanueljg/configuranix";
     };
 
     archiver = {
@@ -38,8 +38,8 @@
     };
 
     # private
-    # vidya.url = "github:emanueljg/vidya";
-    vidya.url = "path:/home/ejg/vidya";
+    vidya.url = "github:emanueljg/vidya";
+    # vidya.url = "path:/home/ejg/vidya";
 
   };
 

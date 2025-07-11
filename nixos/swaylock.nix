@@ -4,6 +4,7 @@ let
 
 in
 {
+  security.pam.services.swaylock = { };
   environment.systemPackages = [
     (pkgs.symlinkJoin {
       name = "swaylock";

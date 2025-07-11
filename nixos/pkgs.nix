@@ -17,6 +17,5 @@
     mupdf
     openssl
     nix-output-monitor
-    packages.deploy-rs
   ];
 }

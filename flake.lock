@@ -60,14 +60,17 @@
         "nixpkgs": "nixpkgs_4"
       },
       "locked": {
-        "lastModified": 1751998961,
-        "narHash": "sha256-OKm+2FW2Erd+nd4G6gQ1CeGEFeeq6qn3ciaJnugPsZU=",
-        "path": "/home/ejg/dev/configuranix",
-        "type": "path"
+        "lastModified": 1751999772,
+        "narHash": "sha256-dGOjWl/P1k4ptQADdDMHJF+bRqyW85LMck7h3VK6NFk=",
+        "owner": "emanueljg",
+        "repo": "configuranix",
+        "rev": "8fb6ab8a8004c0c30d240b2a99f41c06aee358b0",
+        "type": "github"
       },
       "original": {
-        "path": "/home/ejg/dev/configuranix",
-        "type": "path"
+        "owner": "emanueljg",
+        "repo": "configuranix",
+        "type": "github"
       }
     },
     "deploy-rs": {
@@ -590,11 +593,11 @@
     },
     "nixos-unstable": {
       "locked": {
-        "lastModified": 1751271578,
-        "narHash": "sha256-P/SQmKDu06x8yv7i0s8bvnnuJYkxVGBWLWHaU+tt4YY=",
+        "lastModified": 1751984180,
+        "narHash": "sha256-LwWRsENAZJKUdD3SpLluwDmdXY9F45ZEgCb0X+xgOL0=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "3016b4b15d13f3089db8a41ef937b13a9e33a8df",
+        "rev": "9807714d6944a957c2e036f84b0ff8caf9930bc0",
         "type": "github"
       },
       "original": {
@@ -686,22 +689,6 @@
       "original": {
         "owner": "NixOS",
         "ref": "release-24.05",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs-unstable": {
-      "locked": {
-        "lastModified": 1749213349,
-        "narHash": "sha256-UAaWOyQhdp7nXzsbmLVC67fo+QetzoTm9hsPf9X3yr4=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "a4ff0e3c64846abea89662bfbacf037ef4b34207",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixpkgs-unstable",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -850,7 +837,6 @@
         "hyprland": "hyprland",
         "nixos-hardware": "nixos-hardware",
         "nixos-unstable": "nixos-unstable",
-        "nixpkgs-unstable": "nixpkgs-unstable",
         "sops-nix": "sops-nix",
         "vidya": "vidya"
       }
@@ -931,14 +917,17 @@
         "nixpkgs": "nixpkgs_8"
       },
       "locked": {
-        "lastModified": 1751737664,
-        "narHash": "sha256-ix7Xe+1VN8c0O0kSI2iZRK4GID/7XWsU4l0DuX4OCdo=",
-        "path": "/home/ejg/vidya",
-        "type": "path"
+        "lastModified": 1751737661,
+        "narHash": "sha256-kxt1ohR+Jrns0WmgbzspZYoPYa6ujvC3O138DJAlhLk=",
+        "owner": "emanueljg",
+        "repo": "vidya",
+        "rev": "661e4acfa49f67d4c597743a43519c6e5ee59bb5",
+        "type": "github"
       },
       "original": {
-        "path": "/home/ejg/vidya",
-        "type": "path"
+        "owner": "emanueljg",
+        "repo": "vidya",
+        "type": "github"
       }
     },
     "xdph": {

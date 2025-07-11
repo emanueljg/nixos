@@ -12,36 +12,41 @@
 
 
   nixos = with nixos; [
+    # core
     networkmanager
-    hw.bluetooth
-    fetch-from-itch
-    mpv
-    firefox
-    add-headphones-script
-    ani-cli
-    yt-dlp
     pavucontrol
-    tor-browser
-    qbittorrent
+    hw.bluetooth
+    add-headphones-script
+
+    # general software
+    firefox
     qutebrowser.default
+    tor-browser
 
-    nixos-wayland.default
-
+    # wayland
+    hyprland.default
+    greetd
     swaylock
+    pipewire
+    wl-clipboard
+    xwayland.opts
     wofi
     waybar.default
 
-    xdg
+    # multimedia
+    mpv
     ffmpeg
+    ani-cli
+    yt-dlp
+    qbittorrent
     pipe-viewer.default
+
+    # customization
     rice.darker.default
-
-    xwayland.opts
-    hyprland.default
-
+    xdg
     gtk.opts
-    fontconfig
     cursor.default
+    fontconfig
   ];
 
   home = with home; [

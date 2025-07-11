@@ -7,15 +7,6 @@
   specialArgs.nixosModules = {
     inherit (inputs.sops-nix.nixosModules) sops;
   };
-  specialArgs.packages = {
-    inherit (inputs'.configuranix.packages) deploy-rs;
-  };
-  deploy = rec {
-    sshUser = "ejg";
-    profiles = {
-      system.user = "root";
-    };
-  };
 
   nixos = with nixos; [
     packages
@@ -47,6 +38,5 @@
     kitty
   ];
   home = with home; [
-    default-cache
   ];
 }  

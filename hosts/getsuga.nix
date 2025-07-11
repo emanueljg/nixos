@@ -40,10 +40,10 @@
     nginx-localhost
 
     # gaming
-    vidya
+    # vidya
+    fetch-from-itch
     gamescope
     obs
-    xwayland.default
 
     stateversions."23-11"
   ];
