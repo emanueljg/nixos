@@ -26,7 +26,7 @@
     bat
     nnn.default
     aliases
-    nix-gh-pat
+    access-tokens
     direnv
     keep-outputs-and-derivations
     starship

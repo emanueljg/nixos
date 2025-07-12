@@ -18,10 +18,7 @@
     };
 
     hyprland = {
-      type = "git";
-      url = "https://github.com/hyprwm/Hyprland";
-      submodules = true;
-      ref = "refs/tags/v0.49.0";
+      url = "github:hyprwm/Hyprland?ref=v0.49.0";
     };
 
     hy3 = {
@@ -38,7 +35,7 @@
     };
 
     # private
-    vidya.url = "github:emanueljg/vidya";
+    vidya.url = "github:emanueljg/vidya/master";
     # vidya.url = "path:/home/ejg/vidya";
 
   };

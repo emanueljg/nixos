@@ -21,11 +21,6 @@
         asterisks = true;
         user-menu = true;
         cmd = "Hyprland";
-        width = 100;
-        greeting = ''
-          En vanlig bågskytt övar tills han gör rätt 
-            -- en spejare övar tills han aldrig gör fel.
-        '';
       };
 
     in

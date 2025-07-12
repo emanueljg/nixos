@@ -370,19 +370,17 @@
       },
       "locked": {
         "lastModified": 1746735318,
-        "narHash": "sha256-3RVRQr+2WKBflZSsoLym9RwyqHWPk/J5WRtuJ0hgA+g=",
-        "ref": "refs/tags/v0.49.0",
+        "narHash": "sha256-iN0Ge4LaVT7rATqzIrAZFSdfYuIXbe4/HGcXle7qK1g=",
+        "owner": "hyprwm",
+        "repo": "Hyprland",
         "rev": "9958d297641b5c84dcff93f9039d80a5ad37ab00",
-        "revCount": 6098,
-        "submodules": true,
-        "type": "git",
-        "url": "https://github.com/hyprwm/Hyprland"
+        "type": "github"
       },
       "original": {
-        "ref": "refs/tags/v0.49.0",
-        "submodules": true,
-        "type": "git",
-        "url": "https://github.com/hyprwm/Hyprland"
+        "owner": "hyprwm",
+        "ref": "v0.49.0",
+        "repo": "Hyprland",
+        "type": "github"
       }
     },
     "hyprland-protocols": {
@@ -917,15 +915,16 @@
         "nixpkgs": "nixpkgs_8"
       },
       "locked": {
-        "lastModified": 1751737661,
-        "narHash": "sha256-kxt1ohR+Jrns0WmgbzspZYoPYa6ujvC3O138DJAlhLk=",
+        "lastModified": 1752191607,
+        "narHash": "sha256-ZC8wvko7rAWM65js1GcVAlI66BMlHa5bEp+tR+NwC3k=",
         "owner": "emanueljg",
         "repo": "vidya",
-        "rev": "661e4acfa49f67d4c597743a43519c6e5ee59bb5",
+        "rev": "602f80bc4bfb7549bd7cbdf6520878c1d3440a61",
         "type": "github"
       },
       "original": {
         "owner": "emanueljg",
+        "ref": "master",
         "repo": "vidya",
         "type": "github"
       }
