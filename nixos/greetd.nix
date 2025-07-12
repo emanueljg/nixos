@@ -7,23 +7,21 @@
 
   services.greetd = {
     enable = true;
-    package = pkgs.greetd.tuigreet;
-    vt = 2;
-  };
-
-  systemd.services.greetd.serviceConfig.ExecStart =
-    let
-      cmd = lib.getExe config.services.greetd.package;
-      flags = lib.cli.toGNUCommandLineShell { } {
-        time = true;
-        remember = true;
-        remember-user-session = true;
-        asterisks = true;
-        user-menu = true;
-        cmd = "Hyprland";
+    settings.default_session =
+      let
+        exe = lib.getExe pkgs.greetd.tuigreet;
+        flags = lib.cli.toGNUCommandLineShell { } {
+          time = true;
+          remember = true;
+          remember-user-session = true;
+          asterisks = true;
+          user-menu = true;
+          cmd = "Hyprland";
+        };
+      in
+      {
+        command = "${exe} ${flags}";
       };
-
-    in
-    lib.mkForce "${cmd} ${flags}";
+  };
 
 }

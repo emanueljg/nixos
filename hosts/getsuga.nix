@@ -40,7 +40,7 @@
     nginx-localhost
 
     # gaming
-    # vidya
+    vidya
     fetch-from-itch
     gamescope
     obs
