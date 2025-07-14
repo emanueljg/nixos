@@ -56,7 +56,7 @@ in
 
   imports = [ ./opts.nix ];
   local.services.hyprpaper = {
-    enable = true;
+    enable = false;
     settings = {
       splash = false;
       preload = lib.pipe papes [

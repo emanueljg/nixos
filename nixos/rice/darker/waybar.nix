@@ -117,9 +117,9 @@
             disable-scroll = true;
             persistent-workspaces = {
               "DP-2" = [ 1 2 3 4 ];
-              "HDMI-A-1" = [ 5 6 ];
-              "DP-1" = [ 7 8 ];
+              "DP-1" = [ 5 6 7 8 ];
               "eDP-1" = [ 9 ];
+              "HDMI-A-1" = [ 10 ];
             };
           };
 

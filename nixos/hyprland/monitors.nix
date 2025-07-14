@@ -12,11 +12,7 @@ in
     "DP-1,highres@highr,auto,1,transform,3"
     # main screen
     "DP-2,highres@highr,auto,1"
-    # right screen
-    vertLayout
-  ];
-  environment.systemPackages = [
-    (pkgs.writeShellScriptBin "hyvert" "hyprctl keyword monitor '${vertLayout}'")
-    (pkgs.writeShellScriptBin "hyproj" "hyprctl keyword monitor '${projLayout}'")
+
+    "HDMI-A-1,highres@highr,auto,1"
   ];
 }

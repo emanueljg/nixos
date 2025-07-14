@@ -61,13 +61,14 @@
         "3,monitor:DP-2"
         "4,monitor:DP-2"
 
-        "5,monitor:HDMI-A-1"
-        "6,monitor:HDMI-A-1"
-
+        "5,monitor:DP-1"
+        "6,monitor:DP-1"
         "7,monitor:DP-1"
         "8,monitor:DP-1"
 
         "9,monitor:eDP-1"
+
+        "10,monitor:HDMI-A-1"
       ];
       misc = {
         force_default_wallpaper = 0;
@@ -78,10 +79,11 @@
       ];
       bind =
         let
-          workspaces = builtins.map builtins.toString (lib.range 1 9);
-          goto = builtins.map (ws: "$mod, ${ws}, workspace, ${ws}") workspaces;
-          move = builtins.map
-            (ws: "$mod SHIFT, ${ws}, movetoworkspace, ${ws}")
+          workspaces = map builtins.toString (lib.range 1 10);
+          wsBind = ws: if ws == "10" then "0" else ws;
+          goto = map (ws: "$mod, ${wsBind ws}, workspace, ${ws}") workspaces;
+          move = map
+            (ws: "$mod SHIFT, ${wsBind ws}, movetoworkspace, ${ws}")
             workspaces;
         in
         goto ++ move ++ [
