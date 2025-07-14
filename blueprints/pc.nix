@@ -37,7 +37,7 @@
     mpv
     ffmpeg
     ani-cli
-    yt-dlp
+    yt-dlp.default
     qbittorrent
     pipe-viewer.default
 
