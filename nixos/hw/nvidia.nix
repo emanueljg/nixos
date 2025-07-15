@@ -9,7 +9,7 @@
       offload.enable = false;
       sync.enable = true;
     };
-  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+  local.allowed-unfree.names = [
     "nvidia-x11"
     "nvidia-settings"
   ];

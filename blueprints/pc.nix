@@ -8,6 +8,9 @@
     nixpkgs = {
       inherit (inputs) nixos-unstable;
     };
+    packages = {
+      inherit (inputs'.nix-alien.packages) nix-alien;
+    };
   };
 
 
@@ -47,6 +50,9 @@
     gtk.opts
     cursor.default
     fontconfig
+
+    # programming
+    nix-alien
   ];
 
   home = with home; [

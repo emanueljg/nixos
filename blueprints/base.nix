@@ -9,6 +9,7 @@
   };
 
   nixos = with nixos; [
+    allowed-unfree
     packages
     lib
     lan.default

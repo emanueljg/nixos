@@ -34,9 +34,16 @@
       url = "github:emanueljg/archiver";
     };
 
+    nix-alien = {
+      url = "github:thiagokokada/nix-alien";
+      # not overriden, see:
+      # https://github.com/thiagokokada/nix-alien?tab=readme-ov-file#nixos-installation-with-flakes
+      # inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # private
-    vidya.url = "github:emanueljg/vidya/master";
-    # vidya.url = "path:/home/ejg/vidya";
+    # vidya.url = "github:emanueljg/vidya";
+    vidya.url = "path:/home/ejg/dev/vidya";
 
   };
 
