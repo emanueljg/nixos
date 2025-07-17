@@ -13,6 +13,7 @@
     "nvidia-x11"
     "nvidia-settings"
   ];
+  hardware.graphics.enable32Bit = true;
   hardware.graphics.extraPackages = [ pkgs.nvidia-vaapi-driver ];
 }
   
