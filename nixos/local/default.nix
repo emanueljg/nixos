@@ -1,0 +1,20 @@
+{
+  imports = [
+    ./allowed-unfree.nix
+    ./waybar.nix
+    ./lib.nix
+    ./gtk.nix
+    ./lan.nix
+    ./yt-dlp.nix
+    ./qutebrowser.nix
+    ./hyprpaper.nix
+    ./packages.nix
+    ./kitty.nix
+    ./cursor.nix
+    ./helix.nix
+    ./nixos-rebuild.nix
+    ./xwayland.nix
+    ./wg.nix
+    ./hyprland/default.nix
+  ];
+}

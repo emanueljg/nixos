@@ -1,7 +1,5 @@
 { lib, pkgs, ... }: {
   imports = [
-    ./opts.nix
-
     ./qute-pass.nix
     ./qute-nixpkgs-import.nix
   ];

@@ -4,7 +4,6 @@ let
   vertLayout = "${projLayout},transform,1";
 in
 {
-  imports = [ ./opts.nix ];
   local.programs.hyprland.settings.monitor = [
     # computer mon
     "eDP-1,highres@highr,auto,1"

@@ -9,10 +9,7 @@
   };
 
   nixos = with nixos; [
-    allowed-unfree
-    packages
-    lib
-    lan.default
+    local.default
     keyboard
     enable-flakes
     garnix
@@ -21,11 +18,11 @@
     swedish-locale
     user
     sops
-    wg.default
+    wg
     hw.libinput
     hw.efi-grub
     bat
-    nnn.default
+    nnn
     aliases
     access-tokens
     direnv

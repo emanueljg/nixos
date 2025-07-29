@@ -1,7 +1,4 @@
 { config, lib, ... }: {
-  imports = [
-    ./host.nix
-  ];
 
   # config = lib.mkMerge [
   #   {
@@ -18,6 +15,7 @@
   #       } // lib.genAttrs clients (client: { peers = [ server ]; });
   #   }
   local.wg = {
+    enable = true;
     interface = "wg1";
     hosts = {
       "void" = {

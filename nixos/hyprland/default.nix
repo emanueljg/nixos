@@ -1,7 +1,6 @@
 { config, packages, pkgs, lib, self, ... }: {
 
   imports = [
-    ./opts.nix
     ./substituters.nix
     ./env-vars.nix
     ./monitors.nix

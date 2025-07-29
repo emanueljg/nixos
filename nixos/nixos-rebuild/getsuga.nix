@@ -1,5 +1,4 @@
 {
-  imports = [ ./opts.nix ];
   local.nixos-rebuild = {
     enable = true;
     hosts = [

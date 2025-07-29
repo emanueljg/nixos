@@ -32,23 +32,21 @@
     swaylock
     pipewire
     wl-clipboard
-    xwayland.opts
     wofi
-    waybar.default
+    waybar
 
     # multimedia
     mpv
     ffmpeg
     ani-cli
-    yt-dlp.default
+    yt-dlp
     qbittorrent
     pipe-viewer.default
 
     # customization
     rice.darker.default
     xdg
-    gtk.opts
-    cursor.default
+    cursor
     fontconfig
 
     # programming

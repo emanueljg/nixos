@@ -54,7 +54,6 @@ let
 in
 {
 
-  imports = [ ./opts.nix ];
   local.services.hyprpaper = {
     enable = false;
     settings = {
