@@ -1,7 +1,6 @@
 { inputs, blueprints, nixos, home, inputs', ... }: {
 
   imports = [
-    blueprints.opts
   ];
 
   specialArgs.nixosModules = {
