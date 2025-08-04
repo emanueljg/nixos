@@ -8,7 +8,7 @@ in
   local.wrap.wraps."swaylock" = {
     pkg = pkgs.swaylock;
     systemPackages = true;
-    bins."swaylock".env."XDG_CONFIG_DIR".paths = {
+    bins."swaylock".env."XDG_CONFIG_HOME".paths = {
       "swaylock/config" = lib.pipe settings [
         (lib.filterAttrs (n: v: v != false))
         (builtins.mapAttrs (n: v: if v == true then n else "${n}=${v}"))
