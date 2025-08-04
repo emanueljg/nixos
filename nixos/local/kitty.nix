@@ -82,6 +82,7 @@ in
   config = lib.mkIf cfg.enable {
     local.wrap.wraps."kitty" = {
       pkg = cfg.package;
+      systemPackages = true;
       bins = lib.genAttrs [ "kitty" "kitten" ] (_: {
         envs."KITTY_CONFIG_DIRECTORY".paths."kitty.conf" = lib.concatStringsSep "\n" [
           # font

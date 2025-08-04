@@ -12,6 +12,7 @@ in
 {
   local.wrap.wraps."wofi" = {
     pkg = pkgs.wofi;
+    systemPackages = true;
     bins."wofi".envs."XDG_CONFIG_DIR".paths = {
       "wofi/config" = lib.generators.toKeyValue { } settings;
     };

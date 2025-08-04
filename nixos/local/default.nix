@@ -15,7 +15,7 @@
     ./nixos-rebuild.nix
     ./xwayland.nix
     ./wg.nix
-    ./hyprland/default.nix
+    ./hyprland.nix
     ./wrap.nix
   ];
 }

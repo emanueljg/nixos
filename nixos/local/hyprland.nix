@@ -69,18 +69,6 @@ in
         List of prefix of attributes to source at the top of the config.
       '';
     };
-    finalPackage = lib.mkOption {
-      type = lib.types.package;
-      readOnly = true;
-      # config.programs.hyprland adds xwayland configuration
-      # itself by doing an .override, but we're setting a symlinkJoin'd drv
-      # as its package value, which fails. So we wrap it in a callPackage
-      # to allow for overrides. As a bonus, we get a cleaner module.
-      default = pkgs.callPackage ./_finalPackage.nix {
-        _cfg = cfg;
-        _config = config;
-      };
-    };
   };
 
   config = lib.mkIf cfg.enable {

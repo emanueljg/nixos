@@ -145,6 +145,7 @@ in
         builtins.map mkUserscript (builtins.attrValues cfg.stylesheets);
       local.wrap.wraps."qutebrowser" = {
         pkg = cfg.package;
+        systemPackages = true;
         bins."qutebrowser".envs."XDG_CONFIG_HOME".paths = {
           "qutebrowser/config.py" = qutebrowserConfig;
           "qutebrowser/quickmarks" = quickmarksFile;

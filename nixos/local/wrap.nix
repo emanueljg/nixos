@@ -29,7 +29,9 @@ let
         readOnly = true;
         default = builtins.mapAttrs
           (name: value:
-            if builtins.isString value then
+            if value == null then
+              null
+            else if builtins.isString value then
               (pkgs.writeTextDir name value)
             else
               (pkgs.runCommand (builtins.baseNameOf name) { } ''
@@ -49,7 +51,7 @@ let
         readOnly = true;
         default = pkgs.symlinkJoin {
           name = "wrapped-${wraps.config.name}-${args.config.name}";
-          paths = builtins.attrValues args.config.finalPathDrvs;
+          paths = builtins.filter (e: !(builtins.isNull e)) (builtins.attrValues args.config.finalPathDrvs);
           postBuild = args.config.postBuild;
         };
       };
@@ -114,7 +116,7 @@ in
               };
             }));
           };
-          addToSystemPackages = (lib.mkEnableOption "") // { default = true; };
+          systemPackages = lib.mkEnableOption "";
           preWrap = lib.mkOption {
             type = lib.types.lines;
             default = "";
@@ -166,8 +168,8 @@ in
 
                         ${wraps.config.postWrap}
                       '';
-                    } // (lib.optionalAttrs (wraps.config.pkg ? meta.mainProgram) {
-                    meta = { inherit (wraps.config.pkg.meta) mainProgram; };
+                    } // (lib.optionalAttrs (wrappedPkg ? meta.mainProgram) {
+                    meta = { inherit (wrappedPkg) mainProgram; };
                   })
                   )
                 )
@@ -184,7 +186,7 @@ in
   config = lib.mkIf cfg.enable {
     environment.systemPackages = lib.pipe cfg.wraps [
       builtins.attrValues
-      (builtins.filter (wrapper: wrapper.addToSystemPackages))
+      (builtins.filter (wrapper: wrapper.systemPackages))
       (map (wrapper: wrapper.finalPackage))
     ];
   };

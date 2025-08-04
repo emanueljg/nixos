@@ -17,7 +17,6 @@ in
 
     local.wrap.wraps."hyprpaper" = {
       pkg = cfg.package;
-      addToSystemPackages = false;
       bins."hyprpaper".envs."XDG_CONFIG_HOME".paths = {
         "hypr/hyprpaper.conf" = config.local.lib.toHyprConf { attrs = cfg.settings; };
       };

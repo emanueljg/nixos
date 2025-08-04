@@ -18,58 +18,36 @@ in
     };
   };
 
-  config =
-    let
-      pkg =
-        (pkgs.symlinkJoin {
-          name = "waybar-confed";
-          paths = [ cfg.package ];
-          nativeBuildInputs = [ pkgs.makeWrapper ];
-          inherit (cfg.package) meta;
-          postBuild = ''
-            wrapProgram $out/bin/waybar \
-              --set 'XDG_CONFIG_HOME' ${
-                pkgs.symlinkJoin {
-                  name = "waybar-confdir";
-                  paths = [
-                    (pkgs.writeTextDir "waybar/config" (builtins.toJSON (builtins.attrValues cfg.settings)))
-                  ] ++ lib.optional (cfg.style != null) (
-                    if builtins.isPath cfg.style then
-                      pkgs.runCommand "waybar-style.css" { } ''
-                        mkdir -p $out/waybar
-                        cp ${cfg.style} $out/waybar/style.css
-                      ''
-                     else
-                        pkgs.writeTextDir "waybar/style.css" cfg.style
-                    );
-                }
-              }
-          '';
-        });
-    in
-    lib.mkIf cfg.enable {
-      environment.systemPackages = [ pkg ];
-      systemd.user.services.waybar = {
-        partOf = [
-          "graphical-session.target"
-          "tray.target"
-        ];
-        after = [ "graphical-session.target" ];
-        wantedBy = [
-          "graphical-session.target"
-          "tray.target"
-        ];
-
-        unitConfig.ConditionEnvironment = "WAYLAND_DISPLAY";
-
-        serviceConfig = {
-          ExecReload = "${pkgs.coreutils}/bin/kill -SIGUSR2 $MAINPID";
-          ExecStart = lib.getExe pkg;
-          KillMode = "mixed";
-          Restart = "on-failure";
-        };
-
+  config = lib.mkIf cfg.enable {
+    local.wrap.wraps."waybar" = {
+      pkg = cfg.package;
+      systemPackages = true;
+      bins."waybar".envs."XDG_CONFIG_HOME".paths = {
+        "waybar/config" = builtins.toJSON (builtins.attrValues cfg.settings);
+        "waybar/style.css" = cfg.style;
       };
     };
+    systemd.user.services.waybar = {
+      partOf = [
+        "graphical-session.target"
+        "tray.target"
+      ];
+      after = [ "graphical-session.target" ];
+      wantedBy = [
+        "graphical-session.target"
+        "tray.target"
+      ];
+
+      unitConfig.ConditionEnvironment = "WAYLAND_DISPLAY";
+
+      serviceConfig = {
+        ExecReload = "${pkgs.coreutils}/bin/kill -SIGUSR2 $MAINPID";
+        ExecStart = lib.getExe config.local.wrap.wraps."waybar".finalPackage;
+        KillMode = "mixed";
+        Restart = "on-failure";
+      };
+
+    };
+  };
 }
 

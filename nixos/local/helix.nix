@@ -29,6 +29,7 @@ in
       };
     local.wrap.wraps."hx" = {
       pkg = pkgs.helix;
+      systemPackages = true;
       bins."hx".envs."XDG_CONFIG_HOME".paths =
         let
           tomlFormat = pkgs.formats.toml { };
