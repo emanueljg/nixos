@@ -16,5 +16,6 @@
     ./xwayland.nix
     ./wg.nix
     ./hyprland/default.nix
+    ./wrap.nix
   ];
 }

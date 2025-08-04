@@ -10,23 +10,10 @@ let
 
 in
 {
-  environment.systemPackages = [
-    (pkgs.symlinkJoin {
-      name = "wofi";
-      paths = [ pkgs.wofi ];
-      nativeBuildInputs = [ pkgs.makeWrapper ];
-      postBuild = ''
-        wrapProgram $out/bin/wofi \
-          --set 'XDG_CONFIG_DIR' ${
-            pkgs.symlinkJoin {
-              name = "wofi-confdir";
-              paths = [(
-                pkgs.writeTextDir "wofi/config"
-                  (lib.generators.toKeyValue { } settings)
-              )];
-            }
-          }
-      '';
-    })
-  ];
+  local.wrap.wraps."wofi" = {
+    pkg = pkgs.wofi;
+    bins."wofi".envs."XDG_CONFIG_DIR".paths = {
+      "wofi/config" = lib.generators.toKeyValue { } settings;
+    };
+  };
 }

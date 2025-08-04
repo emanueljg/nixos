@@ -111,9 +111,9 @@ in
         ++ lib.mapAttrsToList formatKeyBindings cfg.keyBindings
       );
 
-      quickmarksFile = lib.optionals (cfg.quickmarks != { }) (lib.concatStringsSep "\n" (
+      quickmarksFile = lib.concatStringsSep "\n" (
         lib.mapAttrsToList formatQuickmarks cfg.quickmarks
-      ));
+      );
 
       greasemonkeyDir = lib.optionals
         (
@@ -143,29 +143,15 @@ in
             });
         in
         builtins.map mkUserscript (builtins.attrValues cfg.stylesheets);
-      environment.systemPackages = [
-        (
-          pkgs.symlinkJoin {
-            name = "qutebrowser-confed";
-            paths = [ cfg.package ];
-            nativeBuildInputs = [ pkgs.makeWrapper ];
-            postBuild = ''
-              wrapProgram $out/bin/qutebrowser \
-                --set 'XDG_CONFIG_HOME' ${
-                  pkgs.symlinkJoin {
-                    name = "qutebrowser-confdir";
-                    paths = [
-                      (pkgs.writeTextDir "qutebrowser/config.py" qutebrowserConfig)
-                      (pkgs.writeTextDir "qutebrowser/quickmarks" quickmarksFile)
-                      (pkgs.writeTextDir "qutebrowser/bookmarks/urls" "")
-                      (pkgs.writeTextDir "qutebrowser/greasemonkey" greasemonkeyDir)
-                    ];
-                  }
-                }
-            '';
-          }
-        )
-      ];
+      local.wrap.wraps."qutebrowser" = {
+        pkg = cfg.package;
+        bins."qutebrowser".envs."XDG_CONFIG_HOME".paths = {
+          "qutebrowser/config.py" = qutebrowserConfig;
+          "qutebrowser/quickmarks" = quickmarksFile;
+          "qutebrowser/bookmarks/urls" = "";
+          "qutebrowser/greasemonkey" = greasemonkeyDir;
+        };
+      };
     };
 }
 

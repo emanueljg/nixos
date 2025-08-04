@@ -57,43 +57,6 @@ in
   options.local.programs.kitty = {
     enable = lib.mkEnableOption "kitty";
     package = lib.mkPackageOption pkgs "kitty" { };
-    finalPackage = lib.mkOption {
-      type = lib.types.package;
-      readOnly = true;
-      default = pkgs.symlinkJoin {
-        name = "kitty-confed";
-        buildInputs = [
-          pkgs.makeWrapper
-        ];
-        paths = [
-          cfg.package
-        ];
-        postBuild = ''
-          for i in $out/bin/*; do
-            wrapProgram $i \
-              --set KITTY_CONFIG_DIRECTORY '${
-                pkgs.writeTextDir "kitty/kitty.conf" (lib.concatStringsSep "\n" [
-
-                  # font
-                  (lib.optionalString (cfg.font != null) ''
-                    font_family ${cfg.font.name}
-                    ${lib.optionalString (cfg.font.size != null) "font_size ${toString cfg.font.size}"}
-                  '')
-
-                  # theme
-                  (lib.optionalString (cfg.themeFile != null) ''
-                    include ${pkgs.kitty-themes}/share/kitty-themes/themes/${cfg.themeFile}.conf
-                  '')
-
-                  # settings
-                  (toKittyConfig cfg.settings)
-                ])
-              }/kitty'
-          done
-        '';
-      };
-
-    };
     settings = lib.mkOption {
       type = with lib.types; attrsOf settingsValueType;
       default = { };
@@ -116,8 +79,26 @@ in
     };
   };
 
-  config = {
-    local.packages.kitty = cfg.finalPackage;
-    environment.systemPackages = lib.optional cfg.enable cfg.finalPackage;
+  config = lib.mkIf cfg.enable {
+    local.wrap.wraps."kitty" = {
+      pkg = cfg.package;
+      bins = lib.genAttrs [ "kitty" "kitten" ] (_: {
+        envs."KITTY_CONFIG_DIRECTORY".paths."kitty.conf" = lib.concatStringsSep "\n" [
+          # font
+          (lib.optionalString (cfg.font != null) ''
+            font_family ${cfg.font.name}
+            ${lib.optionalString (cfg.font.size != null) "font_size ${toString cfg.font.size}"}
+          '')
+
+          # theme
+          (lib.optionalString (cfg.themeFile != null) ''
+            include ${pkgs.kitty-themes}/share/kitty-themes/themes/${cfg.themeFile}.conf
+          '')
+
+          # settings
+          (toKittyConfig cfg.settings)
+        ];
+      });
+    };
   };
 }

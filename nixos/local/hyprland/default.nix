@@ -85,9 +85,45 @@ in
 
   config = lib.mkIf cfg.enable {
 
+    local.wrap.wraps."hyprland" = {
+      pkg = cfg.package;
+      bins."Hyprland".flags."--config".path =
+        let
+          pluginsToHyprconf =
+            plugins:
+            config.local.lib.toHyprConf {
+              attrs = {
+                "exec-once" =
+                  let
+                    mkEntry =
+                      entry: if lib.types.package.check entry then "${entry}/lib/lib${entry.pname}.so" else entry;
+                  in
+                  map (p: "hyprctl plugin load ${mkEntry p}") cfg.plugins;
+              };
+              inherit (cfg) importantPrefixes;
+            };
+        in
+        lib.optionalString (cfg.plugins != [ ]) (pluginsToHyprconf cfg.plugins)
+        + lib.optionalString (cfg.settings != { }) (
+          config.local.lib.toHyprConf {
+            attrs = cfg.settings;
+            inherit (cfg) importantPrefixes;
+          }
+        )
+        + lib.optionalString (cfg.extraConfig != "") cfg.extraConfig;
+    };
+
+
     programs.hyprland = {
       enable = true;
-      package = cfg.finalPackage;
+      package = (pkgs.callPackage
+        ({ enableXWayland ? false
+         }: config.local.wrap.wraps."hyprland".finalPackage.override {
+          wrappedPkg = config.local.wrap.wraps."hyprland".pkg.override {
+            inherit enableXWayland;
+          };
+        })
+        { }).overrideAttrs (prev: { inherit (prev.passthru.wrapped) version; });
       withUWSM = true;
       xwayland.enable = config.local.programs.xwayland.enable;
     };

@@ -8,6 +8,7 @@
   };
 
   nixos = with nixos; [
+    wrap
     local.default
     keyboard
     enable-flakes

@@ -15,6 +15,14 @@ in
 
   config = lib.mkIf cfg.enable {
 
+    local.wrap.wraps."hyprpaper" = {
+      pkg = cfg.package;
+      addToSystemPackages = false;
+      bins."hyprpaper".envs."XDG_CONFIG_HOME".paths = {
+        "hypr/hyprpaper.conf" = config.local.lib.toHyprConf { attrs = cfg.settings; };
+      };
+    };
+
     systemd.user.services.hyprpaper = {
       wantedBy = [ "graphical-session.target" ];
       after = [ "graphical-session.target" ];
@@ -23,22 +31,7 @@ in
       unitConfig.ConditionEnvironment = "WAYLAND_DISPLAY";
 
       serviceConfig = {
-        ExecStart = lib.getExe (
-          pkgs.symlinkJoin {
-            name = "hyprpaper-confed";
-            paths = [
-              cfg.package
-            ];
-            inherit (cfg.package) meta;
-            nativeBuildInputs = [ pkgs.makeWrapper ];
-            postBuild = ''
-              wrapProgram $out/bin/hyprpaper \
-                --set 'XDG_CONFIG_HOME' ${
-                  pkgs.writeTextDir "hypr/hyprpaper.conf" (config.local.lib.toHyprConf { attrs = cfg.settings; })
-                }
-            '';
-          }
-        );
+        ExecStart = lib.getExe config.local.wrap.wraps."hyprpaper".finalPackage;
         Restart = "always";
         RestartSec = "10";
       };

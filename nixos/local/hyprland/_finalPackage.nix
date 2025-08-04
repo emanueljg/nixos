@@ -24,7 +24,7 @@ symlinkJoin {
   postBuild = ''
     wrapProgram $out/bin/Hyprland \
       --add-flags '--config ${
-        writeTextDir "hypr/hyprland.conf" (let
+        let
           pluginsToHyprconf =
             plugins:
             config.local.lib.toHyprConf {
@@ -47,7 +47,6 @@ symlinkJoin {
           }
         )
         + lib.optionalString (cfg.extraConfig != "") cfg.extraConfig
-        )
       }/hypr/hyprland.conf'
   '';
 }

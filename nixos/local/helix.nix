@@ -17,40 +17,26 @@ in
     };
   };
 
-  config = {
-    environment = lib.mkIf cfg.enable {
-      sessionVariables =
-        let
-          EDITOR = "hx";
-        in
-        {
-          inherit EDITOR;
-          SUDO_EDITOR = EDITOR;
-          VISUAL = EDITOR;
-        };
-      systemPackages =
+  config = lib.mkIf cfg.enable {
+    environment.sessionVariables =
+      let
+        EDITOR = "hx";
+      in
+      {
+        inherit EDITOR;
+        SUDO_EDITOR = EDITOR;
+        VISUAL = EDITOR;
+      };
+    local.wrap.wraps."hx" = {
+      pkg = pkgs.helix;
+      bins."hx".envs."XDG_CONFIG_HOME".paths =
         let
           tomlFormat = pkgs.formats.toml { };
-          confdir = pkgs.runCommand "helix-confdir" { } ''
-            mkdir -p $out/helix
-            ln -s "${tomlFormat.generate "helix-config.toml" cfg.settings}" $out/helix/config.toml
-            ln -s "${tomlFormat.generate "helix-languages.toml" cfg.languages}" $out/helix/languages.toml
-          '';
-          pkg = pkgs.symlinkJoin {
-            name = "hx-confed";
-            buildInputs = [
-              pkgs.makeWrapper
-            ];
-            paths = [
-              cfg.package
-            ];
-            postBuild = ''
-              wrapProgram $out/bin/hx \
-                --set 'XDG_CONFIG_HOME' '${confdir}'
-            '';
-          };
         in
-        [ pkg ];
+        {
+          "helix/config.toml" = tomlFormat.generate "helix-config.toml" cfg.settings;
+          "helix/languages.toml" = tomlFormat.generate "helix-languages.toml" cfg.languages;
+        };
     };
   };
 }
