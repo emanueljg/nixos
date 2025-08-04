@@ -1,7 +1,7 @@
 { pkgs, config, lib, ... }:
 let
   settings = {
-    term = lib.getExe config.local.programs.kitty.package;
+    term = lib.getExe config.local.wrap.wraps."kitty".finalPackage;
     key_left = "h";
     key_down = "j";
     key_up = "k";

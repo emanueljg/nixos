@@ -147,7 +147,7 @@ in
               (pkgs.callPackage
                 (
                   { symlinkJoin, makeWrapper, lib, wrappedPkg ? wraps.config.pkg }:
-                  (symlinkJoin
+                  symlinkJoin
                     {
                       inherit (wraps.config) name;
                       buildInputs = [
@@ -168,10 +168,8 @@ in
 
                         ${wraps.config.postWrap}
                       '';
-                    } // (lib.optionalAttrs (wrappedPkg ? meta.mainProgram) {
-                    meta = { inherit (wrappedPkg) mainProgram; };
-                  })
-                  )
+                      meta.mainProgram = wrappedPkg.meta.mainProgram;
+                    }
                 )
                 { }) [
               (pkg: pkg.overrideAttrs (wraps.config.overrideAttrs))

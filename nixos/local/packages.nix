@@ -6,6 +6,9 @@
   };
 
   config = {
+    local.packages = builtins.mapAttrs
+      (name: value: value.finalPackage)
+      config.local.wrap.wraps;
     environment.systemPackages = [
       (pkgs.writeShellScriptBin "bld" ''
         nix build .#${config.networking.hostName}."$@"
