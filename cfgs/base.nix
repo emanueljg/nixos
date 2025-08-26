@@ -1,15 +1,17 @@
-{ inputs, blueprints, nixos, home, inputs', ... }: {
+{ self, inputs, modules, ... }: {
 
-  imports = [
-  ];
-
-  specialArgs.nixosModules = {
-    inherit (inputs.sops-nix.nixosModules) sops;
+  specialArgs = {
+    inherit self;
+    nixosModules = {
+      inherit (inputs.sops-nix.nixosModules) sops;
+    };
   };
 
-  nixos = with nixos; [
+  modules = with modules; [
+    hw.libinput
+    hw.efi-grub
     wrap
-    local.default
+    local
     keyboard
     enable-flakes
     garnix
@@ -19,8 +21,6 @@
     user
     sops
     wg
-    hw.libinput
-    hw.efi-grub
     bat
     nnn
     aliases
@@ -35,6 +35,5 @@
     zsh
     kitty
   ];
-  home = with home; [
-  ];
+
 }  

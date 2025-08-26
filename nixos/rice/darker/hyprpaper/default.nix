@@ -84,7 +84,6 @@ in
       ];
       wallpaper = [
         # "HDMI-A-1,${papes.ganyu}"
-        "foo,${doesnotexist}"
         "DP-2,${papes.everlasting-summer-electronics}"
         "DP-1,${papes.konosuba-megumin-field}"
         "eDP-1,${papes.porco-rosso-nap}"

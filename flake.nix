@@ -26,10 +26,6 @@
       inputs.hyprland.follows = "hyprland";
     };
 
-    configuranix = {
-      url = "github:emanueljg/configuranix";
-    };
-
     archiver = {
       url = "github:emanueljg/archiver";
     };
@@ -47,40 +43,57 @@
 
   };
 
-  outputs = inputs @ { self, flake-parts, ... }:
-    flake-parts.lib.mkFlake { inherit inputs; } {
-      imports = [
-        inputs.configuranix.flakeModules.default
-      ];
+  outputs = { self, nixos-unstable, ... }@inputs:
+    let
+      inherit (nixos-unstable) lib;
+    in
+    {
+      modules =
+        let
+          modulesToAttrs = cursor:
+            let
+              paths = builtins.readDir cursor;
+            in
+            if paths ? "default.nix" then
+              (import cursor)
+            else
+              (lib.filterAttrsRecursive (_: v: v != null) (lib.mapAttrs'
+                (n: v: lib.nameValuePair
+                  (if v == "regular" then (lib.removeSuffix ".nix" n) else n)
+                  (
+                    if v == "regular" && !(lib.hasSuffix ".nix" n) then
+                      null
+                    else if v == "regular" then
+                      (import "${cursor}/${n}")
+                    else if v == "directory" then
+                      (modulesToAttrs "${cursor}/${n}")
+                    else
+                      (builtins.throw "")
+                  )
+                )
+                paths));
+        in
+        modulesToAttrs ./nixos;
 
-      systems = [ "x86_64-linux" ];
-
-      configuranix = {
-        enable = true;
-        hostsPath = ./hosts;
-        blueprintsPath = ./blueprints;
-
-        moduleSets = {
-          nixos.inputs = {
-            nixpkgs = inputs.nixos-unstable;
-          };
-          # home.inputs = {
-          #   nixpkgs = inputs.nixos-unstable;
-          #   inherit (inputs) home-manager;
-          # };
-        };
-      };
-
-      perSystem = { config, self', inputs', pkgs, system, lib, ... }: {
-        # in lieu of inputs.nixpkgs
-        _module.args.pkgs = inputs'.nixos-unstable.legacyPackages;
-        legacyPackages =
-          (builtins.mapAttrs
-            (cfgName: cfg:
-              cfg.config.local.packages
+      configs =
+        let
+          cfgDir = ./cfgs;
+        in
+        lib.mapAttrs'
+          (n: v: lib.nameValuePair
+            (lib.removeSuffix ".nix" n)
+            (
+              let
+                x = ((import "${cfgDir}/${n}") {
+                  inherit inputs lib self;
+                  inherit (self) modules configs;
+                });
+              in
+              if builtins.isFunction x then lib.fix x else x
             )
-            self.nixosConfigurations);
-        formatter = pkgs.nixpkgs-fmt;
-      };
+          )
+          (builtins.readDir cfgDir);
+
+      nixosConfigurations = builtins.mapAttrs (_: v: lib.nixosSystem v) self.configs;
     };
 }

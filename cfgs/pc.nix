@@ -1,20 +1,19 @@
-{ config, inputs, home, nixos, blueprints, inputs', ... }: {
+{ inputs, modules, configs, lib, ... }: cfg:
+let
+  parent = configs.base;
+in
+{
 
-  imports = [
-    blueprints.base
-  ];
+  system = "x86_64-linux";
 
-  specialArgs = {
-    nixpkgs = {
-      inherit (inputs) nixos-unstable;
-    };
+  specialArgs = lib.recursiveUpdate parent.specialArgs {
     packages = {
-      inherit (inputs'.nix-alien.packages) nix-alien;
+      inherit (inputs.nix-alien.packages.${cfg.system}) nix-alien;
     };
   };
 
 
-  nixos = with nixos; [
+  modules = parent.modules ++ (with modules; [
     # core
     networkmanager
     pavucontrol
@@ -23,11 +22,11 @@
 
     # general software
     firefox
-    qutebrowser.default
+    qutebrowser
     tor-browser
 
     # wayland
-    hyprland.default
+    hyprland
     greetd
     swaylock
     pipewire
@@ -41,19 +40,15 @@
     ani-cli
     yt-dlp
     qbittorrent
-    pipe-viewer.default
+    pipe-viewer
 
     # customization
-    rice.darker.default
+    rice.darker
     xdg
     cursor
     fontconfig
 
     # programming
     nix-alien
-  ];
-
-  home = with home; [
-
-  ];
+  ]);
 }
