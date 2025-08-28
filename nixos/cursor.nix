@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   local.cursor = {
     enable = true;
     package = pkgs.borealis-cursors;
@@ -7,4 +8,3 @@
     hyprcursor.enable = true;
   };
 }
-    

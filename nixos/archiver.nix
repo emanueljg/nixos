@@ -1,4 +1,9 @@
-{ nixosModules, other, pkgs, ... }:
+{
+  nixosModules,
+  other,
+  pkgs,
+  ...
+}:
 let
   inherit (other.archiver-lib)
     writeArchiveScript
@@ -44,7 +49,8 @@ in
                 };
                 addMetadataParse = key: ''--parse-metadata "${extraMetadata.${key}}:%(${key})s"'';
               in
-              defaultArgs + ''
+              defaultArgs
+              + ''
                 --playlist-reverse \
                 --playlist-items "::-1" \
                 --compat-options playlist-index \
@@ -95,4 +101,3 @@ in
 #   };
 
 # }
-     

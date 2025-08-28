@@ -1,7 +1,9 @@
-{ pkgs
-, nixosModules
-, ...
-}: {
+{
+  pkgs,
+  nixosModules,
+  ...
+}:
+{
   imports = [
     nixosModules.sops
   ];

@@ -1,4 +1,5 @@
-{ nixosModules, ... }: {
+{ nixosModules, ... }:
+{
   imports = [
     nixosModules.disko
   ];
@@ -33,4 +34,3 @@
     };
   };
 }
-

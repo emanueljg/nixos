@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   environment = {
     systemPackages = [ pkgs.ani-cli ];
     shellAliases = {

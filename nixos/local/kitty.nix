@@ -1,23 +1,25 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 let
   # settingsFormat = pkgs.formats.toml { };
   cfg = config.local.programs.kitty;
-  settingsValueType = with lib.types; oneOf [
-    str
-    bool
-    int
-    float
-  ];
+  settingsValueType =
+    with lib.types;
+    oneOf [
+      str
+      bool
+      int
+      float
+    ];
   toKittyConfig = lib.generators.toKeyValue {
     mkKeyValue =
       key: value:
       let
-        value' =
-          if
-            lib.isBool value then
-            (if value then "yes" else "no")
-          else
-            toString value;
+        value' = if lib.isBool value then (if value then "yes" else "no") else toString value;
       in
       "${key} ${value'}";
   };

@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   my = {
     home = {
       packages = with pkgs; [ jmtpfs ];
@@ -9,7 +10,8 @@
           symlinkTgt = "/home/ejg/phone";
         in
         {
-          "phm" = "mkdir -p ${realTgt} && sudo jmtpfs ${realTgt} -o allow_other && ln -sf ${innerRealTgt} ${symlinkTgt}";
+          "phm" =
+            "mkdir -p ${realTgt} && sudo jmtpfs ${realTgt} -o allow_other && ln -sf ${innerRealTgt} ${symlinkTgt}";
           "phum" = "sudo fusermount -u ${realTgt} && rmdir ${realTgt} && rm ${symlinkTgt}";
         };
     };

@@ -1,7 +1,8 @@
-{ config
-, lib
-, pkgs
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  ...
 }:
 
 let
@@ -27,7 +28,9 @@ let
 
       gtk.enable = lib.mkEnableOption "";
 
-      dotIcons.enable = (lib.mkEnableOption "") // { default = true; };
+      dotIcons.enable = (lib.mkEnableOption "") // {
+        default = true;
+      };
 
       hyprcursor.enable = lib.mkEnableOption "hyprcursor config generation";
     };
@@ -63,15 +66,15 @@ in
       sessionVariables = {
         XCURSOR_SIZE = cfg.size;
         XCURSOR_THEME = cfg.name;
-      } // (lib.optionalAttrs (cfg.hyprcursor.enable) {
+      }
+      // (lib.optionalAttrs (cfg.hyprcursor.enable) {
         HYPRCURSOR_THEME = cfg.name;
         HYPRCURSOR_SIZE = cfg.size;
       });
       etc = {
         "xdg/share/icons/default/index.theme".source =
           "${defaultIndexThemePackage}/share/icons/default/index.theme";
-        "xdg/share/icons/${cfg.name}".source =
-          "${cfg.package}/share/icons/${cfg.name}";
+        "xdg/share/icons/${cfg.name}".source = "${cfg.package}/share/icons/${cfg.name}";
       };
     };
     local.gtk.cursorTheme = lib.mkIf cfg.gtk.enable {

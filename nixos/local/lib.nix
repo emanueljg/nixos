@@ -1,13 +1,14 @@
-{ lib, ... }: {
+{ lib, ... }:
+{
   options.local.lib = {
     toHyprConf = lib.mkOption {
       type = with lib.types; functionTo str;
       readOnly = true;
       default =
-        { attrs
-        , indentLevel ? 0
-        , importantPrefixes ? [ "$" ]
-        ,
+        {
+          attrs,
+          indentLevel ? 0,
+          importantPrefixes ? [ "$" ],
         }:
         let
           inherit (lib)

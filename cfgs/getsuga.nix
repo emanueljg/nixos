@@ -1,4 +1,11 @@
-{ inputs, modules, configs, lib, ... }: cfg:
+{
+  inputs,
+  modules,
+  configs,
+  lib,
+  ...
+}:
+cfg:
 let
   parent = configs.pc;
 in
@@ -23,25 +30,27 @@ in
     };
   };
 
-  modules = parent.modules ++ (with modules; [
-    { networking.hostName = "getsuga"; }
-    # hardware
-    disks.getsuga
-    hw.getsuga
-    hw.nvidia
+  modules =
+    parent.modules
+    ++ (with modules; [
+      { networking.hostName = "getsuga"; }
+      # hardware
+      disks.getsuga
+      hw.getsuga
+      hw.nvidia
 
-    nixos-rebuild.getsuga
+      nixos-rebuild.getsuga
 
-    # core-specfic
-    nginx-localhost
+      # core-specfic
+      nginx-localhost
 
-    # gaming
-    vidya
-    fetch-from-itch
-    gamescope
-    obs
+      # gaming
+      vidya
+      fetch-from-itch
+      gamescope
+      obs
 
-    stateversions."23-11"
-  ]);
+      stateversions."23-11"
+    ]);
 
 }

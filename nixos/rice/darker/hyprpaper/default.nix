@@ -1,4 +1,9 @@
-{ pkgs, lib, doesnotexist, ... }:
+{
+  pkgs,
+  lib,
+  doesnotexist,
+  ...
+}:
 let
   papes = {
     # tank-top = pkgs.fetchurl {

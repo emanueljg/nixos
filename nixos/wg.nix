@@ -1,4 +1,5 @@
-{ config, lib, ... }: {
+{ config, lib, ... }:
+{
 
   # config = lib.mkMerge [
   #   {
@@ -55,4 +56,3 @@
   };
 }
 # ];
-

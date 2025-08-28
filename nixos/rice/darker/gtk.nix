@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   local.gtk = {
     enable = true;
     theme = {

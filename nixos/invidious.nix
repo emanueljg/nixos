@@ -1,4 +1,10 @@
-{ nixpkgs', pkgs, other, lib, ... }:
+{
+  nixpkgs',
+  pkgs,
+  other,
+  lib,
+  ...
+}:
 let
 
   # I'm sure this'll become upstreamed in the future,
@@ -26,10 +32,14 @@ in
       external_port = 80;
       https_only = true;
 
-      db = let name = "invidious"; in {
-        user = name;
-        dbname = name;
-      };
+      db =
+        let
+          name = "invidious";
+        in
+        {
+          user = name;
+          dbname = name;
+        };
 
       # db = {
       #   user = "ejg";

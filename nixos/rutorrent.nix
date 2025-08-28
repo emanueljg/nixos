@@ -1,4 +1,5 @@
-{ pkgs, lib, ... }: {
+{ pkgs, lib, ... }:
+{
   services.rutorrent = {
     enable = true;
     hostName = "rutorrent.void";

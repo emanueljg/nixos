@@ -1,4 +1,9 @@
-{ pkgs, config, lib, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 let
   settings = {
     term = lib.getExe config.local.wrap.wraps."kitty".finalPackage;

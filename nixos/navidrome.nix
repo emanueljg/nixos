@@ -1,4 +1,10 @@
-{ config, pkgs, lib, self, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  self,
+  ...
+}:
 
 {
   services.navidrome = {
@@ -36,7 +42,6 @@
     isSystemUser = true;
   };
 
-
   systemd.services.navidrome.serviceConfig = {
     DynamicUser = lib.mkForce false;
     BindReadOnlyPaths = [
@@ -66,4 +71,3 @@
       });
 
 }
-

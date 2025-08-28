@@ -1,4 +1,10 @@
-{ config, pkgs, lib, ... }: {
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
+{
   local.programs.waybar = {
     style =
       let
@@ -111,13 +117,27 @@
           margin-right = margin;
           modules-left = [ mods.workspaces ];
           modules-center = [ mods.clock ];
-          modules-right = [ mods.network mods.audio mods.battery ];
+          modules-right = [
+            mods.network
+            mods.audio
+            mods.battery
+          ];
 
           ${mods.workspaces} = {
             disable-scroll = true;
             persistent-workspaces = {
-              "DP-2" = [ 1 2 3 4 ];
-              "DP-1" = [ 5 6 7 8 ];
+              "DP-2" = [
+                1
+                2
+                3
+                4
+              ];
+              "DP-1" = [
+                5
+                6
+                7
+                8
+              ];
               "eDP-1" = [ 9 ];
               "HDMI-A-1" = [ 10 ];
             };

@@ -1,4 +1,5 @@
-{ lib, pkgs, ... }: {
+{ lib, pkgs, ... }:
+{
   imports = [
     ./qute-pass.nix
     ./qute-nixpkgs-import.nix
@@ -9,11 +10,11 @@
 
     searchEngines =
       let
-        mkNixSearch = chan: type:
+        mkNixSearch =
+          chan: type:
           # weird that you have to specify "type" two times here
           "https://search.nixos.org/${type}?channel=${chan}&type=${type}&query={}";
-        mkGHSearch = type:
-          "https://github.com/NixOS/nixpkgs/issues?q=is%3A${type}%20state%3Aopen%20{}";
+        mkGHSearch = type: "https://github.com/NixOS/nixpkgs/issues?q=is%3A${type}%20state%3Aopen%20{}";
       in
       {
         DEFAULT = "https://www.google.com/search?q={}";

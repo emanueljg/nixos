@@ -1,4 +1,5 @@
-{ config, self, ... }: {
+{ config, self, ... }:
+{
   sops.secrets."kavita-token-key" = {
     sopsFile = "${self}/secrets/${config.networking.hostName}/kavita.yml";
     mode = "0440";

@@ -1,4 +1,12 @@
-{ config, packages, pkgs, lib, self, ... }: {
+{
+  config,
+  packages,
+  pkgs,
+  lib,
+  self,
+  ...
+}:
+{
 
   imports = [
     ./substituters.nix
@@ -15,20 +23,24 @@
       "$terminal" = "kitty";
       "$browser" = "qutebrowser";
       "$screenlock" = "swaylock";
-      "$screenshot" = lib.getExe (pkgs.writeShellApplication {
-        name = "grim-slurp-screenshot";
-        runtimeInputs = [ pkgs.grim pkgs.slurp ];
-        text = ''
-          dir="/home/ejg/shots"
-          grim -g "$(slurp)" "$dir/$(date -u '+%Y-%m-%dT%H-%M-%S').png"
-        '';
-      });
+      "$screenshot" = lib.getExe (
+        pkgs.writeShellApplication {
+          name = "grim-slurp-screenshot";
+          runtimeInputs = [
+            pkgs.grim
+            pkgs.slurp
+          ];
+          text = ''
+            dir="/home/ejg/shots"
+            grim -g "$(slurp)" "$dir/$(date -u '+%Y-%m-%dT%H-%M-%S').png"
+          '';
+        }
+      );
       "$mod" = "ALT";
 
       env = [
         "AQ_DRM_DEVICES,/dev/dri/card0:/dev/dri/card1"
       ];
-
 
       general = {
         layout = "hy3";
@@ -81,11 +93,11 @@
           workspaces = map builtins.toString (lib.range 1 10);
           wsBind = ws: if ws == "10" then "0" else ws;
           goto = map (ws: "$mod, ${wsBind ws}, workspace, ${ws}") workspaces;
-          move = map
-            (ws: "$mod SHIFT, ${wsBind ws}, movetoworkspace, ${ws}")
-            workspaces;
+          move = map (ws: "$mod SHIFT, ${wsBind ws}, movetoworkspace, ${ws}") workspaces;
         in
-        goto ++ move ++ [
+        goto
+        ++ move
+        ++ [
           "$mod, f, fullscreen, 0" # entire screen
 
           # focus
@@ -121,7 +133,3 @@
     };
   };
 }
-
-
-
-

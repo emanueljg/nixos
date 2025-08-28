@@ -7,4 +7,4 @@ _: {
       "https://cache.garnix.io"
     ];
   };
-}  
+}

@@ -1,4 +1,9 @@
-{ nixosModules, other, pkgs, ... }:
+{
+  nixosModules,
+  other,
+  pkgs,
+  ...
+}:
 {
   imports = [
     nixosModules.xstarbound

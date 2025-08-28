@@ -1,4 +1,10 @@
-{ config, lib, pkgs, packages, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  packages,
+  ...
+}:
 
 {
   i18n.defaultLocale = lib.mkForce "en_US.UTF-8";
@@ -8,5 +14,3 @@
     useXkbConfig = true; # use xkb.options in tty.
   };
 }
-
-

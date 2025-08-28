@@ -229,14 +229,13 @@ in
   config = lib.mkIf cfg.enable (
     let
       gtkIni =
-        optionalAttrs (cfg.font != null)
-          {
-            gtk-font-name =
-              let
-                fontSize = if cfg.font.size != null then cfg.font.size else 10;
-              in
-              "${cfg.font.name} ${toString fontSize}";
-          }
+        optionalAttrs (cfg.font != null) {
+          gtk-font-name =
+            let
+              fontSize = if cfg.font.size != null then cfg.font.size else 10;
+            in
+            "${cfg.font.name} ${toString fontSize}";
+        }
         // optionalAttrs (cfg.theme != null) { gtk-theme-name = cfg.theme.name; }
         // optionalAttrs (cfg.iconTheme != null) {
           gtk-icon-theme-name = cfg.iconTheme.name;
@@ -259,14 +258,13 @@ in
         + cfg4.extraCss;
 
       dconfIni =
-        optionalAttrs (cfg.font != null)
-          {
-            font-name =
-              let
-                fontSize = if cfg.font.size != null then cfg.font.size else 10;
-              in
-              "${cfg.font.name} ${toString fontSize}";
-          }
+        optionalAttrs (cfg.font != null) {
+          font-name =
+            let
+              fontSize = if cfg.font.size != null then cfg.font.size else 10;
+            in
+            "${cfg.font.name} ${toString fontSize}";
+        }
         // optionalAttrs (cfg.theme != null) { gtk-theme = cfg.theme.name; }
         // optionalAttrs (cfg.iconTheme != null) {
           icon-theme = cfg.iconTheme.name;
@@ -294,10 +292,8 @@ in
             lib.concatMapStrings (l: l + "\n") (lib.mapAttrsToList formatGtk2Option gtkIni)
             + cfg2.extraConfig
             + "\n";
-          "gtk-3.0/settings.ini".text =
-            toGtk3Ini { Settings = gtkIni // cfg3.extraConfig; };
-          "gtk-3.0/gtk.css" =
-            lib.mkIf (cfg3.extraCss != "") { text = cfg3.extraCss; };
+          "gtk-3.0/settings.ini".text = toGtk3Ini { Settings = gtkIni // cfg3.extraConfig; };
+          "gtk-3.0/gtk.css" = lib.mkIf (cfg3.extraCss != "") { text = cfg3.extraCss; };
           "gtk-3.0/bookmarks" = lib.mkIf (cfg3.bookmarks != [ ]) {
             text = lib.concatMapStrings (l: l + "\n") cfg3.bookmarks;
           };

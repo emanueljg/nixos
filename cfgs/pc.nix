@@ -1,4 +1,11 @@
-{ inputs, modules, configs, lib, ... }: cfg:
+{
+  inputs,
+  modules,
+  configs,
+  lib,
+  ...
+}:
+cfg:
 let
   parent = configs.base;
 in
@@ -12,43 +19,44 @@ in
     };
   };
 
+  modules =
+    parent.modules
+    ++ (with modules; [
+      # core
+      networkmanager
+      pavucontrol
+      hw.bluetooth
+      add-headphones-script
 
-  modules = parent.modules ++ (with modules; [
-    # core
-    networkmanager
-    pavucontrol
-    hw.bluetooth
-    add-headphones-script
+      # general software
+      firefox
+      qutebrowser
+      tor-browser
 
-    # general software
-    firefox
-    qutebrowser
-    tor-browser
+      # wayland
+      hyprland
+      greetd
+      swaylock
+      pipewire
+      wl-clipboard
+      wofi
+      waybar
 
-    # wayland
-    hyprland
-    greetd
-    swaylock
-    pipewire
-    wl-clipboard
-    wofi
-    waybar
+      # multimedia
+      mpv
+      ffmpeg
+      ani-cli
+      yt-dlp
+      qbittorrent
+      pipe-viewer
 
-    # multimedia
-    mpv
-    ffmpeg
-    ani-cli
-    yt-dlp
-    qbittorrent
-    pipe-viewer
+      # customization
+      rice.darker
+      xdg
+      cursor
+      fontconfig
 
-    # customization
-    rice.darker
-    xdg
-    cursor
-    fontconfig
-
-    # programming
-    nix-alien
-  ]);
+      # programming
+      nix-alien
+    ]);
 }

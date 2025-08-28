@@ -1,11 +1,19 @@
-{ self, pkgs, lib, config, options, ... }:
+{
+  self,
+  pkgs,
+  lib,
+  config,
+  options,
+  ...
+}:
 let
   cfg = config.local.wg;
   # TODO
   domain = "emanueljg.com";
   port = 51820;
   mkZone = n: "10.100.0.${builtins.toString n}";
-  mkHostType = { readOnlyIP }:
+  mkHostType =
+    { readOnlyIP }:
     lib.types.submodule (submod: {
       options = {
         enable = lib.mkEnableOption "";
@@ -42,7 +50,9 @@ in
       default = "wg0";
     };
     hosts = lib.mkOption {
-      type = lib.types.attrsOf (mkHostType { readOnlyIP = true; });
+      type = lib.types.attrsOf (mkHostType {
+        readOnlyIP = true;
+      });
       default = { };
     };
     this = lib.mkOption {
@@ -60,49 +70,52 @@ in
     };
   };
 
-  config =
-    lib.mkIf cfg.enable {
-      networking.firewall.allowedUDPPorts = [ port ];
+  config = lib.mkIf cfg.enable {
+    networking.firewall.allowedUDPPorts = [ port ];
 
-      sops.secrets."wg-private" = {
-        sopsFile = "${self}/secrets/${cfg.this}/wireguard.yml";
-        mode = "0440";
-      };
+    sops.secrets."wg-private" = {
+      sopsFile = "${self}/secrets/${cfg.this}/wireguard.yml";
+      mode = "0440";
+    };
 
-      networking.nat = lib.mkIf cfg.thisCfg.server.enable {
-        enable = true;
-        inherit (cfg.thisCfg.server) externalInterface;
-        internalInterfaces = [ cfg.interface ];
-      };
+    networking.nat = lib.mkIf cfg.thisCfg.server.enable {
+      enable = true;
+      inherit (cfg.thisCfg.server) externalInterface;
+      internalInterfaces = [ cfg.interface ];
+    };
 
-      networking.wireguard = {
-        enable = true;
-        interfaces.${cfg.interface} =
+    networking.wireguard = {
+      enable = true;
+      interfaces.${cfg.interface} = {
+        ips = [ "${cfg.thisCfg.ip}/24" ];
+        listenPort = port;
+        privateKeyFile = config.sops.secrets."wg-private".path;
+        peers = map (
+          peer:
+          let
+            peerCfg = cfg.hosts.${peer};
+          in
           {
-            ips = [ "${cfg.thisCfg.ip}/24" ];
-            listenPort = port;
-            privateKeyFile = config.sops.secrets."wg-private".path;
-            peers = map
-              (peer:
-                let peerCfg = cfg.hosts.${peer}; in {
-                  inherit (peerCfg) publicKey;
-                  persistentKeepalive = lib.mkIf (!peerCfg.server.enable) 25;
-                  allowedIPs = [ (peerCfg.ip) ];
+            inherit (peerCfg) publicKey;
+            persistentKeepalive = lib.mkIf (!peerCfg.server.enable) 25;
+            allowedIPs = [ (peerCfg.ip) ];
 
-                } // lib.optionalAttrs (peerCfg.server.enable) {
-                  endpoint = "${domain}:${builtins.toString port}";
-                  dynamicEndpointRefreshSeconds = 3600;
-                })
-              cfg.thisCfg.peers;
-          } // lib.optionalAttrs cfg.thisCfg.server.enable {
-            postSetup = ''
-              ${lib.getExe' pkgs.iptables "iptables"} -t nat -A POSTROUTING -s ${mkZone 0}/24 -o ${cfg.thisCfg.server.externalInterface} -j MASQUERADE
-            '';
+          }
+          // lib.optionalAttrs (peerCfg.server.enable) {
+            endpoint = "${domain}:${builtins.toString port}";
+            dynamicEndpointRefreshSeconds = 3600;
+          }
+        ) cfg.thisCfg.peers;
+      }
+      // lib.optionalAttrs cfg.thisCfg.server.enable {
+        postSetup = ''
+          ${lib.getExe' pkgs.iptables "iptables"} -t nat -A POSTROUTING -s ${mkZone 0}/24 -o ${cfg.thisCfg.server.externalInterface} -j MASQUERADE
+        '';
 
-            postShutdown = ''
-              ${lib.getExe' pkgs.iptables "iptables"} -t nat -D POSTROUTING -s ${mkZone 0}/24 -o ${cfg.thisCfg.server.externalInterface} -j MASQUERADE
-            '';
-          };
+        postShutdown = ''
+          ${lib.getExe' pkgs.iptables "iptables"} -t nat -D POSTROUTING -s ${mkZone 0}/24 -o ${cfg.thisCfg.server.externalInterface} -j MASQUERADE
+        '';
       };
     };
+  };
 }

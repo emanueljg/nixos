@@ -1,4 +1,5 @@
-{ lib, ... }: {
+{ lib, ... }:
+{
   my.nixpkgs.overlays =
     let
       # custom variables
@@ -43,16 +44,12 @@
       ];
     in
     [
-      (
-        _self: super: {
-          qutebrowser = super.qutebrowser.overrideAttrs (oldAttrs: rec {
-            postInstall =
-              oldAttrs.postInstall
-              + ''
-                ${setActiveDownloadsFormat}
-              '';
-          });
-        }
-      )
+      (_self: super: {
+        qutebrowser = super.qutebrowser.overrideAttrs (oldAttrs: rec {
+          postInstall = oldAttrs.postInstall + ''
+            ${setActiveDownloadsFormat}
+          '';
+        });
+      })
     ];
 }

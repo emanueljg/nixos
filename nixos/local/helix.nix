@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 let
   settingsFormat = pkgs.formats.toml { };
   cfg = config.local.programs.helix;

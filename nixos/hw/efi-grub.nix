@@ -1,4 +1,5 @@
-{ config, lib, ... }: {
+{ config, lib, ... }:
+{
   boot = {
     #kernelParams = [ "quiet" "splash" ];
     loader = {

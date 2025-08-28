@@ -4,7 +4,9 @@ let
 in
 {
   options.local.allowed-unfree = {
-    enable = (lib.mkEnableOption "") // { default = true; };
+    enable = (lib.mkEnableOption "") // {
+      default = true;
+    };
     names = lib.mkOption {
       default = { };
       type = with lib.types; listOf str;
@@ -15,4 +17,3 @@ in
     nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) cfg.names;
   };
 }
-

@@ -43,24 +43,26 @@
 
   };
 
-  outputs = { self, nixos-unstable, ... }@inputs:
+  outputs =
+    { self, nixos-unstable, ... }@inputs:
     let
       inherit (nixos-unstable) lib;
     in
     {
       modules =
         let
-          modulesToAttrs = cursor:
+          modulesToAttrs =
+            cursor:
             let
               paths = builtins.readDir cursor;
             in
             if paths ? "default.nix" then
               (import cursor)
             else
-              (lib.filterAttrsRecursive (_: v: v != null) (lib.mapAttrs'
-                (n: v: lib.nameValuePair
-                  (if v == "regular" then (lib.removeSuffix ".nix" n) else n)
-                  (
+              (lib.filterAttrsRecursive (_: v: v != null) (
+                lib.mapAttrs' (
+                  n: v:
+                  lib.nameValuePair (if v == "regular" then (lib.removeSuffix ".nix" n) else n) (
                     if v == "regular" && !(lib.hasSuffix ".nix" n) then
                       null
                     else if v == "regular" then
@@ -70,8 +72,8 @@
                     else
                       (builtins.throw "")
                   )
-                )
-                paths));
+                ) paths
+              ));
         in
         modulesToAttrs ./nixos;
 
@@ -79,21 +81,22 @@
         let
           cfgDir = ./cfgs;
         in
-        lib.mapAttrs'
-          (n: v: lib.nameValuePair
-            (lib.removeSuffix ".nix" n)
-            (
-              let
-                x = ((import "${cfgDir}/${n}") {
+        lib.mapAttrs' (
+          n: v:
+          lib.nameValuePair (lib.removeSuffix ".nix" n) (
+            let
+              x = (
+                (import "${cfgDir}/${n}") {
                   inherit inputs lib self;
                   inherit (self) modules configs;
-                });
-              in
-              if builtins.isFunction x then lib.fix x else x
-            )
+                }
+              );
+            in
+            if builtins.isFunction x then lib.fix x else x
           )
-          (builtins.readDir cfgDir);
+        ) (builtins.readDir cfgDir);
 
       nixosConfigurations = builtins.mapAttrs (_: v: lib.nixosSystem v) self.configs;
+      formatter = builtins.mapAttrs (_: pkgs: pkgs.nixfmt-rfc-style) nixos-unstable.legacyPackages;
     };
 }

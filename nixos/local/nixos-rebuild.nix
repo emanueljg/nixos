@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 let
   cfg = config.local.nixos-rebuild;
 in
@@ -11,21 +16,25 @@ in
     };
     hosts = lib.mkOption {
       default = [ ];
-      type = lib.types.listOf (lib.types.submodule (submod: {
-        options = {
-          enable = (lib.mkEnableOption "") // { default = true; };
-          name = lib.mkOption {
-            type = lib.types.str;
+      type = lib.types.listOf (
+        lib.types.submodule (submod: {
+          options = {
+            enable = (lib.mkEnableOption "") // {
+              default = true;
+            };
+            name = lib.mkOption {
+              type = lib.types.str;
+            };
+            key = lib.mkOption {
+              type = lib.types.str;
+              default = "${cfg.baseKey}-${submod.config.name}";
+            };
+            cmd = lib.mkOption {
+              type = lib.types.str;
+            };
           };
-          key = lib.mkOption {
-            type = lib.types.str;
-            default = "${cfg.baseKey}-${submod.config.name}";
-          };
-          cmd = lib.mkOption {
-            type = lib.types.str;
-          };
-        };
-      }));
+        })
+      );
     };
   };
 
@@ -33,17 +42,13 @@ in
     environment.systemPackages =
       let
         scripts = lib.pipe cfg.hosts [
-          (builtins.filter
-            (host: host.enable))
-          (map
-            (host: (pkgs.writeShellScriptBin host.key host.cmd))
-          )
+          (builtins.filter (host: host.enable))
+          (map (host: (pkgs.writeShellScriptBin host.key host.cmd)))
         ];
       in
-      scripts ++ lib.optional (scripts != [ ]) (
-        pkgs.writeShellScriptBin cfg.baseKey (
-          (builtins.concatStringsSep " && " (map (s: s.name) scripts))
-        )
+      scripts
+      ++ lib.optional (scripts != [ ]) (
+        pkgs.writeShellScriptBin cfg.baseKey ((builtins.concatStringsSep " && " (map (s: s.name) scripts)))
       );
   };
 }

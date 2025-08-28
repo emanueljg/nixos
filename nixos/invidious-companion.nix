@@ -1,10 +1,11 @@
-{ stdenv
-, fetchFromGitHub
-, denoPlatform
-, tree
-, pkgs
-, deno
-, writeShellApplication
+{
+  stdenv,
+  fetchFromGitHub,
+  denoPlatform,
+  tree,
+  pkgs,
+  deno,
+  writeShellApplication,
 }:
 let
   src = fetchFromGitHub {
@@ -17,7 +18,10 @@ let
   vendor = stdenv.mkDerivation {
     name = "invidious-companion-vendor";
 
-    nativeBuildInputs = [ deno tree ];
+    nativeBuildInputs = [
+      deno
+      tree
+    ];
 
     inherit src;
     buildCommand = ''
@@ -82,7 +86,6 @@ denoPlatform.mkDenoBinary {
 # denoPlatform.mkDenoDerivation {
 #  name = "invidious-companion-git";
 
-
 #  buildPhase = ''
 #    deno task compile
 #  '';
@@ -101,4 +104,3 @@ denoPlatform.mkDenoBinary {
 #  # permissions.allow.all = true;
 
 # }
-

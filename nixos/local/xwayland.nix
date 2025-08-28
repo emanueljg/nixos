@@ -1,4 +1,9 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 let
   cfg = config.local.programs.xwayland;
 in
@@ -12,5 +17,3 @@ in
     environment.systemPackages = [ cfg.package ];
   };
 }
-
-  

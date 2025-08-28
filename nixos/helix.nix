@@ -1,4 +1,12 @@
-{ pkgs, lib, ... }: {
+{
+  pkgs,
+  lib,
+  nixpkgs,
+  self,
+  config,
+  ...
+}:
+{
   local.programs.helix = {
     enable = true;
     settings = {
@@ -27,14 +35,24 @@
           name = "nix";
           auto-format = true;
           formatter = {
-            command = lib.getExe pkgs.nixpkgs-fmt;
+            command = lib.getExe pkgs.nixfmt-rfc-style;
           };
         }
       ];
 
       language-server = {
         rust-analyzer.command = lib.getExe pkgs.rust-analyzer;
-        nil.command = lib.getExe pkgs.nil;
+        nixd = {
+          command = lib.getExe pkgs.nixd;
+          config.nixd =
+            let
+              flake = "(builtins.getFlake (builtins.toString ${self.outPath}))";
+            in
+            {
+              nixpkgs.expr = "import ${flake}.inputs.nixos-unstable { }";
+              options.nixos.expr = "${flake}.nixosConfigurations.${config.networking.hostName}.options";
+            };
+        };
         gopls.command = lib.getExe pkgs.gopls;
         dart.command = lib.getExe pkgs.dart;
         pylsp =

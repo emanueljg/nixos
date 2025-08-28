@@ -1,4 +1,5 @@
-{ lib, nixpkgs', ... }: {
+{ lib, nixpkgs', ... }:
+{
   hardware.nvidia.open = lib.mkForce false;
 
   services.jellyfin = {
@@ -12,7 +13,6 @@
   systemd.services.jellyfin.path = [
     nixpkgs'.nixos-unstable.yt-dlp
   ];
-
 
   # virtualisation = {
   #   docker.enableNvidia = true;

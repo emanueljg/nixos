@@ -1,4 +1,5 @@
-{ pkgs, packages, ... }: {
+{ pkgs, packages, ... }:
+{
   environment.systemPackages = with pkgs; [
     xterm
     wget

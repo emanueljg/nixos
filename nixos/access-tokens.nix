@@ -1,4 +1,9 @@
-{ self, lib, config, ... }:
+{
+  self,
+  lib,
+  config,
+  ...
+}:
 let
   accessTokens = [
     "base"
@@ -6,8 +11,8 @@ let
   ];
 
 in
-lib.mkMerge (map
-  (accessToken: {
+lib.mkMerge (
+  map (accessToken: {
     sops = {
       secrets.${accessToken} = {
         mode = "0440";
@@ -19,5 +24,5 @@ lib.mkMerge (map
       !include ${config.sops.secrets.${accessToken}.path}
     '';
 
-  })
-  accessTokens)
+  }) accessTokens
+)

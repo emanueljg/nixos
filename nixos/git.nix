@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   programs = {
     git = {
       enable = true;
@@ -45,6 +46,3 @@
     "gme" = "git merge";
   };
 }
-
-
-

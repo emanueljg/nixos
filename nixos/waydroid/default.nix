@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.virtualisation.waydroid;
@@ -29,10 +34,11 @@ in
     (kCfg.isEnabled "MEMFD_CREATE")
   ];
 
-  /* NOTE: we always enable this flag even if CONFIG_PSI_DEFAULT_DISABLED is not on
-      as reading the kernel config is not always possible and on kernels where it's
-      already on it will be no-op
-    */
+  /*
+    NOTE: we always enable this flag even if CONFIG_PSI_DEFAULT_DISABLED is not on
+     as reading the kernel config is not always possible and on kernels where it's
+     already on it will be no-op
+  */
   boot.kernelParams = [ "psi=1" ];
 
   environment.etc."gbinder.d/waydroid.conf".source = waydroidGbinderConf;

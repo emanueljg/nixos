@@ -1,10 +1,15 @@
-{ config, ... }: {
+{ config, ... }:
+{
   security.acme = {
     acceptTerms = true;
     defaults.email = "emanueljohnsongodin@gmail.com";
   };
 
-  networking.firewall.allowedTCPPorts = [ 80 81 443 ];
+  networking.firewall.allowedTCPPorts = [
+    80
+    81
+    443
+  ];
   # factorio
   networking.firewall.allowedUDPPorts = [ 34197 ];
 

@@ -1,7 +1,8 @@
-{ config
-, lib
-, pkgs
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  ...
 }:
 let
 
@@ -23,16 +24,15 @@ in
         with lib.types;
         let
           valueType =
-            nullOr
-              (oneOf [
-                bool
-                int
-                float
-                str
-                path
-                (attrsOf valueType)
-                (listOf valueType)
-              ])
+            nullOr (oneOf [
+              bool
+              int
+              float
+              str
+              path
+              (attrsOf valueType)
+              (listOf valueType)
+            ])
             // {
               description = "Hyprland configuration value";
             };
@@ -60,7 +60,8 @@ in
         "$"
         "bezier"
         "name"
-      ] ++ lib.optionals cfg.sourceFirst [ "source" ];
+      ]
+      ++ lib.optionals cfg.sourceFirst [ "source" ];
       example = [
         "$"
         "bezier"
@@ -101,17 +102,22 @@ in
         + lib.optionalString (cfg.extraConfig != "") cfg.extraConfig;
     };
 
-
     programs.hyprland = {
       enable = true;
-      package = (pkgs.callPackage
-        ({ enableXWayland ? false
-         }: config.local.wrap.wraps."hyprland".finalPackage.override {
-          wrappedPkg = config.local.wrap.wraps."hyprland".pkg.override {
-            inherit enableXWayland;
-          };
-        })
-        { }).overrideAttrs (prev: { inherit (prev.passthru.wrapped) version; });
+      package =
+        (pkgs.callPackage (
+          {
+            enableXWayland ? false,
+          }:
+          config.local.wrap.wraps."hyprland".finalPackage.override {
+            wrappedPkg = config.local.wrap.wraps."hyprland".pkg.override {
+              inherit enableXWayland;
+            };
+          }
+        ) { }).overrideAttrs
+          (prev: {
+            inherit (prev.passthru.wrapped) version;
+          });
       withUWSM = true;
       xwayland.enable = config.local.programs.xwayland.enable;
     };

@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 let
   cfg = config.local.programs.waybar;
 in
@@ -50,4 +55,3 @@ in
     };
   };
 }
-

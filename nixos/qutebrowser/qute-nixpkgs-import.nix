@@ -1,4 +1,5 @@
-{ pkgs, lib, ... }: {
+{ pkgs, lib, ... }:
+{
   local.programs.qutebrowser.keyBindings.normal =
     let
       script = pkgs.writeShellApplication {

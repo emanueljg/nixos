@@ -1,4 +1,9 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 let
   cfg = config.local.programs.qutebrowser;
 
@@ -36,12 +41,10 @@ let
   flattenSettings =
     x:
     lib.collect (x: !builtins.isAttrs x) (
-      lib.mapAttrsRecursive
-        (path: value: [
-          (lib.concatStringsSep "." path)
-          value
-        ])
-        x
+      lib.mapAttrsRecursive (path: value: [
+        (lib.concatStringsSep "." path)
+        value
+      ]) x
     );
 
   configSet = l: "config.set(${lib.concatStringsSep ", " (map pythonize l)})";
@@ -79,28 +82,32 @@ in
 
     stylesheets = lib.mkOption {
       default = { };
-      type = lib.types.attrsOf (lib.types.submodule ({ name, ... }: {
-        options = {
-          name = lib.mkOption {
-            type = lib.types.str;
-            default = name;
-          };
-          includes = lib.mkOption {
-            default = [ ];
-            type = with lib.types; listOf str;
-          };
-          excludes = lib.mkOption {
-            default = [ ];
-            type = with lib.types; listOf str;
-          };
-          css = lib.mkOption {
-            type = lib.types.str;
-          };
-        };
-      }));
+      type = lib.types.attrsOf (
+        lib.types.submodule (
+          { name, ... }:
+          {
+            options = {
+              name = lib.mkOption {
+                type = lib.types.str;
+                default = name;
+              };
+              includes = lib.mkOption {
+                default = [ ];
+                type = with lib.types; listOf str;
+              };
+              excludes = lib.mkOption {
+                default = [ ];
+                type = with lib.types; listOf str;
+              };
+              css = lib.mkOption {
+                type = lib.types.str;
+              };
+            };
+          }
+        )
+      );
     };
   };
-
 
   config =
     let
@@ -111,21 +118,17 @@ in
         ++ lib.mapAttrsToList formatKeyBindings cfg.keyBindings
       );
 
-      quickmarksFile = lib.concatStringsSep "\n" (
-        lib.mapAttrsToList formatQuickmarks cfg.quickmarks
-      );
+      quickmarksFile = lib.concatStringsSep "\n" (lib.mapAttrsToList formatQuickmarks cfg.quickmarks);
 
-      greasemonkeyDir = lib.optionals
-        (
-          cfg.greasemonkey != [ ]
-        )
-        pkgs.linkFarmFromDrvs "greasemonkey-userscripts"
-        cfg.greasemonkey;
+      greasemonkeyDir = lib.optionals (
+        cfg.greasemonkey != [ ]
+      ) pkgs.linkFarmFromDrvs "greasemonkey-userscripts" cfg.greasemonkey;
     in
     lib.mkIf cfg.enable {
       local.programs.qutebrowser.greasemonkey =
         let
-          mkUserscript = stylesheet:
+          mkUserscript =
+            stylesheet:
             let
               includes' = lib.concatMapStringsSep "\n" (include: "// @include    ${include}") stylesheet.includes;
               excludes' = lib.concatMapStringsSep "\n" (exclude: "// @exclude    ${exclude}") stylesheet.excludes;
@@ -155,5 +158,3 @@ in
       };
     };
 }
-
-

@@ -1,4 +1,5 @@
-{ self, config, ... }: {
+{ self, config, ... }:
+{
   sops.secrets."fetchFromItch" = {
     sopsFile = "${self}/secrets/${config.networking.hostName}/fetchFromItch.yml";
     group = "nixbld";

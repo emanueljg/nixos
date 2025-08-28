@@ -1,6 +1,6 @@
-{ lib, ... }: {
+{ lib, ... }:
+{
   fonts.fontconfig = {
     enable = true;
   };
 }
-    

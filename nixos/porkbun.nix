@@ -1,8 +1,9 @@
-{ config
-, pkgs
-, lib
-, self
-, ...
+{
+  config,
+  pkgs,
+  lib,
+  self,
+  ...
 }:
 let
   service = "porkbun-ddns";
@@ -65,7 +66,11 @@ in
 
         cmd = pkgs.writeShellApplication {
           name = "update-porkbun-ip";
-          runtimeInputs = [ pkgs.curl pkgs.dig pkgs.jq ];
+          runtimeInputs = [
+            pkgs.curl
+            pkgs.dig
+            pkgs.jq
+          ];
           text = ''
             CURRENT_IP="$(curl -s ifconfig.me)"
             PORKBUN_IP="$(dig +short www.${domain})"
@@ -94,4 +99,3 @@ in
       };
   };
 }
-

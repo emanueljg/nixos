@@ -1,10 +1,24 @@
-{ config, nixosModules, pkgs, lib, modulesPath, ... }: {
+{
+  config,
+  nixosModules,
+  pkgs,
+  lib,
+  modulesPath,
+  ...
+}:
+{
   imports = [
     nixosModules.nixos-hardware.lenovo-legion-16irx8h
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usbhid" "uas" "sd_mod" ];
+  boot.initrd.availableKernelModules = [
+    "xhci_pci"
+    "nvme"
+    "usbhid"
+    "uas"
+    "sd_mod"
+  ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
