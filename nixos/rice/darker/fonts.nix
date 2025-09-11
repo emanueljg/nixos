@@ -1,6 +1,6 @@
 { pkgs, ... }:
 {
-  environment.systemPackages = [
+  fonts.packages = [
     pkgs.nerd-fonts.jetbrains-mono
   ];
 }
