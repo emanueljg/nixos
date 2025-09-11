@@ -74,6 +74,6 @@ in
     "d /var/lib/misc 0755 root root -" # for dnsmasq.leases
   ];
 
-  services.dbus.packages = with pkgs; [ waydroid ];
+  services.dbus.packages = [ pkgs.waydroid ];
 
 }

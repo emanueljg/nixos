@@ -11,7 +11,7 @@
     enable = true;
     package = pkgs.writeShellApplication {
       name = "navidrome";
-      runtimeInputs = with pkgs; [ navidrome ];
+      runtimeInputs = [ pkgs.navidrome ];
       text = ''
         ND_LASTFM_APIKEY="$(cat ${config.sops.secrets."last_fm/api_key".path})" 
         ND_LASTFM_SECRET="$(cat ${config.sops.secrets."last_fm/shared_secret".path})" 
