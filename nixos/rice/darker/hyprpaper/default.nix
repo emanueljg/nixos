@@ -75,6 +75,10 @@ let
       url = "https://w.wallhaven.cc/full/9d/wallhaven-9dokjx.jpg";
       hash = "sha256-+LgzR7LPl7wpO3u+v9mMhosiVwRwrXzsujLqsXFTnNY=";
     };
+    sunflower = pkgs.fetchurl {
+      url = "https://w.wallhaven.cc/full/ex/wallhaven-exqqy8.jpg";
+      hash = "sha256-70EsDgAoyIztNfAAWLIftbbDprIFqVChuAt4jpE5da0=";
+    };
   };
 in
 {
@@ -89,7 +93,7 @@ in
       ];
       wallpaper = [
         # "HDMI-A-1,${papes.ganyu}"
-        "DP-2,${papes.everlasting-summer-electronics}"
+        "DP-2,${papes.sunflower}"
         "DP-1,${papes.konosuba-megumin-field}"
         "eDP-1,${papes.porco-rosso-nap}"
       ];
