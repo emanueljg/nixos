@@ -13,9 +13,10 @@
 
   services.greetd = {
     enable = true;
+    useTextGreeter = true;
     settings.default_session =
       let
-        exe = lib.getExe pkgs.greetd.tuigreet;
+        exe = lib.getExe pkgs.tuigreet;
         flags = lib.cli.toGNUCommandLineShell { } {
           time = true;
           remember = true;
