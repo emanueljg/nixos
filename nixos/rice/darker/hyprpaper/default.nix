@@ -79,6 +79,14 @@ let
       url = "https://w.wallhaven.cc/full/ex/wallhaven-exqqy8.jpg";
       hash = "sha256-70EsDgAoyIztNfAAWLIftbbDprIFqVChuAt4jpE5da0=";
     };
+    youmu-yukata = pkgs.fetchurl {
+      url = "https://w.wallhaven.cc/full/1j/wallhaven-1j1myv.jpg";
+      hash = "sha256-+tuj+CNNzajrdS1VWvvs749pylxiKSnEl9xQtx4TOrI=";
+    };
+    youmu-wind = pkgs.fetchurl {
+      url = "https://w.wallhaven.cc/full/4v/wallhaven-4vzxxm.jpg";
+      hash = "sha256-ulka/S1FNbZhkpSsbuAZ0Hc0vcLYtPY2TU4aOTPl1Ps=";
+    };
   };
 in
 {
@@ -93,7 +101,7 @@ in
       ];
       wallpaper = [
         # "HDMI-A-1,${papes.ganyu}"
-        "DP-2,${papes.sunflower}"
+        "DP-2,${papes.youmu-wind}"
         "DP-1,${papes.konosuba-megumin-field}"
         "eDP-1,${papes.porco-rosso-nap}"
       ];
