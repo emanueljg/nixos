@@ -16,8 +16,8 @@
 
   local.programs.hyprland = {
     enable = true;
-    package = packages.hyprland;
-    plugins = [ packages.hy3 ];
+    package = pkgs.hyprland;
+    plugins = [ pkgs.hyprlandPlugins.hy3 ];
     settings = {
       "$menu" = "wofi --show run";
       "$terminal" = "kitty";

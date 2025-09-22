@@ -50,6 +50,8 @@ in
       gamescope
       obs
 
+      network-wait-online-fix
+
       stateversions."23-11"
     ]);
 

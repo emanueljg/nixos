@@ -17,15 +17,6 @@
       url = "github:NixOS/nixos-hardware";
     };
 
-    hyprland = {
-      url = "github:hyprwm/Hyprland?ref=v0.49.0";
-    };
-
-    hy3 = {
-      url = "github:outfoxxed/hy3?ref=hl0.49.0";
-      inputs.hyprland.follows = "hyprland";
-    };
-
     archiver = {
       url = "github:emanueljg/archiver";
     };

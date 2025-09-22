@@ -57,7 +57,7 @@
         dart.command = lib.getExe pkgs.dart;
         pylsp =
           let
-            pylsp-pkg = pkgs.python311Packages.python-lsp-server.overrideAttrs (old: {
+            pylsp-pkg = pkgs.python313Packages.python-lsp-server.overrideAttrs (old: {
               buildInputs = old.buildInputs ++ old.passthru.optional-dependencies.all;
             });
           in
@@ -68,7 +68,7 @@
                 configurationSources = [ "flake8" ];
                 plugins = {
                   flake8 = {
-                    executable = lib.getExe pkgs.python311Packages.flake8;
+                    executable = lib.getExe pkgs.python313Packages.flake8;
                     enabled = true;
                     maxLineLength = 88;
                   };
