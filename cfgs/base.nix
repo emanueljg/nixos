@@ -44,6 +44,7 @@
     helix
     zsh
     kitty
+    themes
   ];
 
 }

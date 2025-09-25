@@ -17,5 +17,6 @@
     ./wg.nix
     ./hyprland.nix
     ./wrap.nix
+    ./themes.nix
   ];
 }

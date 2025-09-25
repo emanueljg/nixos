@@ -8,7 +8,7 @@
   local.programs.waybar = {
     style =
       let
-        theme = import ./_theme.nix;
+        inherit (config.local.themes."Everforest Dark Medium") fg bg;
       in
       ''
         * {
@@ -19,24 +19,24 @@
         window#waybar {
           padding: 10px;
           margin: 10px;
-          color: ${theme.fg.fg};
-          background-color: ${theme.bg.bg0};
+          color: ${fg.fg};
+          background-color: ${bg.bg0};
           transition-property: none;
         }
 
         #workspaces button {
             border-radius: 0;
             border: none;
-            color: ${theme.fg.statusline1}
+            color: ${fg.statusline1}
         }
 
         #workspaces button.visible {
-            background-color: ${theme.bg.bg_green};
+            background-color: ${bg.bg_green};
         }
           
         #workspaces button.active {
-            color: ${theme.bg.bg0};
-            background-color: ${theme.fg.statusline1};
+            color: ${bg.bg0};
+            background-color: ${fg.statusline1};
         }
 
         #network {
@@ -61,7 +61,7 @@
             margin: 0;
             background-image: none;
             border: none;
-            background-color: ${theme.fg.green};
+            background-color: ${fg.green};
             box-shadow: none;
             border: none;
             border-radius: 0;
@@ -70,7 +70,7 @@
         #pulseaudio-slider trough {
             margin: 0;
             min-height: 20px;
-            background-color: ${theme.bg.bg3};
+            background-color: ${bg.bg3};
             box-shadow: none;
             border: none;
             border-radius: 0;
@@ -78,7 +78,7 @@
         #pulseaudio-slider highlight {
             margin: 0;
             min-height: 20px;
-            background-color: ${theme.fg.statusline1};
+            background-color: ${fg.statusline1};
             box-shadow: none;
             border: none;
             border-radius: 0;

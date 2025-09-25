@@ -1,8 +1,8 @@
-{ lib, ... }:
+{ lib, config, ... }:
 {
   local.programs.hyprland.settings =
     let
-      theme = import ./_theme.nix;
+      theme = config.local.themes."Everforest Dark Medium";
     in
     {
       general = {
