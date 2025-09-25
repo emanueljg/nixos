@@ -49,6 +49,7 @@ in
       yt-dlp
       qbittorrent
       pipe-viewer
+      zathura
 
       # customization
       rice.darker
