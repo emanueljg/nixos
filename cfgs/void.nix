@@ -26,7 +26,7 @@ in
   modules =
     parent.modules
     ++ (with modules; [
-      { networking.hostName = "void"; }
+      hostnames.void
       lan.void
       hw.nvidia
       hw.void

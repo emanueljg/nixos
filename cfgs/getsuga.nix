@@ -33,7 +33,7 @@ in
   modules =
     parent.modules
     ++ (with modules; [
-      { networking.hostName = "getsuga"; }
+      hostnames.getsuga
       # hardware
       disks.getsuga
       hw.getsuga
